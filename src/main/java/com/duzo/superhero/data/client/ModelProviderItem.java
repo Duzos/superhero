@@ -26,15 +26,16 @@ public class ModelProviderItem extends ItemModelProvider {
 
     @Override
     protected void registerModels() {
-//        for (RegistryObject<Item> entry : SuperheroItems.ITEMS.getEntries()) {
-//            if (entry.get() instanceof BlockItem item) {
-//                blockItem(Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(entry.get())));
-//                continue;
-//            }
-//
-//            simpleItem(entry);
-//        }
-        basicItem(SuperheroItems.MARK_5_CHESTPLATE.getId());
+        for (RegistryObject<Item> entry : SuperheroItems.ITEMS.getEntries()) {
+            if (entry.get() instanceof BlockItem item) {
+                blockItem(Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(entry.get())));
+                continue;
+            }
+
+            System.out.println(entry.getId());
+            LogUtils.getLogger().debug(String.valueOf(entry.getId()));
+            basicItem(entry.getId());
+        }
     }
 
 
