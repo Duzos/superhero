@@ -43,8 +43,10 @@ public class TakeOffIronManSuitC2SPacket {
             IronManEntity.spawnNew(item.getMark(),level,player.getOnPos(),player);
             level.playSound(null,player, SoundEvents.BEACON_DEACTIVATE, SoundSource.PLAYERS,1f,1f);
 
-            player.getAbilities().mayfly = false;
-            player.getAbilities().flying = false;
+            if (!player.getAbilities().invulnerable) {
+                player.getAbilities().mayfly = false;
+                player.getAbilities().flying = false;
+            }
             player.onUpdateAbilities();
         });
         return true;

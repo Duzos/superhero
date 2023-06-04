@@ -137,7 +137,6 @@ public class IronManEntity extends HumanoidEntity {
         for (EquipmentSlot equipmentSlot : EquipmentSlot.values()) {
             if (!equipmentSlot.isArmor()) continue;
             ItemStack currentSlot = player.getItemBySlot(equipmentSlot);
-            System.out.println("Checking: " + equipmentSlot.name());
             if (currentSlot.getItem() instanceof IronManArmourItem item) {
                 if (currentMark.isEmpty()) {
                     currentMark = item.getMark();
@@ -170,6 +169,7 @@ public class IronManEntity extends HumanoidEntity {
         player.setItemSlot(EquipmentSlot.FEET,this.getItemBySlot(EquipmentSlot.FEET));
 
         this.level.playSound(null,player, SoundEvents.BEACON_ACTIVATE, SoundSource.PLAYERS,1f,1f);
+
         player.getAbilities().mayfly = true;
         player.onUpdateAbilities();
         this.remove(RemovalReason.DISCARDED);
