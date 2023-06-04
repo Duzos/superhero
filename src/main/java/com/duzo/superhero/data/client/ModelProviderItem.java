@@ -32,8 +32,6 @@ public class ModelProviderItem extends ItemModelProvider {
                 continue;
             }
 
-            System.out.println(entry.getId());
-            LogUtils.getLogger().debug(String.valueOf(entry.getId()));
             basicItem(entry.getId());
         }
     }
