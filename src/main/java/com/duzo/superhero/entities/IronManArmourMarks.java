@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Deprecated
+@Deprecated //fucking better be, wtf is this
 public class IronManArmourMarks {
     private static final Map<String, NonNullList<Item>> marks = new HashMap<>();
 

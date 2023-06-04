@@ -2,6 +2,7 @@ package com.duzo.superhero.client.layers;
 
 import com.duzo.superhero.client.models.items.IronManArmourModel;
 import com.duzo.superhero.entities.HumanoidEntity;
+import com.duzo.superhero.entities.IronManEntity;
 import com.duzo.superhero.items.IronManArmourItem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
@@ -28,28 +29,19 @@ public class IronManArmourLayer<T extends LivingEntity, M extends EntityModel<T>
     @Override
     public void render(PoseStack stack, MultiBufferSource source, int light, T entity, float p_117353_, float p_117354_, float p_117355_, float p_117356_, float p_117357_, float p_117358_) {
         ItemStack head = entity.getItemBySlot(EquipmentSlot.HEAD);
-        ItemStack chest = entity.getItemBySlot(EquipmentSlot.CHEST);
-        ItemStack legs = entity.getItemBySlot(EquipmentSlot.LEGS);
-        ItemStack feet = entity.getItemBySlot(EquipmentSlot.FEET);
-        if (this.getParentModel() instanceof HumanoidModel<?> player && isValidArmourSet(head,chest,legs,feet)) {
+        if (this.getParentModel() instanceof HumanoidModel<?> player && IronManEntity.isValidArmorButCooler(entity)) {
             IronManArmourItem item = (IronManArmourItem) head.getItem();
             ResourceLocation texture = item.getTexture();
             model.renderToBuffer(stack,source.getBuffer(RenderType.entitySmoothCutout(texture)),light, OverlayTexture.NO_OVERLAY,1,1,1,1);
         }
     }
 
-    public static boolean isValidArmourSet(ItemStack head,ItemStack chest,ItemStack legs,ItemStack feet) {
-        boolean flag1 = head.getItem() instanceof IronManArmourItem && chest.getItem() instanceof IronManArmourItem && legs.getItem() instanceof IronManArmourItem && feet.getItem() instanceof IronManArmourItem;
-        return flag1;
-    }
 
     @Override
     protected ResourceLocation getTextureLocation(T entity) {
         ItemStack head = entity.getItemBySlot(EquipmentSlot.HEAD);
-        ItemStack chest = entity.getItemBySlot(EquipmentSlot.CHEST);
-        ItemStack legs = entity.getItemBySlot(EquipmentSlot.LEGS);
-        ItemStack feet = entity.getItemBySlot(EquipmentSlot.FEET);
-        if (isValidArmourSet(head, chest, legs, feet)) {
+
+        if (IronManEntity.isValidArmorButCooler(entity)) {
             IronManArmourItem item = (IronManArmourItem) head.getItem();
             return item.getTexture();
         }

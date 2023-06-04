@@ -1,5 +1,6 @@
 package com.duzo.superhero.mixin;
 
+import com.duzo.superhero.entities.IronManEntity;
 import com.duzo.superhero.items.IronManArmourItem;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
@@ -11,8 +12,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import static com.duzo.superhero.client.layers.IronManArmourLayer.isValidArmourSet;
-
 @Mixin(PlayerRenderer.class)
 public class PlayerRendererMixin {
 
@@ -20,16 +19,14 @@ public class PlayerRendererMixin {
 //    private void addLayers(EntityRendererProvider.Context context, boolean slim, CallbackInfo ci) {
 //
 //    }
-    @Inject(at = @At("HEAD"),method = "Lnet/minecraft/client/renderer/entity/player/PlayerRenderer;getTextureLocation(Lnet/minecraft/client/player/AbstractClientPlayer;)Lnet/minecraft/resources/ResourceLocation;", cancellable = true)
+    @Inject(at = @At("HEAD"),method = "getTextureLocation(Lnet/minecraft/client/player/AbstractClientPlayer;)Lnet/minecraft/resources/ResourceLocation;", cancellable = true)
     private void setSkin(AbstractClientPlayer player, CallbackInfoReturnable<ResourceLocation> cir) {
-        ItemStack head = player.getItemBySlot(EquipmentSlot.HEAD);
-        ItemStack chest = player.getItemBySlot(EquipmentSlot.CHEST);
-        ItemStack legs = player.getItemBySlot(EquipmentSlot.LEGS);
-        ItemStack feet = player.getItemBySlot(EquipmentSlot.FEET);
 
-        if (isValidArmourSet(head,chest,legs,feet)) {
-            IronManArmourItem item = (IronManArmourItem) head.getItem();
-            cir.setReturnValue(item.getTexture());
+        if (IronManEntity.isValidArmorButCooler(player)) {
+            ItemStack head = player.getItemBySlot(EquipmentSlot.HEAD);
+            if(head.getItem() instanceof IronManArmourItem item){
+                cir.setReturnValue(item.getTexture());
+            }
         }
     }
 }

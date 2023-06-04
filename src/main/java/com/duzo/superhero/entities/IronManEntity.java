@@ -15,6 +15,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -116,7 +117,7 @@ public class IronManEntity extends HumanoidEntity {
         return output.toString();
     }
 
-    public static boolean isValidArmourSet(ItemStack head,ItemStack chest,ItemStack legs,ItemStack feet) {
+/*    public static boolean isValidArmourSet(ItemStack head,ItemStack chest,ItemStack legs,ItemStack feet) {
         boolean flag1 = head.getItem() instanceof IronManArmourItem && chest.getItem() instanceof IronManArmourItem && legs.getItem() instanceof IronManArmourItem && feet.getItem() instanceof IronManArmourItem;
 
         IronManArmourItem ironhead = (IronManArmourItem) head.getItem();
@@ -127,16 +128,35 @@ public class IronManEntity extends HumanoidEntity {
         boolean flag2 = (ironhead.getMark() == ironchest.getMark()) && (ironhead.getMark() == ironlegs.getMark()) && (ironhead.getMark() == ironfeet.getMark());
 
         return flag1 && flag2;
+    }*/
+
+
+    public static boolean isValidArmorButCooler(LivingEntity player) {
+        String currentMark = "";
+
+        for (EquipmentSlot equipmentSlot : EquipmentSlot.values()) {
+            if (!equipmentSlot.isArmor()) continue;
+            ItemStack currentSlot = player.getItemBySlot(equipmentSlot);
+            System.out.println("Checking: " + equipmentSlot.name());
+            if (currentSlot.getItem() instanceof IronManArmourItem item) {
+                if (currentMark.isEmpty()) {
+                    currentMark = item.getMark();
+                } else if (!currentMark.equals(item.getMark())) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
 
     public void takeArmourOffPlayer(Player player) {
-        if (!isValidArmourSet(player.getItemBySlot(EquipmentSlot.HEAD),player.getItemBySlot(EquipmentSlot.CHEST),player.getItemBySlot(EquipmentSlot.LEGS),player.getItemBySlot(EquipmentSlot.FEET))) return;
+        if (!isValidArmorButCooler(player)) return;
 
-        this.setItemSlot(EquipmentSlot.HEAD,player.getItemBySlot(EquipmentSlot.HEAD));
-        this.setItemSlot(EquipmentSlot.CHEST,player.getItemBySlot(EquipmentSlot.CHEST));
-        this.setItemSlot(EquipmentSlot.LEGS,player.getItemBySlot(EquipmentSlot.LEGS));
-        this.setItemSlot(EquipmentSlot.FEET,player.getItemBySlot(EquipmentSlot.FEET));
+        this.setItemSlot(EquipmentSlot.HEAD, player.getItemBySlot(EquipmentSlot.HEAD));
+        this.setItemSlot(EquipmentSlot.CHEST, player.getItemBySlot(EquipmentSlot.CHEST));
+        this.setItemSlot(EquipmentSlot.LEGS, player.getItemBySlot(EquipmentSlot.LEGS));
+        this.setItemSlot(EquipmentSlot.FEET, player.getItemBySlot(EquipmentSlot.FEET));
 
         player.setItemSlot(EquipmentSlot.HEAD,ItemStack.EMPTY);
         player.setItemSlot(EquipmentSlot.CHEST,ItemStack.EMPTY);

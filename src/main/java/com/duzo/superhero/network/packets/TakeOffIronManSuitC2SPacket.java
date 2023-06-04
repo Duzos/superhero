@@ -13,7 +13,7 @@ import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
-import static com.duzo.superhero.entities.IronManEntity.isValidArmourSet;
+import static com.duzo.superhero.entities.IronManEntity.isValidArmorButCooler;
 
 public class TakeOffIronManSuitC2SPacket {
     public TakeOffIronManSuitC2SPacket() {
@@ -36,11 +36,8 @@ public class TakeOffIronManSuitC2SPacket {
             ServerLevel level = player.getLevel();
 
             ItemStack head = player.getItemBySlot(EquipmentSlot.HEAD);
-            ItemStack chest = player.getItemBySlot(EquipmentSlot.CHEST);
-            ItemStack legs = player.getItemBySlot(EquipmentSlot.LEGS);
-            ItemStack feet = player.getItemBySlot(EquipmentSlot.FEET);
 
-            if (!isValidArmourSet(head,chest,legs,feet)) return;
+            if (!isValidArmorButCooler(player)) return;
 
             IronManArmourItem item = (IronManArmourItem) head.getItem();
             IronManEntity.spawnNew(item.getMark(),level,player.getOnPos(),player);
