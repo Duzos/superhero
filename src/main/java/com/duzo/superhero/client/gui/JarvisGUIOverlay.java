@@ -30,6 +30,10 @@ public class JarvisGUIOverlay {
 
         if (mc.player.getItemBySlot(EquipmentSlot.HEAD).getItem() instanceof IronManArmourItem) {
             GuiComponent.blit(poseStack, x - imageHeight / 2, y - imageWidth, 0, 0, imageHeight, imageWidth, imageHeight, imageWidth);
+
+            String i = Math.round(mc.player.getX()) + ", " + Math.round(mc.player.getY()) + ", " + Math.round(mc.player.getZ());
+            int textWidth = mc.font.width(i);
+            mc.font.draw(poseStack,i,x - textWidth / 2,y / 8,0x59d7e3);
         }
     }));
 }
