@@ -14,6 +14,10 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageSources;
+import net.minecraft.world.damagesource.DamageType;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -27,24 +31,28 @@ public class IronManEntity extends HumanoidEntity {
 
     public IronManEntity(EntityType<? extends HumanoidEntity> entityType, Level level) {
         super(entityType, level);
+        this.setInvulnerable(true);
         this.setCustomName(Component.translatable("Iron Man " + fileNameToUsable(this.getMark())));
         this.refreshSkin();
     }
 
     public IronManEntity(EntityType<? extends HumanoidEntity> entityType, Level level, String customName, ResourceLocation skin) {
         super(entityType, level, customName, skin);
+        this.setInvulnerable(true);
         this.setCustomName(Component.translatable("Iron Man " + fileNameToUsable(this.getMark())));
         this.refreshSkin();
     }
 
     public IronManEntity(EntityType<? extends HumanoidEntity> entityType, Level level, String customName) {
         super(entityType, level, customName);
+        this.setInvulnerable(true);
         this.setCustomName(Component.translatable("Iron Man " + fileNameToUsable(this.getMark())));
         this.refreshSkin();
     }
 
     public IronManEntity(EntityType<? extends HumanoidEntity> entityType, Level level, ResourceLocation skin) {
         super(entityType, level, skin);
+        this.setInvulnerable(true);
         this.setCustomName(Component.translatable("Iron Man " + fileNameToUsable(this.getMark())));
         this.refreshSkin();
     }
@@ -96,10 +104,7 @@ public class IronManEntity extends HumanoidEntity {
         super.defineSynchedData();
         this.entityData.define(MARK, DEFAULT_MARK);
     }
-    @Override
-    public boolean isInvulnerable() {
-        return true;
-    }
+
 
     /**
      * Removes Underscores from the string
@@ -171,10 +176,8 @@ public class IronManEntity extends HumanoidEntity {
         player.setItemSlot(EquipmentSlot.LEGS,this.getItemBySlot(EquipmentSlot.LEGS));
         player.setItemSlot(EquipmentSlot.FEET,this.getItemBySlot(EquipmentSlot.FEET));
 
-        this.level.playSound(null,player, SuperheroSounds.IRONMAN_POWERUP.get(), SoundSource.PLAYERS,1f,1f);
+        this.level.playSound(null,player,SuperheroSounds.IRONMAN_POWERUP.get(),SoundSource.PLAYERS,1f,1f);
 
-        player.getAbilities().mayfly = true;
-        player.onUpdateAbilities();
         this.remove(RemovalReason.DISCARDED);
     }
 //    private boolean putSelfOntoPlayer(Player player) {

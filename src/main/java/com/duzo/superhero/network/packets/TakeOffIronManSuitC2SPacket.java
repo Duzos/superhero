@@ -1,5 +1,7 @@
 package com.duzo.superhero.network.packets;
 
+import com.duzo.superhero.blocks.IronManSuitCaseBlock;
+import com.duzo.superhero.blocks.SuperheroBlocks;
 import com.duzo.superhero.entities.IronManEntity;
 import com.duzo.superhero.items.IronManArmourItem;
 import com.duzo.superhero.sounds.SuperheroSounds;
@@ -12,6 +14,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.network.NetworkEvent;
 
+import java.util.Objects;
 import java.util.function.Supplier;
 
 import static com.duzo.superhero.entities.IronManEntity.isValidArmorButCooler;
@@ -41,7 +44,13 @@ public class TakeOffIronManSuitC2SPacket {
             if (!isValidArmorButCooler(player)) return;
 
             IronManArmourItem item = (IronManArmourItem) head.getItem();
-            IronManEntity.spawnNew(item.getMark(),level,player.getOnPos(),player);
+
+            if (Objects.equals(item.getMark(), "mark_5")) {
+                IronManSuitCaseBlock.convertArmourToSuitcase(player);
+            } else {
+                IronManEntity.spawnNew(item.getMark(), level, player.getOnPos(), player);
+            }
+
             level.playSound(null,player, SuperheroSounds.IRONMAN_POWERDOWN.get(), SoundSource.PLAYERS,1f,1f);
 
             if (!player.getAbilities().invulnerable) {

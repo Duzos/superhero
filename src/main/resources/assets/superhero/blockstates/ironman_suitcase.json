@@ -1,0 +1,20 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "superhero:block/ironman_suitcase",
+      "y": 270
+    },
+    "facing=north": {
+      "model": "superhero:block/ironman_suitcase",
+      "y": 180
+    },
+    "facing=south": {
+      "model": "superhero:block/ironman_suitcase",
+      "y": 0
+    },
+    "facing=west": {
+      "model": "superhero:block/ironman_suitcase",
+      "y": 90
+    }
+  }
+}
