@@ -32,8 +32,12 @@ public class JarvisGUIOverlay {
             GuiComponent.blit(poseStack, x - imageHeight / 2, y - imageWidth, 0, 0, imageHeight, imageWidth, imageHeight, imageWidth);
 
             String i = Math.round(mc.player.getX()) + ", " + Math.round(mc.player.getY()) + ", " + Math.round(mc.player.getZ());
-            int textWidth = mc.font.width(i);
-            mc.font.draw(poseStack,i,x - textWidth / 2,y / 8,0x59d7e3);
+            int coordsWidth = mc.font.width(i);
+            mc.font.draw(poseStack,i,x - coordsWidth / 2,y / 8,0x59d7e3);
+
+            String j = mc.player.getDirection().name();
+            int dirWdth = mc.font.width(j);
+            mc.font.draw(poseStack,j,x - dirWdth / 2,y / 6,0x59d7e3);
         }
     }));
 }
