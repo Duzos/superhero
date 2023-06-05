@@ -1,0 +1,14 @@
+{
+  "ironman_powerdown": {
+    "sounds": [
+      "superhero:ironman_powerdown"
+    ],
+    "subtitle": "subtitle.superhero.ironman_powerdown"
+  },
+  "ironman_powerup": {
+    "sounds": [
+      "superhero:ironman_powerup"
+    ],
+    "subtitle": "subtitle.superhero.ironman_powerup"
+  }
+}

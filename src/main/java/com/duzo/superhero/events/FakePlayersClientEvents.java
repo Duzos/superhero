@@ -1,27 +1,31 @@
 package com.duzo.superhero.events;
 
 import com.duzo.superhero.Superhero;
+import com.duzo.superhero.client.gui.JarvisGUIOverlay;
 import com.duzo.superhero.client.models.entities.HumanoidEntityModel;
 import com.duzo.superhero.client.models.entities.IronManEntityModel;
 import com.duzo.superhero.client.models.items.IronManArmourModel;
 import com.duzo.superhero.client.renderers.IronManEntityRenderer;
 import com.duzo.superhero.entities.SuperheroEntities;
+import com.duzo.superhero.items.IronManArmourItem;
 import com.duzo.superhero.network.Network;
 import com.duzo.superhero.network.packets.TakeOffIronManSuitC2SPacket;
 import com.duzo.superhero.util.KeyBinds;
+import com.mojang.blaze3d.vertex.PoseStack;
+import cpw.mods.jarhandling.impl.Jar;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.EntityRenderersEvent;
-import net.minecraftforge.client.event.InputEvent;
-import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
+import net.minecraftforge.client.event.*;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(value = Dist.CLIENT, modid = Superhero.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class FakePlayersClientEvents {
-
 
     @SubscribeEvent
     public static void registerRenderers(EntityRenderersEvent.RegisterRenderers renderers) {
@@ -51,6 +55,10 @@ public class FakePlayersClientEvents {
         @SubscribeEvent
         public static void onKeyRegister(RegisterKeyMappingsEvent event) {
             event.register(KeyBinds.TAKE_OFF_IRON_MAN_SUIT);
+        }
+        @SubscribeEvent
+        public static void renderOverlays(RegisterGuiOverlaysEvent event) {
+            event.registerAboveAll("jarvis_hud", JarvisGUIOverlay.HUD_JARVIS);
         }
 
     }

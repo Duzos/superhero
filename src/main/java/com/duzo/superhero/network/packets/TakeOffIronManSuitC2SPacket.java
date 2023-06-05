@@ -2,6 +2,7 @@ package com.duzo.superhero.network.packets;
 
 import com.duzo.superhero.entities.IronManEntity;
 import com.duzo.superhero.items.IronManArmourItem;
+import com.duzo.superhero.sounds.SuperheroSounds;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -41,7 +42,7 @@ public class TakeOffIronManSuitC2SPacket {
 
             IronManArmourItem item = (IronManArmourItem) head.getItem();
             IronManEntity.spawnNew(item.getMark(),level,player.getOnPos(),player);
-            level.playSound(null,player, SoundEvents.BEACON_DEACTIVATE, SoundSource.PLAYERS,1f,1f);
+            level.playSound(null,player, SuperheroSounds.IRONMAN_POWERDOWN.get(), SoundSource.PLAYERS,1f,1f);
 
             if (!player.getAbilities().invulnerable) {
                 player.getAbilities().mayfly = false;

@@ -18,5 +18,6 @@ public class DataGenerationEvent {
         ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
 
         generator.addProvider(true, new ModelProviderItem(packOutput,existingFileHelper));
+        generator.addProvider(true, new SoundDataGeneration(packOutput,existingFileHelper));
     }
 }

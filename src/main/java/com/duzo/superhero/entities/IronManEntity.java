@@ -2,6 +2,7 @@ package com.duzo.superhero.entities;
 
 import com.duzo.superhero.Superhero;
 import com.duzo.superhero.items.IronManArmourItem;
+import com.duzo.superhero.sounds.SuperheroSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -143,6 +144,8 @@ public class IronManEntity extends HumanoidEntity {
                 } else if (!currentMark.equals(item.getMark())) {
                     return false;
                 }
+            } else {
+                return false;
             }
         }
         return true;
@@ -168,7 +171,7 @@ public class IronManEntity extends HumanoidEntity {
         player.setItemSlot(EquipmentSlot.LEGS,this.getItemBySlot(EquipmentSlot.LEGS));
         player.setItemSlot(EquipmentSlot.FEET,this.getItemBySlot(EquipmentSlot.FEET));
 
-        this.level.playSound(null,player, SoundEvents.BEACON_ACTIVATE, SoundSource.PLAYERS,1f,1f);
+        this.level.playSound(null,player, SuperheroSounds.IRONMAN_POWERUP.get(), SoundSource.PLAYERS,1f,1f);
 
         player.getAbilities().mayfly = true;
         player.onUpdateAbilities();

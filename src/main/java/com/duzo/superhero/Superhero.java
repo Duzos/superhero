@@ -4,6 +4,7 @@ import com.duzo.superhero.data.client.ModelProviderItem;
 import com.duzo.superhero.entities.SuperheroEntities;
 import com.duzo.superhero.items.SuperheroItems;
 import com.duzo.superhero.network.Network;
+import com.duzo.superhero.sounds.SuperheroSounds;
 import com.mojang.logging.LogUtils;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.common.MinecraftForge;
@@ -32,6 +33,7 @@ public class Superhero {
 
         SuperheroEntities.ENTITIES.register(modEventBus);
         SuperheroItems.ITEMS.register(modEventBus);
+        SuperheroSounds.SOUNDS.register(modEventBus);
 
         MinecraftForge.EVENT_BUS.register(this);
 
