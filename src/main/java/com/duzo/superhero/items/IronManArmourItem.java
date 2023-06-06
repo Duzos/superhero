@@ -55,14 +55,29 @@ public abstract class IronManArmourItem extends ArmorItem {
             if (IronManEntity.isValidArmorButCooler(player)) {
                 this.runFlight(player);
             }
+
             if (this.getEquipmentSlot() == EquipmentSlot.HEAD && player.getItemBySlot(EquipmentSlot.HEAD).getItem() instanceof IronManArmourItem) {
 //                if (!player.getActiveEffectsMap().containsKey(MobEffects.NIGHT_VISION)) {
                     player.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, 11 * 20, 1, false, false, false));
 //                }
             }
+            if (this.getEquipmentSlot() == EquipmentSlot.FEET && player.getItemBySlot(EquipmentSlot.FEET).getItem() instanceof IronManArmourItem && !IronManEntity.isValidArmorButCooler(player)) {
+                bootsOnlyFlight(player);
+            }
         }
     }
 
+    // Flight that only goes up
+    private void bootsOnlyFlight(Player player) {
+        if(InputConstants.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), GLFW.GLFW_KEY_SPACE)) {
+            Vec3 motion = player.getDeltaMovement();
+            double motionY = motion.y();
+            double currentAccel = 0.02D * (motionY < 0.3D ? 2.5D : 1.0D);
+            player.setDeltaMovement(motion.x(), motion.y() + currentAccel, motion.z());
+        }
+    }
+
+    // @TODO movement to left right and back
     private void runFlight(Player player) {
         if(InputConstants.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), GLFW.GLFW_KEY_SPACE)) {
             Vec3 motion = player.getDeltaMovement();

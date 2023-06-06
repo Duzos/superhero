@@ -105,6 +105,11 @@ public class IronManEntity extends HumanoidEntity {
         this.entityData.define(MARK, DEFAULT_MARK);
     }
 
+    // @TODO iron man entity despawns
+    @Override
+    public void checkDespawn() {
+        super.checkDespawn();
+    }
 
     /**
      * Removes Underscores from the string
