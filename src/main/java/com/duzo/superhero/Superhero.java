@@ -3,6 +3,7 @@ package com.duzo.superhero;
 import com.duzo.superhero.blocks.SuperheroBlocks;
 import com.duzo.superhero.data.client.ModelProviderItem;
 import com.duzo.superhero.entities.SuperheroEntities;
+import com.duzo.superhero.items.IronManArmourItem;
 import com.duzo.superhero.items.SuperheroItems;
 import com.duzo.superhero.network.Network;
 import com.duzo.superhero.sounds.SuperheroSounds;
@@ -10,6 +11,8 @@ import com.mojang.logging.LogUtils;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -19,7 +22,9 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.event.CreativeModeTabEvent;
+import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -58,6 +63,15 @@ public class Superhero {
     private void addCreative(CreativeModeTabEvent.BuildContents event)
     {
 
+    }
+
+    @SubscribeEvent
+    public void onFall(LivingFallEvent event) {
+        if (!(event.getEntity() instanceof Player player)) return;
+
+        if (player.getItemBySlot(EquipmentSlot.FEET).getItem() instanceof IronManArmourItem) {
+            event.setDistance(0);
+        }
     }
 
     private void registerCreative(CreativeModeTabEvent.Register event) {
