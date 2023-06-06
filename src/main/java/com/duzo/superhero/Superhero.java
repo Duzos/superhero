@@ -16,6 +16,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.CreativeModeTabRegistry;
 import net.minecraftforge.common.MinecraftForge;
@@ -46,6 +47,7 @@ public class Superhero {
         modEventBus.addListener(this::commonSetup);
 
         SuperheroEntities.ENTITIES.register(modEventBus);
+        SuperheroItems.init();
         SuperheroItems.ITEMS.register(modEventBus);
         SuperheroBlocks.BLOCKS.register(modEventBus);
         SuperheroSounds.SOUNDS.register(modEventBus);
@@ -77,7 +79,7 @@ public class Superhero {
     private void registerCreative(CreativeModeTabEvent.Register event) {
         event.registerCreativeModeTab(new ResourceLocation(MODID,"superhero"), builder ->
                 builder.title(Component.translatable("item_group." + MODID + ".superhero"))
-                        .icon(() -> new ItemStack(SuperheroItems.MARK_7_HELMET.get()))
+                        .icon(() -> new ItemStack(Items.IRON_INGOT))
                         .displayItems(((parms, output) -> {
                             for (RegistryObject<Item> item : SuperheroItems.ITEMS.getEntries()) {
                                 output.accept(item.get());

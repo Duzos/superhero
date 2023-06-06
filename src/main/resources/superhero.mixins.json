@@ -5,8 +5,10 @@
   "compatibilityLevel": "JAVA_8",
   "refmap": "superhero.refmap.json",
   "mixins": [
+    "EntityMixin"
   ],
   "client": [
+    "ClientPlayerMixin",
     "PlayerRendererMixin"
   ],
   "injectors": {

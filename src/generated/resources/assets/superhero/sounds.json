@@ -10,5 +10,11 @@
       "superhero:ironman_powerup"
     ],
     "subtitle": "subtitle.superhero.ironman_powerup"
+  },
+  "ironman_step": {
+    "sounds": [
+      "superhero:ironman_step"
+    ],
+    "subtitle": "subtitle.superhero.ironman_step"
   }
 }

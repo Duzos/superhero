@@ -3,13 +3,22 @@ package com.duzo.superhero.items;
 import com.duzo.superhero.Superhero;
 import com.duzo.superhero.client.models.items.IronManArmourModel;
 import com.duzo.superhero.entities.IronManEntity;
+import com.duzo.superhero.network.packets.TakeOffIronManSuitC2SPacket;
 import com.duzo.superhero.sounds.SuperheroSounds;
+import com.duzo.superhero.sounds.ThrustersSoundInstance;
+import com.duzo.superhero.util.IronManCapability;
+import com.duzo.superhero.util.IronManMark;
 import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;
+import net.minecraft.client.multiplayer.PlayerInfo;
+import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.player.Input;
+import net.minecraft.client.resources.sounds.SimpleSoundInstance;
+import net.minecraft.client.resources.sounds.Sound;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -29,22 +38,24 @@ import org.lwjgl.glfw.GLFW;
 import java.util.function.Consumer;
 
 public abstract class IronManArmourItem extends ArmorItem {
+    private ThrustersSoundInstance sound;
     public IronManArmourItem(ArmorMaterial material, Type type, Properties properties) {
         super(material, type, properties);
     }
 
-    public abstract String getMark();
+    public abstract IronManMark getMark();
     public ResourceLocation getTexture() {
-        return new ResourceLocation(Superhero.MODID, "textures/entities/iron_man/" + this.getMark() + ".png");
+        return new ResourceLocation(Superhero.MODID, "textures/entities/iron_man/" + this.getMark().getSerializedName() + ".png");
     }
+    private static boolean isEquipped(ItemStack stack,Player player) {
+        for (EquipmentSlot equipmentSlot : EquipmentSlot.values()) {
+            if (!equipmentSlot.isArmor()) continue;
 
-    private static float changeValueByDirection(float val, Direction direction) {
-        return switch(direction) {
-            case DOWN, WEST, NORTH:
-                yield val--;
-            case UP, EAST, SOUTH:
-                yield val++;
-        };
+            if (player.getItemBySlot(equipmentSlot) == stack) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
@@ -52,55 +63,100 @@ public abstract class IronManArmourItem extends ArmorItem {
         super.inventoryTick(stack, level, entity, p_41407_, p_41408_);
 
         if (entity instanceof Player player) {
+            if (!isEquipped(stack,player)) return;
+
             if (IronManEntity.isValidArmorButCooler(player)) {
                 this.runFlight(player);
             }
 
             if (this.getEquipmentSlot() == EquipmentSlot.HEAD && player.getItemBySlot(EquipmentSlot.HEAD).getItem() instanceof IronManArmourItem) {
-//                if (!player.getActiveEffectsMap().containsKey(MobEffects.NIGHT_VISION)) {
-                    player.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, 11 * 20, 1, false, false, false));
-//                }
+                player.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, 11 * 20, 1, false, false, false));
             }
-            if (this.getEquipmentSlot() == EquipmentSlot.FEET && player.getItemBySlot(EquipmentSlot.FEET).getItem() instanceof IronManArmourItem && !IronManEntity.isValidArmorButCooler(player)) {
-                bootsOnlyFlight(player);
+            if (this.getEquipmentSlot() == EquipmentSlot.FEET && player.getItemBySlot(EquipmentSlot.FEET).getItem() instanceof IronManArmourItem) {
+                if (!IronManEntity.isValidArmorButCooler(player)) {
+                    bootsOnlyFlight(player);
+                }
+
+                if (player.getY() > 185 && this.getMark().getCapabilities().has(IronManCapability.ICES_OVER)) {
+                    player.addEffect(new MobEffectInstance(MobEffects.WITHER, 2 * 20, 0, false, false, false));
+                }
             }
         }
     }
 
     // Flight that only goes up
     private void bootsOnlyFlight(Player player) {
-        if(InputConstants.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), GLFW.GLFW_KEY_SPACE)) {
+        if(keyDown(GLFW.GLFW_KEY_SPACE)) {
             Vec3 motion = player.getDeltaMovement();
-            double motionY = motion.y();
-            double currentAccel = 0.02D * (motionY < 0.3D ? 2.5D : 1.0D);
+            double currentAccel = this.getMark().getVerticalFlightSpeedForBoots() * (motion.y() < 0.3D ? 2.5D : 1.0D);
             player.setDeltaMovement(motion.x(), motion.y() + currentAccel, motion.z());
         }
     }
 
     // @TODO movement to left right and back
     private void runFlight(Player player) {
-        if(InputConstants.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), GLFW.GLFW_KEY_SPACE)) {
-            Vec3 motion = player.getDeltaMovement();
-            double motionY = motion.y();
-            double currentAccel = 0.02D * (motionY < 0.3D ? 2.5D : 1.0D);
-            if(InputConstants.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), GLFW.GLFW_KEY_W)) {
-                if (!player.isSprinting()) {
-                    player.setDeltaMovement(player.getLookAngle().x() / 2, motion.y() + currentAccel, player.getLookAngle().z() / 2);
-                } else {
-                    player.setDeltaMovement(player.getLookAngle().x() * 2, motion.y() + currentAccel, player.getLookAngle().z() * 2);
-                }
+        Vec3 motion = player.getDeltaMovement();
+        double currentAccel = this.getMark().getVerticalFlightSpeed() * (motion.y() < 0.3D ? 2.5D : 1.0D);
+        double horizAccel = this.getMark().getHorizontalFlightSpeed(player.isSprinting());
+        boolean spaceHeld = keyDown(GLFW.GLFW_KEY_SPACE);
+
+        if (keyDown(GLFW.GLFW_KEY_W)) {
+            forwardFlight(player,motion,horizAccel,currentAccel,spaceHeld);
+        } else if (keyDown(GLFW.GLFW_KEY_SPACE)) {
+            verticalFlight(player,motion,currentAccel);
+        }
+    }
+
+    private void verticalFlight(Player player, Vec3 motion, double vertAccel) {
+        player.setDeltaMovement(motion.add(0, vertAccel,0));
+    }
+
+    private void forwardFlight(Player player, Vec3 motion,double horizAccel, double vertAccel, boolean spaceHeld) {
+        Vec3 movement = new Vec3(player.getLookAngle().x(), motion.y(),player.getLookAngle().z());
+
+        if (spaceHeld) {
+            if (!player.isSprinting()) {
+                movement = new Vec3(movement.x() / horizAccel, movement.y() + vertAccel, movement.z() / horizAccel);
             } else {
-                player.setDeltaMovement(motion.x(),motion.y() + currentAccel,motion.z());
+                movement = new Vec3(movement.x() * horizAccel, movement.y() + vertAccel, movement.z() * horizAccel);
             }
         } else if (!player.isOnGround()) {
-            Vec3 motion = player.getDeltaMovement();
-            if(InputConstants.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), GLFW.GLFW_KEY_W)) {
-                if (!player.isSprinting()) {
-                    player.setDeltaMovement(player.getLookAngle().x() / 2, motion.y(), player.getLookAngle().z() / 2);
-                } else {
-                    player.setDeltaMovement(player.getLookAngle().x() * 2, motion.y(), player.getLookAngle().z() * 2);
-                }
+            if (!player.isSprinting()) {
+                movement = new Vec3(movement.x() / horizAccel, movement.y(), movement.z() / horizAccel);
+            } else {
+                movement = new Vec3(movement.x() * horizAccel, movement.y(), movement.z() * horizAccel);
             }
         }
+
+        if (!player.isOnGround()) {
+            player.setDeltaMovement(movement);
+        }
+    }
+
+    // @TODO this shit dont farting work, fuck this im making it so you cdan only move with W >:(
+    private void leftFlight(Player player, Vec3 motion, double vertAccel, boolean spaceHeld) {
+        Vec3 movement = new Vec3(0, 0,vertAccel);
+
+        if (spaceHeld) {
+            if (!player.isSprinting()) {
+                movement = new Vec3(movement.x() / 2, movement.y() + vertAccel, movement.z() / 2);
+            } else {
+                movement = new Vec3(movement.x() * 2, movement.y() + vertAccel, movement.z() * 2);
+            }
+        } else if (!player.isOnGround()) {
+            if (!player.isSprinting()) {
+                movement = new Vec3(movement.x() / 2, movement.y(), movement.z() / 2);
+            } else {
+                movement = new Vec3(movement.x() * 2, movement.y(), movement.z() * 2);
+            }
+        }
+
+        if (!player.isOnGround()) {
+            player.moveRelative(1f,movement);
+        }
+    }
+
+    private static boolean keyDown(int key) {
+        return InputConstants.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), key);
     }
 }

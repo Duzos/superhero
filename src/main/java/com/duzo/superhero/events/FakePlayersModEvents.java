@@ -26,6 +26,6 @@ public class FakePlayersModEvents {
 
     @SubscribeEvent
     public static void entityAttributes(EntityAttributeCreationEvent event) {
-        event.put(SuperheroEntities.IRON_MAN_ENTITY.get(), HumanoidEntity.getHumanoidAttributes().build());
+        event.put(SuperheroEntities.IRON_MAN_ENTITY.get(), IronManEntity.getIronManAttributes().build());
     }
 }

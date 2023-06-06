@@ -1,12 +1,13 @@
 package com.duzo.superhero.items;
 
 import com.duzo.superhero.entities.IronManEntity;
+import com.duzo.superhero.util.IronManMark;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.Item;
 
 public class IronManArmourItemBuilder extends IronManArmourItem {
-    private String mark;
-    public IronManArmourItemBuilder(ArmorMaterial material, Type type, Properties properties, String mark) {
+    private IronManMark mark;
+    public IronManArmourItemBuilder(ArmorMaterial material, Type type, Properties properties, IronManMark mark) {
         super(material, type, properties);
         this.mark = mark;
     }
@@ -15,13 +16,13 @@ public class IronManArmourItemBuilder extends IronManArmourItem {
         this.mark = IronManEntity.DEFAULT_MARK;
     }
 
-    public IronManArmourItemBuilder mark(String mark) {
+    public IronManArmourItemBuilder mark(IronManMark mark) {
         this.mark = mark;
         return this;
     }
 
     @Override
-    public String getMark() {
+    public IronManMark getMark() {
         return this.mark;
     }
 }

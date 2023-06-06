@@ -3,6 +3,8 @@ package com.duzo.superhero.entities;
 import com.duzo.superhero.Superhero;
 import com.duzo.superhero.items.IronManArmourItem;
 import com.duzo.superhero.sounds.SuperheroSounds;
+import com.duzo.superhero.util.IronManCapability;
+import com.duzo.superhero.util.IronManMark;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -18,22 +20,35 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageSources;
 import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.damagesource.DamageTypes;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.control.FlyingMoveControl;
+import net.minecraft.world.entity.ai.control.MoveControl;
+import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
+import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
+import net.minecraft.world.entity.animal.FlyingAnimal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.pathfinder.Path;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.UUID;
 
 public class IronManEntity extends HumanoidEntity {
     private static final EntityDataAccessor<String> MARK = SynchedEntityData.defineId(IronManEntity.class, EntityDataSerializers.STRING);
-    public static final String DEFAULT_MARK = "mark_7";
+    public static final IronManMark DEFAULT_MARK = IronManMark.MARK_7;
+    private Player owner;
 
     public IronManEntity(EntityType<? extends HumanoidEntity> entityType, Level level) {
         super(entityType, level);
         this.setInvulnerable(true);
         this.setCustomName(Component.translatable("Iron Man " + fileNameToUsable(this.getMark())));
         this.refreshSkin();
+        this.moveControl = new FlyingMoveControl(this, 20, false);
+        this.navigation = new FlyingPathNavigation(this, this.level);
+        this.navigation.setCanFloat(false);
     }
 
     public IronManEntity(EntityType<? extends HumanoidEntity> entityType, Level level, String customName, ResourceLocation skin) {
@@ -41,6 +56,9 @@ public class IronManEntity extends HumanoidEntity {
         this.setInvulnerable(true);
         this.setCustomName(Component.translatable("Iron Man " + fileNameToUsable(this.getMark())));
         this.refreshSkin();
+        this.moveControl = new FlyingMoveControl(this, 20, false);
+        this.navigation = new FlyingPathNavigation(this, this.level);
+        this.navigation.setCanFloat(false);
     }
 
     public IronManEntity(EntityType<? extends HumanoidEntity> entityType, Level level, String customName) {
@@ -48,6 +66,9 @@ public class IronManEntity extends HumanoidEntity {
         this.setInvulnerable(true);
         this.setCustomName(Component.translatable("Iron Man " + fileNameToUsable(this.getMark())));
         this.refreshSkin();
+        this.moveControl = new FlyingMoveControl(this, 20, false);
+        this.navigation = new FlyingPathNavigation(this, this.level);
+        this.navigation.setCanFloat(false);
     }
 
     public IronManEntity(EntityType<? extends HumanoidEntity> entityType, Level level, ResourceLocation skin) {
@@ -55,6 +76,9 @@ public class IronManEntity extends HumanoidEntity {
         this.setInvulnerable(true);
         this.setCustomName(Component.translatable("Iron Man " + fileNameToUsable(this.getMark())));
         this.refreshSkin();
+        this.moveControl = new FlyingMoveControl(this, 20, false);
+        this.navigation = new FlyingPathNavigation(this, this.level);
+        this.navigation.setCanFloat(false);
     }
 
     @Override
@@ -68,8 +92,17 @@ public class IronManEntity extends HumanoidEntity {
     }
 
     @Override
+    public boolean isPersistenceRequired() {
+        return true;
+    }
+
+    @Override
     protected void registerGoals() {
         // no goals because no AI
+    }
+
+    public void setOwner(Player player) {
+        this.owner = player;
     }
 
     public ResourceLocation getSkin() {
@@ -79,18 +112,21 @@ public class IronManEntity extends HumanoidEntity {
         this.skin = new ResourceLocation(Superhero.MODID, "textures/entities/iron_man/" + this.getMark() + ".png");
     }
 
-    public void setMark(String mark) {
-        this.entityData.set(MARK,mark);
+    public void setMark(IronManMark mark) {
+        this.entityData.set(MARK,mark.getSerializedName());
         this.skin = new ResourceLocation(Superhero.MODID, "textures/entities/iron_man/" + this.getMark() + ".png");
         this.setCustomName(Component.translatable("Iron Man " + fileNameToUsable(this.getMark())));
     }
     public String getMark() {
         return this.entityData.get(MARK);
     }
+    public IronManMark getMarkEnum() {
+        return IronManMark.valueOf(this.getMark().toUpperCase());
+    }
     @Override
     public void readAdditionalSaveData(CompoundTag nbt) {
         super.readAdditionalSaveData(nbt);
-        this.setMark(nbt.getString("mark"));
+        this.setMark(IronManMark.valueOf(nbt.getString("mark").toUpperCase()));
     }
 
     @Override
@@ -102,7 +138,7 @@ public class IronManEntity extends HumanoidEntity {
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
-        this.entityData.define(MARK, DEFAULT_MARK);
+        this.entityData.define(MARK, DEFAULT_MARK.getSerializedName());
     }
 
     // @TODO iron man entity despawns
@@ -143,13 +179,13 @@ public class IronManEntity extends HumanoidEntity {
 
 
     public static boolean isValidArmorButCooler(LivingEntity player) {
-        String currentMark = "";
+        IronManMark currentMark = null;
 
         for (EquipmentSlot equipmentSlot : EquipmentSlot.values()) {
             if (!equipmentSlot.isArmor()) continue;
             ItemStack currentSlot = player.getItemBySlot(equipmentSlot);
             if (currentSlot.getItem() instanceof IronManArmourItem item) {
-                if (currentMark.isEmpty()) {
+                if (currentMark == null) {
                     currentMark = item.getMark();
                 } else if (!currentMark.equals(item.getMark())) {
                     return false;
@@ -202,13 +238,31 @@ public class IronManEntity extends HumanoidEntity {
         return true;
     }
 
-    public static void spawnNew(String mark,Level level, BlockPos pos, Player player) {
+    public static void spawnNew(IronManMark mark,Level level, BlockPos pos, Player player) {
         IronManEntity ironMan = new IronManEntity(SuperheroEntities.IRON_MAN_ENTITY.get(), level);
         ironMan.setMark(mark);
         ironMan.takeArmourOffPlayer(player);
         ironMan.setPos(pos.above().getCenter());
         ironMan.setYRot(player.getYRot());
+        ironMan.setOwner(player);
         level.addFreshEntity(ironMan);
         ironMan.refreshSkin();
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+
+        // Code to move towards player, may be useful for calling the iron man suit to the player.
+        if (!this.level.isClientSide) {
+            if (!(this.isNoAi()) && this.owner != null && !(this.getTarget() == this.owner) && this.getMarkEnum().getCapabilities().has(IronManCapability.BRACELET_LOCATING)) {
+                this.setSpeed(1);
+                this.getNavigation().moveTo(this.owner,1d);
+            }
+        }
+    }
+
+    public static AttributeSupplier.Builder getIronManAttributes() {
+        return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 25.0D).add(Attributes.MOVEMENT_SPEED, 0.2D).add(Attributes.ATTACK_DAMAGE, 1D).add(Attributes.FLYING_SPEED, 3D);
     }
 }

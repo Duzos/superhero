@@ -2,6 +2,7 @@ package com.duzo.superhero.blocks;
 
 import com.duzo.superhero.items.SuperheroItems;
 import com.duzo.superhero.sounds.SuperheroSounds;
+import com.duzo.superhero.util.IronManMark;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundSource;
@@ -33,6 +34,8 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.duzo.superhero.util.IronManMark.MARK_5;
+
 public class IronManSuitCaseBlock extends Block {
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
     public IronManSuitCaseBlock(Properties properties) {
@@ -61,10 +64,7 @@ public class IronManSuitCaseBlock extends Block {
         return RenderShape.MODEL;
     }
 
-    public static boolean equipArmourForMark(int mark, Player player) {
-        return equipArmourForMark("mark_" + mark, player);
-    }
-    public static boolean equipArmourForMark(String mark, Player player) {
+    public static boolean equipArmourForMark(IronManMark mark, Player player) {
         for (EquipmentSlot slot : EquipmentSlot.values()) {
             if (!slot.isArmor()) continue;
 
@@ -73,7 +73,7 @@ public class IronManSuitCaseBlock extends Block {
 
         List<ArmorItem> armour = new ArrayList<>();
         for (RegistryObject<Item> item : SuperheroItems.ITEMS.getEntries()) {
-            if (item.getId().toString().contains(mark)) {
+            if (item.getId().toString().contains(mark.getSerializedName())) {
                 armour.add((ArmorItem) item.get());
             }
         }
@@ -98,7 +98,7 @@ public class IronManSuitCaseBlock extends Block {
     @Override
     public InteractionResult use(BlockState p_60503_, Level level, BlockPos p_60505_, Player player, InteractionHand hand, BlockHitResult p_60508_) {
         if (!level.isClientSide && hand == InteractionHand.MAIN_HAND) {
-            if (equipArmourForMark(5,player)) {
+            if (equipArmourForMark(MARK_5,player)) {
                 level.removeBlock(p_60505_,false);
                 level.playSound(null,player, SuperheroSounds.IRONMAN_POWERUP.get(), SoundSource.PLAYERS,1f,1f);
             }
