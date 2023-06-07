@@ -38,6 +38,15 @@ public class JarvisGUIOverlay {
             String j = mc.player.getDirection().name();
             int dirWdth = mc.font.width(j);
             mc.font.draw(poseStack,j,x - dirWdth / 2,y / 6,0x59d7e3);
+
+            var deltaX = mc.player.getX() - mc.player.xOld;
+            var deltaY = mc.player.getY() - mc.player.yOld;
+            var deltaZ = mc.player.getZ() - mc.player.zOld;
+            var speed = Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2) + Math.pow(deltaZ, 2));
+
+            String l = "" + Math.round(speed * 20) + " b/s";
+            int spdWdth = mc.font.width(l);
+            mc.font.draw(poseStack,l,(x - spdWdth / 2f) * 1.35f,y / 1.12f,0x59d7e3);
         }
     }));
 }
