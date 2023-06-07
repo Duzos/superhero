@@ -12,18 +12,14 @@ public class IronManCapabilities {
         this.capabilities.add(capability);
         return this;
     }
+    public IronManCapabilities add(IronManCapability... capabilities) {
+        for (IronManCapability capability : capabilities) {
+            this.add(capability);
+        }
+        return this;
+    }
     public boolean has(IronManCapability capability) {
         return this.capabilities.contains(capability);
     }
 
-//    public static class Serializer {
-//        public void serialize(CompoundTag tag, IronManCapabilities cap) {
-//            ListTag capTags = new ListTag();
-//            cap.capabilities.forEach((capability -> capTags.add(capability.serialize())));
-//
-//            tag.put("capabilities",capTags);
-//        }
-//
-//        public IronManCapabilities deserialize
-//    }
 }

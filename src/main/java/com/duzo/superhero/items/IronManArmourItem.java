@@ -9,6 +9,7 @@ import com.duzo.superhero.sounds.ThrustersSoundInstance;
 import com.duzo.superhero.util.IronManCapability;
 import com.duzo.superhero.util.IronManMark;
 import com.mojang.blaze3d.platform.InputConstants;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.multiplayer.PlayerInfo;
@@ -17,6 +18,7 @@ import net.minecraft.client.player.Input;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.resources.sounds.Sound;
 import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -33,14 +35,27 @@ import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
+import org.jetbrains.annotations.Nullable;
 import org.lwjgl.glfw.GLFW;
 
+import java.util.List;
 import java.util.function.Consumer;
+
+import static com.duzo.superhero.entities.IronManEntity.fileNameToUsable;
 
 public abstract class IronManArmourItem extends ArmorItem {
     private ThrustersSoundInstance sound;
     public IronManArmourItem(ArmorMaterial material, Type type, Properties properties) {
         super(material, type, properties);
+    }
+
+    @Override
+    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> components, TooltipFlag flag) {
+        if (this.getMark() != null) {
+            components.add(Component.translatable(fileNameToUsable(this.getMark().getSerializedName())).withStyle(ChatFormatting.GOLD));
+        }
+
+        super.appendHoverText(stack, level, components, flag);
     }
 
     public abstract IronManMark getMark();

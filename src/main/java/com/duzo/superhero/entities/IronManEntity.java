@@ -164,6 +164,17 @@ public class IronManEntity extends HumanoidEntity {
         return output.toString();
     }
 
+    public static String nameFromSlot(EquipmentSlot slot) {
+        return switch(slot) {
+            case MAINHAND -> "hand";
+            case OFFHAND -> "offhand";
+            case FEET -> "boots";
+            case LEGS -> "leggings";
+            case CHEST -> "chestplate";
+            case HEAD -> "helmet";
+        };
+    }
+
 /*    public static boolean isValidArmourSet(ItemStack head,ItemStack chest,ItemStack legs,ItemStack feet) {
         boolean flag1 = head.getItem() instanceof IronManArmourItem && chest.getItem() instanceof IronManArmourItem && legs.getItem() instanceof IronManArmourItem && feet.getItem() instanceof IronManArmourItem;
 

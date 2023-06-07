@@ -2,6 +2,7 @@ package com.duzo.superhero.data;
 
 import com.duzo.superhero.Superhero;
 import com.duzo.superhero.data.client.ModelProviderItem;
+import com.duzo.superhero.data.client.SuperheroEnglish;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -19,5 +20,6 @@ public class DataGenerationEvent {
 
         generator.addProvider(true, new ModelProviderItem(packOutput,existingFileHelper));
         generator.addProvider(true, new SoundDataGeneration(packOutput,existingFileHelper));
+        generator.addProvider(true, new SuperheroEnglish(packOutput));
     }
 }
