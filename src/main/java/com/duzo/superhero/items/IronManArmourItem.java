@@ -58,6 +58,8 @@ public abstract class IronManArmourItem extends ArmorItem {
         super.appendHoverText(stack, level, components, flag);
     }
 
+
+
     public abstract IronManMark getMark();
     public ResourceLocation getTexture() {
         return new ResourceLocation(Superhero.MODID, "textures/entities/iron_man/" + this.getMark().getSerializedName() + ".png");

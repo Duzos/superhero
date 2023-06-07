@@ -1,5 +1,6 @@
 package com.duzo.superhero.blocks;
 
+import com.duzo.superhero.items.IronManNanotechItem;
 import com.duzo.superhero.items.SuperheroItems;
 import com.duzo.superhero.sounds.SuperheroSounds;
 import com.duzo.superhero.util.IronManMark;
@@ -65,10 +66,22 @@ public class IronManSuitCaseBlock extends Block {
     }
 
     public static boolean equipArmourForMark(IronManMark mark, Player player) {
+        return equipArmourForMark(mark,player,false);
+    }
+
+    public static boolean equipArmourForMark(IronManMark mark, Player player, boolean excludeNanotech) {
         for (EquipmentSlot slot : EquipmentSlot.values()) {
             if (!slot.isArmor()) continue;
 
-            if (!player.getItemBySlot(slot).isEmpty()) return false;
+            if (!player.getItemBySlot(slot).isEmpty()) {
+                if (excludeNanotech && slot == EquipmentSlot.CHEST) {
+                    if (player.getItemBySlot(slot).getItem() instanceof IronManNanotechItem) {
+                        continue;
+                    }
+                } else {
+                    return false;
+                }
+            }
         }
 
         List<ArmorItem> armour = new ArrayList<>();

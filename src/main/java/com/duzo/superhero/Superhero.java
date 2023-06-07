@@ -81,11 +81,11 @@ public class Superhero {
                 builder.title(Component.translatable("item_group." + MODID + ".superhero"))
                         .icon(() -> new ItemStack(Items.IRON_INGOT))
                         .displayItems(((parms, output) -> {
-                            for (RegistryObject<Item> item : SuperheroItems.ITEMS.getEntries()) {
-                                output.accept(item.get());
-                            }
                             for (RegistryObject<Block> block : SuperheroBlocks.BLOCKS.getEntries()) {
                                 output.accept(block.get().asItem());
+                            }
+                            for (RegistryObject<Item> item : SuperheroItems.ITEMS.getEntries()) {
+                                output.accept(item.get());
                             }
         })));
     }

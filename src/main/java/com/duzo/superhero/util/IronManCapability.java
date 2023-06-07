@@ -8,7 +8,8 @@ public enum IronManCapability implements StringRepresentable {
     SEAMLESS,
     BRACELET_LOCATING,
     ICES_OVER,
-    JARVIS,;
+    JARVIS,
+    NANOTECH;
 
     @Override
     public String getSerializedName() {

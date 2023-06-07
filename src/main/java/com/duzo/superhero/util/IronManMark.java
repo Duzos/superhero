@@ -48,7 +48,7 @@ public enum IronManMark implements StringRepresentable {
     MARK_9() {
         @Override
         public IronManCapabilities getCapabilities() {
-            return new IronManCapabilities().add(IronManCapability.SEAMLESS,IronManCapability.JARVIS);
+            return new IronManCapabilities().add(IronManCapability.NANOTECH,IronManCapability.JARVIS);
         }
 
 

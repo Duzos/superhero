@@ -1,4 +1,4 @@
-// 1.19.4	2023-06-07T16:48:00.4583827	Item Models: superhero
+// 1.19.4	2023-06-07T18:43:07.5408904	Item Models: superhero
 89d4c26218c760397a1d91463cdae73612a89932 assets/superhero/models/item/ironman_suitcase.json
 10fe10c3d1ad890b13d886df2187cd23166f4cb6 assets/superhero/models/item/mark_14_boots.json
 50fdbf003991622dcdfb48a6b06b7410fb2090e2 assets/superhero/models/item/mark_14_chestplate.json
@@ -28,3 +28,4 @@ aa60a0348386e864bd9a5ef071d761ca6dc6e5ac assets/superhero/models/item/mark_9_boo
 cad0dbd5bba02f7174df5b2f1d1e891d4380bcfa assets/superhero/models/item/mark_9_chestplate.json
 740d31cc4443c455ae73bcd5981b5a318ae830d1 assets/superhero/models/item/mark_9_helmet.json
 ef8eece909458a88633f31cdfd27873ea78f5434 assets/superhero/models/item/mark_9_leggings.json
+26bfbcd57f27e27d892bfb0096986c1c7f6cb9a9 assets/superhero/models/item/nanotech.json
