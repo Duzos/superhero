@@ -18,11 +18,8 @@ public class ClientPlayerMixin {
     @Inject(at = @At("HEAD"),method = "Lnet/minecraft/client/player/AbstractClientPlayer;getSkinTextureLocation()Lnet/minecraft/resources/ResourceLocation;", cancellable = true)
     private void setSkin(CallbackInfoReturnable<ResourceLocation> cir) {
         AbstractClientPlayer player = (AbstractClientPlayer) (Object) this;
-        if (IronManEntity.isValidArmorButCooler(player)) {
-            ItemStack head = player.getItemBySlot(EquipmentSlot.HEAD);
-            if(head.getItem() instanceof IronManArmourItem item){
-                cir.setReturnValue(item.getTexture());
-            }
+        if (player.getItemBySlot(EquipmentSlot.CHEST).getItem() instanceof IronManArmourItem chest) {
+            cir.setReturnValue(chest.getTexture());
         }
     }
 }

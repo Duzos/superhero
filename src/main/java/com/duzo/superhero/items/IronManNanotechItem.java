@@ -8,10 +8,12 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import net.minecraftforge.event.level.NoteBlockEvent;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 import static com.duzo.superhero.blocks.IronManSuitCaseBlock.equipArmourForMark;
 import static com.duzo.superhero.entities.IronManEntity.fileNameToUsable;
@@ -20,6 +22,11 @@ public class IronManNanotechItem extends ArmorItem {
     private IronManMark mark;
     public IronManNanotechItem(ArmorMaterial material, Type type, Item.Properties properties) {
         super(material, type, properties);
+    }
+
+    @Override
+    public void initializeClient(Consumer<IClientItemExtensions> consumer) {
+        super.initializeClient(consumer);
     }
 
     @Override

@@ -22,14 +22,14 @@ public class PlayerRendererMixin {
 //    private void addLayers(EntityRendererProvider.Context context, boolean slim, CallbackInfo ci) {
 //
 //    }
-    @Inject(at = @At("HEAD"),method = "getTextureLocation(Lnet/minecraft/client/player/AbstractClientPlayer;)Lnet/minecraft/resources/ResourceLocation;", cancellable = true)
-    private void setSkin(AbstractClientPlayer player, CallbackInfoReturnable<ResourceLocation> cir) {
-
-        if (IronManEntity.isValidArmorButCooler(player)) {
-            ItemStack head = player.getItemBySlot(EquipmentSlot.HEAD);
-            if(head.getItem() instanceof IronManArmourItem item){
-                cir.setReturnValue(item.getTexture());
-            }
-        }
-    }
+//    @Inject(at = @At("HEAD"),method = "getTextureLocation(Lnet/minecraft/client/player/AbstractClientPlayer;)Lnet/minecraft/resources/ResourceLocation;", cancellable = true)
+//    private void setSkin(AbstractClientPlayer player, CallbackInfoReturnable<ResourceLocation> cir) {
+//
+//        if (IronManEntity.isValidArmorButCooler(player)) {
+//            ItemStack head = player.getItemBySlot(EquipmentSlot.HEAD);
+//            if(head.getItem() instanceof IronManArmourItem item){
+//                cir.setReturnValue(item.getTexture());
+//            }
+//        }
+//    }
 }
