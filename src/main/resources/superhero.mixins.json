@@ -9,7 +9,8 @@
   ],
   "client": [
     "ClientPlayerMixin",
-    "PlayerRendererMixin"
+    "PlayerRendererMixin",
+    "HumanoidModelMixin"
   ],
   "injectors": {
     "defaultRequire": 1
