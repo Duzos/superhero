@@ -28,6 +28,8 @@ public class JarvisGUIOverlay {
 
         if (mc.player == null) return;
 
+        if (!mc.options.getCameraType().isFirstPerson()) return;
+
         if (mc.player.getItemBySlot(EquipmentSlot.HEAD).getItem() instanceof IronManArmourItem) {
             GuiComponent.blit(poseStack, x - imageHeight / 2, y - imageWidth, 0, 0, imageHeight, imageWidth, imageHeight, imageWidth);
 

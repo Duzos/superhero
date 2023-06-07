@@ -19,23 +19,23 @@ import net.minecraft.world.entity.LivingEntity;
 public class IronManArmourModel<T extends LivingEntity> extends HumanoidModel<T> {
 	// This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
 	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(Superhero.MODID, "iron_man_armour"), "main");
-	private final ModelPart head;
+	public final ModelPart head;
 	public final ModelPart hat;
-	private final ModelPart body;
-	private final ModelPart right_arm;
-	private final ModelPart left_arm;
-	private final ModelPart right_leg;
-	private final ModelPart left_leg;
+	public final ModelPart body;
+	public final ModelPart rightArm;
+	public final ModelPart leftArm;
+	public final ModelPart rightLeg;
+	public final ModelPart leftLeg;
 
 	public IronManArmourModel(ModelPart root) {
 		super(root);
 		this.hat = root.getChild("hat");
 		this.head = root.getChild("head");
 		this.body = root.getChild("body");
-		this.right_arm = root.getChild("right_arm");
-		this.left_arm = root.getChild("left_arm");
-		this.right_leg = root.getChild("right_leg");
-		this.left_leg = root.getChild("left_leg");
+		this.rightArm = root.getChild("right_arm");
+		this.leftArm = root.getChild("left_arm");
+		this.rightLeg = root.getChild("right_leg");
+		this.leftLeg = root.getChild("left_leg");
 	}
 
 	public static LayerDefinition createBodyLayer() {
@@ -67,16 +67,16 @@ public class IronManArmourModel<T extends LivingEntity> extends HumanoidModel<T>
 
 	@Override
 	public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netheadYaw, float headPitch) {
-
+		super.setupAnim(entity,limbSwing,limbSwingAmount,ageInTicks,netheadYaw,headPitch);
 	}
 
 	@Override
 	public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
 		head.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
 		body.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-		right_arm.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-		left_arm.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-		right_leg.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-		left_leg.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+		rightArm.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+		leftArm.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+		rightLeg.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+		leftLeg.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
 	}
 }
