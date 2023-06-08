@@ -39,9 +39,26 @@ import static com.duzo.superhero.util.IronManMark.MARK_5;
 
 public class IronManSuitCaseBlock extends Block {
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
+
+    // Shapes for each direction so the hitbox is the right size
+    public static final VoxelShape NORTH_AABB = Block.box(2, 0, 5, 14, 3, 13); // I don't think AABB is the right name for these, but thats how that idiot Loqor does it.
+    public static final VoxelShape EAST_AABB = Block.box(3, 0, 2, 11, 3, 14);
+    public static final VoxelShape SOUTH_AABB = Block.box(2, 0, 3, 14, 3, 11);
+    public static final VoxelShape WEST_AABB = Block.box(5, 0, 2, 13, 3, 14);
     public IronManSuitCaseBlock(Properties properties) {
         super(properties);
         this.registerDefaultState(this.getStateDefinition().any().setValue(FACING, Direction.NORTH));
+    }
+
+    @Override
+    public @NotNull VoxelShape getShape(BlockState state, BlockGetter p_60556_, BlockPos p_60557_, CollisionContext p_60558_) {
+        return switch (state.getValue(FACING)) {
+            case NORTH -> NORTH_AABB;
+            case SOUTH -> SOUTH_AABB;
+            case EAST -> EAST_AABB;
+            case WEST -> WEST_AABB;
+            default -> throw new RuntimeException("Invalid facing direction in getShape() for RadioBlock");
+        };
     }
 
     public BlockState getStateForPlacement(BlockPlaceContext context) {
