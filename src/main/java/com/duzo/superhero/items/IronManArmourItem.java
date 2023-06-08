@@ -28,11 +28,10 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.DragonFireball;
+import net.minecraft.world.entity.projectile.Fireball;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
@@ -123,6 +122,7 @@ public abstract class IronManArmourItem extends ArmorItem {
 
             if (IronManEntity.isValidArmorButCooler(player)) {
                 this.runFlight(player);
+                this.weaponsEnabled(player);
             }
 
             if (this.getEquipmentSlot() == EquipmentSlot.HEAD && player.getItemBySlot(EquipmentSlot.HEAD).getItem() instanceof IronManArmourItem) {
@@ -160,6 +160,16 @@ public abstract class IronManArmourItem extends ArmorItem {
             forwardFlight(player,motion,horizAccel,currentAccel,spaceHeld);
         } else if (keyDown(GLFW.GLFW_KEY_SPACE)) {
             verticalFlight(player,motion,currentAccel);
+        }
+    }
+
+    private void weaponsEnabled(Player player) {
+        Vec3 motion = new Vec3(1d, 0d, 0d);
+        Vec3 movement = new Vec3(motion.x(), player.getLookAngle().y(), player.getLookAngle().z());
+        if (keyDown(GLFW.GLFW_KEY_B)) {
+            Fireball fireball = EntityType.FIREBALL.create(player.level);
+            fireball.setPos(new Vec3(player.getX(), player.getY(), player.getZ()));
+            player.level.addFreshEntity(fireball);
         }
     }
 
@@ -212,7 +222,7 @@ public abstract class IronManArmourItem extends ArmorItem {
         }
     }
 
-    private static boolean keyDown(int key) {
+    public static boolean keyDown(int key) {
         return InputConstants.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), key);
     }
 }

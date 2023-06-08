@@ -3,6 +3,7 @@ package com.duzo.superhero;
 import com.duzo.superhero.blocks.SuperheroBlocks;
 import com.duzo.superhero.data.client.ModelProviderItem;
 import com.duzo.superhero.entities.SuperheroEntities;
+import com.duzo.superhero.events.FlyingEventHandler;
 import com.duzo.superhero.items.IronManArmourItem;
 import com.duzo.superhero.items.SuperheroItems;
 import com.duzo.superhero.network.Network;
@@ -51,6 +52,7 @@ public class Superhero {
         SuperheroItems.ITEMS.register(modEventBus);
         SuperheroBlocks.BLOCKS.register(modEventBus);
         SuperheroSounds.SOUNDS.register(modEventBus);
+        MinecraftForge.EVENT_BUS.register(new FlyingEventHandler());
 
         MinecraftForge.EVENT_BUS.register(this);
 
