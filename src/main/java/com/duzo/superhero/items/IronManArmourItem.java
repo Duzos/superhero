@@ -101,7 +101,7 @@ public abstract class IronManArmourItem extends ArmorItem {
 
                 ForgeHooksClient.copyModelProperties(original,model);
 
-                model.setAllVisible(false);
+                //model.setAllVisible(false);
 
                 return model;
             }
