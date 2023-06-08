@@ -34,6 +34,7 @@ public class SuperheroEnglish extends LanguageProvider {
 
         // Items
         add(SuperheroItems.NANOTECH.get(),"Nanotech");
+        add(SuperheroItems.EDITH_GLASSES.get(),"EDITH Glasses");
 
         // Blocks
         add(SuperheroBlocks.IRONMAN_SUITCASE.get(), "Iron Man Suitcase");

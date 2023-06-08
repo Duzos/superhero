@@ -3,6 +3,7 @@ package com.duzo.superhero.client.gui;
 import com.duzo.superhero.Superhero;
 import com.duzo.superhero.client.models.items.IronManArmourModel;
 import com.duzo.superhero.items.IronManArmourItem;
+import com.duzo.superhero.items.IronManEdithGlasses;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiComponent;
@@ -30,7 +31,7 @@ public class JarvisGUIOverlay {
 
         if (!mc.options.getCameraType().isFirstPerson()) return;
 
-        if (mc.player.getItemBySlot(EquipmentSlot.HEAD).getItem() instanceof IronManArmourItem) {
+        if (mc.player.getItemBySlot(EquipmentSlot.HEAD).getItem() instanceof IronManArmourItem || mc.player.getItemBySlot(EquipmentSlot.HEAD).getItem() instanceof IronManEdithGlasses) {
             GuiComponent.blit(poseStack, x - imageHeight / 2, y - imageWidth, 0, 0, imageHeight, imageWidth, imageHeight, imageWidth);
 
             String i = Math.round(mc.player.getX()) + ", " + Math.round(mc.player.getY()) + ", " + Math.round(mc.player.getZ());

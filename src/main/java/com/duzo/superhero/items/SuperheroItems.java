@@ -9,11 +9,14 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
+import static com.duzo.superhero.items.SuperheroArmourMaterials.IRON_MAN;
+
 public class SuperheroItems {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Superhero.MODID);
 
     public static final RegistryObject<IronManNanotechItem> NANOTECH = ITEMS.register("nanotech",
-            () -> new IronManNanotechItem(SuperheroArmourMaterials.IRON_MAN, ArmorItem.Type.CHESTPLATE,new Item.Properties().stacksTo(1)));
+            () -> new IronManNanotechItem(IRON_MAN, ArmorItem.Type.CHESTPLATE,new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<IronManEdithGlasses> EDITH_GLASSES = ITEMS.register("edith_glasses", () -> new IronManEdithGlasses(IRON_MAN,ArmorItem.Type.HELMET,new Item.Properties().stacksTo(1)));
 
 
 
@@ -29,12 +32,12 @@ public class SuperheroItems {
         String name = mark.getSerializedName();
 
         ITEMS.register(name + "_helmet",
-                () -> new IronManArmourItemBuilder(SuperheroArmourMaterials.IRON_MAN, ArmorItem.Type.HELMET,new Item.Properties().stacksTo(1)).mark(mark));
+                () -> new IronManArmourItemBuilder(IRON_MAN, ArmorItem.Type.HELMET,new Item.Properties().stacksTo(1)).mark(mark));
         ITEMS.register(name + "_chestplate",
-                () -> new IronManArmourItemBuilder(SuperheroArmourMaterials.IRON_MAN, ArmorItem.Type.CHESTPLATE,new Item.Properties().stacksTo(1)).mark(mark));
+                () -> new IronManArmourItemBuilder(IRON_MAN, ArmorItem.Type.CHESTPLATE,new Item.Properties().stacksTo(1)).mark(mark));
         ITEMS.register(name + "_leggings",
-                () -> new IronManArmourItemBuilder(SuperheroArmourMaterials.IRON_MAN, ArmorItem.Type.LEGGINGS,new Item.Properties().stacksTo(1)).mark(mark));
+                () -> new IronManArmourItemBuilder(IRON_MAN, ArmorItem.Type.LEGGINGS,new Item.Properties().stacksTo(1)).mark(mark));
         ITEMS.register(name + "_boots",
-                () -> new IronManArmourItemBuilder(SuperheroArmourMaterials.IRON_MAN, ArmorItem.Type.BOOTS,new Item.Properties().stacksTo(1)).mark(mark));
+                () -> new IronManArmourItemBuilder(IRON_MAN, ArmorItem.Type.BOOTS,new Item.Properties().stacksTo(1)).mark(mark));
     }
 }
