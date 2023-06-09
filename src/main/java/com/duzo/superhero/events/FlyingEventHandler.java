@@ -1,39 +1,15 @@
 package com.duzo.superhero.events;
 
-import com.duzo.superhero.Superhero;
-import com.duzo.superhero.items.IronManArmourItem;
+import com.duzo.superhero.items.ironman.IronManArmourItem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.player.AbstractClientPlayer;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.core.Direction;
-import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.Rotation;
-import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RenderPlayerEvent;
-import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import org.joml.Quaternionf;
-import org.joml.Vector3f;
-import org.lwjgl.glfw.GLFW;
-import org.lwjgl.opengl.GL;
-import org.lwjgl.opengl.GL11;
-
-import java.nio.ByteBuffer;
-
-import static com.duzo.superhero.entities.IronManEntity.isValidArmorButCooler;
-import static com.duzo.superhero.items.IronManArmourItem.keyDown;
 
 @Mod.EventBusSubscriber
 public class FlyingEventHandler {
@@ -46,7 +22,13 @@ public class FlyingEventHandler {
             AbstractClientPlayer playerEntity = (AbstractClientPlayer) event.getEntity();
             PlayerModel playerModel = event.getRenderer().getModel();
 
-            if (!playerEntity.isOnGround() && isValidArmorButCooler(playerEntity) && playerEntity.isSprinting() && !playerEntity.isSwimming()) {
+            ItemStack chest = playerEntity.getItemBySlot(EquipmentSlot.CHEST);
+
+            if (!(chest.getItem() instanceof IronManArmourItem hero)) return;
+            if (!hero.isValidArmor(playerEntity)) return;
+
+
+            if (!playerEntity.isOnGround() && hero.isValidArmor(playerEntity) && playerEntity.isSprinting() && !playerEntity.isSwimming()) {
                 PoseStack pose = event.getPoseStack();
                 pose.pushPose();
                 float lax = 0;

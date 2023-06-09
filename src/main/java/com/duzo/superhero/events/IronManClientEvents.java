@@ -7,18 +7,13 @@ import com.duzo.superhero.client.models.entities.IronManEntityModel;
 import com.duzo.superhero.client.models.items.IronManArmourModel;
 import com.duzo.superhero.client.renderers.IronManEntityRenderer;
 import com.duzo.superhero.entities.SuperheroEntities;
-import com.duzo.superhero.items.IronManArmourItem;
 import com.duzo.superhero.network.Network;
+import com.duzo.superhero.network.packets.AbilityC2SPacket;
 import com.duzo.superhero.network.packets.TakeOffIronManSuitC2SPacket;
 import com.duzo.superhero.util.KeyBinds;
-import com.mojang.blaze3d.vertex.PoseStack;
-import cpw.mods.jarhandling.impl.Jar;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.*;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -44,8 +39,14 @@ public class IronManClientEvents {
 
         @SubscribeEvent
         public static void onKeyInput(InputEvent.Key event) {
-            if (KeyBinds.TAKE_OFF_IRON_MAN_SUIT.consumeClick()) {
-                Network.sendToServer(new TakeOffIronManSuitC2SPacket());
+            if (KeyBinds.ABILITY_ONE.consumeClick()) {
+                Network.sendToServer(new AbilityC2SPacket(1));
+            }
+            if (KeyBinds.ABILITY_TWO.consumeClick()) {
+                Network.sendToServer(new AbilityC2SPacket(2));
+            }
+            if (KeyBinds.ABILITY_THREE.consumeClick()) {
+                Network.sendToServer(new AbilityC2SPacket(3));
             }
         }
     }
@@ -54,7 +55,7 @@ public class IronManClientEvents {
 
         @SubscribeEvent
         public static void onKeyRegister(RegisterKeyMappingsEvent event) {
-            event.register(KeyBinds.TAKE_OFF_IRON_MAN_SUIT);
+            event.register(KeyBinds.ABILITY_ONE);
         }
         @SubscribeEvent
         public static void renderOverlays(RegisterGuiOverlaysEvent event) {

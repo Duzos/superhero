@@ -1,6 +1,7 @@
 package com.duzo.superhero.network;
 
 import com.duzo.superhero.Superhero;
+import com.duzo.superhero.network.packets.AbilityC2SPacket;
 import com.duzo.superhero.network.packets.TakeOffIronManSuitC2SPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -31,6 +32,11 @@ public class Network {
                 .decoder(TakeOffIronManSuitC2SPacket::new)
                 .encoder(TakeOffIronManSuitC2SPacket::toBytes)
                 .consumerMainThread(TakeOffIronManSuitC2SPacket::handle)
+                .add();
+        net.messageBuilder(AbilityC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(AbilityC2SPacket::decode)
+                .encoder(AbilityC2SPacket::encode)
+                .consumerMainThread(AbilityC2SPacket::handle)
                 .add();
     }
 

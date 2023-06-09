@@ -1,9 +1,11 @@
 package com.duzo.superhero.items;
 
 import com.duzo.superhero.Superhero;
+import com.duzo.superhero.items.ironman.IronManArmourItem;
+import com.duzo.superhero.items.ironman.IronManEdithGlasses;
+import com.duzo.superhero.items.ironman.IronManNanotechItem;
 import com.duzo.superhero.util.IronManMark;
 import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.ArmorMaterials;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -32,12 +34,12 @@ public class SuperheroItems {
         String name = mark.getSerializedName();
 
         ITEMS.register(name + "_helmet",
-                () -> new IronManArmourItemBuilder(IRON_MAN, ArmorItem.Type.HELMET,new Item.Properties().stacksTo(1)).mark(mark));
+                () -> new IronManArmourItem(IRON_MAN, ArmorItem.Type.HELMET,new Item.Properties().stacksTo(1),mark));
         ITEMS.register(name + "_chestplate",
-                () -> new IronManArmourItemBuilder(IRON_MAN, ArmorItem.Type.CHESTPLATE,new Item.Properties().stacksTo(1)).mark(mark));
+                () -> new IronManArmourItem(IRON_MAN, ArmorItem.Type.CHESTPLATE,new Item.Properties().stacksTo(1),mark));
         ITEMS.register(name + "_leggings",
-                () -> new IronManArmourItemBuilder(IRON_MAN, ArmorItem.Type.LEGGINGS,new Item.Properties().stacksTo(1)).mark(mark));
+                () -> new IronManArmourItem(IRON_MAN, ArmorItem.Type.LEGGINGS,new Item.Properties().stacksTo(1),mark));
         ITEMS.register(name + "_boots",
-                () -> new IronManArmourItemBuilder(IRON_MAN, ArmorItem.Type.BOOTS,new Item.Properties().stacksTo(1)).mark(mark));
+                () -> new IronManArmourItem(IRON_MAN, ArmorItem.Type.BOOTS,new Item.Properties().stacksTo(1),mark));
     }
 }

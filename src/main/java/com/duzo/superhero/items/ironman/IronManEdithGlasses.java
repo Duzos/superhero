@@ -1,4 +1,4 @@
-package com.duzo.superhero.items;
+package com.duzo.superhero.items.ironman;
 
 import com.duzo.superhero.client.models.items.IronManArmourModel;
 import net.minecraft.client.Minecraft;

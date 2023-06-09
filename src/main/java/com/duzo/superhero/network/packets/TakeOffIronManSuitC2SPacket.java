@@ -1,32 +1,24 @@
 package com.duzo.superhero.network.packets;
 
-import com.duzo.superhero.blocks.IronManSuitCaseBlock;
-import com.duzo.superhero.blocks.SuperheroBlocks;
-import com.duzo.superhero.entities.IronManEntity;
-import com.duzo.superhero.items.IronManArmourItem;
-import com.duzo.superhero.items.IronManNanotechItem;
-import com.duzo.superhero.items.IronManTestingItem;
+import com.duzo.superhero.items.ironman.IronManArmourItem;
+import com.duzo.superhero.items.ironman.IronManNanotechItem;
 import com.duzo.superhero.sounds.SuperheroSounds;
 import com.duzo.superhero.util.IronManCapabilities;
 import com.duzo.superhero.util.IronManCapability;
-import com.duzo.superhero.util.IronManMark;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.network.NetworkEvent;
 
-import java.util.Objects;
 import java.util.function.Supplier;
 
 import static com.duzo.superhero.blocks.IronManSuitCaseBlock.convertArmourToSuitcase;
-import static com.duzo.superhero.entities.IronManEntity.isValidArmorButCooler;
 import static com.duzo.superhero.entities.IronManEntity.spawnNew;
-import static com.duzo.superhero.items.IronManNanotechItem.convertArmourToNanotech;
-import static com.duzo.superhero.items.IronManNanotechItem.convertNanotechToArmour;
+import static com.duzo.superhero.items.ironman.IronManNanotechItem.convertArmourToNanotech;
+import static com.duzo.superhero.items.ironman.IronManNanotechItem.convertNanotechToArmour;
 
 public class TakeOffIronManSuitC2SPacket {
     public TakeOffIronManSuitC2SPacket() {
@@ -59,9 +51,6 @@ public class TakeOffIronManSuitC2SPacket {
             ItemStack head = player.getItemBySlot(EquipmentSlot.HEAD);
             IronManArmourItem item = (IronManArmourItem) head.getItem();
             IronManCapabilities cap = item.getMark().getCapabilities();
-
-
-            if (!isValidArmorButCooler(player)) return;
 
             if (cap.has(IronManCapability.SUITCASE)) {
                 convertArmourToSuitcase(player);

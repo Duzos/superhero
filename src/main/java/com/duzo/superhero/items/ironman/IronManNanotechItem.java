@@ -1,23 +1,22 @@
-package com.duzo.superhero.items;
+package com.duzo.superhero.items.ironman;
 
-import com.duzo.superhero.blocks.SuperheroBlocks;
 import com.duzo.superhero.client.models.items.IronManArmourModel;
+import com.duzo.superhero.items.SuperheroArmourItem;
+import com.duzo.superhero.items.SuperheroItems;
+import com.duzo.superhero.sounds.SuperheroSounds;
 import com.duzo.superhero.util.IronManMark;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;
-import net.minecraft.client.model.PlayerModel;
-import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.network.chat.Component;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.client.ForgeHooksClient;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
-import net.minecraftforge.event.level.NoteBlockEvent;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -27,10 +26,28 @@ import java.util.function.Consumer;
 import static com.duzo.superhero.blocks.IronManSuitCaseBlock.equipArmourForMark;
 import static com.duzo.superhero.entities.IronManEntity.fileNameToUsable;
 
-public class IronManNanotechItem extends ArmorItem {
+public class IronManNanotechItem extends SuperheroArmourItem {
     private IronManMark mark;
     public IronManNanotechItem(ArmorMaterial material, Type type, Item.Properties properties) {
         super(material, type, properties);
+    }
+
+    @Override
+    public void runAbility(Player player, int number) {
+        Level level = player.getLevel();
+        ItemStack chest = player.getItemBySlot(EquipmentSlot.CHEST);
+        if (number == 1) {
+            if (chest.getItem() instanceof IronManNanotechItem) {
+                convertNanotechToArmour(chest,player);
+                level.playSound(null,player, SuperheroSounds.IRONMAN_POWERUP.get(), SoundSource.PLAYERS,1f,1f);
+                return;
+            }
+        }
+    }
+
+    @Override
+    public boolean isValidArmor(LivingEntity player) {
+        return player.getItemBySlot(EquipmentSlot.CHEST).getItem() instanceof IronManNanotechItem;
     }
 
     @Override

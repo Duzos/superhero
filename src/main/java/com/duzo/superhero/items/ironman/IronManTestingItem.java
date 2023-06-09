@@ -1,4 +1,4 @@
-package com.duzo.superhero.items;
+package com.duzo.superhero.items.ironman;
 
 import com.duzo.superhero.entities.IronManEntity;
 import com.duzo.superhero.entities.SuperheroEntities;

@@ -1,25 +1,14 @@
 package com.duzo.superhero.mixin;
 
-import com.duzo.superhero.items.IronManArmourItem;
-import com.duzo.superhero.items.SuperheroItems;
-import net.minecraft.client.Minecraft;
+import com.duzo.superhero.items.ironman.IronManArmourItem;
 import net.minecraft.client.model.HumanoidModel;
-import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import org.joml.Vector3f;
-import org.lwjgl.glfw.GLFW;
-import org.lwjgl.opengl.GL11;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
-import static com.duzo.superhero.items.IronManArmourItem.keyDown;
 
 @Mixin(HumanoidModel.class)
 public abstract class HumanoidModelMixin<T extends LivingEntity> {

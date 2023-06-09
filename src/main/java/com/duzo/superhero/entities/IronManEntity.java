@@ -1,7 +1,8 @@
 package com.duzo.superhero.entities;
 
 import com.duzo.superhero.Superhero;
-import com.duzo.superhero.items.IronManArmourItem;
+import com.duzo.superhero.items.SuperheroArmourItem;
+import com.duzo.superhero.items.ironman.IronManArmourItem;
 import com.duzo.superhero.sounds.SuperheroSounds;
 import com.duzo.superhero.util.IronManCapability;
 import com.duzo.superhero.util.IronManMark;
@@ -12,29 +13,18 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.damagesource.DamageSources;
-import net.minecraft.world.damagesource.DamageType;
-import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.FlyingMoveControl;
-import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
-import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
-import net.minecraft.world.entity.animal.FlyingAnimal;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.pathfinder.Path;
-import org.jetbrains.annotations.Nullable;
-
-import java.util.UUID;
 
 public class IronManEntity extends HumanoidEntity {
     private static final EntityDataAccessor<String> MARK = SynchedEntityData.defineId(IronManEntity.class, EntityDataSerializers.STRING);
@@ -189,28 +179,12 @@ public class IronManEntity extends HumanoidEntity {
     }*/
 
 
-    public static boolean isValidArmorButCooler(LivingEntity player) {
-        IronManMark currentMark = null;
-
-        for (EquipmentSlot equipmentSlot : EquipmentSlot.values()) {
-            if (!equipmentSlot.isArmor()) continue;
-            ItemStack currentSlot = player.getItemBySlot(equipmentSlot);
-            if (currentSlot.getItem() instanceof IronManArmourItem item) {
-                if (currentMark == null) {
-                    currentMark = item.getMark();
-                } else if (!currentMark.equals(item.getMark())) {
-                    return false;
-                }
-            } else {
-                return false;
-            }
-        }
-        return true;
-    }
-
-
     public void takeArmourOffPlayer(Player player) {
-        if (!isValidArmorButCooler(player)) return;
+        Item item = player.getItemBySlot(EquipmentSlot.CHEST).getItem();
+
+        if (!(item instanceof SuperheroArmourItem hero)) return;
+
+        if (!hero.isValidArmor(player)) return;
 
         this.setItemSlot(EquipmentSlot.HEAD, player.getItemBySlot(EquipmentSlot.HEAD));
         this.setItemSlot(EquipmentSlot.CHEST, player.getItemBySlot(EquipmentSlot.CHEST));

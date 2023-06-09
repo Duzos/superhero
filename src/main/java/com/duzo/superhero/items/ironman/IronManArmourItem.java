@@ -1,37 +1,25 @@
-package com.duzo.superhero.items;
+package com.duzo.superhero.items.ironman;
 
 import com.duzo.superhero.Superhero;
 import com.duzo.superhero.client.models.items.IronManArmourModel;
 import com.duzo.superhero.entities.IronManEntity;
-import com.duzo.superhero.network.packets.TakeOffIronManSuitC2SPacket;
+import com.duzo.superhero.items.SuperheroArmourItem;
 import com.duzo.superhero.sounds.SuperheroSounds;
-import com.duzo.superhero.sounds.ThrustersSoundInstance;
+import com.duzo.superhero.util.IronManCapabilities;
 import com.duzo.superhero.util.IronManCapability;
 import com.duzo.superhero.util.IronManMark;
-import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;
-import net.minecraft.client.model.PigModel;
-import net.minecraft.client.model.geom.ModelPart;
-import net.minecraft.client.multiplayer.PlayerInfo;
-import net.minecraft.client.player.AbstractClientPlayer;
-import net.minecraft.client.player.Input;
-import net.minecraft.client.resources.sounds.SimpleSoundInstance;
-import net.minecraft.client.resources.sounds.Sound;
-import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.DragonFireball;
 import net.minecraft.world.entity.projectile.Fireball;
+import net.minecraft.world.entity.projectile.SmallFireball;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
@@ -41,17 +29,24 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.lwjgl.glfw.GLFW;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.function.Consumer;
 
-import static com.duzo.superhero.entities.IronManEntity.fileNameToUsable;
+import static com.duzo.superhero.blocks.IronManSuitCaseBlock.convertArmourToSuitcase;
+import static com.duzo.superhero.entities.IronManEntity.*;
+import static com.duzo.superhero.entities.IronManEntity.spawnNew;
+import static com.duzo.superhero.items.ironman.IronManNanotechItem.convertArmourToNanotech;
+import static com.duzo.superhero.items.ironman.IronManNanotechItem.convertNanotechToArmour;
 
-public abstract class IronManArmourItem extends ArmorItem {
-    private ThrustersSoundInstance sound;
-    public IronManArmourItem(ArmorMaterial material, Type type, Properties properties) {
+public class IronManArmourItem extends SuperheroArmourItem {
+    private IronManMark mark;
+
+    public IronManArmourItem(ArmorMaterial material, Type type, Properties properties, IronManMark mark) {
         super(material, type, properties);
+        this.mark = mark;
+    }
+    public IronManArmourItem(ArmorMaterial material, Type type, Properties properties) {
+        this(material,type,properties,IronManEntity.DEFAULT_MARK);
     }
 
     @Override
@@ -63,19 +58,16 @@ public abstract class IronManArmourItem extends ArmorItem {
         super.appendHoverText(stack, level, components, flag);
     }
 
-    public abstract IronManMark getMark();
+    public void setMark(IronManMark mark) {
+        this.mark = mark;
+    }
+
+    public IronManMark getMark() {
+        return this.mark;
+    }
+
     public ResourceLocation getTexture() {
         return new ResourceLocation(Superhero.MODID, "textures/entities/iron_man/" + this.getMark().getSerializedName() + ".png");
-    }
-    private static boolean isEquipped(ItemStack stack,Player player) {
-        for (EquipmentSlot equipmentSlot : EquipmentSlot.values()) {
-            if (!equipmentSlot.isArmor()) continue;
-
-            if (player.getItemBySlot(equipmentSlot) == stack) {
-                return true;
-            }
-        }
-        return false;
     }
 
     @Override
@@ -120,16 +112,15 @@ public abstract class IronManArmourItem extends ArmorItem {
         if (entity instanceof Player player) {
             if (!isEquipped(stack,player)) return;
 
-            if (IronManEntity.isValidArmorButCooler(player)) {
+            if (isValidArmor(player)) {
                 this.runFlight(player);
-                this.weaponsEnabled(player);
             }
 
             if (this.getEquipmentSlot() == EquipmentSlot.HEAD && player.getItemBySlot(EquipmentSlot.HEAD).getItem() instanceof IronManArmourItem) {
                 player.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, 11 * 20, 1, false, false, false));
             }
             if (this.getEquipmentSlot() == EquipmentSlot.FEET && player.getItemBySlot(EquipmentSlot.FEET).getItem() instanceof IronManArmourItem) {
-                if (!IronManEntity.isValidArmorButCooler(player)) {
+                if (!isValidArmor(player)) {
                     bootsOnlyFlight(player);
                 }
 
@@ -140,7 +131,72 @@ public abstract class IronManArmourItem extends ArmorItem {
         }
     }
 
-    // Flight that only goes up
+    @Override
+    public boolean isValidArmor(LivingEntity player) {
+        IronManMark currentMark = null;
+
+        for (EquipmentSlot equipmentSlot : EquipmentSlot.values()) {
+            if (!equipmentSlot.isArmor()) continue;
+            ItemStack currentSlot = player.getItemBySlot(equipmentSlot);
+            if (currentSlot.getItem() instanceof IronManArmourItem item) {
+                if (currentMark == null) {
+                    currentMark = item.getMark();
+                } else if (!currentMark.equals(item.getMark())) {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public void runAbility(Player player,int number) {
+        if (number == 1) {
+            this.runAbilityOne(player);
+        } else if (number == 2) {
+            this.runAbilityTwo(player);
+        }
+    }
+
+    public void runAbilityOne(Player player) {
+        Level level = player.getLevel();
+        ItemStack chest = player.getItemBySlot(EquipmentSlot.CHEST);
+        if (chest.getItem() instanceof IronManNanotechItem) {
+            convertNanotechToArmour(chest,player);
+            level.playSound(null,player, SuperheroSounds.IRONMAN_POWERUP.get(), SoundSource.PLAYERS,1f,1f);
+            return;
+        }
+
+        ItemStack head = player.getItemBySlot(EquipmentSlot.HEAD);
+        IronManArmourItem item = (IronManArmourItem) head.getItem();
+        IronManCapabilities cap = item.getMark().getCapabilities();
+
+
+        if (!isValidArmor(player)) return;
+
+        if (cap.has(IronManCapability.SUITCASE)) {
+            convertArmourToSuitcase(player);
+            level.playSound(null,player, SuperheroSounds.IRONMAN_POWERDOWN.get(), SoundSource.PLAYERS,1f,1f);
+        } else if (cap.has(IronManCapability.SEAMLESS)) {
+            spawnNew(item.getMark(),level,player.getOnPos(),player);
+            level.playSound(null,player, SuperheroSounds.IRONMAN_POWERDOWN.get(), SoundSource.PLAYERS,1f,1f);
+        } else if (cap.has(IronManCapability.BRACELET_LOCATING)) {
+            spawnNew(item.getMark(),level,player.getOnPos(),player); // @TODO temporarily the same as seamless until i make something new for it
+            level.playSound(null,player, SuperheroSounds.IRONMAN_POWERDOWN.get(), SoundSource.PLAYERS,1f,1f);
+        } else if (cap.has(IronManCapability.NANOTECH)) {
+            convertArmourToNanotech(player);
+            level.playSound(null,player, SuperheroSounds.IRONMAN_POWERDOWN.get(), SoundSource.PLAYERS,1f,1f);
+        }
+    }
+    public void runAbilityTwo(Player player) {
+        SmallFireball fireball = EntityType.SMALL_FIREBALL.create(player.level);
+        fireball.setPos(new Vec3(player.getX(), player.getY(), player.getZ()));
+        player.level.addFreshEntity(fireball);
+    }
+
+        // Flight that only goes up
     private void bootsOnlyFlight(Player player) {
         if(keyDown(GLFW.GLFW_KEY_SPACE)) {
             Vec3 motion = player.getDeltaMovement();
@@ -157,19 +213,9 @@ public abstract class IronManArmourItem extends ArmorItem {
         boolean spaceHeld = keyDown(GLFW.GLFW_KEY_SPACE);
 
         if (keyDown(GLFW.GLFW_KEY_W)) {
-            forwardFlight(player,motion,horizAccel,currentAccel,spaceHeld);
+            forwardFlight(player, motion, horizAccel, currentAccel, spaceHeld);
         } else if (keyDown(GLFW.GLFW_KEY_SPACE)) {
-            verticalFlight(player,motion,currentAccel);
-        }
-    }
-
-    private void weaponsEnabled(Player player) {
-        Vec3 motion = new Vec3(1d, 0d, 0d);
-        Vec3 movement = new Vec3(motion.x(), player.getLookAngle().y(), player.getLookAngle().z());
-        if (keyDown(GLFW.GLFW_KEY_B)) {
-            Fireball fireball = EntityType.FIREBALL.create(player.level);
-            fireball.setPos(new Vec3(player.getX(), player.getY(), player.getZ()));
-            player.level.addFreshEntity(fireball);
+            verticalFlight(player, motion, currentAccel);
         }
     }
 
@@ -220,9 +266,5 @@ public abstract class IronManArmourItem extends ArmorItem {
         if (!player.isOnGround()) {
             player.moveRelative(1f,movement);
         }
-    }
-
-    public static boolean keyDown(int key) {
-        return InputConstants.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), key);
     }
 }
