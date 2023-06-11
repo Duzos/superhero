@@ -16,7 +16,7 @@ plugins {
 apply plugin: 'org.spongepowered.mixin'
 
 group = 'com.duzo'
-version = '0.1'
+version = '0.2'
 
 java {
     archivesBaseName = 'superhero'
