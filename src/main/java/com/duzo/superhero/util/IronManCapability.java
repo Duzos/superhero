@@ -7,6 +7,7 @@ public enum IronManCapability implements StringRepresentable {
     SUITCASE,
     SEAMLESS,
     BRACELET_LOCATING,
+    BINDING,
     ICES_OVER,
     JARVIS,
     NANOTECH,

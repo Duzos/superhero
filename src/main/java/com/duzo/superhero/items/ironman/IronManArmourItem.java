@@ -22,6 +22,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Fireball;
 import net.minecraft.world.entity.projectile.SmallFireball;
 import net.minecraft.world.item.*;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -39,6 +40,7 @@ import static com.duzo.superhero.entities.IronManEntity.*;
 import static com.duzo.superhero.entities.IronManEntity.spawnNew;
 import static com.duzo.superhero.items.ironman.IronManNanotechItem.convertArmourToNanotech;
 import static com.duzo.superhero.items.ironman.IronManNanotechItem.convertNanotechToArmour;
+import static net.minecraft.world.item.enchantment.EnchantmentHelper.hasBindingCurse;
 
 public class IronManArmourItem extends SuperheroArmourItem {
     private IronManMark mark;
@@ -108,6 +110,11 @@ public class IronManArmourItem extends SuperheroArmourItem {
     }
 
     @Override
+    public boolean isFoil(ItemStack stack) {
+        return false;
+    }
+
+    @Override
     public void inventoryTick(ItemStack stack, Level level, Entity entity, int p_41407_, boolean p_41408_) {
         super.inventoryTick(stack, level, entity, p_41407_, p_41408_);
 
@@ -117,6 +124,10 @@ public class IronManArmourItem extends SuperheroArmourItem {
             if (isValidArmor(player)) {
                 this.runFlight(player);
             }
+
+//            if (!hasBindingCurse(stack) && this.getMark().getCapabilities().has(IronManCapability.BINDING)) {
+//                stack.enchant(Enchantments.BINDING_CURSE,1);
+//            }
 
             if (this.getEquipmentSlot() == EquipmentSlot.HEAD && player.getItemBySlot(EquipmentSlot.HEAD).getItem() instanceof IronManArmourItem) {
                 player.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, 11 * 20, 1, false, false, false));

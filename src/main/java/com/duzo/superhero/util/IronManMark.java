@@ -91,7 +91,7 @@ public enum IronManMark implements StringRepresentable {
     MARK_2() {
         @Override
         public IronManCapabilities getCapabilities() {
-            return new IronManCapabilities().add(IronManCapability.ICES_OVER,IronManCapability.JARVIS,IronManCapability.BLAST_OFF);
+            return new IronManCapabilities().add(IronManCapability.ICES_OVER,IronManCapability.JARVIS,IronManCapability.BLAST_OFF,IronManCapability.BINDING);
         }
 
         @Override
@@ -104,7 +104,7 @@ public enum IronManMark implements StringRepresentable {
     MARK_1() {
         @Override
         public IronManCapabilities getCapabilities() {
-            return new IronManCapabilities().add(IronManCapability.ICES_OVER);
+            return new IronManCapabilities().add(IronManCapability.ICES_OVER,IronManCapability.BINDING);
         }
 
         @Override
