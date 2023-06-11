@@ -204,8 +204,8 @@ public class IronManArmourItem extends SuperheroArmourItem {
         }
     }
     public void runAbilityTwo(Player player) {
-        SmallFireball fireball = EntityType.SMALL_FIREBALL.create(player.level);
-        fireball.setPos(new Vec3(player.getX(), player.getY(), player.getZ()));
+        SmallFireball fireball = new SmallFireball(player.level,player,player.getXRot(),player.getYRot(),player.getZ());
+        fireball.shootFromRotation(player,player.getXRot(),player.getYRot(),0,3f,0);
         player.level.addFreshEntity(fireball);
     }
 
