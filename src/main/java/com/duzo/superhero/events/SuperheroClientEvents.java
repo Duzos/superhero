@@ -7,20 +7,24 @@ import com.duzo.superhero.client.models.entities.IronManEntityModel;
 import com.duzo.superhero.client.models.items.IronManArmourModel;
 import com.duzo.superhero.client.renderers.IronManEntityRenderer;
 import com.duzo.superhero.entities.SuperheroEntities;
+import com.duzo.superhero.items.ironman.IronManArmourItem;
 import com.duzo.superhero.network.Network;
 import com.duzo.superhero.network.packets.AbilityC2SPacket;
-import com.duzo.superhero.network.packets.TakeOffIronManSuitC2SPacket;
+import com.duzo.superhero.util.IronManCapability;
 import com.duzo.superhero.util.KeyBinds;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.*;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(value = Dist.CLIENT, modid = Superhero.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
-public class IronManClientEvents {
+public class SuperheroClientEvents {
 
     @SubscribeEvent
     public static void registerRenderers(EntityRenderersEvent.RegisterRenderers renderers) {
@@ -49,6 +53,17 @@ public class IronManClientEvents {
                 Network.sendToServer(new AbilityC2SPacket(3));
             }
         }
+        @SubscribeEvent
+        public static void changeFOV(ComputeFovModifierEvent event) {
+            ItemStack chest = event.getPlayer().getItemBySlot(EquipmentSlot.CHEST);
+
+            if (!(chest.getItem() instanceof IronManArmourItem hero)) return;
+
+            if (!event.getPlayer().isOnGround() && Screen.hasControlDown() && hero.isValidArmor(event.getPlayer()) && hero.getMark().getCapabilities().has(IronManCapability.BLAST_OFF)) {
+                event.setNewFovModifier(event.getFovModifier() * 1.25f);
+//                event.setNewFovModifier((float) (event.getFovModifier() * hero.getMark().getBlastOffSpeed()));
+            }
+        }
     }
     @Mod.EventBusSubscriber(modid = Superhero.MODID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
     public static class ClientModBusEvents {
@@ -56,12 +71,13 @@ public class IronManClientEvents {
         @SubscribeEvent
         public static void onKeyRegister(RegisterKeyMappingsEvent event) {
             event.register(KeyBinds.ABILITY_ONE);
+            event.register(KeyBinds.ABILITY_TWO);
+            event.register(KeyBinds.ABILITY_THREE);
         }
         @SubscribeEvent
         public static void renderOverlays(RegisterGuiOverlaysEvent event) {
             event.registerAboveAll("jarvis_hud", JarvisGUIOverlay.HUD_JARVIS);
         }
-
     }
 }
 

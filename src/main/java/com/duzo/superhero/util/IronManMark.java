@@ -7,48 +7,36 @@ import static com.duzo.superhero.entities.IronManEntity.fileNameToUsable;
 import static com.duzo.superhero.entities.IronManEntity.nameFromSlot;
 
 public enum IronManMark implements StringRepresentable {
-    MARK_20() {
-        @Override
-        public IronManCapabilities getCapabilities() {
-            return new IronManCapabilities().add(IronManCapability.SEAMLESS,IronManCapability.JARVIS);
-        }
-
-        @Override
-        public double getVerticalFlightSpeed() {
-            return 0.03;
-        }
-
-        @Override
-        public double getHorizontalFlightSpeed(boolean isSprinting) {
-            if (isSprinting) {
-                return 4d;
-            }
-            return 1.25d;
-        }
-    },
-    MARK_14() {
-        @Override
-        public IronManCapabilities getCapabilities() {
-            return new IronManCapabilities().add(IronManCapability.SEAMLESS,IronManCapability.JARVIS);
-        }
-
-        @Override
-        public double getVerticalFlightSpeed() {
-            return 0.025;
-        }
-
-        @Override
-        public double getHorizontalFlightSpeed(boolean isSprinting) {
-            if (isSprinting) {
-                return 1.5d;
-            }
-            return 2d;
-        }
-    },
+//    MARK_20() {
+//        @Override
+//        public IronManCapabilities getCapabilities() {
+//            return new IronManCapabilities().add(IronManCapability.SEAMLESS,IronManCapability.JARVIS);
+//        }
+//
+//        @Override
+//        public double getVerticalFlightSpeed() {
+//            return 0.03;
+//        }
+//
+//
+//    },
+//    MARK_14() {
+//        @Override
+//        public IronManCapabilities getCapabilities() {
+//            return new IronManCapabilities().add(IronManCapability.SEAMLESS,IronManCapability.JARVIS);
+//        }
+//
+//        @Override
+//        public double getVerticalFlightSpeed() {
+//            return 0.025;
+//        }
+//
+//
+//    },
     MARK_9() {
         @Override
         public IronManCapabilities getCapabilities() {
-            return new IronManCapabilities().add(IronManCapability.NANOTECH,IronManCapability.JARVIS);
+            return new IronManCapabilities().add(IronManCapability.NANOTECH,IronManCapability.JARVIS,IronManCapability.BLAST_OFF);
         }
 
 
@@ -57,18 +45,17 @@ public enum IronManMark implements StringRepresentable {
             return 0.02;
         }
 
-        @Override
-        public double getHorizontalFlightSpeed(boolean isSprinting) {
-            if (isSprinting) {
-                return 1.25;
-            }
-            return 4d;
-        }
-    },
+    @Override
+    public double getBlastOffSpeed() {
+        return 2.5d;
+    }
+
+
+},
     MARK_7() {
         @Override
         public IronManCapabilities getCapabilities() {
-            return new IronManCapabilities().add(IronManCapability.BRACELET_LOCATING,IronManCapability.JARVIS);
+            return new IronManCapabilities().add(IronManCapability.BRACELET_LOCATING,IronManCapability.JARVIS,IronManCapability.BLAST_OFF);
         }
 
         @Override
@@ -77,17 +64,16 @@ public enum IronManMark implements StringRepresentable {
         }
 
         @Override
-        public double getHorizontalFlightSpeed(boolean isSprinting) {
-            if (isSprinting) {
-                return 1d;
-            }
-            return 4d;
+        public double getBlastOffSpeed() {
+            return 2d;
         }
+
+
     },
     MARK_5() {
         @Override
         public IronManCapabilities getCapabilities() {
-            return new IronManCapabilities().add(IronManCapability.SUITCASE,IronManCapability.JARVIS);
+            return new IronManCapabilities().add(IronManCapability.SUITCASE,IronManCapability.JARVIS,IronManCapability.BLAST_OFF);
         }
 
         @Override
@@ -96,26 +82,23 @@ public enum IronManMark implements StringRepresentable {
         }
 
         @Override
-        public double getHorizontalFlightSpeed(boolean isSprinting) {
-            if (isSprinting) {
-                return 0.8d;
-            }
-            return 4d;
+        public double getBlastOffSpeed() {
+            return 1.5d;
         }
+
+
     },
     MARK_2() {
         @Override
         public IronManCapabilities getCapabilities() {
-            return new IronManCapabilities().add(IronManCapability.ICES_OVER,IronManCapability.JARVIS);
+            return new IronManCapabilities().add(IronManCapability.ICES_OVER,IronManCapability.JARVIS,IronManCapability.BLAST_OFF);
         }
 
         @Override
-        public double getHorizontalFlightSpeed(boolean isSprinting) {
-            if (isSprinting) {
-                return 0.5d;
-            }
-            return 4d;
+        public double getBlastOffSpeed() {
+            return 1.25d;
         }
+
 
     },
     MARK_1() {
@@ -130,11 +113,8 @@ public enum IronManMark implements StringRepresentable {
         }
 
         @Override
-        public double getHorizontalFlightSpeed(boolean isSprinting) {
-            if (isSprinting) {
-                return 0.25d;
-            }
-            return 6d;
+        public double getBlastOffSpeed() {
+            return 1d;
         }
     };
     @Override
@@ -163,7 +143,7 @@ public enum IronManMark implements StringRepresentable {
         return this.getVerticalFlightSpeed();
     }
 
-    public abstract double getHorizontalFlightSpeed(boolean isSprinting);
+    public abstract double getBlastOffSpeed();
     public boolean autoAdd() {
         return true;
     }

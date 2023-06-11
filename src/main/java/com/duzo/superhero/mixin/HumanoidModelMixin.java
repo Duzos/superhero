@@ -1,14 +1,19 @@
 package com.duzo.superhero.mixin;
 
 import com.duzo.superhero.items.ironman.IronManArmourItem;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.phys.AABB;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import static com.duzo.superhero.items.ironman.IronManArmourItem.canBlastOff;
 
 @Mixin(HumanoidModel.class)
 public abstract class HumanoidModelMixin<T extends LivingEntity> {
@@ -18,14 +23,17 @@ public abstract class HumanoidModelMixin<T extends LivingEntity> {
     @Inject(at = @At("TAIL"), method = "setupAnim(Lnet/minecraft/world/entity/LivingEntity;FFFFF)V", cancellable = true)
     private void setupAnim(T player, float p_102867_, float p_102868_, float p_102869_, float p_102870_, float p_102871_, CallbackInfo ci) {
         HumanoidModel humanoidModel = (HumanoidModel) (Object) this;
-        Item chest = player.getItemBySlot(EquipmentSlot.CHEST).getItem();
-        Item legs = player.getItemBySlot(EquipmentSlot.LEGS).getItem();
-        Item feet = player.getItemBySlot(EquipmentSlot.FEET).getItem();
-        if (!player.isOnGround()
-                && chest instanceof IronManArmourItem
-                && legs instanceof IronManArmourItem
-                && feet instanceof IronManArmourItem && Math.abs(player.getDeltaMovement().x) * 10 > 0) {
-            humanoidModel.head.yRot = 0;
+
+        if (!(player instanceof Player)) return;
+
+        if (canBlastOff((Player) player)) {
+            humanoidModel.head.setRotation(-1.5707964f,0,0);
+            humanoidModel.leftArm.setRotation(0,0,0);
+            humanoidModel.rightArm.setRotation(0,0,0);
+            humanoidModel.leftLeg.setRotation(0,0,0);
+            humanoidModel.rightLeg.setRotation(0,0,0);
+//            AABB box = player.getBoundingBox().deflate(0,1,0);
+//            player.setBoundingBox(box);
         }
         /*&& player.getItemBySlot(EquipmentSlot.HEAD).getItem() instanceof IronManArmourItem
                 && player.getItemBySlot(EquipmentSlot.CHEST).getItem() instanceof IronManArmourItem

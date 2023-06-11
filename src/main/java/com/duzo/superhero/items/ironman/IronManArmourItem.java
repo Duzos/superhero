@@ -10,6 +10,7 @@ import com.duzo.superhero.util.IronManCapability;
 import com.duzo.superhero.util.IronManMark;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -22,6 +23,7 @@ import net.minecraft.world.entity.projectile.Fireball;
 import net.minecraft.world.entity.projectile.SmallFireball;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.client.ForgeHooksClient;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
@@ -196,7 +198,7 @@ public class IronManArmourItem extends SuperheroArmourItem {
         player.level.addFreshEntity(fireball);
     }
 
-        // Flight that only goes up
+    // Flight that only goes up
     private void bootsOnlyFlight(Player player) {
         if(keyDown(GLFW.GLFW_KEY_SPACE)) {
             Vec3 motion = player.getDeltaMovement();
@@ -209,14 +211,30 @@ public class IronManArmourItem extends SuperheroArmourItem {
     private void runFlight(Player player) {
         Vec3 motion = player.getDeltaMovement();
         double currentAccel = this.getMark().getVerticalFlightSpeed() * (motion.y() < 0.3D ? 2.5D : 1.0D);
-        double horizAccel = this.getMark().getHorizontalFlightSpeed(player.isSprinting());
-        boolean spaceHeld = keyDown(GLFW.GLFW_KEY_SPACE);
 
-        if (keyDown(GLFW.GLFW_KEY_W)) {
-            forwardFlight(player, motion, horizAccel, currentAccel, spaceHeld);
-        } else if (keyDown(GLFW.GLFW_KEY_SPACE)) {
+//        if (!player.level.isClientSide && canBlastOff(player)) {
+//            AABB box = player.getBoundingBox().deflate(0,1,0);
+//            player.setBoundingBox(box);
+//        }
+
+        if (Minecraft.getInstance().player == null) return;
+
+        if (canBlastOff(player)) {
+            // @TODO hitbox code
+            blastOff(player,this.getMark().getBlastOffSpeed());
+        } else if (Minecraft.getInstance().player.input.jumping) {
             verticalFlight(player, motion, currentAccel);
         }
+    }
+
+    public static boolean canBlastOff(Player player) {
+        if (!(player.getItemBySlot(EquipmentSlot.CHEST).getItem() instanceof IronManArmourItem hero)) return false;
+        return Screen.hasControlDown() && !player.isOnGround() && hero.getMark().getCapabilities().has(IronManCapability.BLAST_OFF) && !player.isSwimming();
+    }
+
+    private void blastOff(Player player,double factor) {
+        Vec3 look = player.getLookAngle().normalize().multiply(factor, factor, factor);;
+        player.setDeltaMovement(look);
     }
 
     private void verticalFlight(Player player, Vec3 motion, double vertAccel) {
