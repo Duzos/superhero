@@ -22,6 +22,8 @@ public class SuperheroItems {
             () -> new IronManEdithGlasses(IRON_MAN,ArmorItem.Type.HELMET,new Item.Properties().stacksTo(1)));
     public static final RegistryObject<Item> PALLADIUM_INGOT = ITEMS.register("palladium_ingot",
             () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> RAW_PALLADIUM = ITEMS.register("raw_palladium",
+            () -> new Item(new Item.Properties()));
 
     public static void init() {
         for (IronManMark mark: IronManMark.values()) {

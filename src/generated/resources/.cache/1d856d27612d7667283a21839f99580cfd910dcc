@@ -1,4 +1,4 @@
-// 1.19.4	2023-06-12T00:06:50.6857793	Item Models: superhero
+// 1.19.4	2023-06-12T10:30:51.4856184	Item Models: superhero
 f6f976d97aaabd54f474d239a4b89b86eff08781 assets/superhero/models/item/deepslate_palladium_ore.json
 5b86ace0365970012836b74d9f8c7cd0c8dbff18 assets/superhero/models/item/edith_glasses.json
 89d4c26218c760397a1d91463cdae73612a89932 assets/superhero/models/item/ironman_suitcase.json
@@ -25,3 +25,4 @@ ef8eece909458a88633f31cdfd27873ea78f5434 assets/superhero/models/item/mark_9_leg
 26bfbcd57f27e27d892bfb0096986c1c7f6cb9a9 assets/superhero/models/item/nanotech.json
 ec2345a7bab7d41484b206700f836db7ca7a8d6a assets/superhero/models/item/palladium_ingot.json
 c8763fe35c7a4f01f515e7cc25c5ed387aa51b03 assets/superhero/models/item/palladium_ore.json
+bac13b3f025e387c5e13d0bead267b18e86117d6 assets/superhero/models/item/raw_palladium.json
