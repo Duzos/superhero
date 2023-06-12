@@ -1,18 +1,12 @@
 {
+  "block.superhero.deepslate_palladium_ore": "Deepslate Palladium Ore",
   "block.superhero.ironman_suitcase": "Iron Man Suitcase",
+  "block.superhero.palladium_ore": "Palladium Ore",
   "item.superhero.edith_glasses": "EDITH Glasses",
-  "item.superhero.mark_14_boots": "Iron Man Boots ",
-  "item.superhero.mark_14_chestplate": "Iron Man Chestplate ",
-  "item.superhero.mark_14_helmet": "Iron Man Helmet ",
-  "item.superhero.mark_14_leggings": "Iron Man Leggings ",
   "item.superhero.mark_1_boots": "Iron Man Boots ",
   "item.superhero.mark_1_chestplate": "Iron Man Chestplate ",
   "item.superhero.mark_1_helmet": "Iron Man Helmet ",
   "item.superhero.mark_1_leggings": "Iron Man Leggings ",
-  "item.superhero.mark_20_boots": "Iron Man Boots ",
-  "item.superhero.mark_20_chestplate": "Iron Man Chestplate ",
-  "item.superhero.mark_20_helmet": "Iron Man Helmet ",
-  "item.superhero.mark_20_leggings": "Iron Man Leggings ",
   "item.superhero.mark_2_boots": "Iron Man Boots ",
   "item.superhero.mark_2_chestplate": "Iron Man Chestplate ",
   "item.superhero.mark_2_helmet": "Iron Man Helmet ",
@@ -30,6 +24,7 @@
   "item.superhero.mark_9_helmet": "Iron Man Helmet ",
   "item.superhero.mark_9_leggings": "Iron Man Leggings ",
   "item.superhero.nanotech": "Nanotech",
+  "item.superhero.palladium_ingot": "Palladium Ingot",
   "item_group.superhero.superhero": "Duzo's Superheroes",
-  "key.duzo.take_off_iron_man_suit": "Take off Iron Man suit"
+  "key.superhero.ability_one": "Take off Iron Man suit"
 }

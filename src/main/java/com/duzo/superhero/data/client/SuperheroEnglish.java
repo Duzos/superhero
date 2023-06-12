@@ -29,9 +29,12 @@ public class SuperheroEnglish extends LanguageProvider {
         // Items
         add(SuperheroItems.NANOTECH.get(),"Nanotech");
         add(SuperheroItems.EDITH_GLASSES.get(),"EDITH Glasses");
+        add(SuperheroItems.PALLADIUM_INGOT.get(), "Palladium Ingot");
 
         // Blocks
         add(SuperheroBlocks.IRONMAN_SUITCASE.get(), "Iron Man Suitcase");
+        add(SuperheroBlocks.PALLADIUM_ORE.get(), "Palladium Ore");
+        add(SuperheroBlocks.DEEPSLATE_PALLADIUM_ORE.get(), "Deepslate Palladium Ore");
 
         // Tabs
         add("item_group.superhero.superhero","Duzo's Superheroes");

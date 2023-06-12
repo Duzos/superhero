@@ -1,18 +1,11 @@
-// 1.19.4	2023-06-08T02:59:31.2180266	Item Models: superhero
+// 1.19.4	2023-06-12T00:06:50.6857793	Item Models: superhero
+f6f976d97aaabd54f474d239a4b89b86eff08781 assets/superhero/models/item/deepslate_palladium_ore.json
 5b86ace0365970012836b74d9f8c7cd0c8dbff18 assets/superhero/models/item/edith_glasses.json
 89d4c26218c760397a1d91463cdae73612a89932 assets/superhero/models/item/ironman_suitcase.json
-10fe10c3d1ad890b13d886df2187cd23166f4cb6 assets/superhero/models/item/mark_14_boots.json
-50fdbf003991622dcdfb48a6b06b7410fb2090e2 assets/superhero/models/item/mark_14_chestplate.json
-554c3a2bf20603102c06fcf84eab4f69af0d14d3 assets/superhero/models/item/mark_14_helmet.json
-0b92e6b2a37bf7b812f27bb8d9c235096b0ba83e assets/superhero/models/item/mark_14_leggings.json
 45c1d729f57222c5d4753eb546a7973b6ee5758b assets/superhero/models/item/mark_1_boots.json
 2359356cdd9912401461260b786a1fde76d03764 assets/superhero/models/item/mark_1_chestplate.json
 fbb13ab3807b2d044d5fb0131d0882506ee28e02 assets/superhero/models/item/mark_1_helmet.json
 623d8c7c8fb14c0b70a51be1ec19b3185949350c assets/superhero/models/item/mark_1_leggings.json
-20fb9bc331654e810a4d26c3500d17c4f534ff1d assets/superhero/models/item/mark_20_boots.json
-d66aaf259b54246f9f032e79afc0baa1ab483dae assets/superhero/models/item/mark_20_chestplate.json
-20a67518f2ff0ff8e444e61592f66b95408ea8a8 assets/superhero/models/item/mark_20_helmet.json
-00433feae1b4d14bf6c8efdb95211c4c39d6536c assets/superhero/models/item/mark_20_leggings.json
 7f442b8bb244e2a3c4a1e48db9bf9a9ad3f0b4dc assets/superhero/models/item/mark_2_boots.json
 07c005cb6a2589204d02c89a1ecf165eb53d18e3 assets/superhero/models/item/mark_2_chestplate.json
 2475ba54d38c3425111d680cf947a9762376e4f3 assets/superhero/models/item/mark_2_helmet.json
@@ -30,3 +23,5 @@ cad0dbd5bba02f7174df5b2f1d1e891d4380bcfa assets/superhero/models/item/mark_9_che
 740d31cc4443c455ae73bcd5981b5a318ae830d1 assets/superhero/models/item/mark_9_helmet.json
 ef8eece909458a88633f31cdfd27873ea78f5434 assets/superhero/models/item/mark_9_leggings.json
 26bfbcd57f27e27d892bfb0096986c1c7f6cb9a9 assets/superhero/models/item/nanotech.json
+ec2345a7bab7d41484b206700f836db7ca7a8d6a assets/superhero/models/item/palladium_ingot.json
+c8763fe35c7a4f01f515e7cc25c5ed387aa51b03 assets/superhero/models/item/palladium_ore.json

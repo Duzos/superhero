@@ -3,10 +3,13 @@ package com.duzo.superhero;
 import com.duzo.superhero.blocks.SuperheroBlocks;
 import com.duzo.superhero.entities.SuperheroEntities;
 import com.duzo.superhero.events.FlyingEventHandler;
+import com.duzo.superhero.items.SuperheroArmourItem;
 import com.duzo.superhero.items.ironman.IronManArmourItem;
 import com.duzo.superhero.items.SuperheroItems;
 import com.duzo.superhero.network.Network;
 import com.duzo.superhero.sounds.SuperheroSounds;
+import com.duzo.superhero.world.SuperheroConfiguredFeatures;
+import com.duzo.superhero.world.SuperheroPlacedFeatures;
 import com.mojang.logging.LogUtils;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -75,7 +78,7 @@ public class Superhero {
     private void registerCreative(CreativeModeTabEvent.Register event) {
         event.registerCreativeModeTab(new ResourceLocation(MODID,"superhero"), builder ->
                 builder.title(Component.translatable("item_group." + MODID + ".superhero"))
-                        .icon(() -> new ItemStack(Items.IRON_INGOT))
+                        .icon(() -> new ItemStack(SuperheroItems.NANOTECH.get()))
                         .displayItems(((parms, output) -> {
                             for (RegistryObject<Block> block : SuperheroBlocks.BLOCKS.getEntries()) {
                                 output.accept(block.get().asItem());
