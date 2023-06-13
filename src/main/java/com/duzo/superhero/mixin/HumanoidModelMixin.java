@@ -28,6 +28,7 @@ public abstract class HumanoidModelMixin<T extends LivingEntity> {
 
         if (canBlastOff((Player) player)) {
             humanoidModel.head.setRotation(-1.5707964f,0,0);
+            humanoidModel.hat.setRotation(-1.5707964f,0,0);
             humanoidModel.leftArm.setRotation(0,0,0);
             humanoidModel.rightArm.setRotation(0,0,0);
             humanoidModel.leftLeg.setRotation(0,0,0);

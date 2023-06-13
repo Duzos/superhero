@@ -30,6 +30,7 @@ public abstract class SuperheroArmourItem extends ArmorItem {
         return InputConstants.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), key);
     }
 
+
     public boolean isValidArmor(LivingEntity player) {
         for (EquipmentSlot equipmentSlot : EquipmentSlot.values()) {
             if (!equipmentSlot.isArmor()) continue;

@@ -12,9 +12,11 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.model.HumanoidModel;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
@@ -33,6 +35,7 @@ import org.jetbrains.annotations.Nullable;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.List;
+import java.util.Random;
 import java.util.function.Consumer;
 
 import static com.duzo.superhero.blocks.IronManSuitCaseBlock.convertArmourToSuitcase;
@@ -44,6 +47,7 @@ import static net.minecraft.world.item.enchantment.EnchantmentHelper.hasBindingC
 
 public class IronManArmourItem extends SuperheroArmourItem {
     private IronManMark mark;
+    private boolean maskToggle = false;
 
     public IronManArmourItem(ArmorMaterial material, Type type, Properties properties, IronManMark mark) {
         super(material, type, properties);
@@ -84,14 +88,19 @@ public class IronManArmourItem extends SuperheroArmourItem {
 
                 if (equipmentSlot == EquipmentSlot.HEAD) {
                     model.hat.visible = true;
+                    model.hat.setRotation(-1.5707964f,0,0);
                     model.head.visible = true;
                 } else if (equipmentSlot == EquipmentSlot.CHEST) {
                     model.body.visible = true;
                     model.leftArm.visible = true;
                     model.rightArm.visible = true;
+                    model.right_arm.getChild("rightArmFlame").visible = false;
+                    model.left_arm.getChild("leftArmFlame").visible = false;
                 } else if (equipmentSlot == EquipmentSlot.FEET || equipmentSlot == EquipmentSlot.LEGS) {
                     model.leftLeg.visible = true;
                     model.rightLeg.visible = true;
+                    model.right_leg.getChild("rightLegFlame").visible = false;
+                    model.left_leg.getChild("leftLegFlame").visible = false;
                 }
 
                 ForgeHooksClient.copyModelProperties(original,model);
@@ -170,6 +179,8 @@ public class IronManArmourItem extends SuperheroArmourItem {
             this.runAbilityOne(player);
         } else if (number == 2) {
             this.runAbilityTwo(player);
+        } else if (number == 4) {
+            this.runAbilityFour();
         }
     }
 
@@ -205,8 +216,12 @@ public class IronManArmourItem extends SuperheroArmourItem {
     }
     public void runAbilityTwo(Player player) {
         SmallFireball fireball = new SmallFireball(player.level,player,player.getXRot(),player.getYRot(),player.getZ());
-        fireball.shootFromRotation(player,player.getXRot(),player.getYRot(),0,3f,0);
+        fireball.shootFromRotation(player,player.getXRot(),player.getYRot(),0,1.5f,0);
         player.level.addFreshEntity(fireball);
+    }
+
+    public boolean runAbilityFour() {
+        return true;
     }
 
     // Flight that only goes up
@@ -222,7 +237,42 @@ public class IronManArmourItem extends SuperheroArmourItem {
     private void runFlight(Player player) {
         Vec3 motion = player.getDeltaMovement();
         double currentAccel = this.getMark().getVerticalFlightSpeed() * (motion.y() < 0.3D ? 2.5D : 1.0D);
-
+        Random random = new Random();
+        if(!player.isOnGround()) {
+            if (canBlastOff(player)) {
+                int i = Mth.clamp(0, 0, 64);
+                float f2 = Mth.cos(player.getYHeadRot() * ((float) Math.PI / 180F)) * (0.1F + 1.21F * (float) i);
+                float f3 = Mth.sin(player.getYHeadRot() * ((float) Math.PI / 180F)) * (0.1F + 1.21F * (float) i);
+                float f4 = Mth.cos(player.getYHeadRot() * ((float) Math.PI / 180F)) * (0.4F + 5.21F * (float) i);
+                float f5 = Mth.sin(player.getYHeadRot() * ((float) Math.PI / 180F)) * (0.4F + 5.21F * (float) i);
+                float f6 = (0.3F * 0.45F) * ((float) i * 0.2F + 9.0F);
+                float f7 = (0.3F * 0.45F) * ((float) i * 0.2F + 9.0F);
+                player.getLevel().addParticle(ParticleTypes.SMOKE, player.getX() + (double) f2, player.getY() + (double) f6, player.getZ() + (double) f3, random.nextGaussian() * 0.05D, -0.25, random.nextGaussian() * 0.05D);
+                player.getLevel().addParticle(ParticleTypes.SMOKE, player.getX() - (double) f2, player.getY() + (double) f6, player.getZ() - (double) f3, random.nextGaussian() * 0.05D, -0.25, random.nextGaussian() * 0.05D);
+                player.getLevel().addParticle(ParticleTypes.SMOKE, player.getX() + (double) f4, player.getY() + (double) f7, player.getZ() + (double) f5, random.nextGaussian() * 0.05D, -0.25, random.nextGaussian() * 0.05D);
+                player.getLevel().addParticle(ParticleTypes.SMOKE, player.getX() - (double) f4, player.getY() + (double) f7, player.getZ() - (double) f5, random.nextGaussian() * 0.05D, -0.25, random.nextGaussian() * 0.05D);
+                player.getLevel().addParticle(ParticleTypes.SOUL_FIRE_FLAME, player.getX() + (double) f2, player.getY() + (double) f6, player.getZ() + (double) f3, random.nextGaussian() * 0.05D, -0.25, random.nextGaussian() * 0.05D);
+                player.getLevel().addParticle(ParticleTypes.SOUL_FIRE_FLAME, player.getX() - (double) f2, player.getY() + (double) f6, player.getZ() - (double) f3, random.nextGaussian() * 0.05D, -0.25, random.nextGaussian() * 0.05D);
+                player.getLevel().addParticle(ParticleTypes.SOUL_FIRE_FLAME, player.getX() + (double) f4, player.getY() + (double) f7, player.getZ() + (double) f5, random.nextGaussian() * 0.05D, -0.25, random.nextGaussian() * 0.05D);
+                player.getLevel().addParticle(ParticleTypes.SOUL_FIRE_FLAME, player.getX() - (double) f4, player.getY() + (double) f7, player.getZ() - (double) f5, random.nextGaussian() * 0.05D, -0.25, random.nextGaussian() * 0.05D);
+            } else if (keyDown(GLFW.GLFW_KEY_SPACE)) {
+                int i = Mth.clamp(0, 0, 64);
+                float f2 = Mth.cos(player.yBodyRot * ((float) Math.PI / 180F)) * (0.1F + 0.21F * (float) i);
+                float f3 = Mth.sin(player.yBodyRot * ((float) Math.PI / 180F)) * (0.1F + 0.21F * (float) i);
+                float f4 = Mth.cos(player.yBodyRot * ((float) Math.PI / 180F)) * (0.4F + 0.21F * (float) i);
+                float f5 = Mth.sin(player.yBodyRot * ((float) Math.PI / 180F)) * (0.4F + 0.21F * (float) i);
+                float f6 = (0.3F * 0.45F) * ((float) i * 0.2F + 1F);
+                float f7 = (0.3F * 0.45F) * ((float) i * 0.2F + 6F);
+                player.getLevel().addParticle(ParticleTypes.SMOKE, player.getX() + (double) f2, player.getY() + (double) f6, player.getZ() + (double) f3, random.nextGaussian() * 0.05D, -0.25, random.nextGaussian() * 0.05D);
+                player.getLevel().addParticle(ParticleTypes.SMOKE, player.getX() - (double) f2, player.getY() + (double) f6, player.getZ() - (double) f3, random.nextGaussian() * 0.05D, -0.25, random.nextGaussian() * 0.05D);
+                player.getLevel().addParticle(ParticleTypes.SMOKE, player.getX() + (double) f4, player.getY() + (double) f7, player.getZ() + (double) f5, random.nextGaussian() * 0.05D, -0.25, random.nextGaussian() * 0.05D);
+                player.getLevel().addParticle(ParticleTypes.SMOKE, player.getX() - (double) f4, player.getY() + (double) f7, player.getZ() - (double) f5, random.nextGaussian() * 0.05D, -0.25, random.nextGaussian() * 0.05D);
+                player.getLevel().addParticle(ParticleTypes.SOUL_FIRE_FLAME, player.getX() + (double) f2, player.getY() + (double) f6, player.getZ() + (double) f3, random.nextGaussian() * 0.05D, -0.25, random.nextGaussian() * 0.05D);
+                player.getLevel().addParticle(ParticleTypes.SOUL_FIRE_FLAME, player.getX() - (double) f2, player.getY() + (double) f6, player.getZ() - (double) f3, random.nextGaussian() * 0.05D, -0.25, random.nextGaussian() * 0.05D);
+                player.getLevel().addParticle(ParticleTypes.SOUL_FIRE_FLAME, player.getX() + (double) f4, player.getY() + (double) f7, player.getZ() + (double) f5, random.nextGaussian() * 0.05D, -0.25, random.nextGaussian() * 0.05D);
+                player.getLevel().addParticle(ParticleTypes.SOUL_FIRE_FLAME, player.getX() - (double) f4, player.getY() + (double) f7, player.getZ() - (double) f5, random.nextGaussian() * 0.05D, -0.25, random.nextGaussian() * 0.05D);
+            }
+        }
 //        if (!player.level.isClientSide && canBlastOff(player)) {
 //            AABB box = player.getBoundingBox().deflate(0,1,0);
 //            player.setBoundingBox(box);

@@ -52,6 +52,9 @@ public class SuperheroClientEvents {
             if (KeyBinds.ABILITY_THREE.consumeClick()) {
                 Network.sendToServer(new AbilityC2SPacket(3));
             }
+            if (KeyBinds.ABILITY_FOUR.consumeClick()) {
+                Network.sendToServer(new AbilityC2SPacket(4));
+            }
         }
         @SubscribeEvent
         public static void changeFOV(ComputeFovModifierEvent event) {

@@ -41,9 +41,13 @@ public abstract class PlayerRendererMixin extends LivingEntityRenderer<AbstractC
     @Inject(method = "setModelProperties", at = @At("RETURN"))
     public void setModelProperties(AbstractClientPlayer abstractClientPlayer, CallbackInfo info) {
         PlayerModel<AbstractClientPlayer> playerModel = this.getModel();
+        Item head = abstractClientPlayer.getItemBySlot(EquipmentSlot.HEAD).getItem();
         Item chest = abstractClientPlayer.getItemBySlot(EquipmentSlot.CHEST).getItem();
         Item legs = abstractClientPlayer.getItemBySlot(EquipmentSlot.LEGS).getItem();
         Item feet = abstractClientPlayer.getItemBySlot(EquipmentSlot.FEET).getItem();
+        if(head instanceof IronManArmourItem) {
+            playerModel.hat.visible = false;
+        }
         if(chest instanceof IronManArmourItem) {
             playerModel.jacket.visible = false;
             playerModel.leftSleeve.visible = false;

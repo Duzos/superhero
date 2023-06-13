@@ -10,6 +10,7 @@ public class KeyBinds {
     public static final String KEY_ABILITY_ONE = "key.superhero.ability_one";
     public static final String KEY_ABILITY_TWO = "key.superhero.ability_two";
     public static final String KEY_ABILITY_THREE = "key.superhero.ability_three";
+    public static final String KEY_ABILITY_FOUR = "key.superhero.ability_four";
 
     public static final KeyMapping ABILITY_ONE = new KeyMapping(
             KEY_ABILITY_ONE,
@@ -30,6 +31,13 @@ public class KeyBinds {
             KeyConflictContext.IN_GAME,
             InputConstants.Type.KEYSYM,
             GLFW.GLFW_KEY_C,
+            KEY_CATEGORY_SUPERHERO
+    );
+    public static final KeyMapping ABILITY_FOUR = new KeyMapping(
+            KEY_ABILITY_FOUR,
+            KeyConflictContext.IN_GAME,
+            InputConstants.Type.KEYSYM,
+            GLFW.GLFW_KEY_N,
             KEY_CATEGORY_SUPERHERO
     );
 }
