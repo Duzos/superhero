@@ -237,6 +237,20 @@ public class IronManArmourItem extends SuperheroArmourItem {
     private void runFlight(Player player) {
         Vec3 motion = player.getDeltaMovement();
         double currentAccel = this.getMark().getVerticalFlightSpeed() * (motion.y() < 0.3D ? 2.5D : 1.0D);
+
+        createParticles(player);
+
+        if (Minecraft.getInstance().player == null) return;
+
+        if (canBlastOff(player)) {
+            // @TODO hitbox code
+            blastOff(player,this.getMark().getBlastOffSpeed());
+        } else if (Minecraft.getInstance().player.input.jumping) {
+            verticalFlight(player, motion, currentAccel);
+        }
+    }
+
+    public static void createParticles(Player player) {
         Random random = new Random();
         if(!player.isOnGround()) {
             if (canBlastOff(player)) {
@@ -272,19 +286,6 @@ public class IronManArmourItem extends SuperheroArmourItem {
                 player.getLevel().addParticle(ParticleTypes.SOUL_FIRE_FLAME, player.getX() + (double) f4, player.getY() + (double) f7, player.getZ() + (double) f5, random.nextGaussian() * 0.05D, -0.25, random.nextGaussian() * 0.05D);
                 player.getLevel().addParticle(ParticleTypes.SOUL_FIRE_FLAME, player.getX() - (double) f4, player.getY() + (double) f7, player.getZ() - (double) f5, random.nextGaussian() * 0.05D, -0.25, random.nextGaussian() * 0.05D);
             }
-        }
-//        if (!player.level.isClientSide && canBlastOff(player)) {
-//            AABB box = player.getBoundingBox().deflate(0,1,0);
-//            player.setBoundingBox(box);
-//        }
-
-        if (Minecraft.getInstance().player == null) return;
-
-        if (canBlastOff(player)) {
-            // @TODO hitbox code
-            blastOff(player,this.getMark().getBlastOffSpeed());
-        } else if (Minecraft.getInstance().player.input.jumping) {
-            verticalFlight(player, motion, currentAccel);
         }
     }
 

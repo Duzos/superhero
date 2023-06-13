@@ -50,8 +50,7 @@ public enum IronManMark implements StringRepresentable {
         return 2.5d;
     }
 
-
-},
+    },
     MARK_7() {
         @Override
         public IronManCapabilities getCapabilities() {

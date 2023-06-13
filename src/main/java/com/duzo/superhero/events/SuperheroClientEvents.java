@@ -6,7 +6,9 @@ import com.duzo.superhero.client.models.entities.HumanoidEntityModel;
 import com.duzo.superhero.client.models.entities.IronManEntityModel;
 import com.duzo.superhero.client.models.items.IronManArmourModel;
 import com.duzo.superhero.client.renderers.IronManEntityRenderer;
+import com.duzo.superhero.client.renderers.UnibeamRenderer;
 import com.duzo.superhero.entities.SuperheroEntities;
+import com.duzo.superhero.entities.UnibeamEntity;
 import com.duzo.superhero.items.ironman.IronManArmourItem;
 import com.duzo.superhero.network.Network;
 import com.duzo.superhero.network.packets.AbilityC2SPacket;
@@ -29,6 +31,7 @@ public class SuperheroClientEvents {
     @SubscribeEvent
     public static void registerRenderers(EntityRenderersEvent.RegisterRenderers renderers) {
         renderers.registerEntityRenderer(SuperheroEntities.IRON_MAN_ENTITY.get(), IronManEntityRenderer::new);
+        renderers.registerEntityRenderer(SuperheroEntities.UNIBEAM_ENTITY.get(), UnibeamRenderer::new);
     }
 
     @SubscribeEvent
