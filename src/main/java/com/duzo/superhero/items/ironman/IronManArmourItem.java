@@ -3,6 +3,8 @@ package com.duzo.superhero.items.ironman;
 import com.duzo.superhero.Superhero;
 import com.duzo.superhero.client.models.items.IronManArmourModel;
 import com.duzo.superhero.entities.IronManEntity;
+import com.duzo.superhero.entities.SuperheroEntities;
+import com.duzo.superhero.entities.UnibeamEntity;
 import com.duzo.superhero.items.SuperheroArmourItem;
 import com.duzo.superhero.sounds.SuperheroSounds;
 import com.duzo.superhero.util.IronManCapabilities;
@@ -12,6 +14,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.model.HumanoidModel;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -34,6 +37,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.lwjgl.glfw.GLFW;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.function.Consumer;
@@ -47,7 +51,7 @@ import static net.minecraft.world.item.enchantment.EnchantmentHelper.hasBindingC
 
 public class IronManArmourItem extends SuperheroArmourItem {
     private IronManMark mark;
-    private boolean maskToggle = false;
+    private List<UnibeamEntity> beamEntities = new ArrayList<>();
 
     public IronManArmourItem(ArmorMaterial material, Type type, Properties properties, IronManMark mark) {
         super(material, type, properties);
@@ -215,9 +219,25 @@ public class IronManArmourItem extends SuperheroArmourItem {
         }
     }
     public void runAbilityTwo(Player player) {
-        SmallFireball fireball = new SmallFireball(player.level,player,player.getXRot(),player.getYRot(),player.getZ());
+        /*SmallFireball fireball = new SmallFireball(player.level,player,player.getXRot(),player.getYRot(),player.getZ());
         fireball.shootFromRotation(player,player.getXRot(),player.getYRot(),0,1.5f,0);
-        player.level.addFreshEntity(fireball);
+        player.level.addFreshEntity(fireball);*/
+        System.out.println("HELLO");
+        int i = Mth.clamp(0, 0, 64);
+        float f2 = Mth.cos(player.yBodyRot * ((float) Math.PI / 180F)) * (0F + 1.21F * (float) i);
+        float f3 = Mth.sin(player.yBodyRot * ((float) Math.PI / 180F)) * (0F + 1.21F * (float) i);
+        float f6 = (0.3F * 0.45F) * ((float) i * 0.2F + 0.0F);
+        UnibeamEntity unibeam = new UnibeamEntity(SuperheroEntities.UNIBEAM_ENTITY.get(), player.getLevel());
+            unibeam.moveTo(player.getX() + (double) f2, player.getY() + (double) f6, player.getZ() + (double) f3, player.getYRot(), player.getXRot());
+            boolean i1 = true;
+            if(i1) {
+                player.getLevel().addFreshEntity(unibeam);
+                i1 = false;
+            }
+            //unibeam.setPos(player.getX() + (double) f2, player.getY() + (double) f6, player.getZ() + (double) f3);
+            //unibeam.setYRot(player.getYRot());
+            //unibeam.setXRot(player.getXRot());
+        this.beamEntities.add(unibeam);
     }
 
     public boolean runAbilityFour() {
@@ -288,6 +308,8 @@ public class IronManArmourItem extends SuperheroArmourItem {
             }
         }
     }
+
+
 
     public static boolean canBlastOff(Player player) {
         if (!(player.getItemBySlot(EquipmentSlot.CHEST).getItem() instanceof IronManArmourItem hero)) return false;

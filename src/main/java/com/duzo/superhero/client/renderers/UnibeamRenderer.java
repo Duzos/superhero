@@ -30,10 +30,28 @@ public class UnibeamRenderer extends EntityRenderer<UnibeamEntity> {
         stack.mulPose(Axis.XP.rotationDegrees(90f));
         Matrix4f matrix4f = stack.last().pose();
         stack.popPose();
+
+        //Outside beam
         quad(matrix4f, vertexconsumer, 0, -1.25f, 0, 0, -1.25f, 0.94901960784f, 0.63921568627f, 0.14117647058f, 0.10f, 0.10f, false, false, true, false);
         quad(matrix4f, vertexconsumer, 0, -1.25f, 0, 0, -1.25f, 0.94901960784f, 0.63921568627f, 0.14117647058f, 0.10f, 0.10f, true, false, true, true);
         quad(matrix4f, vertexconsumer, 0, -1.25f, 0, 0, -1.25f, 0.94901960784f, 0.63921568627f, 0.14117647058f, 0.10f, 0.10f, true, true, false, true);
         quad(matrix4f, vertexconsumer, 0, -1.25f, 0, 0, -1.25f, 0.94901960784f, 0.63921568627f, 0.14117647058f, 0.10f, 0.10f, false, true, false, false);
+
+        //Inside beam
+        quad(matrix4f, vertexconsumer, 0, -1.25f, 0, 0, -1.25f, 0.94901960784f, 0.63921568627f, 0.14117647058f, 0.05f, 0.05f, false, false, true, false);
+        quad(matrix4f, vertexconsumer, 0, -1.25f, 0, 0, -1.25f, 0.94901960784f, 0.63921568627f, 0.14117647058f, 0.05f, 0.05f, true, false, true, true);
+        quad(matrix4f, vertexconsumer, 0, -1.25f, 0, 0, -1.25f, 0.94901960784f, 0.63921568627f, 0.14117647058f, 0.05f, 0.05f, true, true, false, true);
+        quad(matrix4f, vertexconsumer, 0, -1.25f, 0, 0, -1.25f, 0.94901960784f, 0.63921568627f, 0.14117647058f, 0.05f, 0.05f, false, true, false, false);
+        quad(matrix4f, vertexconsumer, 0, -1.25f, 0, 0, -1.25f, 0.94901960784f, 0.63921568627f, 0.14117647058f, 0.05f, 0.05f, false, false, true, false);
+        quad(matrix4f, vertexconsumer, 0, -1.25f, 0, 0, -1.25f, 0.94901960784f, 0.63921568627f, 0.14117647058f, 0.05f, 0.05f, true, false, true, true);
+        quad(matrix4f, vertexconsumer, 0, -1.25f, 0, 0, -1.25f, 0.94901960784f, 0.63921568627f, 0.14117647058f, 0.05f, 0.05f, true, true, false, true);
+        quad(matrix4f, vertexconsumer, 0, -1.25f, 0, 0, -1.25f, 0.94901960784f, 0.63921568627f, 0.14117647058f, 0.05f, 0.05f, false, true, false, false);
+
+        //Inside beam 2 Electric Boogaloo
+        quad(matrix4f, vertexconsumer, 0, -1.25f, 0, 0, -1.25f, 1f, 1f, 1f, 0.025f, 0.025f, false, false, true, false);
+        quad(matrix4f, vertexconsumer, 0, -1.25f, 0, 0, -1.25f, 1f, 1f, 1f, 0.025f, 0.025f, true, false, true, true);
+        quad(matrix4f, vertexconsumer, 0, -1.25f, 0, 0, -1.25f, 1f, 1f, 1f, 0.025f, 0.025f, true, true, false, true);
+        quad(matrix4f, vertexconsumer, 0, -1.25f, 0, 0, -1.25f, 1f, 1f, 1f, 0.025f, 0.025f, false, true, false, false);
     }
 
     // Copied from lightning bolt renderer
