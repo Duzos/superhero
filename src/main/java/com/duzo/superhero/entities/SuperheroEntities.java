@@ -15,5 +15,5 @@ public class SuperheroEntities {
             EntityType.Builder.<IronManEntity>of(IronManEntity::new, MobCategory.CREATURE).sized(0.6f,1.8f).build(new ResourceLocation(Superhero.MODID,"iron_man_entity").toString()));
 
     public static final RegistryObject<EntityType<UnibeamEntity>> UNIBEAM_ENTITY = ENTITIES.register("unibeam_entity", () ->
-            EntityType.Builder.<UnibeamEntity>of(UnibeamEntity::new, MobCategory.CREATURE).build(new ResourceLocation(Superhero.MODID,"unibeam_entity").toString()));
+            EntityType.Builder.<UnibeamEntity>of(UnibeamEntity::new, MobCategory.CREATURE).sized(0.125f, 0.125f).build(new ResourceLocation(Superhero.MODID,"unibeam_entity").toString()));
 }
