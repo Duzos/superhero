@@ -312,8 +312,10 @@ public class IronManArmourItem extends SuperheroArmourItem {
 
 
     public static boolean canBlastOff(Player player) {
+        if (Minecraft.getInstance().player == null) return false;
         if (!(player.getItemBySlot(EquipmentSlot.CHEST).getItem() instanceof IronManArmourItem hero)) return false;
-        return Screen.hasControlDown() && !player.isOnGround() && hero.getMark().getCapabilities().has(IronManCapability.BLAST_OFF) && !player.isSwimming();
+
+        return Screen.hasControlDown() && Minecraft.getInstance().player.input.up && !player.isOnGround() && hero.getMark().getCapabilities().has(IronManCapability.BLAST_OFF) && !player.isSwimming();
     }
 
     private void blastOff(Player player,double factor) {
