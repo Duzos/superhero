@@ -51,11 +51,15 @@ public abstract class EntityRendererMixin<T extends Entity> {
         if (!flag) return;
         // Everything past here is only shown with JARVIS hud up
 
-        renderJARVISCircle(entity,stack);
+        // WIP code of the things looking like there physically there in space, issues with locations @TODO because its cooler
 
+//        renderJARVISCircle(entity,stack);
+//        renderJARVISEntityText(entity,stack,source,p_114502_);
+    }
+
+    private void renderJARVISEntityText(T entity, PoseStack stack, MultiBufferSource source, int p_114502_) {
         stack.pushPose();
-        stack.mulPose(this.entityRenderDispatcher.cameraOrientation());
-//        stack.translate(entity.getBbWidth() / 2,entity.getBbHeight() - 0.5f,entity.getBbWidth() / 2);
+        stack.rotateAround(this.entityRenderDispatcher.cameraOrientation(), -entity.getBbWidth(), entity.getBbHeight() / 1.5f,0);
         stack.scale(-0.01F, -0.01F, 0.01F);
 
         Matrix4f matrix4f = stack.last().pose();
@@ -71,16 +75,14 @@ public abstract class EntityRendererMixin<T extends Entity> {
         RenderSystem.setShaderTexture(0, JARVIS_CIRCLE);
 
         stack.pushPose();
-//        stack.translate(entity.getBbWidth() / 2,entity.getBbHeight() / 2,entity.getBbWidth() / 2);
-        stack.mulPose(this.entityRenderDispatcher.cameraOrientation());
-//        stack.scale(-0.01F, -0.01F, 0.01F);
-
+//        stack.translate(-entity.getBbWidth(),0,-entity.getBbWidth());
+        stack.rotateAround(this.entityRenderDispatcher.cameraOrientation(), entity.getBbWidth(), 0,entity.getBbWidth());
         blit(stack, 0, 0, 0, 0, 1,1,1,1);
         stack.popPose();
     }
 
     @Inject(method = "render", at = @At("TAIL"))
     public void render(T entity, float p_114486_, float p_114487_, PoseStack stack, MultiBufferSource source, int p_114490_, CallbackInfo ci) {
-        this.renderJARVISOverlays(entity,stack,source,p_114490_);
+//        this.renderJARVISOverlays(entity,stack,source,p_114490_);
     }
 }
