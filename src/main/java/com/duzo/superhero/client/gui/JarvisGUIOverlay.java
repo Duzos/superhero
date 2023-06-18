@@ -107,7 +107,7 @@ public class JarvisGUIOverlay {
 //        System.out.println(Minecraft.getInstance().mouseHandler.ypos()); 737
 //        System.out.println(Minecraft.getInstance().mouseHandler.xpos());  322
         // @TODO rotation as its too annoying for me rn
-        stack.rotateAround(Axis.ZN.rotationDegrees(rotation),(-x/8) + (sizeX/4f),(-y/4) + (sizeY / 4f),0);
+//        stack.rotateAround(Axis.ZN.rotationDegrees(rotation),(-x/8) + (sizeX/4f),(-y/4) + (sizeY / 4f),0);
 
         blit(stack,0, 0, 0, 0, sizeX, sizeY,sizeX,sizeY);
         stack.popPose();
