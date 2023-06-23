@@ -4,7 +4,7 @@ import com.duzo.superhero.client.models.items.IronManArmourModel;
 import com.duzo.superhero.items.SuperheroArmourItem;
 import com.duzo.superhero.items.SuperheroItems;
 import com.duzo.superhero.sounds.SuperheroSounds;
-import com.duzo.superhero.util.IronManMark;
+import com.duzo.superhero.util.ironman.IronManMark;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;

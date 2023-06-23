@@ -1,4 +1,4 @@
-package com.duzo.superhero.util;
+package com.duzo.superhero.util.ironman;
 
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -129,6 +129,7 @@ public enum IronManMark implements StringRepresentable {
     public String getLangFileName() {
         return "Iron Man";
     }
+    @Deprecated
     public int getMarkNumber() {
         return this.name().charAt(-1);
     }

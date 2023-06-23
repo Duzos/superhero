@@ -2,7 +2,7 @@ package com.duzo.superhero.items.ironman;
 
 import com.duzo.superhero.entities.IronManEntity;
 import com.duzo.superhero.entities.SuperheroEntities;
-import com.duzo.superhero.util.IronManMark;
+import com.duzo.superhero.util.ironman.IronManMark;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;

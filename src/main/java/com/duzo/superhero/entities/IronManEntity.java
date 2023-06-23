@@ -2,10 +2,9 @@ package com.duzo.superhero.entities;
 
 import com.duzo.superhero.Superhero;
 import com.duzo.superhero.items.SuperheroArmourItem;
-import com.duzo.superhero.items.ironman.IronManArmourItem;
 import com.duzo.superhero.sounds.SuperheroSounds;
-import com.duzo.superhero.util.IronManCapability;
-import com.duzo.superhero.util.IronManMark;
+import com.duzo.superhero.util.ironman.IronManCapability;
+import com.duzo.superhero.util.ironman.IronManMark;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;

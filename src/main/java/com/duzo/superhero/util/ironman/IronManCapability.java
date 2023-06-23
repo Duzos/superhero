@@ -1,4 +1,4 @@
-package com.duzo.superhero.util;
+package com.duzo.superhero.util.ironman;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.StringRepresentable;

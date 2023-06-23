@@ -1,7 +1,4 @@
-package com.duzo.superhero.util;
-
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
+package com.duzo.superhero.util.ironman;
 
 import java.util.ArrayList;
 import java.util.List;

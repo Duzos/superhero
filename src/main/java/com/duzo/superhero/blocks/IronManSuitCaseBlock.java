@@ -3,7 +3,7 @@ package com.duzo.superhero.blocks;
 import com.duzo.superhero.items.ironman.IronManNanotechItem;
 import com.duzo.superhero.items.SuperheroItems;
 import com.duzo.superhero.sounds.SuperheroSounds;
-import com.duzo.superhero.util.IronManMark;
+import com.duzo.superhero.util.ironman.IronManMark;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundSource;
@@ -30,7 +30,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.duzo.superhero.util.IronManMark.MARK_5;
+import static com.duzo.superhero.util.ironman.IronManMark.MARK_5;
 
 public class IronManSuitCaseBlock extends Block {
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;

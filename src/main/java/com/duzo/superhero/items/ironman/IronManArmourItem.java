@@ -7,14 +7,13 @@ import com.duzo.superhero.entities.SuperheroEntities;
 import com.duzo.superhero.entities.UnibeamEntity;
 import com.duzo.superhero.items.SuperheroArmourItem;
 import com.duzo.superhero.sounds.SuperheroSounds;
-import com.duzo.superhero.util.IronManCapabilities;
-import com.duzo.superhero.util.IronManCapability;
-import com.duzo.superhero.util.IronManMark;
+import com.duzo.superhero.util.ironman.IronManCapabilities;
+import com.duzo.superhero.util.ironman.IronManCapability;
+import com.duzo.superhero.util.ironman.IronManMark;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.model.HumanoidModel;
-import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -24,12 +23,8 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.Fireball;
-import net.minecraft.world.entity.projectile.SmallFireball;
 import net.minecraft.world.item.*;
-import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.client.ForgeHooksClient;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
@@ -47,7 +42,6 @@ import static com.duzo.superhero.entities.IronManEntity.*;
 import static com.duzo.superhero.entities.IronManEntity.spawnNew;
 import static com.duzo.superhero.items.ironman.IronManNanotechItem.convertArmourToNanotech;
 import static com.duzo.superhero.items.ironman.IronManNanotechItem.convertNanotechToArmour;
-import static net.minecraft.world.item.enchantment.EnchantmentHelper.hasBindingCurse;
 
 public class IronManArmourItem extends SuperheroArmourItem {
     private IronManMark mark;
@@ -228,13 +222,9 @@ public class IronManArmourItem extends SuperheroArmourItem {
         float f3 = Mth.sin(player.yBodyRot * ((float) Math.PI / 180F)) * (0F + 1.21F * (float) i);
         float f6 = (0.3F * 0.45F) * ((float) i * 0.2F + 0.0F);
         UnibeamEntity unibeam = new UnibeamEntity(SuperheroEntities.UNIBEAM_ENTITY.get(), player.getLevel());
-            unibeam.moveTo(player.getX() + (double) f2, player.getY() + (double) f6, player.getZ() + (double) f3, player.getYRot(), player.getXRot());
-            boolean i1 = true;
-            if(i1) {
-                player.getLevel().addFreshEntity(unibeam);
-                i1 = false;
-            }
-            //unibeam.setPos(player.getX() + (double) f2, player.getY() + (double) f6, player.getZ() + (double) f3);
+        unibeam.moveTo(player.getX() + (double) f2, player.getY() + (double) f6, player.getZ() + (double) f3, player.getYRot(), player.getXRot());
+        player.getLevel().addFreshEntity(unibeam);
+        //unibeam.setPos(player.getX() + (double) f2, player.getY() + (double) f6, player.getZ() + (double) f3);
             //unibeam.setYRot(player.getYRot());
             //unibeam.setXRot(player.getXRot());
         this.beamEntities.add(unibeam);

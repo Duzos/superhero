@@ -1,7 +1,7 @@
 package com.duzo.superhero.items.ironman;
 
 import com.duzo.superhero.entities.IronManEntity;
-import com.duzo.superhero.util.IronManMark;
+import com.duzo.superhero.util.ironman.IronManMark;
 import net.minecraft.world.item.Item;
 
 public class IronManTestingItemBuilder extends IronManTestingItem {
