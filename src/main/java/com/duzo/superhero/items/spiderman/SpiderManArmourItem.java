@@ -91,5 +91,4 @@ public class SpiderManArmourItem extends SuperheroArmourItem {
     public SpiderManIdentifier getIdentifier() {
         return this.id;
     }
-
 }

@@ -1,6 +1,10 @@
 package com.duzo.superhero.util.spiderman;
 
 import net.minecraft.util.StringRepresentable;
+import net.minecraft.world.entity.EquipmentSlot;
+
+import static com.duzo.superhero.entities.IronManEntity.fileNameToUsable;
+import static com.duzo.superhero.entities.IronManEntity.nameFromSlot;
 
 public enum SpiderManIdentifier implements StringRepresentable {
     MILES {
@@ -20,5 +24,11 @@ public enum SpiderManIdentifier implements StringRepresentable {
     }
     public boolean autoAdd() {
         return true;
+    }
+    public String getLangFileName(EquipmentSlot slot) {
+        String base = fileNameToUsable(this.getSerializedName());
+        String slotName = fileNameToUsable(nameFromSlot(slot));
+
+        return "Iron Man" + " " + slotName;
     }
 }
