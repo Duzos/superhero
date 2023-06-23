@@ -1,7 +1,5 @@
 package com.duzo.superhero.items;
 
-import com.duzo.superhero.items.ironman.IronManArmourItem;
-import com.duzo.superhero.util.IronManMark;
 import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.EquipmentSlot;

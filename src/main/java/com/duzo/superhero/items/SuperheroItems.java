@@ -4,7 +4,9 @@ import com.duzo.superhero.Superhero;
 import com.duzo.superhero.items.ironman.IronManArmourItem;
 import com.duzo.superhero.items.ironman.IronManEdithGlasses;
 import com.duzo.superhero.items.ironman.IronManNanotechItem;
-import com.duzo.superhero.util.IronManMark;
+import com.duzo.superhero.items.spiderman.SpiderManArmourItem;
+import com.duzo.superhero.util.ironman.IronManMark;
+import com.duzo.superhero.util.spiderman.SpiderManIdentifier;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.registries.DeferredRegister;
@@ -12,6 +14,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
 import static com.duzo.superhero.items.SuperheroArmourMaterials.IRON_MAN;
+import static com.duzo.superhero.items.SuperheroArmourMaterials.SPIDER_MAN;
 
 public class SuperheroItems {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Superhero.MODID);
@@ -31,6 +34,12 @@ public class SuperheroItems {
 
             registerIronManSet(mark);
         }
+
+        for (SpiderManIdentifier id : SpiderManIdentifier.values()) {
+            if (!id.autoAdd()) continue;
+
+            registerSpiderManSet(id);
+        }
     }
 
     public static void registerIronManSet(IronManMark mark) {
@@ -44,5 +53,18 @@ public class SuperheroItems {
                 () -> new IronManArmourItem(IRON_MAN, ArmorItem.Type.LEGGINGS,new Item.Properties().stacksTo(1),mark));
         ITEMS.register(name + "_boots",
                 () -> new IronManArmourItem(IRON_MAN, ArmorItem.Type.BOOTS,new Item.Properties().stacksTo(1),mark));
+    }
+
+    public static void registerSpiderManSet(SpiderManIdentifier id) {
+        String name = id.getSerializedName();
+
+        ITEMS.register(name + "_helmet",
+                () -> new SpiderManArmourItem(SPIDER_MAN, ArmorItem.Type.HELMET,new Item.Properties().stacksTo(1),id));
+        ITEMS.register(name + "_chestplate",
+                () -> new SpiderManArmourItem(SPIDER_MAN, ArmorItem.Type.CHESTPLATE,new Item.Properties().stacksTo(1),id));
+        ITEMS.register(name + "_leggings",
+                () -> new SpiderManArmourItem(SPIDER_MAN, ArmorItem.Type.LEGGINGS,new Item.Properties().stacksTo(1),id));
+        ITEMS.register(name + "_boots",
+                () -> new SpiderManArmourItem(SPIDER_MAN, ArmorItem.Type.BOOTS,new Item.Properties().stacksTo(1),id));
     }
 }

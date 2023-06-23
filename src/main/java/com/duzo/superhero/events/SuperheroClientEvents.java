@@ -2,18 +2,19 @@ package com.duzo.superhero.events;
 
 import com.duzo.superhero.Superhero;
 import com.duzo.superhero.client.gui.JarvisGUIOverlay;
+import com.duzo.superhero.client.models.AlexSkinModel;
+import com.duzo.superhero.client.models.SteveSkinModel;
 import com.duzo.superhero.client.models.entities.HumanoidEntityModel;
 import com.duzo.superhero.client.models.entities.IronManEntityModel;
 import com.duzo.superhero.client.models.items.IronManArmourModel;
 import com.duzo.superhero.client.renderers.IronManEntityRenderer;
 import com.duzo.superhero.client.renderers.UnibeamRenderer;
 import com.duzo.superhero.entities.SuperheroEntities;
-import com.duzo.superhero.entities.UnibeamEntity;
 import com.duzo.superhero.items.ironman.IronManArmourItem;
 import com.duzo.superhero.network.Network;
 import com.duzo.superhero.network.packets.AbilityC2SPacket;
-import com.duzo.superhero.util.IronManCapability;
 import com.duzo.superhero.util.KeyBinds;
+import com.duzo.superhero.util.ironman.IronManCapability;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
@@ -37,6 +38,8 @@ public class SuperheroClientEvents {
     @SubscribeEvent
     public static void registerLayerDefinition(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(HumanoidEntityModel.LAYER_LOCATION,() -> LayerDefinition.create(PlayerModel.createMesh(CubeDeformation.NONE,false),64,64));
+        event.registerLayerDefinition(SteveSkinModel.LAYER_LOCATION,() -> LayerDefinition.create(PlayerModel.createMesh(CubeDeformation.NONE,false),64,64));
+        event.registerLayerDefinition(AlexSkinModel.LAYER_LOCATION,AlexSkinModel::createBodyLayer);
         event.registerLayerDefinition(IronManEntityModel.LAYER_LOCATION,() -> LayerDefinition.create(PlayerModel.createMesh(CubeDeformation.NONE,false),64,64));
         event.registerLayerDefinition(IronManArmourModel.LAYER_LOCATION,IronManArmourModel::createBodyLayer);
     }

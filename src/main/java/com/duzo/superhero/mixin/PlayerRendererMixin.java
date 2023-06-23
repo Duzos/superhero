@@ -1,6 +1,6 @@
 package com.duzo.superhero.mixin;
 
-import com.duzo.superhero.items.ironman.IronManArmourItem;
+import com.duzo.superhero.items.SuperheroArmourItem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.player.AbstractClientPlayer;
@@ -45,15 +45,15 @@ public abstract class PlayerRendererMixin extends LivingEntityRenderer<AbstractC
         Item chest = abstractClientPlayer.getItemBySlot(EquipmentSlot.CHEST).getItem();
         Item legs = abstractClientPlayer.getItemBySlot(EquipmentSlot.LEGS).getItem();
         Item feet = abstractClientPlayer.getItemBySlot(EquipmentSlot.FEET).getItem();
-        if(head instanceof IronManArmourItem) {
+        if(head instanceof SuperheroArmourItem) {
             playerModel.hat.visible = false;
         }
-        if(chest instanceof IronManArmourItem) {
+        if(chest instanceof SuperheroArmourItem) {
             playerModel.jacket.visible = false;
             playerModel.leftSleeve.visible = false;
             playerModel.rightSleeve.visible = false;
         }
-        if(legs instanceof IronManArmourItem || abstractClientPlayer.getItemBySlot(EquipmentSlot.FEET).getItem() instanceof IronManArmourItem) {
+        if(legs instanceof SuperheroArmourItem || feet instanceof SuperheroArmourItem) {
             playerModel.leftPants.visible = false;
             playerModel.rightPants.visible = false;
         }

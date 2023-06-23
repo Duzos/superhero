@@ -13,6 +13,9 @@ import java.util.function.Supplier;
 public enum SuperheroArmourMaterials implements ArmorMaterial {
     IRON_MAN("iron_man",15,new int[]{2, 5, 6, 2}, 9, SoundEvents.ARMOR_EQUIP_IRON, 0.0F, 0.0F, () -> {
         return Ingredient.of(Items.IRON_INGOT);
+    }),
+    SPIDER_MAN("spider_man",15,new int[]{2, 5, 6, 2}, 9, SoundEvents.ARMOR_EQUIP_LEATHER, 0.0F, 0.0F, () -> {
+        return Ingredient.of(Items.STRING);
     });
 
     private static final int[] HEALTH_PER_SLOT = new int[]{13, 15, 16, 11};
