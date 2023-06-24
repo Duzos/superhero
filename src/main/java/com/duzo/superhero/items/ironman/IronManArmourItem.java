@@ -216,7 +216,6 @@ public class IronManArmourItem extends SuperheroArmourItem {
         /*SmallFireball fireball = new SmallFireball(player.level,player,player.getXRot(),player.getYRot(),player.getZ());
         fireball.shootFromRotation(player,player.getXRot(),player.getYRot(),0,1.5f,0);
         player.level.addFreshEntity(fireball);*/
-        System.out.println("HELLO");
         int i = Mth.clamp(0, 0, 64);
         float f2 = Mth.cos(player.yBodyRot * ((float) Math.PI / 180F)) * (0F + 1.21F * (float) i);
         float f3 = Mth.sin(player.yBodyRot * ((float) Math.PI / 180F)) * (0F + 1.21F * (float) i);

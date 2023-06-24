@@ -2,6 +2,8 @@ package com.duzo.superhero.network;
 
 import com.duzo.superhero.Superhero;
 import com.duzo.superhero.network.packets.AbilityC2SPacket;
+import com.duzo.superhero.network.packets.ChangeDeltaMovementS2CPacket;
+import com.duzo.superhero.network.packets.SwingArmS2CPacket;
 import com.duzo.superhero.network.packets.TakeOffIronManSuitC2SPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -37,6 +39,16 @@ public class Network {
                 .decoder(AbilityC2SPacket::decode)
                 .encoder(AbilityC2SPacket::encode)
                 .consumerMainThread(AbilityC2SPacket::handle)
+                .add();
+        net.messageBuilder(ChangeDeltaMovementS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+                .decoder(ChangeDeltaMovementS2CPacket::decode)
+                .encoder(ChangeDeltaMovementS2CPacket::encode)
+                .consumerMainThread(ChangeDeltaMovementS2CPacket::handle)
+                .add();
+        net.messageBuilder(SwingArmS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+                .decoder(SwingArmS2CPacket::decode)
+                .encoder(SwingArmS2CPacket::encode)
+                .consumerMainThread(SwingArmS2CPacket::handle)
                 .add();
     }
 

@@ -1,6 +1,7 @@
 package com.duzo.superhero.client.renderers;
 
 import com.duzo.superhero.entities.UnibeamEntity;
+import com.duzo.superhero.items.ironman.IronManArmourItem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
@@ -11,6 +12,9 @@ import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.player.Player;
 import org.joml.Matrix4f;
 
 public class UnibeamRenderer extends EntityRenderer<UnibeamEntity> {
@@ -49,6 +53,23 @@ public class UnibeamRenderer extends EntityRenderer<UnibeamEntity> {
         quad(matrix4f, vertexconsumer, 0, -1.25f, 0, 0, -1.25f, 1f, 1f, 1f, 0.025f, 0.025f, true, false, true, true);
         quad(matrix4f, vertexconsumer, 0, -1.25f, 0, 0, -1.25f, 1f, 1f, 1f, 0.025f, 0.025f, true, true, false, true);
         quad(matrix4f, vertexconsumer, 0, -1.25f, 0, 0, -1.25f, 1f, 1f, 1f, 0.025f, 0.025f, false, true, false, false);
+
+        updateEntityPosition(entity);
+    }
+
+    private static void updateEntityPosition(UnibeamEntity entity) {
+        Player player = entity.level.getNearestPlayer(entity,10d);
+
+        if (player == null) return;
+
+        if (!(player.getItemBySlot(EquipmentSlot.CHEST).getItem() instanceof IronManArmourItem)) return;
+
+        // @TODO move this code somewhere thats constantly ran bc the delay is very noticeable.
+        int i = Mth.clamp(0, 0, 64);
+        float f2 = Mth.cos(player.yBodyRot * ((float) Math.PI / 180F)) * (0F + 1.21F * (float) i);
+        float f3 = Mth.sin(player.yBodyRot * ((float) Math.PI / 180F)) * (0F + 1.21F * (float) i);
+        float f6 = (0.3F * 0.45F) * ((float) i * 0.2F + 0.0F);
+        entity.moveTo(player.getX() + (double) f2, player.getY() + (double) f6, player.getZ() + (double) f3, player.getYRot(), player.getXRot());
     }
 
     // Copied from lightning bolt renderer
