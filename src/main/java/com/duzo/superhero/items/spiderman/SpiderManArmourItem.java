@@ -57,7 +57,7 @@ public class SpiderManArmourItem extends SuperheroArmourItem {
         if (player.level.getBlockState(hitPos).isAir()) return;
 
         Vec3 look = player.getLookAngle().normalize().multiply(2.5d, 3.5d, 2.5d);//.add(0,0.5d,0);
-        Network.sendToPlayer(new ChangeDeltaMovementS2CPacket(look), (ServerPlayer) player);
+        Network.sendToPlayer(new ChangeDeltaMovementS2CPacket(look.add(player.getDeltaMovement().x,0,player.getDeltaMovement().z)), (ServerPlayer) player);
     }
 
     protected static BlockHitResult getPlayerPOVHitResult(Level level, Player player) {
