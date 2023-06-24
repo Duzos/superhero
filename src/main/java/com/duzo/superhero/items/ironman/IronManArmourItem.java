@@ -57,7 +57,7 @@ public class IronManArmourItem extends SuperheroArmourItem {
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> components, TooltipFlag flag) {
-        if (this.getMark() != null) {
+        if (this.getMark() != null && Screen.hasShiftDown()) {
             components.add(Component.translatable(fileNameToUsable(this.getMark().getSerializedName())).withStyle(ChatFormatting.GOLD));
         }
 

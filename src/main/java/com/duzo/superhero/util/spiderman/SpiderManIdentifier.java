@@ -12,6 +12,13 @@ public enum SpiderManIdentifier implements StringRepresentable {
         public boolean isSlim() {
             return false;
         }
+
+        @Override
+        public String getLangFileName(EquipmentSlot slot) {
+            String slotName = fileNameToUsable(nameFromSlot(slot));
+
+            return "Miles" + " " + slotName;
+        }
     };
 
     @Override
@@ -29,6 +36,6 @@ public enum SpiderManIdentifier implements StringRepresentable {
         String base = fileNameToUsable(this.getSerializedName());
         String slotName = fileNameToUsable(nameFromSlot(slot));
 
-        return "Iron Man" + " " + slotName;
+        return "SpiderMan" + " " + slotName;
     }
 }

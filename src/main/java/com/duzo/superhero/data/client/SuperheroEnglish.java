@@ -2,6 +2,7 @@ package com.duzo.superhero.data.client;
 
 import com.duzo.superhero.Superhero;
 import com.duzo.superhero.blocks.SuperheroBlocks;
+import com.duzo.superhero.items.SuperheroArmourItem;
 import com.duzo.superhero.items.ironman.IronManArmourItem;
 import com.duzo.superhero.items.SuperheroItems;
 import com.duzo.superhero.items.spiderman.SpiderManArmourItem;
@@ -19,6 +20,14 @@ public class SuperheroEnglish extends LanguageProvider {
 
     @Override
     protected void addTranslations() {
+        // Adding hover text
+        for (RegistryObject<Item> entry : SuperheroItems.ITEMS.getEntries()) {
+            if (entry.get() instanceof SuperheroArmourItem item) {
+                add("text." + item.getDescriptionId(),item.getHoverTextMessage());
+                add("text." + item.getDescriptionId() + ".shifting",item.getShiftingHoverTextMessage());
+            }
+        }
+
         // Auto adding iron man items
         for (RegistryObject<Item> entry : SuperheroItems.ITEMS.getEntries()) {
             if (entry.get() instanceof IronManArmourItem item) {
@@ -27,7 +36,7 @@ public class SuperheroEnglish extends LanguageProvider {
             }
         }
 
-        // Auto adding super man items
+        // Auto adding spider man items
         for (RegistryObject<Item> entry : SuperheroItems.ITEMS.getEntries()) {
             if (entry.get() instanceof SpiderManArmourItem item) {
                 if (!item.getIdentifier().autoAdd()) continue;

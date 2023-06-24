@@ -3,13 +3,11 @@ package com.duzo.superhero;
 import com.duzo.superhero.blocks.SuperheroBlocks;
 import com.duzo.superhero.entities.SuperheroEntities;
 import com.duzo.superhero.events.FlyingEventHandler;
-import com.duzo.superhero.items.SuperheroArmourItem;
-import com.duzo.superhero.items.ironman.IronManArmourItem;
 import com.duzo.superhero.items.SuperheroItems;
+import com.duzo.superhero.items.ironman.IronManArmourItem;
+import com.duzo.superhero.items.spiderman.SpiderManArmourItem;
 import com.duzo.superhero.network.Network;
 import com.duzo.superhero.sounds.SuperheroSounds;
-import com.duzo.superhero.world.SuperheroConfiguredFeatures;
-import com.duzo.superhero.world.SuperheroPlacedFeatures;
 import com.mojang.logging.LogUtils;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -17,7 +15,6 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.CreativeModeTabEvent;
@@ -72,6 +69,9 @@ public class Superhero {
 
         if (player.getItemBySlot(EquipmentSlot.FEET).getItem() instanceof IronManArmourItem) {
             event.setDistance(0);
+        }
+        if (player.getItemBySlot(EquipmentSlot.FEET).getItem() instanceof SpiderManArmourItem) {
+            event.setDamageMultiplier(event.getDamageMultiplier() * 0.5f);
         }
     }
 
