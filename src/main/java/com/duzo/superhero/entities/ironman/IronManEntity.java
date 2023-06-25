@@ -1,6 +1,8 @@
-package com.duzo.superhero.entities;
+package com.duzo.superhero.entities.ironman;
 
 import com.duzo.superhero.Superhero;
+import com.duzo.superhero.entities.HumanoidEntity;
+import com.duzo.superhero.entities.SuperheroEntities;
 import com.duzo.superhero.items.SuperheroArmourItem;
 import com.duzo.superhero.sounds.SuperheroSounds;
 import com.duzo.superhero.util.ironman.IronManCapability;

@@ -2,7 +2,6 @@ package com.duzo.superhero.client.layers;
 
 import com.duzo.superhero.client.models.items.IronManArmourModel;
 import com.duzo.superhero.entities.HumanoidEntity;
-import com.duzo.superhero.entities.IronManEntity;
 import com.duzo.superhero.items.ironman.IronManArmourItem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;

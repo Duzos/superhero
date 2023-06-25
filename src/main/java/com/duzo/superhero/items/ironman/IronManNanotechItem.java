@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.function.Consumer;
 
 import static com.duzo.superhero.blocks.IronManSuitCaseBlock.equipArmourForMark;
-import static com.duzo.superhero.entities.IronManEntity.fileNameToUsable;
+import static com.duzo.superhero.entities.ironman.IronManEntity.fileNameToUsable;
 
 public class IronManNanotechItem extends SuperheroArmourItem {
     private IronManMark mark;

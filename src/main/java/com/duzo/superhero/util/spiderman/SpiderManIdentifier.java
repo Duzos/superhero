@@ -3,8 +3,8 @@ package com.duzo.superhero.util.spiderman;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.entity.EquipmentSlot;
 
-import static com.duzo.superhero.entities.IronManEntity.fileNameToUsable;
-import static com.duzo.superhero.entities.IronManEntity.nameFromSlot;
+import static com.duzo.superhero.entities.ironman.IronManEntity.fileNameToUsable;
+import static com.duzo.superhero.entities.ironman.IronManEntity.nameFromSlot;
 
 public enum SpiderManIdentifier implements StringRepresentable {
     MILES {

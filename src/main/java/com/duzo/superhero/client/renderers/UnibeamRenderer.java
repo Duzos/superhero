@@ -1,6 +1,6 @@
 package com.duzo.superhero.client.renderers;
 
-import com.duzo.superhero.entities.UnibeamEntity;
+import com.duzo.superhero.entities.ironman.UnibeamEntity;
 import com.duzo.superhero.items.ironman.IronManArmourItem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -64,7 +64,6 @@ public class UnibeamRenderer extends EntityRenderer<UnibeamEntity> {
 
         if (!(player.getItemBySlot(EquipmentSlot.CHEST).getItem() instanceof IronManArmourItem)) return;
 
-        // @TODO move this code somewhere thats constantly ran bc the delay is very noticeable.
         int i = Mth.clamp(0, 0, 64);
         float f2 = Mth.cos(player.yBodyRot * ((float) Math.PI / 180F)) * (0F + 1.21F * (float) i);
         float f3 = Mth.sin(player.yBodyRot * ((float) Math.PI / 180F)) * (0F + 1.21F * (float) i);

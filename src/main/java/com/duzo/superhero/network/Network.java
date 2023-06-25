@@ -1,10 +1,7 @@
 package com.duzo.superhero.network;
 
 import com.duzo.superhero.Superhero;
-import com.duzo.superhero.network.packets.AbilityC2SPacket;
-import com.duzo.superhero.network.packets.ChangeDeltaMovementS2CPacket;
-import com.duzo.superhero.network.packets.SwingArmS2CPacket;
-import com.duzo.superhero.network.packets.TakeOffIronManSuitC2SPacket;
+import com.duzo.superhero.network.packets.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkDirection;
@@ -49,6 +46,21 @@ public class Network {
                 .decoder(SwingArmS2CPacket::decode)
                 .encoder(SwingArmS2CPacket::encode)
                 .consumerMainThread(SwingArmS2CPacket::handle)
+                .add();
+        net.messageBuilder(UpdateWebRopePointsS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+                .decoder(UpdateWebRopePointsS2CPacket::decode)
+                .encoder(UpdateWebRopePointsS2CPacket::encode)
+                .consumerMainThread(UpdateWebRopePointsS2CPacket::handle)
+                .add();
+        net.messageBuilder(RequestWebRopePointsC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(RequestWebRopePointsC2SPacket::decode)
+                .encoder(RequestWebRopePointsC2SPacket::encode)
+                .consumerMainThread(RequestWebRopePointsC2SPacket::handle)
+                .add();
+        net.messageBuilder(UpdateWebRopeAlphaS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+                .decoder(UpdateWebRopeAlphaS2CPacket::decode)
+                .encoder(UpdateWebRopeAlphaS2CPacket::encode)
+                .consumerMainThread(UpdateWebRopeAlphaS2CPacket::handle)
                 .add();
     }
 

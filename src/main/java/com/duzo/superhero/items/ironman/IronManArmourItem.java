@@ -2,9 +2,9 @@ package com.duzo.superhero.items.ironman;
 
 import com.duzo.superhero.Superhero;
 import com.duzo.superhero.client.models.items.IronManArmourModel;
-import com.duzo.superhero.entities.IronManEntity;
+import com.duzo.superhero.entities.ironman.IronManEntity;
 import com.duzo.superhero.entities.SuperheroEntities;
-import com.duzo.superhero.entities.UnibeamEntity;
+import com.duzo.superhero.entities.ironman.UnibeamEntity;
 import com.duzo.superhero.items.SuperheroArmourItem;
 import com.duzo.superhero.sounds.SuperheroSounds;
 import com.duzo.superhero.util.ironman.IronManCapabilities;
@@ -38,8 +38,8 @@ import java.util.Random;
 import java.util.function.Consumer;
 
 import static com.duzo.superhero.blocks.IronManSuitCaseBlock.convertArmourToSuitcase;
-import static com.duzo.superhero.entities.IronManEntity.*;
-import static com.duzo.superhero.entities.IronManEntity.spawnNew;
+import static com.duzo.superhero.entities.ironman.IronManEntity.*;
+import static com.duzo.superhero.entities.ironman.IronManEntity.spawnNew;
 import static com.duzo.superhero.items.ironman.IronManNanotechItem.convertArmourToNanotech;
 import static com.duzo.superhero.items.ironman.IronManNanotechItem.convertNanotechToArmour;
 

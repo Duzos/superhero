@@ -16,5 +16,11 @@
       "superhero:ironman_step"
     ],
     "subtitle": "subtitle.superhero.ironman_step"
+  },
+  "spiderman_shoot": {
+    "sounds": [
+      "superhero:spiderman_shoot"
+    ],
+    "subtitle": "subtitle.superhero.spiderman_shoot"
   }
 }

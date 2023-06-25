@@ -7,6 +7,7 @@ import com.duzo.superhero.items.SuperheroItems;
 import com.duzo.superhero.items.ironman.IronManArmourItem;
 import com.duzo.superhero.items.spiderman.SpiderManArmourItem;
 import com.duzo.superhero.network.Network;
+import com.duzo.superhero.particles.SuperheroParticles;
 import com.duzo.superhero.sounds.SuperheroSounds;
 import com.mojang.logging.LogUtils;
 import net.minecraft.network.chat.Component;
@@ -46,6 +47,7 @@ public class Superhero {
         SuperheroItems.ITEMS.register(modEventBus);
         SuperheroBlocks.BLOCKS.register(modEventBus);
         SuperheroSounds.SOUNDS.register(modEventBus);
+        SuperheroParticles.PARTICLE_TYPES.register(modEventBus);
         MinecraftForge.EVENT_BUS.register(new FlyingEventHandler());
 
         MinecraftForge.EVENT_BUS.register(this);

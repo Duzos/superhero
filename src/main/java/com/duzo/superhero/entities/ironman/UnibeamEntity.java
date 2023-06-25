@@ -1,5 +1,6 @@
-package com.duzo.superhero.entities;
+package com.duzo.superhero.entities.ironman;
 
+import com.duzo.superhero.entities.SuperheroEntities;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;

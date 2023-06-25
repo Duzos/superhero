@@ -1,4 +1,4 @@
-package com.duzo.superhero.entities;
+package com.duzo.superhero.entities.ironman;
 
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.item.Item;

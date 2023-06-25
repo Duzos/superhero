@@ -16,7 +16,7 @@ import net.minecraftforge.network.NetworkEvent;
 import java.util.function.Supplier;
 
 import static com.duzo.superhero.blocks.IronManSuitCaseBlock.convertArmourToSuitcase;
-import static com.duzo.superhero.entities.IronManEntity.spawnNew;
+import static com.duzo.superhero.entities.ironman.IronManEntity.spawnNew;
 import static com.duzo.superhero.items.ironman.IronManNanotechItem.convertArmourToNanotech;
 import static com.duzo.superhero.items.ironman.IronManNanotechItem.convertNanotechToArmour;
 

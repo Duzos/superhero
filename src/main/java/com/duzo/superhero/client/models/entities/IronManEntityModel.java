@@ -1,8 +1,7 @@
 package com.duzo.superhero.client.models.entities;
 
 import com.duzo.superhero.Superhero;
-import com.duzo.superhero.entities.HumanoidEntity;
-import com.duzo.superhero.entities.IronManEntity;
+import com.duzo.superhero.entities.ironman.IronManEntity;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;

@@ -1,6 +1,6 @@
 package com.duzo.superhero.items.ironman;
 
-import com.duzo.superhero.entities.IronManEntity;
+import com.duzo.superhero.entities.ironman.IronManEntity;
 import com.duzo.superhero.util.ironman.IronManMark;
 import net.minecraft.world.item.Item;
 

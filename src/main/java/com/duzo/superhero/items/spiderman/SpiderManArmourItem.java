@@ -2,15 +2,20 @@ package com.duzo.superhero.items.spiderman;
 
 import com.duzo.superhero.client.models.AlexSkinModel;
 import com.duzo.superhero.client.models.SteveSkinModel;
+import com.duzo.superhero.entities.spiderman.WebRopeEntity;
 import com.duzo.superhero.items.SuperheroArmourItem;
 import com.duzo.superhero.network.Network;
 import com.duzo.superhero.network.packets.ChangeDeltaMovementS2CPacket;
 import com.duzo.superhero.network.packets.SwingArmS2CPacket;
+import com.duzo.superhero.particles.SuperheroParticles;
+import com.duzo.superhero.sounds.SuperheroSounds;
 import com.duzo.superhero.util.spiderman.SpiderManIdentifier;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
@@ -51,10 +56,23 @@ public class SpiderManArmourItem extends SuperheroArmourItem {
         BlockHitResult blockhitresult = getPlayerPOVHitResult(player.level,player);
         BlockPos hitPos = blockhitresult.getBlockPos();
         BlockPos hitPosRelative = hitPos.relative(blockhitresult.getDirection());
+        Vec3 hitVec3 = hitPosRelative.getCenter().relative(blockhitresult.getDirection().getOpposite(),0.45d);
 
         Network.sendToPlayer(new SwingArmS2CPacket(InteractionHand.MAIN_HAND), (ServerPlayer) player);
 
         if (player.level.getBlockState(hitPos).isAir()) return;
+
+        ((ServerLevel)player.level).sendParticles(SuperheroParticles.WEB_PARTICLES.get(),hitVec3.x(),hitVec3.y(),hitVec3.z(),1,0,0,0,0d);
+
+        player.level.playSound(null,player, SuperheroSounds.SPIDERMAN_SHOOT.get(), SoundSource.PLAYERS,1f,1f);
+
+        WebRopeEntity rope = new WebRopeEntity(player.level, hitVec3);
+        rope.moveTo(player.position());
+        rope.setXRot(player.getXRot());
+        rope.setYRot(player.getYRot());
+        player.level.addFreshEntity(rope);
+        rope.setPointsChanged();
+//        rope.setPointsChanged();
 
         Vec3 look = player.getLookAngle().normalize().multiply(2.5d, 3.5d, 2.5d);//.add(0,0.5d,0);
         Network.sendToPlayer(new ChangeDeltaMovementS2CPacket(look.add(player.getDeltaMovement().x,0,player.getDeltaMovement().z)), (ServerPlayer) player);
