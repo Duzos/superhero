@@ -16,8 +16,10 @@ public enum SuperheroArmourMaterials implements ArmorMaterial {
     }),
     SPIDER_MAN("spider_man",15,new int[]{2, 5, 6, 2}, 9, SoundEvents.ARMOR_EQUIP_LEATHER, 0.0F, 0.0F, () -> {
         return Ingredient.of(Items.STRING);
+    }),
+    BATMAN("batman",15,new int[]{2, 5, 6, 2}, 9, SoundEvents.ARMOR_EQUIP_CHAIN, 0.0F, 0.0F, () -> {
+        return Ingredient.of(Items.LEATHER);
     });
-
     private static final int[] HEALTH_PER_SLOT = new int[]{13, 15, 16, 11};
     private final String name;
     private final int durabilityMultiplier;

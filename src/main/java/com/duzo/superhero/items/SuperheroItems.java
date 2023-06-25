@@ -1,12 +1,14 @@
 package com.duzo.superhero.items;
 
 import com.duzo.superhero.Superhero;
+import com.duzo.superhero.items.batman.BatManArmourItem;
 import com.duzo.superhero.items.ironman.IronManArmourItem;
 import com.duzo.superhero.items.ironman.IronManEdithGlasses;
 import com.duzo.superhero.items.ironman.IronManNanotechItem;
 import com.duzo.superhero.items.spiderman.MilesHoodieItem;
 import com.duzo.superhero.items.spiderman.SpiderManArmourItem;
 import com.duzo.superhero.items.spiderman.SpiderManNanotechItem;
+import com.duzo.superhero.util.batman.BatManIdentifier;
 import com.duzo.superhero.util.ironman.IronManMark;
 import com.duzo.superhero.util.spiderman.SpiderManIdentifier;
 import net.minecraft.world.item.ArmorItem;
@@ -16,8 +18,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
-import static com.duzo.superhero.items.SuperheroArmourMaterials.IRON_MAN;
-import static com.duzo.superhero.items.SuperheroArmourMaterials.SPIDER_MAN;
+import static com.duzo.superhero.items.SuperheroArmourMaterials.*;
 
 public class SuperheroItems {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Superhero.MODID);
@@ -48,6 +49,12 @@ public class SuperheroItems {
 
             registerSpiderManSet(id);
         }
+
+        for (BatManIdentifier id : BatManIdentifier.values()) {
+            if (!id.autoAdd()) continue;
+
+            registerBatManSet(id);
+        }
     }
 
     public static void registerIronManSet(IronManMark mark) {
@@ -74,5 +81,18 @@ public class SuperheroItems {
                 () -> new SpiderManArmourItem(SPIDER_MAN, ArmorItem.Type.LEGGINGS,new Item.Properties().stacksTo(1),id));
         ITEMS.register(name + "_boots",
                 () -> new SpiderManArmourItem(SPIDER_MAN, ArmorItem.Type.BOOTS,new Item.Properties().stacksTo(1),id));
+    }
+
+    public static void registerBatManSet(BatManIdentifier id) {
+        String name = id.getSerializedName();
+
+        ITEMS.register(name + "_helmet",
+                () -> new BatManArmourItem(BATMAN, ArmorItem.Type.HELMET,new Item.Properties().stacksTo(1),id));
+        ITEMS.register(name + "_chestplate",
+                () -> new BatManArmourItem(BATMAN, ArmorItem.Type.CHESTPLATE,new Item.Properties().stacksTo(1),id));
+        ITEMS.register(name + "_leggings",
+                () -> new BatManArmourItem(BATMAN, ArmorItem.Type.LEGGINGS,new Item.Properties().stacksTo(1),id));
+        ITEMS.register(name + "_boots",
+                () -> new BatManArmourItem(BATMAN, ArmorItem.Type.BOOTS,new Item.Properties().stacksTo(1),id));
     }
 }

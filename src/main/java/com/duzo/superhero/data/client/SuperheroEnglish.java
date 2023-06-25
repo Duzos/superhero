@@ -3,8 +3,9 @@ package com.duzo.superhero.data.client;
 import com.duzo.superhero.Superhero;
 import com.duzo.superhero.blocks.SuperheroBlocks;
 import com.duzo.superhero.items.SuperheroArmourItem;
-import com.duzo.superhero.items.ironman.IronManArmourItem;
 import com.duzo.superhero.items.SuperheroItems;
+import com.duzo.superhero.items.batman.BatManArmourItem;
+import com.duzo.superhero.items.ironman.IronManArmourItem;
 import com.duzo.superhero.items.spiderman.SpiderManArmourItem;
 import com.duzo.superhero.util.KeyBinds;
 import net.minecraft.data.PackOutput;
@@ -39,6 +40,14 @@ public class SuperheroEnglish extends LanguageProvider {
         // Auto adding spider man items
         for (RegistryObject<Item> entry : SuperheroItems.ITEMS.getEntries()) {
             if (entry.get() instanceof SpiderManArmourItem item) {
+                if (!item.getIdentifier().autoAdd()) continue;
+                add(entry.get(),item.getIdentifier().getLangFileName(item.getEquipmentSlot()));
+            }
+        }
+
+        // Auto adding bat man items
+        for (RegistryObject<Item> entry : SuperheroItems.ITEMS.getEntries()) {
+            if (entry.get() instanceof BatManArmourItem item) {
                 if (!item.getIdentifier().autoAdd()) continue;
                 add(entry.get(),item.getIdentifier().getLangFileName(item.getEquipmentSlot()));
             }
