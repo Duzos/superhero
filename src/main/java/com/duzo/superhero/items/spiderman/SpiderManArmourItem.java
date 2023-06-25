@@ -23,6 +23,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -144,8 +145,19 @@ public class SpiderManArmourItem extends SuperheroArmourItem {
     }
 
     private void runMilesInvisibility(Player player) {
-        player.addEffect(new MobEffectInstance(MobEffects.INVISIBILITY, 120 * 20, 1, false, false, false));
+        if (!playerHasEffect(player,MobEffects.INVISIBILITY)) {
+            player.addEffect(new MobEffectInstance(MobEffects.INVISIBILITY, 120 * 20, 1, false, false, false));
+        } else {
+            player.removeEffect(MobEffects.INVISIBILITY);
+        }
 //        player.setInvisible(!player.isInvisible()); // This is good because its not an effect, but it causes more problems than it fixes
+    }
+
+    public static boolean playerHasEffect(Player player,MobEffect effect) {
+        for (MobEffectInstance instance : player.getActiveEffects()) {
+            if (instance.getEffect() == effect) return true;
+        }
+        return false;
     }
 
     private void shootWebAndSwingToIt(Player player) {
