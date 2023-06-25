@@ -67,10 +67,13 @@ public class SpiderManArmourItem extends SuperheroArmourItem {
         player.level.playSound(null,player, SuperheroSounds.SPIDERMAN_SHOOT.get(), SoundSource.PLAYERS,1f,1f);
 
         WebRopeEntity rope = new WebRopeEntity(player.level, hitVec3);
-        rope.moveTo(player.position());
-        rope.setXRot(player.getXRot());
-        rope.setYRot(player.getYRot());
+
+        int i = Mth.clamp(0, 0, 64);
+        float f2 = Mth.cos(player.yBodyRot * ((float) Math.PI / 180F)) * (0F + 1.21F * (float) i);
+        float f3 = Mth.sin(player.yBodyRot * ((float) Math.PI / 180F)) * (0F + 1.21F * (float) i);
+        float f6 = (0.3F * 0.45F) * ((float) i * 0.2F + 0.0F);
         player.level.addFreshEntity(rope);
+        rope.moveTo(player.getX() + (double) f2, player.getY() + (double) f6 + 2f, player.getZ() + (double) f3, player.getYRot(), player.getXRot());
         rope.setPointsChanged();
 //        rope.setPointsChanged();
 
