@@ -15,6 +15,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.model.HumanoidModel;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -77,6 +78,56 @@ public class SpiderManArmourItem extends SuperheroArmourItem {
     }
 
     @Override
+    public void inventoryTick(ItemStack stack, Level level, Entity entity, int p_41407_, boolean p_41408_) {
+        super.inventoryTick(stack, level, entity, p_41407_, p_41408_);
+
+        if (entity instanceof Player player) {
+            if (!isEquipped(stack,player)) return;
+
+
+            if (this.getEquipmentSlot() == EquipmentSlot.CHEST && isValidArmor(player)) {
+                this.runEffects(player);
+                this.runWallClimbs(player);
+            }
+        }
+    }
+
+    private void runEffects(Player player) {
+        if (this.getIdentifier().getCapabilities().has(SpiderManCapability.SUPER_STRENGTH)) {
+            player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 2 * 20, 1, false, false, false));
+            player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 2 * 20, 1, false, false, false));
+        }
+        if (this.getIdentifier().getCapabilities().has(SpiderManCapability.FAST_MOBILITY)) {
+            player.addEffect(new MobEffectInstance(MobEffects.JUMP, 2 * 20, 1, false, false, false));
+            player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 2 * 20, 1, false, false, false));
+        }
+    }
+
+    private void runWallClimbs(Player player) {
+        if (this.getIdentifier().getCapabilities().has(SpiderManCapability.WALL_CLIMBING)) {
+            if (Minecraft.getInstance().player != null) {
+                LocalPlayer clientPlayer = Minecraft.getInstance().player;
+                if (clientPlayer.horizontalCollision) {
+                    if (clientPlayer.isCrouching()) {
+                        stickToWall(player);
+                    } else if (clientPlayer.input.jumping) {
+                        climbWall(player);
+                    }
+                }
+            }
+        }
+    }
+
+    private static void stickToWall(Player player) {
+        player.setDeltaMovement(player.getDeltaMovement().x,0,player.getDeltaMovement().z);
+    }
+
+    private static void climbWall(Player player) {
+        player.setDeltaMovement(player.getDeltaMovement().x,0.2,player.getDeltaMovement().z);
+    }
+
+
+    @Override
     public void runAbility(Player player, int number) {
         // Always server-side
         if (number == 1) {
@@ -109,7 +160,7 @@ public class SpiderManArmourItem extends SuperheroArmourItem {
 
         ((ServerLevel)player.level).sendParticles(SuperheroParticles.WEB_PARTICLES.get(),hitVec3.x(),hitVec3.y(),hitVec3.z(),1,0,0,0,0d);
 
-        player.level.playSound(null,player, SuperheroSounds.SPIDERMAN_SHOOT.get(), SoundSource.PLAYERS,1f,1f);
+        player.level.playSound(null,player, SuperheroSounds.SPIDERMAN_SHOOT.get(), SoundSource.PLAYERS,0.25f,1f);
 
         WebRopeEntity rope = new WebRopeEntity(player.level, hitVec3);
 
@@ -122,7 +173,7 @@ public class SpiderManArmourItem extends SuperheroArmourItem {
         rope.setPointsChanged();
 //        rope.setPointsChanged();
 
-        Vec3 look = player.getLookAngle().normalize().multiply(2.5d, 3.5d, 2.5d);//.add(0,0.5d,0);
+        Vec3 look = player.getLookAngle().normalize().multiply(2.5d, 2.5d, 2.5d);//.add(0,0.5d,0);
         Network.sendToPlayer(new ChangeDeltaMovementS2CPacket(look.add(player.getDeltaMovement().x,0,player.getDeltaMovement().z)), (ServerPlayer) player);
     }
 

@@ -22,19 +22,19 @@ public enum SpiderManIdentifier implements StringRepresentable {
 
         @Override
         public SpiderManCapabilities getCapabilities() {
-            return new SpiderManCapabilities().add(SpiderManCapability.WEB_SHOOTING);
+            return new SpiderManCapabilities().add(SpiderManCapability.WEB_SHOOTING,SpiderManCapability.WALL_CLIMBING,SpiderManCapability.SUPER_STRENGTH,SpiderManCapability.FAST_MOBILITY);
         }
     },
     IRON_SPIDER {
         @Override
         public SpiderManCapabilities getCapabilities() {
-            return new SpiderManCapabilities().add(SpiderManCapability.WEB_SHOOTING,SpiderManCapability.NANOTECH);
+            return new SpiderManCapabilities().add(SpiderManCapability.NANOTECH,SpiderManCapability.WEB_SHOOTING,SpiderManCapability.WALL_CLIMBING,SpiderManCapability.SUPER_STRENGTH,SpiderManCapability.FAST_MOBILITY);
         }
     },
     AMAZING_SPIDER_MAN {
         @Override
         public SpiderManCapabilities getCapabilities() {
-            return new SpiderManCapabilities().add(SpiderManCapability.WEB_SHOOTING);
+            return new SpiderManCapabilities().add(SpiderManCapability.WEB_SHOOTING,SpiderManCapability.WALL_CLIMBING,SpiderManCapability.SUPER_STRENGTH,SpiderManCapability.FAST_MOBILITY);
         }
     },
     MILES_CLOTHED {
@@ -52,7 +52,7 @@ public enum SpiderManIdentifier implements StringRepresentable {
 
         @Override
         public SpiderManCapabilities getCapabilities() {
-            return new SpiderManCapabilities().add(SpiderManCapability.WEB_SHOOTING,SpiderManCapability.INVISIBILITY);
+            return new SpiderManCapabilities().add(SpiderManCapability.INVISIBILITY,SpiderManCapability.WEB_SHOOTING,SpiderManCapability.WALL_CLIMBING,SpiderManCapability.SUPER_STRENGTH,SpiderManCapability.FAST_MOBILITY);
         }
     },
     MILES {
@@ -70,7 +70,7 @@ public enum SpiderManIdentifier implements StringRepresentable {
 
         @Override
         public SpiderManCapabilities getCapabilities() {
-            return new SpiderManCapabilities().add(SpiderManCapability.WEB_SHOOTING,SpiderManCapability.INVISIBILITY);
+            return new SpiderManCapabilities().add(SpiderManCapability.INVISIBILITY,SpiderManCapability.WEB_SHOOTING,SpiderManCapability.WALL_CLIMBING,SpiderManCapability.SUPER_STRENGTH,SpiderManCapability.FAST_MOBILITY);
         }
     };
 
