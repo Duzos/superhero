@@ -1,13 +1,8 @@
 package com.duzo.superhero.mixin;
 
-import com.duzo.superhero.items.ironman.IronManArmourItem;
-import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.model.HumanoidModel;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.phys.AABB;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -33,6 +28,7 @@ public abstract class HumanoidModelMixin<T extends LivingEntity> {
             humanoidModel.rightArm.setRotation(0,0,0);
             humanoidModel.leftLeg.setRotation(0,0,0);
             humanoidModel.rightLeg.setRotation(0,0,0);
+            humanoidModel.body.setRotation(0,0,0);
 //            AABB box = player.getBoundingBox().deflate(0,1,0);
 //            player.setBoundingBox(box);
         }

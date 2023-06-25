@@ -7,10 +7,40 @@ import static com.duzo.superhero.entities.ironman.IronManEntity.fileNameToUsable
 import static com.duzo.superhero.entities.ironman.IronManEntity.nameFromSlot;
 
 public enum SpiderManIdentifier implements StringRepresentable {
-    MILES {
+    GWEN {
         @Override
         public boolean isSlim() {
-            return false;
+            return true;
+        }
+
+        @Override
+        public String getLangFileName(EquipmentSlot slot) {
+            String slotName = fileNameToUsable(nameFromSlot(slot));
+
+            return "SpiderWoman" + " " + slotName;
+        }
+
+        @Override
+        public SpiderManCapabilities getCapabilities() {
+            return new SpiderManCapabilities().add(SpiderManCapability.WEB_SHOOTING);
+        }
+    },
+    IRON_SPIDER {
+        @Override
+        public SpiderManCapabilities getCapabilities() {
+            return new SpiderManCapabilities().add(SpiderManCapability.WEB_SHOOTING,SpiderManCapability.NANOTECH);
+        }
+    },
+    AMAZING_SPIDER_MAN {
+        @Override
+        public SpiderManCapabilities getCapabilities() {
+            return new SpiderManCapabilities().add(SpiderManCapability.WEB_SHOOTING);
+        }
+    },
+    MILES_CLOTHED {
+        @Override
+        public boolean isSlim() {
+            return true;
         }
 
         @Override
@@ -18,6 +48,29 @@ public enum SpiderManIdentifier implements StringRepresentable {
             String slotName = fileNameToUsable(nameFromSlot(slot));
 
             return "Miles" + " " + slotName;
+        }
+
+        @Override
+        public SpiderManCapabilities getCapabilities() {
+            return new SpiderManCapabilities().add(SpiderManCapability.WEB_SHOOTING,SpiderManCapability.INVISIBILITY);
+        }
+    },
+    MILES {
+        @Override
+        public boolean isSlim() {
+            return true;
+        }
+
+        @Override
+        public String getLangFileName(EquipmentSlot slot) {
+            String slotName = fileNameToUsable(nameFromSlot(slot));
+
+            return "Miles" + " " + slotName;
+        }
+
+        @Override
+        public SpiderManCapabilities getCapabilities() {
+            return new SpiderManCapabilities().add(SpiderManCapability.WEB_SHOOTING,SpiderManCapability.INVISIBILITY);
         }
     };
 
@@ -38,4 +91,5 @@ public enum SpiderManIdentifier implements StringRepresentable {
 
         return "SpiderMan" + " " + slotName;
     }
+    public abstract SpiderManCapabilities getCapabilities();
 }

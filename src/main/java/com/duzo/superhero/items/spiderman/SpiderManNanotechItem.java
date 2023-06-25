@@ -1,37 +1,32 @@
-package com.duzo.superhero.items.ironman;
+package com.duzo.superhero.items.spiderman;
 
 import com.duzo.superhero.client.models.SteveSkinModel;
 import com.duzo.superhero.items.SuperheroArmourItem;
 import com.duzo.superhero.items.SuperheroItems;
-import com.duzo.superhero.sounds.SuperheroSounds;
-import com.duzo.superhero.util.ironman.IronManMark;
+import com.duzo.superhero.util.spiderman.SpiderManIdentifier;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.network.chat.Component;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ArmorMaterial;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
+import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-import static com.duzo.superhero.blocks.IronManSuitCaseBlock.equipArmourForMark;
 import static com.duzo.superhero.entities.ironman.IronManEntity.fileNameToUsable;
 
-public class IronManNanotechItem extends SuperheroArmourItem {
-    private IronManMark mark;
-    public IronManNanotechItem(ArmorMaterial material, Type type, Item.Properties properties) {
+public class SpiderManNanotechItem extends SuperheroArmourItem {
+    public SpiderManNanotechItem(ArmorMaterial material, Type type, Item.Properties properties) {
         super(material, type, properties);
     }
 
@@ -39,18 +34,16 @@ public class IronManNanotechItem extends SuperheroArmourItem {
     public void runAbility(Player player, int number) {
         Level level = player.getLevel();
         ItemStack chest = player.getItemBySlot(EquipmentSlot.CHEST);
-        if (number == 1) {
-            if (chest.getItem() instanceof IronManNanotechItem) {
+        if (number == 2) {
+            if (chest.getItem() instanceof SpiderManNanotechItem) {
                 convertNanotechToArmour(chest,player);
-                level.playSound(null,player, SuperheroSounds.IRONMAN_POWERUP.get(), SoundSource.PLAYERS,1f,1f);
-                return;
             }
         }
     }
 
     @Override
     public boolean isValidArmor(LivingEntity player) {
-        return player.getItemBySlot(EquipmentSlot.CHEST).getItem() instanceof IronManNanotechItem;
+        return player.getItemBySlot(EquipmentSlot.CHEST).getItem() instanceof SpiderManNanotechItem;
     }
 
     @Override
@@ -58,7 +51,6 @@ public class IronManNanotechItem extends SuperheroArmourItem {
         consumer.accept(new IClientItemExtensions() {
             @Override
             public @NotNull HumanoidModel<?> getHumanoidArmorModel(LivingEntity livingEntity, ItemStack itemStack, EquipmentSlot equipmentSlot, HumanoidModel<?> original) {
-
                 return new SteveSkinModel<>(Minecraft.getInstance().getEntityModels().bakeLayer(SteveSkinModel.LAYER_LOCATION));
             }
         });
@@ -72,43 +64,74 @@ public class IronManNanotechItem extends SuperheroArmourItem {
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> components, TooltipFlag flag) {
-        if (getMark(stack) != null) {
-            components.add(Component.translatable(fileNameToUsable(getMark(stack).getSerializedName())).withStyle(ChatFormatting.GOLD));
+        if (getID(stack) != null) {
+            components.add(Component.translatable(fileNameToUsable(getID(stack).getSerializedName())).withStyle(ChatFormatting.GOLD));
         }
 
         super.appendHoverText(stack, level, components, flag);
     }
 
-    public static IronManMark getMark(ItemStack stack) {
+    public static SpiderManIdentifier getID(ItemStack stack) {
         if (stack.hasTag()) {
-            if (stack.getTag().getString("mark") == "") return null;
+            if (stack.getTag().getString("id") == "") return null;
 
-            return IronManMark.valueOf(stack.getTag().getString("mark").toUpperCase());
+            return SpiderManIdentifier.valueOf(stack.getTag().getString("id").toUpperCase());
         }
         return null;
     };
-    public static void setMark(ItemStack stack,IronManMark mark) {
+    public static void setID(ItemStack stack, SpiderManIdentifier id) {
         if (stack.hasTag()) {
-            stack.getTag().putString("mark",mark.getSerializedName());
+            stack.getTag().putString("id",id.getSerializedName());
         }
     };
 
 
     public static void convertArmourToNanotech(Player player) {
-        if (!(player.getItemBySlot(EquipmentSlot.HEAD).getItem() instanceof IronManArmourItem item)) return;
+        if (!(player.getItemBySlot(EquipmentSlot.HEAD).getItem() instanceof SpiderManArmourItem item)) return;
 
-        ItemStack stack = new ItemStack(SuperheroItems.IRON_MAN_NANOTECH.get());
-        setMark(stack,item.getMark());
+        ItemStack stack = new ItemStack(SuperheroItems.SPIDERMAN_NANOTECH.get());
+        setID(stack,item.getIdentifier());
 
-        player.setItemSlot(EquipmentSlot.HEAD,ItemStack.EMPTY);
+        player.setItemSlot(EquipmentSlot.HEAD, ItemStack.EMPTY);
         player.setItemSlot(EquipmentSlot.CHEST,stack);
         player.setItemSlot(EquipmentSlot.LEGS,ItemStack.EMPTY);
         player.setItemSlot(EquipmentSlot.FEET,ItemStack.EMPTY);
     }
     public static void convertNanotechToArmour(ItemStack stack, Player player) {
-        IronManMark mark = getMark(stack);
-        if (mark == null) return;
+        SpiderManIdentifier id = getID(stack);
+        if (id == null) return;
 
-        equipArmourForMark(mark,player,true);
+        equipSpiderSuitForID(id,player,true);
+    }
+
+    public static boolean equipSpiderSuitForID(SpiderManIdentifier id, Player player, boolean excludeNanotech) {
+        for (EquipmentSlot slot : EquipmentSlot.values()) {
+            if (!slot.isArmor()) continue;
+
+            if (!player.getItemBySlot(slot).isEmpty()) {
+                if (excludeNanotech && slot == EquipmentSlot.CHEST) {
+                    if (player.getItemBySlot(slot).getItem() instanceof SpiderManNanotechItem) {
+                        continue;
+                    }
+                } else {
+                    return false;
+                }
+            }
+        }
+
+        List<ArmorItem> armour = new ArrayList<>();
+        for (RegistryObject<Item> item : SuperheroItems.ITEMS.getEntries()) {
+            if (item.getId().toString().contains(id.getSerializedName())) {
+                armour.add((ArmorItem) item.get());
+            }
+        }
+
+        if (armour.isEmpty()) return false;
+
+        for (ArmorItem item : armour) {
+            player.setItemSlot(item.getEquipmentSlot(), new ItemStack(item));
+        }
+
+        return true;
     }
 }

@@ -1,9 +1,12 @@
 package com.duzo.superhero.util.ironman;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
-public class IronManCapabilities {
+public class IronManCapabilities implements Iterable<IronManCapability> {
     private List<IronManCapability> capabilities = new ArrayList<>();
     public IronManCapabilities add(IronManCapability capability) {
         this.capabilities.add(capability);
@@ -19,4 +22,9 @@ public class IronManCapabilities {
         return this.capabilities.contains(capability);
     }
 
+    @NotNull
+    @Override
+    public Iterator<IronManCapability> iterator() {
+        return this.capabilities.iterator();
+    }
 }

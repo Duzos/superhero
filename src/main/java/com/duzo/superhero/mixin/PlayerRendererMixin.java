@@ -1,6 +1,7 @@
 package com.duzo.superhero.mixin;
 
 import com.duzo.superhero.items.SuperheroArmourItem;
+import com.duzo.superhero.items.spiderman.MilesHoodieItem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.player.AbstractClientPlayer;
@@ -48,7 +49,7 @@ public abstract class PlayerRendererMixin extends LivingEntityRenderer<AbstractC
         if(head instanceof SuperheroArmourItem) {
             playerModel.hat.visible = false;
         }
-        if(chest instanceof SuperheroArmourItem) {
+        if(chest instanceof SuperheroArmourItem || chest instanceof MilesHoodieItem) {
             playerModel.jacket.visible = false;
             playerModel.leftSleeve.visible = false;
             playerModel.rightSleeve.visible = false;

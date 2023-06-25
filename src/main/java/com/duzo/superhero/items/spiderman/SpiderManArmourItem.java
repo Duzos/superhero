@@ -9,21 +9,28 @@ import com.duzo.superhero.network.packets.ChangeDeltaMovementS2CPacket;
 import com.duzo.superhero.network.packets.SwingArmS2CPacket;
 import com.duzo.superhero.particles.SuperheroParticles;
 import com.duzo.superhero.sounds.SuperheroSounds;
+import com.duzo.superhero.util.spiderman.SpiderManCapability;
 import com.duzo.superhero.util.spiderman.SpiderManIdentifier;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
@@ -32,7 +39,11 @@ import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
 import java.util.function.Consumer;
+
+import static com.duzo.superhero.entities.ironman.IronManEntity.fileNameToUsable;
+import static com.duzo.superhero.items.spiderman.SpiderManNanotechItem.convertArmourToNanotech;
 
 public class SpiderManArmourItem extends SuperheroArmourItem {
     public static final SpiderManIdentifier DEFAULT_ID = SpiderManIdentifier.MILES;
@@ -46,10 +57,44 @@ public class SpiderManArmourItem extends SuperheroArmourItem {
     }
 
     @Override
-    public void runAbility(Player player, int number) {
-        if (number == 1) {
-            this.shootWebAndSwingToIt(player);
+    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> components, TooltipFlag flag) {
+        if (this.getIdentifier() != null && Screen.hasShiftDown()) {
+            components.add(Component.translatable(fileNameToUsable(this.getIdentifier().getSerializedName())).withStyle(ChatFormatting.GOLD));
         }
+
+        super.appendHoverText(stack, level, components, flag);
+    }
+
+    @Override
+    public String getShiftingHoverTextMessage() {
+        StringBuilder base = new StringBuilder();
+
+        for (SpiderManCapability capability : this.getIdentifier().getCapabilities()) {
+            base.append("/n").append(fileNameToUsable(capability.getSerializedName()));
+        }
+
+        return base.toString();
+    }
+
+    @Override
+    public void runAbility(Player player, int number) {
+        // Always server-side
+        if (number == 1) {
+            if (this.getIdentifier().getCapabilities().has(SpiderManCapability.WEB_SHOOTING)) {
+                this.shootWebAndSwingToIt(player);
+            }
+        } else if (number == 2) {
+            if (this.getIdentifier().getCapabilities().has(SpiderManCapability.INVISIBILITY)) {
+                this.runMilesInvisibility(player);
+            } else if (this.getIdentifier().getCapabilities().has(SpiderManCapability.NANOTECH)) {
+                convertArmourToNanotech(player);
+            }
+        }
+    }
+
+    private void runMilesInvisibility(Player player) {
+        player.addEffect(new MobEffectInstance(MobEffects.INVISIBILITY, 120 * 20, 1, false, false, false));
+//        player.setInvisible(!player.isInvisible()); // This is good because its not an effect, but it causes more problems than it fixes
     }
 
     private void shootWebAndSwingToIt(Player player) {
@@ -120,6 +165,8 @@ public class SpiderManArmourItem extends SuperheroArmourItem {
                         model.rightLeg.visible = true;
                     }
 
+                    if (livingEntity.isInvisible()) model.setAllVisible(false);
+
                     return model;
                 } else {
                     SteveSkinModel<?> model = new SteveSkinModel<>(Minecraft.getInstance().getEntityModels().bakeLayer(SteveSkinModel.LAYER_LOCATION));
@@ -138,6 +185,8 @@ public class SpiderManArmourItem extends SuperheroArmourItem {
                         model.rightLeg.visible = true;
                     }
 
+                    if (livingEntity.isInvisible()) model.setAllVisible(false);
+
                     return model;
                 }
             }
@@ -147,7 +196,29 @@ public class SpiderManArmourItem extends SuperheroArmourItem {
 
     @Override
     public @Nullable String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
+        if (entity.isInvisible()) return "superhero:textures/heroes/spider_man/invisible_skin.png";
+
         return "superhero:textures/heroes/spider_man/" + this.getIdentifier().getSerializedName() + ".png";
+    }
+
+    @Override
+    public boolean isValidArmor(LivingEntity player) {
+        SpiderManIdentifier currentMark = null;
+
+        for (EquipmentSlot equipmentSlot : EquipmentSlot.values()) {
+            if (!equipmentSlot.isArmor() || equipmentSlot == EquipmentSlot.HEAD) continue;
+            ItemStack currentSlot = player.getItemBySlot(equipmentSlot);
+            if (currentSlot.getItem() instanceof SpiderManArmourItem item) {
+                if (currentMark == null) {
+                    currentMark = item.getIdentifier();
+                } else if (!currentMark.equals(item.getIdentifier())) {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        }
+        return true;
     }
 
     public SpiderManIdentifier getIdentifier() {

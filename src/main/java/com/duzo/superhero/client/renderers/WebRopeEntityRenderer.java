@@ -44,8 +44,13 @@ public class WebRopeEntityRenderer extends EntityRenderer<WebRopeEntity> {
 //        stack.translate(0,0,1.25);
         //@TODO ITS NOT SHOOTING TO THE FUCKING CETERE EHJRIUWAHTIUHESIUSHGUISDG
         // @TODO either adjust the rotations of THIS so it points to centre of the block OR move the particle to where this points to (second options probably easier)
+//        float f = Mth.rotLerp(p_114487_, entity.yRotO, entity.getYRot());
+//        stack.mulPose(Axis.YP.rotationDegrees(f * ((float)Math.PI / 180F) * 100));
+//        float f6 = Mth.lerp(p_114487_, entity.xRotO, entity.getXRot());
+//        stack.mulPose(Axis.XP.rotationDegrees(f6 * ((float)Math.PI / 180F) * 1000));
+        // These rotations are so annoying, someone else do them pleeeeeeeeeeeeeeeeeeeeeeeeease
         stack.mulPose(Axis.YP.rotationDegrees(-entity.getYRot()));
-        stack.mulPose(Axis.XP.rotationDegrees(entity.getXRot() + 95f)); // 95 is the magic number????
+        stack.mulPose(Axis.XP.rotationDegrees(entity.getXRot() + 95f)); // 95 is the magic number???? no, its not but it works mostly
 //        Vec3 dir = entity.point.subtract(entity.position());
         stack.popPose();
 

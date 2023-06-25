@@ -2,8 +2,8 @@ package com.duzo.superhero.items.ironman;
 
 import com.duzo.superhero.Superhero;
 import com.duzo.superhero.client.models.items.IronManArmourModel;
-import com.duzo.superhero.entities.ironman.IronManEntity;
 import com.duzo.superhero.entities.SuperheroEntities;
+import com.duzo.superhero.entities.ironman.IronManEntity;
 import com.duzo.superhero.entities.ironman.UnibeamEntity;
 import com.duzo.superhero.items.SuperheroArmourItem;
 import com.duzo.superhero.sounds.SuperheroSounds;
@@ -21,9 +21,13 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.*;
+import net.minecraft.world.item.ArmorMaterial;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.client.ForgeHooksClient;
@@ -38,7 +42,7 @@ import java.util.Random;
 import java.util.function.Consumer;
 
 import static com.duzo.superhero.blocks.IronManSuitCaseBlock.convertArmourToSuitcase;
-import static com.duzo.superhero.entities.ironman.IronManEntity.*;
+import static com.duzo.superhero.entities.ironman.IronManEntity.fileNameToUsable;
 import static com.duzo.superhero.entities.ironman.IronManEntity.spawnNew;
 import static com.duzo.superhero.items.ironman.IronManNanotechItem.convertArmourToNanotech;
 import static com.duzo.superhero.items.ironman.IronManNanotechItem.convertNanotechToArmour;
@@ -62,6 +66,17 @@ public class IronManArmourItem extends SuperheroArmourItem {
         }
 
         super.appendHoverText(stack, level, components, flag);
+    }
+
+    @Override
+    public String getShiftingHoverTextMessage() {
+        StringBuilder base = new StringBuilder();
+
+        for (IronManCapability capability : this.getMark().getCapabilities()) {
+            base.append("/n").append(fileNameToUsable(capability.getSerializedName()));
+        }
+
+        return base.toString();
     }
 
     public void setMark(IronManMark mark) {

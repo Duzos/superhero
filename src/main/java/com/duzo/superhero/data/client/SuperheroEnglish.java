@@ -45,8 +45,10 @@ public class SuperheroEnglish extends LanguageProvider {
         }
 
         // Items
-        add(SuperheroItems.NANOTECH.get(),"Nanotech");
+        add(SuperheroItems.IRON_MAN_NANOTECH.get(),"Iron Man's Nanotech");
+        add(SuperheroItems.SPIDERMAN_NANOTECH.get(),"SpiderMan's Nanotech");
         add(SuperheroItems.EDITH_GLASSES.get(),"EDITH Glasses");
+        add(SuperheroItems.MILES_HOODIE.get(),"Miles' Hoodie");
         add(SuperheroItems.PALLADIUM_INGOT.get(), "Palladium Ingot");
         add(SuperheroItems.RAW_PALLADIUM.get(), "Raw Palladium");
 
@@ -59,6 +61,9 @@ public class SuperheroEnglish extends LanguageProvider {
         add("item_group.superhero.superhero","Duzo's Superheroes");
 
         // Keybinds
-        add(KeyBinds.KEY_ABILITY_ONE, "Take off Iron Man suit");
+        add(KeyBinds.KEY_ABILITY_ONE, "Suit Ability One");
+        add(KeyBinds.KEY_ABILITY_TWO, "Suit Ability Two");
+        add(KeyBinds.KEY_ABILITY_THREE, "Suit Ability Three");
+        add(KeyBinds.KEY_ABILITY_FOUR, "Suit Ability Four");
     }
 }
