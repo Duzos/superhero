@@ -5,7 +5,9 @@ import com.duzo.superhero.entities.SuperheroEntities;
 import com.duzo.superhero.events.FlyingEventHandler;
 import com.duzo.superhero.items.SuperheroItems;
 import com.duzo.superhero.items.ironman.IronManArmourItem;
+import com.duzo.superhero.items.ironman.IronManNanotechItem;
 import com.duzo.superhero.items.spiderman.SpiderManArmourItem;
+import com.duzo.superhero.items.spiderman.SpiderManNanotechItem;
 import com.duzo.superhero.network.Network;
 import com.duzo.superhero.particles.SuperheroParticles;
 import com.duzo.superhero.sounds.SuperheroSounds;
@@ -86,6 +88,8 @@ public class Superhero {
                                 output.accept(block.get().asItem());
                             }
                             for (RegistryObject<Item> item : SuperheroItems.ITEMS.getEntries()) {
+                                if (item.get() instanceof SpiderManNanotechItem || item.get() instanceof IronManNanotechItem) continue;
+
                                 output.accept(item.get());
                             }
         })));

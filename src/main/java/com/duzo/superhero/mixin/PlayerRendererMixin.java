@@ -4,10 +4,15 @@ import com.duzo.superhero.items.SuperheroArmourItem;
 import com.duzo.superhero.items.spiderman.MilesHoodieItem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.PlayerModel;
+import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.player.AbstractClientPlayer;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
+import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.Item;
 import org.spongepowered.asm.mixin.Mixin;
@@ -38,6 +43,34 @@ public abstract class PlayerRendererMixin extends LivingEntityRenderer<AbstractC
 //        }
 //    }
 
+    @Inject(method = "renderHand", at = @At("HEAD"),cancellable = true)
+    public void setModelProperties(PoseStack p_117776_, MultiBufferSource p_117777_, int p_117778_, AbstractClientPlayer player, ModelPart p_117780_, ModelPart p_117781_, CallbackInfo ci) {
+        if (player.getItemBySlot(EquipmentSlot.CHEST).getItem() instanceof SuperheroArmourItem item) {
+            // @TODO Loqor's silly iron man models mean this is broken for iron man
+
+            String skinString = item.getArmorTexture(player.getItemBySlot(EquipmentSlot.CHEST),player,EquipmentSlot.CHEST,"");
+            ResourceLocation skin = new ResourceLocation(skinString);
+
+            if (skinString.equals("superhero:textures/heroes/generic/" + "nanotech" + ".png")) {
+                skin = player.getSkinTextureLocation();
+            }
+
+            PlayerModel<AbstractClientPlayer> playermodel = this.getModel();
+            this.setModelProperties(player);
+            playermodel.attackTime = 0.0F;
+            playermodel.crouching = false;
+            playermodel.swimAmount = 0.0F;
+            playermodel.setupAnim(player, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
+            p_117780_.xRot = 0.0F;
+            p_117780_.render(p_117776_, p_117777_.getBuffer(RenderType.entitySolid(skin)), p_117778_, OverlayTexture.NO_OVERLAY);
+            p_117781_.xRot = 0.0F;
+            p_117781_.render(p_117776_, p_117777_.getBuffer(RenderType.entityTranslucent(skin)), p_117778_, OverlayTexture.NO_OVERLAY);
+            ci.cancel();
+        }
+    }
+
+    @Shadow
+    protected abstract void setModelProperties(AbstractClientPlayer player);
     @SuppressWarnings("resource")
     @Inject(method = "setModelProperties", at = @At("RETURN"))
     public void setModelProperties(AbstractClientPlayer abstractClientPlayer, CallbackInfo info) {
