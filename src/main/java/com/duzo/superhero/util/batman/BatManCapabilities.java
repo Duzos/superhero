@@ -6,6 +6,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+@Deprecated
+/**
+ * Replace with {@link com.duzo.superhero.util.SuperheroCapabilities}
+ */
 public class BatManCapabilities implements Iterable<BatManCapability> {
     private List<BatManCapability> capabilities = new ArrayList<>();
     public BatManCapabilities add(BatManCapability capability) {
@@ -20,10 +24,6 @@ public class BatManCapabilities implements Iterable<BatManCapability> {
     }
     public boolean has(BatManCapability capability) {
         return this.capabilities.contains(capability);
-    }
-
-    public BatManCapabilities of(BatManIdentifier identifier) {
-        return identifier.getCapabilities();
     }
 
     @NotNull

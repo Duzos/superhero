@@ -1,22 +1,18 @@
 package com.duzo.superhero.client.gui;
 
 import com.duzo.superhero.Superhero;
-import com.duzo.superhero.items.ironman.IronManArmourItem;
+import com.duzo.superhero.items.SuperheroArmourItem;
 import com.duzo.superhero.items.ironman.IronManEdithGlasses;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraftforge.client.gui.overlay.IGuiOverlay;
-import org.joml.Quaternionf;
 
 import static net.minecraft.client.gui.GuiComponent.blit;
 
@@ -38,7 +34,7 @@ public class JarvisGUIOverlay {
 
         if (!mc.options.getCameraType().isFirstPerson()) return;
 
-        boolean flag = mc.player.getItemBySlot(EquipmentSlot.HEAD).getItem() instanceof IronManArmourItem || mc.player.getItemBySlot(EquipmentSlot.HEAD).getItem() instanceof IronManEdithGlasses;
+        boolean flag = mc.player.getItemBySlot(EquipmentSlot.HEAD).getItem() instanceof SuperheroArmourItem || mc.player.getItemBySlot(EquipmentSlot.HEAD).getItem() instanceof IronManEdithGlasses;
 
         if (!flag) return;
 

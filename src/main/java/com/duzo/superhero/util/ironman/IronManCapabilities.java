@@ -6,6 +6,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+@Deprecated
+/**
+ * Replace with {@link com.duzo.superhero.util.SuperheroCapabilities}
+ */
 public class IronManCapabilities implements Iterable<IronManCapability> {
     private List<IronManCapability> capabilities = new ArrayList<>();
     public IronManCapabilities add(IronManCapability capability) {

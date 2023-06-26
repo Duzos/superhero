@@ -5,7 +5,7 @@ import com.duzo.superhero.entities.HumanoidEntity;
 import com.duzo.superhero.entities.SuperheroEntities;
 import com.duzo.superhero.items.SuperheroArmourItem;
 import com.duzo.superhero.sounds.SuperheroSounds;
-import com.duzo.superhero.util.ironman.IronManCapability;
+import com.duzo.superhero.util.SuperheroCapability;
 import com.duzo.superhero.util.ironman.IronManMark;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -17,7 +17,9 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.FlyingMoveControl;
@@ -241,7 +243,7 @@ public class IronManEntity extends HumanoidEntity {
 
         // Code to move towards player, may be useful for calling the iron man suit to the player.
         if (!this.level.isClientSide) {
-            if (!(this.isNoAi()) && this.owner != null && !(this.getTarget() == this.owner) && this.getMarkEnum().getCapabilities().has(IronManCapability.BRACELET_LOCATING)) {
+            if (!(this.isNoAi()) && this.owner != null && !(this.getTarget() == this.owner) && this.getMarkEnum().getCapabilities().has(SuperheroCapability.BRACELET_LOCATING)) {
                 this.setSpeed(1);
                 this.getNavigation().moveTo(this.owner,1d);
             }

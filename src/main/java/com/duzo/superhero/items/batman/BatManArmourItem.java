@@ -3,7 +3,7 @@ package com.duzo.superhero.items.batman;
 import com.duzo.superhero.client.models.AlexSkinModel;
 import com.duzo.superhero.client.models.SteveSkinModel;
 import com.duzo.superhero.items.SuperheroArmourItem;
-import com.duzo.superhero.util.batman.BatManCapability;
+import com.duzo.superhero.util.SuperheroCapability;
 import com.duzo.superhero.util.batman.BatManIdentifier;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
@@ -50,7 +50,7 @@ public class BatManArmourItem extends SuperheroArmourItem {
     public String getShiftingHoverTextMessage() {
         StringBuilder base = new StringBuilder();
 
-        for (BatManCapability capability : this.getIdentifier().getCapabilities()) {
+        for (SuperheroCapability capability : this.getIdentifier().getCapabilities()) {
             base.append("/n").append(fileNameToUsable(capability.getSerializedName()));
         }
 

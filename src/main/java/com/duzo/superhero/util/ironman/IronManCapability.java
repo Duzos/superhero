@@ -1,8 +1,11 @@
 package com.duzo.superhero.util.ironman;
 
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.StringRepresentable;
 
+@Deprecated
+/**
+ * Replace with {@link com.duzo.superhero.util.SuperheroCapability}
+ */
 public enum IronManCapability implements StringRepresentable {
     SUITCASE,
     SEAMLESS,

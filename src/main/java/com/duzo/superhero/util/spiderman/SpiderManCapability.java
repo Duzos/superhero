@@ -2,6 +2,10 @@ package com.duzo.superhero.util.spiderman;
 
 import net.minecraft.util.StringRepresentable;
 
+@Deprecated
+/**
+ * Replace with {@link com.duzo.superhero.util.SuperheroCapability}
+ */
 public enum SpiderManCapability implements StringRepresentable {
     WEB_SHOOTING,
     INVISIBILITY,

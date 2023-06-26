@@ -7,8 +7,8 @@ import com.duzo.superhero.entities.ironman.IronManEntity;
 import com.duzo.superhero.entities.ironman.UnibeamEntity;
 import com.duzo.superhero.items.SuperheroArmourItem;
 import com.duzo.superhero.sounds.SuperheroSounds;
-import com.duzo.superhero.util.ironman.IronManCapabilities;
-import com.duzo.superhero.util.ironman.IronManCapability;
+import com.duzo.superhero.util.SuperheroCapabilities;
+import com.duzo.superhero.util.SuperheroCapability;
 import com.duzo.superhero.util.ironman.IronManMark;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
@@ -72,7 +72,7 @@ public class IronManArmourItem extends SuperheroArmourItem {
     public String getShiftingHoverTextMessage() {
         StringBuilder base = new StringBuilder();
 
-        for (IronManCapability capability : this.getMark().getCapabilities()) {
+        for (SuperheroCapability capability : this.getMark().getCapabilities()) {
             base.append("/n").append(fileNameToUsable(capability.getSerializedName()));
         }
 
@@ -147,7 +147,7 @@ public class IronManArmourItem extends SuperheroArmourItem {
                 this.runFlight(player);
             }
 
-//            if (!hasBindingCurse(stack) && this.getMark().getCapabilities().has(IronManCapability.BINDING)) {
+//            if (!hasBindingCurse(stack) && this.getMark().getCapabilities().has(SuperheroCapability.BINDING)) {
 //                stack.enchant(Enchantments.BINDING_CURSE,1);
 //            }
 
@@ -159,7 +159,7 @@ public class IronManArmourItem extends SuperheroArmourItem {
                     bootsOnlyFlight(player);
                 }
 
-                if (player.getY() > 185 && this.getMark().getCapabilities().has(IronManCapability.ICES_OVER)) {
+                if (player.getY() > 185 && this.getMark().getCapabilities().has(SuperheroCapability.ICES_OVER)) {
                     player.addEffect(new MobEffectInstance(MobEffects.WITHER, 2 * 20, 0, false, false, false));
                 }
             }
@@ -208,21 +208,21 @@ public class IronManArmourItem extends SuperheroArmourItem {
 
         ItemStack head = player.getItemBySlot(EquipmentSlot.HEAD);
         IronManArmourItem item = (IronManArmourItem) head.getItem();
-        IronManCapabilities cap = item.getMark().getCapabilities();
+        SuperheroCapabilities cap = item.getMark().getCapabilities();
 
 
         if (!isValidArmor(player)) return;
 
-        if (cap.has(IronManCapability.SUITCASE)) {
+        if (cap.has(SuperheroCapability.SUITCASE)) {
             convertArmourToSuitcase(player);
             level.playSound(null,player, SuperheroSounds.IRONMAN_POWERDOWN.get(), SoundSource.PLAYERS,1f,1f);
-        } else if (cap.has(IronManCapability.SEAMLESS)) {
+        } else if (cap.has(SuperheroCapability.SEAMLESS)) {
             spawnNew(item.getMark(),level,player.getOnPos(),player);
             level.playSound(null,player, SuperheroSounds.IRONMAN_POWERDOWN.get(), SoundSource.PLAYERS,1f,1f);
-        } else if (cap.has(IronManCapability.BRACELET_LOCATING)) {
+        } else if (cap.has(SuperheroCapability.BRACELET_LOCATING)) {
             spawnNew(item.getMark(),level,player.getOnPos(),player); // @TODO temporarily the same as seamless until i make something new for it
             level.playSound(null,player, SuperheroSounds.IRONMAN_POWERDOWN.get(), SoundSource.PLAYERS,1f,1f);
-        } else if (cap.has(IronManCapability.NANOTECH)) {
+        } else if (cap.has(SuperheroCapability.NANOTECH)) {
             convertArmourToNanotech(player);
             level.playSound(null,player, SuperheroSounds.IRONMAN_POWERDOWN.get(), SoundSource.PLAYERS,1f,1f);
         }
@@ -319,7 +319,7 @@ public class IronManArmourItem extends SuperheroArmourItem {
         if (Minecraft.getInstance().player == null) return false;
         if (!(player.getItemBySlot(EquipmentSlot.CHEST).getItem() instanceof IronManArmourItem hero)) return false;
 
-        return Screen.hasControlDown() && Minecraft.getInstance().player.input.up && !player.isOnGround() && hero.getMark().getCapabilities().has(IronManCapability.BLAST_OFF) && !player.isSwimming();
+        return Screen.hasControlDown() && Minecraft.getInstance().player.input.up && !player.isOnGround() && hero.getMark().getCapabilities().has(SuperheroCapability.BLAST_OFF) && !player.isSwimming();
     }
 
     private void blastOff(Player player,double factor) {

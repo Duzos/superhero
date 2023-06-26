@@ -3,8 +3,8 @@ package com.duzo.superhero.network.packets;
 import com.duzo.superhero.items.ironman.IronManArmourItem;
 import com.duzo.superhero.items.ironman.IronManNanotechItem;
 import com.duzo.superhero.sounds.SuperheroSounds;
-import com.duzo.superhero.util.ironman.IronManCapabilities;
-import com.duzo.superhero.util.ironman.IronManCapability;
+import com.duzo.superhero.util.SuperheroCapabilities;
+import com.duzo.superhero.util.SuperheroCapability;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -50,18 +50,18 @@ public class TakeOffIronManSuitC2SPacket {
 
             ItemStack head = player.getItemBySlot(EquipmentSlot.HEAD);
             IronManArmourItem item = (IronManArmourItem) head.getItem();
-            IronManCapabilities cap = item.getMark().getCapabilities();
+            SuperheroCapabilities cap = item.getMark().getCapabilities();
 
-            if (cap.has(IronManCapability.SUITCASE)) {
+            if (cap.has(SuperheroCapability.SUITCASE)) {
                 convertArmourToSuitcase(player);
                 level.playSound(null,player, SuperheroSounds.IRONMAN_POWERDOWN.get(), SoundSource.PLAYERS,1f,1f);
-            } else if (cap.has(IronManCapability.SEAMLESS)) {
+            } else if (cap.has(SuperheroCapability.SEAMLESS)) {
                 spawnNew(item.getMark(),level,player.getOnPos(),player);
                 level.playSound(null,player, SuperheroSounds.IRONMAN_POWERDOWN.get(), SoundSource.PLAYERS,1f,1f);
-            } else if (cap.has(IronManCapability.BRACELET_LOCATING)) {
+            } else if (cap.has(SuperheroCapability.BRACELET_LOCATING)) {
                 spawnNew(item.getMark(),level,player.getOnPos(),player); // @TODO temporarily the same as seamless until i make something new for it
                 level.playSound(null,player, SuperheroSounds.IRONMAN_POWERDOWN.get(), SoundSource.PLAYERS,1f,1f);
-            } else if (cap.has(IronManCapability.NANOTECH)) {
+            } else if (cap.has(SuperheroCapability.NANOTECH)) {
                 convertArmourToNanotech(player);
                 level.playSound(null,player, SuperheroSounds.IRONMAN_POWERDOWN.get(), SoundSource.PLAYERS,1f,1f);
             }

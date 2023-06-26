@@ -6,6 +6,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+@Deprecated
+/**
+ * Replace with {@link com.duzo.superhero.util.SuperheroCapabilities}
+ */
 public class SpiderManCapabilities implements Iterable<SpiderManCapability> {
     private List<SpiderManCapability> capabilities = new ArrayList<>();
     public SpiderManCapabilities add(SpiderManCapability capability) {
@@ -20,10 +24,6 @@ public class SpiderManCapabilities implements Iterable<SpiderManCapability> {
     }
     public boolean has(SpiderManCapability capability) {
         return this.capabilities.contains(capability);
-    }
-
-    public SpiderManCapabilities of(SpiderManIdentifier identifier) {
-        return identifier.getCapabilities();
     }
 
     @NotNull

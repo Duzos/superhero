@@ -7,6 +7,7 @@ import com.duzo.superhero.sounds.SuperheroSounds;
 import com.duzo.superhero.util.ironman.IronManMark;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundSource;
@@ -72,7 +73,7 @@ public class IronManNanotechItem extends SuperheroArmourItem {
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> components, TooltipFlag flag) {
-        if (getMark(stack) != null) {
+        if (getMark(stack) != null && Screen.hasShiftDown()) {
             components.add(Component.translatable(fileNameToUsable(getMark(stack).getSerializedName())).withStyle(ChatFormatting.GOLD));
         }
 

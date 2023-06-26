@@ -9,7 +9,7 @@ import com.duzo.superhero.network.packets.ChangeDeltaMovementS2CPacket;
 import com.duzo.superhero.network.packets.SwingArmS2CPacket;
 import com.duzo.superhero.particles.SuperheroParticles;
 import com.duzo.superhero.sounds.SuperheroSounds;
-import com.duzo.superhero.util.spiderman.SpiderManCapability;
+import com.duzo.superhero.util.SuperheroCapability;
 import com.duzo.superhero.util.spiderman.SpiderManIdentifier;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
@@ -71,7 +71,7 @@ public class SpiderManArmourItem extends SuperheroArmourItem {
     public String getShiftingHoverTextMessage() {
         StringBuilder base = new StringBuilder();
 
-        for (SpiderManCapability capability : this.getIdentifier().getCapabilities()) {
+        for (SuperheroCapability capability : this.getIdentifier().getCapabilities()) {
             base.append("/n").append(fileNameToUsable(capability.getSerializedName()));
         }
 
@@ -94,18 +94,18 @@ public class SpiderManArmourItem extends SuperheroArmourItem {
     }
 
     private void runEffects(Player player) {
-        if (this.getIdentifier().getCapabilities().has(SpiderManCapability.SUPER_STRENGTH)) {
+        if (this.getIdentifier().getCapabilities().has(SuperheroCapability.SUPER_STRENGTH)) {
             player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 2 * 20, 1, false, false, false));
             player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 2 * 20, 1, false, false, false));
         }
-        if (this.getIdentifier().getCapabilities().has(SpiderManCapability.FAST_MOBILITY)) {
+        if (this.getIdentifier().getCapabilities().has(SuperheroCapability.FAST_MOBILITY)) {
             player.addEffect(new MobEffectInstance(MobEffects.JUMP, 2 * 20, 1, false, false, false));
             player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 2 * 20, 1, false, false, false));
         }
     }
 
     private void runWallClimbs(Player player) {
-        if (this.getIdentifier().getCapabilities().has(SpiderManCapability.WALL_CLIMBING)) {
+        if (this.getIdentifier().getCapabilities().has(SuperheroCapability.WALL_CLIMBING)) {
             if (Minecraft.getInstance().player != null) {
                 LocalPlayer clientPlayer = Minecraft.getInstance().player;
                 if (clientPlayer.horizontalCollision) {
@@ -132,13 +132,13 @@ public class SpiderManArmourItem extends SuperheroArmourItem {
     public void runAbility(Player player, int number) {
         // Always server-side
         if (number == 1) {
-            if (this.getIdentifier().getCapabilities().has(SpiderManCapability.WEB_SHOOTING)) {
+            if (this.getIdentifier().getCapabilities().has(SuperheroCapability.WEB_SHOOTING)) {
                 this.shootWebAndSwingToIt(player);
             }
         } else if (number == 2) {
-            if (this.getIdentifier().getCapabilities().has(SpiderManCapability.INVISIBILITY)) {
+            if (this.getIdentifier().getCapabilities().has(SuperheroCapability.INVISIBILITY)) {
                 this.runMilesInvisibility(player);
-            } else if (this.getIdentifier().getCapabilities().has(SpiderManCapability.NANOTECH)) {
+            } else if (this.getIdentifier().getCapabilities().has(SuperheroCapability.NANOTECH)) {
                 convertArmourToNanotech(player);
             }
         }
@@ -181,7 +181,7 @@ public class SpiderManArmourItem extends SuperheroArmourItem {
         float f3 = Mth.sin(player.yBodyRot * ((float) Math.PI / 180F)) * (0F + 1.21F * (float) i);
         float f6 = (0.3F * 0.45F) * ((float) i * 0.2F + 0.0F);
         player.level.addFreshEntity(rope);
-        rope.moveTo(player.getX() + (double) f2, player.getY() + (double) f6 + 2f, player.getZ() + (double) f3, player.getYRot(), player.getXRot());
+        rope.moveTo(player.getX() + (double) f2, player.getY() + (double) f6 + 1.25f, player.getZ() + (double) f3, player.getYRot(), player.getXRot());
         rope.setPointsChanged();
 //        rope.setPointsChanged();
 

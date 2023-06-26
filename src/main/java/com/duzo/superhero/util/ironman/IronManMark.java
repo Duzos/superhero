@@ -1,5 +1,7 @@
 package com.duzo.superhero.util.ironman;
 
+import com.duzo.superhero.util.SuperheroCapabilities;
+import com.duzo.superhero.util.SuperheroCapability;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.entity.EquipmentSlot;
 
@@ -9,8 +11,8 @@ import static com.duzo.superhero.entities.ironman.IronManEntity.nameFromSlot;
 public enum IronManMark implements StringRepresentable {
 //    MARK_20() {
 //        @Override
-//        public IronManCapabilities getCapabilities() {
-//            return new IronManCapabilities().add(IronManCapability.SEAMLESS,IronManCapability.JARVIS);
+//        public SuperheroCapabilities getCapabilities() {
+//            return new SuperheroCapabilities().add(SuperheroCapability.SEAMLESS,SuperheroCapability.JARVIS);
 //        }
 //
 //        @Override
@@ -22,8 +24,8 @@ public enum IronManMark implements StringRepresentable {
 //    },
 //    MARK_14() {
 //        @Override
-//        public IronManCapabilities getCapabilities() {
-//            return new IronManCapabilities().add(IronManCapability.SEAMLESS,IronManCapability.JARVIS);
+//        public SuperheroCapabilities getCapabilities() {
+//            return new SuperheroCapabilities().add(SuperheroCapability.SEAMLESS,SuperheroCapability.JARVIS);
 //        }
 //
 //        @Override
@@ -35,8 +37,8 @@ public enum IronManMark implements StringRepresentable {
 //    },
     MARK_9() {
         @Override
-        public IronManCapabilities getCapabilities() {
-            return new IronManCapabilities().add(IronManCapability.NANOTECH,IronManCapability.JARVIS,IronManCapability.BLAST_OFF);
+        public SuperheroCapabilities getCapabilities() {
+            return new SuperheroCapabilities().add(SuperheroCapability.NANOTECH,SuperheroCapability.JARVIS,SuperheroCapability.BLAST_OFF);
         }
 
 
@@ -53,8 +55,8 @@ public enum IronManMark implements StringRepresentable {
     },
     MARK_7() {
         @Override
-        public IronManCapabilities getCapabilities() {
-            return new IronManCapabilities().add(IronManCapability.BRACELET_LOCATING,IronManCapability.JARVIS,IronManCapability.BLAST_OFF);
+        public SuperheroCapabilities getCapabilities() {
+            return new SuperheroCapabilities().add(SuperheroCapability.BRACELET_LOCATING,SuperheroCapability.JARVIS,SuperheroCapability.BLAST_OFF);
         }
 
         @Override
@@ -71,8 +73,8 @@ public enum IronManMark implements StringRepresentable {
     },
     MARK_5() {
         @Override
-        public IronManCapabilities getCapabilities() {
-            return new IronManCapabilities().add(IronManCapability.SUITCASE,IronManCapability.JARVIS,IronManCapability.BLAST_OFF);
+        public SuperheroCapabilities getCapabilities() {
+            return new SuperheroCapabilities().add(SuperheroCapability.SUITCASE,SuperheroCapability.JARVIS,SuperheroCapability.BLAST_OFF);
         }
 
         @Override
@@ -89,8 +91,8 @@ public enum IronManMark implements StringRepresentable {
     },
     MARK_2() {
         @Override
-        public IronManCapabilities getCapabilities() {
-            return new IronManCapabilities().add(IronManCapability.ICES_OVER,IronManCapability.JARVIS,IronManCapability.BLAST_OFF,IronManCapability.BINDING);
+        public SuperheroCapabilities getCapabilities() {
+            return new SuperheroCapabilities().add(SuperheroCapability.ICES_OVER,SuperheroCapability.JARVIS,SuperheroCapability.BLAST_OFF,SuperheroCapability.BINDING);
         }
 
         @Override
@@ -102,8 +104,8 @@ public enum IronManMark implements StringRepresentable {
     },
     MARK_1() {
         @Override
-        public IronManCapabilities getCapabilities() {
-            return new IronManCapabilities().add(IronManCapability.ICES_OVER,IronManCapability.BINDING);
+        public SuperheroCapabilities getCapabilities() {
+            return new SuperheroCapabilities().add(SuperheroCapability.ICES_OVER,SuperheroCapability.BINDING);
         }
 
         @Override
@@ -134,7 +136,7 @@ public enum IronManMark implements StringRepresentable {
         return this.name().charAt(-1);
     }
 
-    public abstract IronManCapabilities getCapabilities();
+    public abstract SuperheroCapabilities getCapabilities();
 
     public double getVerticalFlightSpeed() {
         return 0.01D;

@@ -6,6 +6,7 @@ import com.duzo.superhero.items.SuperheroItems;
 import com.duzo.superhero.util.spiderman.SpiderManIdentifier;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Entity;
@@ -64,7 +65,7 @@ public class SpiderManNanotechItem extends SuperheroArmourItem {
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> components, TooltipFlag flag) {
-        if (getID(stack) != null) {
+        if (getID(stack) != null && Screen.hasShiftDown()) {
             components.add(Component.translatable(fileNameToUsable(getID(stack).getSerializedName())).withStyle(ChatFormatting.GOLD));
         }
 

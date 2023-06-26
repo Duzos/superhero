@@ -15,7 +15,7 @@ import com.duzo.superhero.items.ironman.IronManArmourItem;
 import com.duzo.superhero.network.Network;
 import com.duzo.superhero.network.packets.AbilityC2SPacket;
 import com.duzo.superhero.util.KeyBinds;
-import com.duzo.superhero.util.ironman.IronManCapability;
+import com.duzo.superhero.util.SuperheroCapability;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
@@ -70,7 +70,7 @@ public class SuperheroClientEvents {
 
             if (!(chest.getItem() instanceof IronManArmourItem hero)) return;
 
-            if (!event.getPlayer().isOnGround() && Screen.hasControlDown() && hero.isValidArmor(event.getPlayer()) && hero.getMark().getCapabilities().has(IronManCapability.BLAST_OFF)) {
+            if (!event.getPlayer().isOnGround() && Screen.hasControlDown() && hero.isValidArmor(event.getPlayer()) && hero.getMark().getCapabilities().has(SuperheroCapability.BLAST_OFF)) {
                 event.setNewFovModifier(event.getFovModifier() * 1.25f);
 //                event.setNewFovModifier((float) (event.getFovModifier() * hero.getMark().getBlastOffSpeed()));
             }

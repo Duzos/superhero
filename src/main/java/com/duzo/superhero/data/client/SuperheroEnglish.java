@@ -54,8 +54,8 @@ public class SuperheroEnglish extends LanguageProvider {
         }
 
         // Items
-        add(SuperheroItems.IRON_MAN_NANOTECH.get(),"Iron Man's Nanotech");
-        add(SuperheroItems.SPIDERMAN_NANOTECH.get(),"SpiderMan's Nanotech");
+        add(SuperheroItems.IRON_MAN_NANOTECH.get(),"Nanotech");
+        add(SuperheroItems.SPIDERMAN_NANOTECH.get(),"Nanotech");
         add(SuperheroItems.EDITH_GLASSES.get(),"EDITH Glasses");
         add(SuperheroItems.MILES_HOODIE.get(),"Miles' Hoodie");
         add(SuperheroItems.PALLADIUM_INGOT.get(), "Palladium Ingot");

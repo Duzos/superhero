@@ -1,5 +1,7 @@
 package com.duzo.superhero.util.spiderman;
 
+import com.duzo.superhero.util.SuperheroCapabilities;
+import com.duzo.superhero.util.SuperheroCapability;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.entity.EquipmentSlot;
 
@@ -21,20 +23,20 @@ public enum SpiderManIdentifier implements StringRepresentable {
         }
 
         @Override
-        public SpiderManCapabilities getCapabilities() {
-            return new SpiderManCapabilities().add(SpiderManCapability.WEB_SHOOTING,SpiderManCapability.WALL_CLIMBING,SpiderManCapability.SUPER_STRENGTH,SpiderManCapability.FAST_MOBILITY);
+        public SuperheroCapabilities getCapabilities() {
+            return new SuperheroCapabilities().add(SuperheroCapability.WEB_SHOOTING,SuperheroCapability.WALL_CLIMBING,SuperheroCapability.SUPER_STRENGTH,SuperheroCapability.FAST_MOBILITY);
         }
     },
     IRON_SPIDER {
         @Override
-        public SpiderManCapabilities getCapabilities() {
-            return new SpiderManCapabilities().add(SpiderManCapability.NANOTECH,SpiderManCapability.WEB_SHOOTING,SpiderManCapability.WALL_CLIMBING,SpiderManCapability.SUPER_STRENGTH,SpiderManCapability.FAST_MOBILITY);
+        public SuperheroCapabilities getCapabilities() {
+            return new SuperheroCapabilities().add(SuperheroCapability.NANOTECH,SuperheroCapability.WEB_SHOOTING,SuperheroCapability.WALL_CLIMBING,SuperheroCapability.SUPER_STRENGTH,SuperheroCapability.FAST_MOBILITY);
         }
     },
     AMAZING_SPIDER_MAN {
         @Override
-        public SpiderManCapabilities getCapabilities() {
-            return new SpiderManCapabilities().add(SpiderManCapability.WEB_SHOOTING,SpiderManCapability.WALL_CLIMBING,SpiderManCapability.SUPER_STRENGTH,SpiderManCapability.FAST_MOBILITY);
+        public SuperheroCapabilities getCapabilities() {
+            return new SuperheroCapabilities().add(SuperheroCapability.WEB_SHOOTING,SuperheroCapability.WALL_CLIMBING,SuperheroCapability.SUPER_STRENGTH,SuperheroCapability.FAST_MOBILITY);
         }
     },
     MILES_CLOTHED {
@@ -51,8 +53,8 @@ public enum SpiderManIdentifier implements StringRepresentable {
         }
 
         @Override
-        public SpiderManCapabilities getCapabilities() {
-            return new SpiderManCapabilities().add(SpiderManCapability.INVISIBILITY,SpiderManCapability.WEB_SHOOTING,SpiderManCapability.WALL_CLIMBING,SpiderManCapability.SUPER_STRENGTH,SpiderManCapability.FAST_MOBILITY);
+        public SuperheroCapabilities getCapabilities() {
+            return new SuperheroCapabilities().add(SuperheroCapability.INVISIBILITY,SuperheroCapability.WEB_SHOOTING,SuperheroCapability.WALL_CLIMBING,SuperheroCapability.SUPER_STRENGTH,SuperheroCapability.FAST_MOBILITY);
         }
     },
     MILES {
@@ -69,8 +71,8 @@ public enum SpiderManIdentifier implements StringRepresentable {
         }
 
         @Override
-        public SpiderManCapabilities getCapabilities() {
-            return new SpiderManCapabilities().add(SpiderManCapability.INVISIBILITY,SpiderManCapability.WEB_SHOOTING,SpiderManCapability.WALL_CLIMBING,SpiderManCapability.SUPER_STRENGTH,SpiderManCapability.FAST_MOBILITY);
+        public SuperheroCapabilities getCapabilities() {
+            return new SuperheroCapabilities().add(SuperheroCapability.INVISIBILITY,SuperheroCapability.WEB_SHOOTING,SuperheroCapability.WALL_CLIMBING,SuperheroCapability.SUPER_STRENGTH,SuperheroCapability.FAST_MOBILITY);
         }
     };
 
@@ -91,5 +93,5 @@ public enum SpiderManIdentifier implements StringRepresentable {
 
         return "SpiderMan" + " " + slotName;
     }
-    public abstract SpiderManCapabilities getCapabilities();
+    public abstract SuperheroCapabilities getCapabilities();
 }
