@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "superhero:item/mark_2_leggings"
+    "layer0": "superhero:item/ironman_mark_7_leggings"
   }
 }

@@ -8,6 +8,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import static com.duzo.superhero.entities.ironman.IronManEntity.fileNameToUsable;
 import static com.duzo.superhero.entities.ironman.IronManEntity.nameFromSlot;
 
+@Deprecated
 public enum SpiderManIdentifier implements StringRepresentable {
     GWEN {
         @Override

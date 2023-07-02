@@ -11,7 +11,7 @@ import com.duzo.superhero.client.renderers.IronManEntityRenderer;
 import com.duzo.superhero.client.renderers.UnibeamRenderer;
 import com.duzo.superhero.client.renderers.WebRopeEntityRenderer;
 import com.duzo.superhero.entities.SuperheroEntities;
-import com.duzo.superhero.items.ironman.IronManArmourItem;
+import com.duzo.superhero.items.SuperheroArmourItem;
 import com.duzo.superhero.network.Network;
 import com.duzo.superhero.network.packets.AbilityC2SPacket;
 import com.duzo.superhero.util.KeyBinds;
@@ -68,9 +68,9 @@ public class SuperheroClientEvents {
         public static void changeFOV(ComputeFovModifierEvent event) {
             ItemStack chest = event.getPlayer().getItemBySlot(EquipmentSlot.CHEST);
 
-            if (!(chest.getItem() instanceof IronManArmourItem hero)) return;
+            if (!(chest.getItem() instanceof SuperheroArmourItem hero)) return;
 
-            if (!event.getPlayer().isOnGround() && Screen.hasControlDown() && hero.isValidArmor(event.getPlayer()) && hero.getMark().getCapabilities().has(SuperheroCapability.BLAST_OFF)) {
+            if (!event.getPlayer().isOnGround() && Screen.hasControlDown() && hero.getIdentifier().isValidArmour(event.getPlayer()) && hero.getIdentifier().getCapabilities().has(SuperheroCapability.BLAST_OFF)) {
                 event.setNewFovModifier(event.getFovModifier() * 1.25f);
 //                event.setNewFovModifier((float) (event.getFovModifier() * hero.getMark().getBlastOffSpeed()));
             }

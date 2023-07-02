@@ -4,7 +4,7 @@ import com.duzo.superhero.client.models.SteveSkinModel;
 import com.duzo.superhero.items.SuperheroArmourItem;
 import com.duzo.superhero.items.SuperheroItems;
 import com.duzo.superhero.sounds.SuperheroSounds;
-import com.duzo.superhero.util.ironman.IronManMark;
+import com.duzo.superhero.util.SuperheroIdentifier;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
@@ -28,10 +28,10 @@ import java.util.List;
 import java.util.function.Consumer;
 
 import static com.duzo.superhero.blocks.IronManSuitCaseBlock.equipArmourForMark;
-import static com.duzo.superhero.entities.ironman.IronManEntity.fileNameToUsable;
 
+@Deprecated
 public class IronManNanotechItem extends SuperheroArmourItem {
-    private IronManMark mark;
+    private SuperheroIdentifier mark;
     public IronManNanotechItem(ArmorMaterial material, Type type, Item.Properties properties) {
         super(material, type, properties);
     }
@@ -44,14 +44,8 @@ public class IronManNanotechItem extends SuperheroArmourItem {
             if (chest.getItem() instanceof IronManNanotechItem) {
                 convertNanotechToArmour(chest,player);
                 level.playSound(null,player, SuperheroSounds.IRONMAN_POWERUP.get(), SoundSource.PLAYERS,1f,1f);
-                return;
             }
         }
-    }
-
-    @Override
-    public boolean isValidArmor(LivingEntity player) {
-        return player.getItemBySlot(EquipmentSlot.CHEST).getItem() instanceof IronManNanotechItem;
     }
 
     @Override
@@ -59,7 +53,6 @@ public class IronManNanotechItem extends SuperheroArmourItem {
         consumer.accept(new IClientItemExtensions() {
             @Override
             public @NotNull HumanoidModel<?> getHumanoidArmorModel(LivingEntity livingEntity, ItemStack itemStack, EquipmentSlot equipmentSlot, HumanoidModel<?> original) {
-
                 return new SteveSkinModel<>(Minecraft.getInstance().getEntityModels().bakeLayer(SteveSkinModel.LAYER_LOCATION));
             }
         });
@@ -74,21 +67,19 @@ public class IronManNanotechItem extends SuperheroArmourItem {
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> components, TooltipFlag flag) {
         if (getMark(stack) != null && Screen.hasShiftDown()) {
-            components.add(Component.translatable(fileNameToUsable(getMark(stack).getSerializedName())).withStyle(ChatFormatting.GOLD));
+            components.add(Component.translatable(this.getIdentifier().getHoverTextName()).withStyle(ChatFormatting.GOLD));
         }
-
-        super.appendHoverText(stack, level, components, flag);
     }
 
-    public static IronManMark getMark(ItemStack stack) {
+    public static SuperheroIdentifier getMark(ItemStack stack) {
         if (stack.hasTag()) {
             if (stack.getTag().getString("mark") == "") return null;
 
-            return IronManMark.valueOf(stack.getTag().getString("mark").toUpperCase());
+            return SuperheroIdentifier.valueOf(stack.getTag().getString("mark").toUpperCase());
         }
         return null;
     };
-    public static void setMark(ItemStack stack,IronManMark mark) {
+    public static void setMark(ItemStack stack,SuperheroIdentifier mark) {
         if (stack.hasTag()) {
             stack.getTag().putString("mark",mark.getSerializedName());
         }
@@ -98,7 +89,7 @@ public class IronManNanotechItem extends SuperheroArmourItem {
     public static void convertArmourToNanotech(Player player) {
         if (!(player.getItemBySlot(EquipmentSlot.HEAD).getItem() instanceof IronManArmourItem item)) return;
 
-        ItemStack stack = new ItemStack(SuperheroItems.IRON_MAN_NANOTECH.get());
+        ItemStack stack = new ItemStack(SuperheroItems.NANOTECH.get());
         setMark(stack,item.getMark());
 
         player.setItemSlot(EquipmentSlot.HEAD,ItemStack.EMPTY);
@@ -107,7 +98,7 @@ public class IronManNanotechItem extends SuperheroArmourItem {
         player.setItemSlot(EquipmentSlot.FEET,ItemStack.EMPTY);
     }
     public static void convertNanotechToArmour(ItemStack stack, Player player) {
-        IronManMark mark = getMark(stack);
+        SuperheroIdentifier mark = getMark(stack);
         if (mark == null) return;
 
         equipArmourForMark(mark,player,true);

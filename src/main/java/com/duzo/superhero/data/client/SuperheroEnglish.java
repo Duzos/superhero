@@ -4,9 +4,7 @@ import com.duzo.superhero.Superhero;
 import com.duzo.superhero.blocks.SuperheroBlocks;
 import com.duzo.superhero.items.SuperheroArmourItem;
 import com.duzo.superhero.items.SuperheroItems;
-import com.duzo.superhero.items.batman.BatManArmourItem;
-import com.duzo.superhero.items.ironman.IronManArmourItem;
-import com.duzo.superhero.items.spiderman.SpiderManArmourItem;
+import com.duzo.superhero.items.SuperheroNanotechItem;
 import com.duzo.superhero.util.KeyBinds;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.item.Item;
@@ -24,38 +22,24 @@ public class SuperheroEnglish extends LanguageProvider {
         // Adding hover text
         for (RegistryObject<Item> entry : SuperheroItems.ITEMS.getEntries()) {
             if (entry.get() instanceof SuperheroArmourItem item) {
+                if (item instanceof SuperheroNanotechItem) continue;
+                if (!item.getIdentifier().autoAdd()) continue;
                 add("text." + item.getDescriptionId(),item.getHoverTextMessage());
                 add("text." + item.getDescriptionId() + ".shifting",item.getShiftingHoverTextMessage());
             }
         }
 
-        // Auto adding iron man items
+        // Auto adding superhero items
         for (RegistryObject<Item> entry : SuperheroItems.ITEMS.getEntries()) {
-            if (entry.get() instanceof IronManArmourItem item) {
-                if (!item.getMark().autoAdd()) continue;
-                add(entry.get(),item.getMark().getLangFileName(item.getEquipmentSlot()));
-            }
-        }
-
-        // Auto adding spider man items
-        for (RegistryObject<Item> entry : SuperheroItems.ITEMS.getEntries()) {
-            if (entry.get() instanceof SpiderManArmourItem item) {
-                if (!item.getIdentifier().autoAdd()) continue;
-                add(entry.get(),item.getIdentifier().getLangFileName(item.getEquipmentSlot()));
-            }
-        }
-
-        // Auto adding bat man items
-        for (RegistryObject<Item> entry : SuperheroItems.ITEMS.getEntries()) {
-            if (entry.get() instanceof BatManArmourItem item) {
+            if (entry.get() instanceof SuperheroArmourItem item) {
+                if (item instanceof SuperheroNanotechItem) continue;
                 if (!item.getIdentifier().autoAdd()) continue;
                 add(entry.get(),item.getIdentifier().getLangFileName(item.getEquipmentSlot()));
             }
         }
 
         // Items
-        add(SuperheroItems.IRON_MAN_NANOTECH.get(),"Nanotech");
-        add(SuperheroItems.SPIDERMAN_NANOTECH.get(),"Nanotech");
+        add(SuperheroItems.NANOTECH.get(),"Nanotech");
         add(SuperheroItems.EDITH_GLASSES.get(),"EDITH Glasses");
         add(SuperheroItems.MILES_HOODIE.get(),"Miles' Hoodie");
         add(SuperheroItems.PALLADIUM_INGOT.get(), "Palladium Ingot");

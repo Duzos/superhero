@@ -20,6 +20,7 @@ import static com.duzo.superhero.entities.ironman.IronManEntity.spawnNew;
 import static com.duzo.superhero.items.ironman.IronManNanotechItem.convertArmourToNanotech;
 import static com.duzo.superhero.items.ironman.IronManNanotechItem.convertNanotechToArmour;
 
+@Deprecated(forRemoval = true)
 public class TakeOffIronManSuitC2SPacket {
     public TakeOffIronManSuitC2SPacket() {
 

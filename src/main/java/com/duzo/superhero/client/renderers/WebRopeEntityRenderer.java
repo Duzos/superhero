@@ -1,7 +1,6 @@
 package com.duzo.superhero.client.renderers;
 
 import com.duzo.superhero.entities.spiderman.WebRopeEntity;
-import com.duzo.superhero.items.spiderman.SpiderManArmourItem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
@@ -14,8 +13,6 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.player.Player;
 import org.joml.Matrix4f;
 
 public class WebRopeEntityRenderer extends EntityRenderer<WebRopeEntity> {
@@ -98,20 +95,6 @@ public class WebRopeEntityRenderer extends EntityRenderer<WebRopeEntity> {
 //        }
 //
 //        stack.popPose();
-    }
-
-    private static void updateEntityPosition(WebRopeEntity entity) {
-        Player player = entity.level.getNearestPlayer(entity,10d);
-
-        if (player == null) return;
-
-        if (!(player.getItemBySlot(EquipmentSlot.CHEST).getItem() instanceof SpiderManArmourItem)) return;
-
-        int i = Mth.clamp(0, 0, 64);
-        float f2 = Mth.cos(player.yBodyRot * ((float) Math.PI / 180F)) * (0F + 1.21F * (float) i);
-        float f3 = Mth.sin(player.yBodyRot * ((float) Math.PI / 180F)) * (0F + 1.21F * (float) i);
-        float f6 = (0.3F * 0.45F) * ((float) i * 0.2F + 0.0F);
-        entity.moveTo(player.getX() + (double) f2, player.getY() + (double) f6, player.getZ() + (double) f3, player.getYRot(), player.getXRot());
     }
 
     private static void quad(Matrix4f p_253966_, VertexConsumer p_115274_, float p_115275_, float p_115276_, int p_115277_, float p_115278_, float p_115279_, float p_115280_, float p_115281_, float p_115282_, float p_115283_, float p_115284_,int length,float alpha, boolean p_115285_, boolean p_115286_, boolean p_115287_, boolean p_115288_) {

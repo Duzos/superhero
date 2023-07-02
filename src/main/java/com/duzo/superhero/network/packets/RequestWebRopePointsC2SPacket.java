@@ -3,8 +3,6 @@ package com.duzo.superhero.network.packets;
 import com.duzo.superhero.entities.spiderman.WebRopeEntity;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
@@ -45,13 +43,13 @@ public class RequestWebRopePointsC2SPacket {
 
     public boolean handle(Supplier<NetworkEvent.Context> supplier) {
         NetworkEvent.Context context = supplier.get();
-        context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
+        context.enqueueWork(() -> {
             Level level = context.getSender().getLevel();
 
             if (level.getEntity(this.entityID) instanceof WebRopeEntity rope) {
                 rope.setPointsChanged();
             }
-        }));
+        });
         return true;
     }
 }

@@ -1,8 +1,9 @@
 package com.duzo.superhero.client.gui;
 
 import com.duzo.superhero.Superhero;
-import com.duzo.superhero.items.SuperheroArmourItem;
 import com.duzo.superhero.items.ironman.IronManEdithGlasses;
+import com.duzo.superhero.util.SuperheroCapability;
+import com.duzo.superhero.util.SuperheroIdentifier;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
@@ -14,6 +15,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraftforge.client.gui.overlay.IGuiOverlay;
 
+import static com.duzo.superhero.util.SuperheroUtil.getIDFromStack;
 import static net.minecraft.client.gui.GuiComponent.blit;
 
 public class JarvisGUIOverlay {
@@ -34,7 +36,11 @@ public class JarvisGUIOverlay {
 
         if (!mc.options.getCameraType().isFirstPerson()) return;
 
-        boolean flag = mc.player.getItemBySlot(EquipmentSlot.HEAD).getItem() instanceof SuperheroArmourItem || mc.player.getItemBySlot(EquipmentSlot.HEAD).getItem() instanceof IronManEdithGlasses;
+        SuperheroIdentifier id = getIDFromStack(mc.player.getItemBySlot(EquipmentSlot.HEAD));
+
+        if (id == null) return;
+
+        boolean flag = id.getCapabilities().has(SuperheroCapability.JARVIS) || mc.player.getItemBySlot(EquipmentSlot.HEAD).getItem() instanceof IronManEdithGlasses;
 
         if (!flag) return;
 

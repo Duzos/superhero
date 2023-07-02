@@ -1,15 +1,11 @@
 package com.duzo.superhero.network.packets;
 
 import com.duzo.superhero.items.SuperheroArmourItem;
-import net.minecraft.client.Minecraft;
-import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.network.NetworkEvent;
@@ -52,20 +48,16 @@ public class AbilityC2SPacket {
     public boolean handle(Supplier<NetworkEvent.Context> supplier) {
         NetworkEvent.Context context = supplier.get();
         context.enqueueWork(() -> {
-            // Make sure it's only executed on the physical client
-            DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
-                // SERVER
-                ServerPlayer player = context.getSender();
-                ServerLevel level = player.getLevel();
+            // SERVER
+            ServerPlayer player = context.getSender();
+            ServerLevel level = player.getLevel();
 
-                ItemStack chest = player.getItemBySlot(EquipmentSlot.CHEST);
+            ItemStack chest = player.getItemBySlot(EquipmentSlot.CHEST);
 
-                if (!(chest.getItem() instanceof SuperheroArmourItem hero)) return;
-                if (!hero.isValidArmor(player)) return;
+            if (!(chest.getItem() instanceof SuperheroArmourItem hero)) return;
+            if (!hero.getIdentifier().isValidArmour(player)) return;
 
-                hero.runAbility(player,this.number);
-
-            });
+            hero.runAbility(player,this.number);
         });
         return true;
     }

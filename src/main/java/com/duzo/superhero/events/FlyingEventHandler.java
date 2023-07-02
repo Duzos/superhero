@@ -1,9 +1,8 @@
 package com.duzo.superhero.events;
 
-import com.duzo.superhero.items.ironman.IronManArmourItem;
+import com.duzo.superhero.items.SuperheroArmourItem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
-import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -12,7 +11,7 @@ import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-import static com.duzo.superhero.items.ironman.IronManArmourItem.canBlastOff;
+import static com.duzo.superhero.util.ironman.IronManUtil.FlightUtil.canBlastOff;
 
 @Mod.EventBusSubscriber
 public class FlyingEventHandler {
@@ -27,8 +26,8 @@ public class FlyingEventHandler {
 
             ItemStack chest = playerEntity.getItemBySlot(EquipmentSlot.CHEST);
 
-            if (!(chest.getItem() instanceof IronManArmourItem hero)) return;
-            if (!hero.isValidArmor(playerEntity)) return;
+            if (!(chest.getItem() instanceof SuperheroArmourItem hero)) return;
+            if (!hero.getIdentifier().isValidArmour(playerEntity)) return;
 
 
             if (canBlastOff(playerEntity)) {
