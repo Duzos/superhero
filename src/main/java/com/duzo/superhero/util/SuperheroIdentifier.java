@@ -18,7 +18,7 @@ public enum SuperheroIdentifier implements StringRepresentable {
     BATMAN_VS_SUPERMAN {
         @Override
         public SuperheroCapabilities getCapabilities() {
-            return new SuperheroCapabilities();
+            return new SuperheroCapabilities(SuperheroCapability.SUPER_STRENGTH);
         }
 
         @Override
@@ -69,6 +69,9 @@ public enum SuperheroIdentifier implements StringRepresentable {
             return "Spider-Man" + " " + slotName;
         }
     },
+    /**
+     * The default identifier.
+     */
     AMAZING_SPIDER_MAN {
         @Override
         public SuperheroCapabilities getCapabilities() {

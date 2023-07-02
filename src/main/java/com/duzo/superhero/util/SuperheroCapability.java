@@ -71,8 +71,10 @@ public enum SuperheroCapability implements StringRepresentable {
 
         @Override
         public void tick(ItemStack stack, Level level, Player player) {
-            player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 2 * 20, 1, false, false, false));
-            player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 2 * 20, 1, false, false, false));
+            if (getIDFromStack(stack).isValidArmour(player)) {
+                player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 2 * 20, 1, false, false, false));
+                player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 2 * 20, 1, false, false, false));
+            }
         }
     },
     FAST_MOBILITY {
@@ -83,8 +85,10 @@ public enum SuperheroCapability implements StringRepresentable {
 
         @Override
         public void tick(ItemStack stack, Level level, Player player) {
-            player.addEffect(new MobEffectInstance(MobEffects.JUMP, 2 * 20, 1, false, false, false));
-            player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 2 * 20, 1, false, false, false));
+            if (getIDFromStack(stack).isValidArmour(player)) {
+                player.addEffect(new MobEffectInstance(MobEffects.JUMP, 2 * 20, 1, false, false, false));
+                player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 2 * 20, 1, false, false, false));
+            }
         }
     },
     NIGHT_VISION {
@@ -95,7 +99,9 @@ public enum SuperheroCapability implements StringRepresentable {
 
         @Override
         public void tick(ItemStack stack, Level level, Player player) {
-            player.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, 11 * 20, 1, false, false, false));
+            if (getIDFromStack(stack).isValidArmour(player)) {
+                player.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, 11 * 20, 1, false, false, false));
+            }
         }
     },
 

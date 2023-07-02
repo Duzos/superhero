@@ -8,6 +8,11 @@ import java.util.List;
 
 public class SuperheroCapabilities implements Iterable<SuperheroCapability> {
     private List<SuperheroCapability> capabilities = new ArrayList<>();
+
+    public SuperheroCapabilities(SuperheroCapability... capabilities) {
+        this.add(capabilities);
+    }
+
     public SuperheroCapabilities add(SuperheroCapability capability) {
         this.capabilities.add(capability);
         return this;

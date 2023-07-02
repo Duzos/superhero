@@ -133,6 +133,12 @@ public class SpiderManUtil {
 
         return true;
     }
+
+    /**
+     * Doesnt need the helmet to be on to be valid
+     * @param player
+     * @return
+     */
     public static boolean isValidArmor(LivingEntity player) {
         SuperheroIdentifier currentMark = null;
 
