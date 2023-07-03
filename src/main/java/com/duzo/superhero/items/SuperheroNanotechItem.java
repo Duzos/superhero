@@ -57,12 +57,12 @@ public class SuperheroNanotechItem extends SuperheroArmourItem {
             return SuperheroIdentifier.valueOf(stack.getTag().getString("id").toUpperCase());
         }
         return null;
-    };
+    }
     public static void setID(ItemStack stack, SuperheroIdentifier id) {
         if (stack.hasTag()) {
             stack.getTag().putString("id",id.getSerializedName());
         }
-    };
+    }
 
 
     public static void convertArmourToNanotech(Player player) {

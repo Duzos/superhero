@@ -44,6 +44,7 @@ public class SuperheroEnglish extends LanguageProvider {
         add(SuperheroItems.MILES_HOODIE.get(),"Miles' Hoodie");
         add(SuperheroItems.PALLADIUM_INGOT.get(), "Palladium Ingot");
         add(SuperheroItems.RAW_PALLADIUM.get(), "Raw Palladium");
+        add(SuperheroItems.GRAPPLING_HOOK.get(),"Grappling Hook");
 
         // Blocks
         add(SuperheroBlocks.IRONMAN_SUITCASE.get(), "Iron Man Suitcase");

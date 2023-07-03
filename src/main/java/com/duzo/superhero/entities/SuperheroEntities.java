@@ -1,6 +1,7 @@
 package com.duzo.superhero.entities;
 
 import com.duzo.superhero.Superhero;
+import com.duzo.superhero.entities.batman.GrapplingHookRopeEntity;
 import com.duzo.superhero.entities.ironman.IronManEntity;
 import com.duzo.superhero.entities.ironman.UnibeamEntity;
 import com.duzo.superhero.entities.spiderman.WebRopeEntity;
@@ -22,4 +23,6 @@ public class SuperheroEntities {
 
     public static final RegistryObject<EntityType<WebRopeEntity>> WEB_ROPE_ENTITY = ENTITIES.register("web_rope_entity", () ->
             EntityType.Builder.<WebRopeEntity>of(WebRopeEntity::new, MobCategory.MISC).sized(0.125f, 0.125f).build(new ResourceLocation(Superhero.MODID,"web_rope_entity").toString()));
+    public static final RegistryObject<EntityType<GrapplingHookRopeEntity>> GRAPPLE_ROPE_ENTITY = ENTITIES.register("grapple_rope_entity", () ->
+            EntityType.Builder.<GrapplingHookRopeEntity>of(GrapplingHookRopeEntity::new, MobCategory.MISC).sized(0.125f, 0.125f).build(new ResourceLocation(Superhero.MODID,"grapple_rope_entity").toString()));
 }

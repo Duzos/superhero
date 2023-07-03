@@ -7,6 +7,7 @@ import com.duzo.superhero.client.models.SteveSkinModel;
 import com.duzo.superhero.client.models.entities.HumanoidEntityModel;
 import com.duzo.superhero.client.models.entities.IronManEntityModel;
 import com.duzo.superhero.client.models.items.IronManArmourModel;
+import com.duzo.superhero.client.renderers.GrapplingHookRopeEntityRenderer;
 import com.duzo.superhero.client.renderers.IronManEntityRenderer;
 import com.duzo.superhero.client.renderers.UnibeamRenderer;
 import com.duzo.superhero.client.renderers.WebRopeEntityRenderer;
@@ -35,6 +36,7 @@ public class SuperheroClientEvents {
         renderers.registerEntityRenderer(SuperheroEntities.IRON_MAN_ENTITY.get(), IronManEntityRenderer::new);
         renderers.registerEntityRenderer(SuperheroEntities.UNIBEAM_ENTITY.get(), UnibeamRenderer::new);
         renderers.registerEntityRenderer(SuperheroEntities.WEB_ROPE_ENTITY.get(), WebRopeEntityRenderer::new);
+        renderers.registerEntityRenderer(SuperheroEntities.GRAPPLE_ROPE_ENTITY.get(), GrapplingHookRopeEntityRenderer::new);
     }
 
     @SubscribeEvent

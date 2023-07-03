@@ -157,7 +157,7 @@ public class SpiderManUtil {
         }
         return true;
     }
-    protected static BlockHitResult getPlayerPOVHitResult(Level level, Player player) {
+    public static BlockHitResult getPlayerPOVHitResult(Level level, Player player) {
         float f = player.getXRot();
         float f1 = player.getYRot();
         Vec3 vec3 = player.getEyePosition();

@@ -117,7 +117,7 @@ public class IronManUtil {
         }
 
         public static void blastOff(Player player,double factor) {
-            Vec3 look = player.getLookAngle().normalize().multiply(factor, factor, factor);;
+            Vec3 look = player.getLookAngle().normalize().multiply(factor, factor, factor);
             player.setDeltaMovement(look);
         }
 

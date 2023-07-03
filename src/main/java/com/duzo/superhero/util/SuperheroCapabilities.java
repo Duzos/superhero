@@ -37,6 +37,16 @@ public class SuperheroCapabilities implements Iterable<SuperheroCapability> {
         return flag;
     }
 
+    public boolean has(List<SuperheroCapability> capabilities) {
+        boolean flag = true;
+
+        for (SuperheroCapability capability : capabilities) {
+            flag = flag && this.has(capability);
+        }
+
+        return flag;
+    }
+
     @NotNull
     @Override
     public Iterator<SuperheroCapability> iterator() {

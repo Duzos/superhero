@@ -5,6 +5,7 @@ import com.duzo.superhero.items.ironman.IronManArmourItem;
 import com.duzo.superhero.items.ironman.IronManEdithGlasses;
 import com.duzo.superhero.items.spiderman.MilesHoodieItem;
 import com.duzo.superhero.util.SuperheroIdentifier;
+import com.duzo.superhero.items.batman.GrapplingHookWeaponItem;
 import com.duzo.superhero.util.ironman.IronManUtil;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterials;
@@ -29,6 +30,11 @@ public class SuperheroItems {
             () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> RAW_PALLADIUM = ITEMS.register("raw_palladium",
             () -> new Item(new Item.Properties()));
+
+
+    // Batman Weapons
+    public static final RegistryObject<GrapplingHookWeaponItem> GRAPPLING_HOOK = ITEMS.register("grappling_hook",
+            () -> new GrapplingHookWeaponItem(new Item.Properties().stacksTo(1)));
 
     public static void init() {
         for (SuperheroIdentifier id : SuperheroIdentifier.values()) {

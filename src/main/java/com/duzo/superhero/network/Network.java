@@ -62,6 +62,16 @@ public class Network {
                 .encoder(UpdateWebRopeAlphaS2CPacket::encode)
                 .consumerMainThread(UpdateWebRopeAlphaS2CPacket::handle)
                 .add();
+        net.messageBuilder(UpdateGrappleRopePointsS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+                .decoder(UpdateGrappleRopePointsS2CPacket::decode)
+                .encoder(UpdateGrappleRopePointsS2CPacket::encode)
+                .consumerMainThread(UpdateGrappleRopePointsS2CPacket::handle)
+                .add();
+        net.messageBuilder(RequestGrappleRopePointsC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(RequestGrappleRopePointsC2SPacket::decode)
+                .encoder(RequestGrappleRopePointsC2SPacket::encode)
+                .consumerMainThread(RequestGrappleRopePointsC2SPacket::handle)
+                .add();
     }
 
     public static <MSG> void sendToServer(MSG message) {

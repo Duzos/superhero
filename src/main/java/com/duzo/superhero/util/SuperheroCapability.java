@@ -105,6 +105,19 @@ public enum SuperheroCapability implements StringRepresentable {
         }
     },
 
+    // BATMAN
+    GRAPPLING_HOOK {
+        @Override
+        public void runAbility(int num, Player player) {
+
+        }
+
+        @Override
+        public void tick(ItemStack stack, Level level, Player player) {
+
+        }
+    },
+
     // IRONMAN
     NIGHT_VISION_HELMET_ONLY {
         @Override
