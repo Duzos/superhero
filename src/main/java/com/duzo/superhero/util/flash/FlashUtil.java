@@ -19,6 +19,8 @@ import net.minecraft.world.phys.Vec3;
 import java.util.UUID;
 
 public class FlashUtil {
+    public static final UUID SPEED_UUID = UUID.fromString("fff934a3-13f8-47c6-877d-7067fb9a842f");
+
     public static double syncSpeed(Player player) {
         if (!player.level.isClientSide) {
             Network.sendToPlayer(new SyncSpeedsterDataS2CPacket(player.getPersistentData().getDouble("speedster.speed")), (ServerPlayer) player);
@@ -98,7 +100,7 @@ public class FlashUtil {
             // Dont even ask me what this is
 
             if (getSpeed(player) == 1) {
-                player.getAttribute(Attributes.MOVEMENT_SPEED).removeModifier(UUID.fromString("fff934a3-13f8-47c6-877d-7067fb9a842f"));
+                player.getAttribute(Attributes.MOVEMENT_SPEED).removeModifier(SPEED_UUID);
                 return;
             }
 
@@ -106,13 +108,13 @@ public class FlashUtil {
                 walkOnWater(player);
             }
 
-            AttributeModifier mod = createModifier(UUID.fromString("fff934a3-13f8-47c6-877d-7067fb9a842f"),"Speedster speed", getSpeed(player), AttributeModifier.Operation.MULTIPLY_TOTAL);
+            AttributeModifier mod = createModifier(SPEED_UUID,"Speedster speed", getSpeed(player), AttributeModifier.Operation.MULTIPLY_TOTAL);
             if(!player.getAttribute(Attributes.MOVEMENT_SPEED).hasModifier(mod)) {
                 player.getAttribute(Attributes.MOVEMENT_SPEED).addTransientModifier(mod);
             } else {
-                AttributeModifier existing = player.getAttribute(Attributes.MOVEMENT_SPEED).getModifier(UUID.fromString("fff934a3-13f8-47c6-877d-7067fb9a842f"));
+                AttributeModifier existing = player.getAttribute(Attributes.MOVEMENT_SPEED).getModifier(SPEED_UUID);
                 if (existing.getAmount() != mod.getAmount()) {
-                    player.getAttribute(Attributes.MOVEMENT_SPEED).removeModifier(UUID.fromString("fff934a3-13f8-47c6-877d-7067fb9a842f"));
+                    player.getAttribute(Attributes.MOVEMENT_SPEED).removeModifier(SPEED_UUID);
                     player.getAttribute(Attributes.MOVEMENT_SPEED).addTransientModifier(mod);
                 }
             }
@@ -133,6 +135,13 @@ public class FlashUtil {
         }
     }
 
+    public static void removeFlashSpeed(Player player) {
+        AttributeModifier mod = createSpeedModifier(player);
+        if (player.getAttribute(Attributes.MOVEMENT_SPEED).hasModifier(mod)) {
+            player.getAttribute(Attributes.MOVEMENT_SPEED).removeModifier(mod);
+        }
+    }
+
     /**
      * Dunno why i made this
      * @param uuid
@@ -144,5 +153,8 @@ public class FlashUtil {
     public static AttributeModifier createModifier(UUID uuid,String description, double amount,AttributeModifier.Operation operation) {
         AttributeModifier mod = new AttributeModifier(uuid,description,amount,operation);
         return mod;
+    }
+    public static AttributeModifier createSpeedModifier(Entity entity) {
+        return createModifier(SPEED_UUID,"Speedster speed", getSpeed(entity), AttributeModifier.Operation.MULTIPLY_TOTAL);
     }
 }

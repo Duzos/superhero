@@ -18,7 +18,7 @@ public enum SuperheroIdentifier implements StringRepresentable {
     FLASH {
         @Override
         public SuperheroCapabilities getCapabilities() {
-            return new SuperheroCapabilities(SuperheroCapability.SPEEDSTER);
+            return new SuperheroCapabilities(SuperheroCapability.SPEEDSTER,SuperheroCapability.FLASH_HUD);
         }
 
         @Override

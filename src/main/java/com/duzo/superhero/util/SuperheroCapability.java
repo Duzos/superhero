@@ -8,7 +8,6 @@ import com.duzo.superhero.sounds.SuperheroSounds;
 import com.duzo.superhero.util.flash.FlashUtil;
 import com.duzo.superhero.util.ironman.IronManUtil;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.util.StringRepresentable;
@@ -139,7 +138,7 @@ public enum SuperheroCapability implements StringRepresentable {
         public void runAbility(int num, Player player) {
             if (num == 1) {
                 double speed = FlashUtil.changeSpeed(player, Screen.hasControlDown());
-                player.displayClientMessage(Component.literal("Speed: " + speed),true);
+//                player.displayClientMessage(Component.literal("Speed: " + speed),true);
             }
         }
 
@@ -148,6 +147,31 @@ public enum SuperheroCapability implements StringRepresentable {
             if (getIDFromStack(stack).isValidArmour(player)) {
                 FlashUtil.modifyPlayerSpeed(player);
             }
+        }
+
+        @Override
+        public void unequippedTick(ItemStack stack, Level level, Player player) {
+            ItemStack chest = player.getItemBySlot(EquipmentSlot.CHEST);
+            if (chest.getItem() instanceof SuperheroArmourItem) {
+                if (!getIDFromStack(chest).isValidArmour(player)) {
+                    FlashUtil.setSpeed(player,1.0d);
+                    FlashUtil.removeFlashSpeed(player);
+                }
+            } else {
+                FlashUtil.setSpeed(player,1.0d);
+                FlashUtil.removeFlashSpeed(player);
+            }
+        }
+    },
+    FLASH_HUD {
+        @Override
+        public void runAbility(int num, Player player) {
+
+        }
+
+        @Override
+        public void tick(ItemStack stack, Level level, Player player) {
+
         }
 
         @Override
