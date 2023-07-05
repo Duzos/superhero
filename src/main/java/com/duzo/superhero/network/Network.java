@@ -42,6 +42,11 @@ public class Network {
                 .encoder(ChangeDeltaMovementS2CPacket::encode)
                 .consumerMainThread(ChangeDeltaMovementS2CPacket::handle)
                 .add();
+        net.messageBuilder(SyncSpeedsterDataS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+                .decoder(SyncSpeedsterDataS2CPacket::decode)
+                .encoder(SyncSpeedsterDataS2CPacket::encode)
+                .consumerMainThread(SyncSpeedsterDataS2CPacket::handle)
+                .add();
         net.messageBuilder(SwingArmS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
                 .decoder(SwingArmS2CPacket::decode)
                 .encoder(SwingArmS2CPacket::encode)

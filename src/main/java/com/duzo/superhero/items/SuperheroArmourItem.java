@@ -116,10 +116,13 @@ public class SuperheroArmourItem extends ArmorItem {
         super.inventoryTick(stack, level, entity, p_41407_, p_41408_);
 
         if (entity instanceof Player player) {
-            if (!isEquipped(stack,player)) return;
 
             for (SuperheroCapability cap : this.getIdentifier().getCapabilities()) {
-                cap.tick(stack, level, player);
+                if (!isEquipped(stack,player)) {
+                    cap.unequippedTick(stack,level,player);
+                } else {
+                    cap.tick(stack, level, player);
+                }
             }
         }
     }

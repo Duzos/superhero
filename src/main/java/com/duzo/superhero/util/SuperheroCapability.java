@@ -5,7 +5,10 @@ import com.duzo.superhero.entities.ironman.UnibeamEntity;
 import com.duzo.superhero.items.SuperheroArmourItem;
 import com.duzo.superhero.items.SuperheroNanotechItem;
 import com.duzo.superhero.sounds.SuperheroSounds;
+import com.duzo.superhero.util.flash.FlashUtil;
 import com.duzo.superhero.util.ironman.IronManUtil;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.util.StringRepresentable;
@@ -40,6 +43,11 @@ public enum SuperheroCapability implements StringRepresentable {
         public void tick(ItemStack stack, Level level, Player player) {
 
         }
+
+        @Override
+        public void unequippedTick(ItemStack stack, Level level, Player player) {
+
+        }
     },
     NANOTECH {
         @Override
@@ -62,6 +70,11 @@ public enum SuperheroCapability implements StringRepresentable {
         public void tick(ItemStack stack, Level level, Player player) {
 
         }
+
+        @Override
+        public void unequippedTick(ItemStack stack, Level level, Player player) {
+
+        }
     },
     SUPER_STRENGTH {
         @Override
@@ -75,6 +88,11 @@ public enum SuperheroCapability implements StringRepresentable {
                 player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 2 * 20, 1, false, false, false));
                 player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 2 * 20, 1, false, false, false));
             }
+        }
+
+        @Override
+        public void unequippedTick(ItemStack stack, Level level, Player player) {
+
         }
     },
     FAST_MOBILITY {
@@ -90,6 +108,11 @@ public enum SuperheroCapability implements StringRepresentable {
                 player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 2 * 20, 1, false, false, false));
             }
         }
+
+        @Override
+        public void unequippedTick(ItemStack stack, Level level, Player player) {
+
+        }
     },
     NIGHT_VISION {
         @Override
@@ -103,6 +126,34 @@ public enum SuperheroCapability implements StringRepresentable {
                 player.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, 11 * 20, 1, false, false, false));
             }
         }
+
+        @Override
+        public void unequippedTick(ItemStack stack, Level level, Player player) {
+
+        }
+    },
+
+    // FLASH
+    SPEEDSTER {
+        @Override
+        public void runAbility(int num, Player player) {
+            if (num == 1) {
+                double speed = FlashUtil.changeSpeed(player, Screen.hasControlDown());
+                player.displayClientMessage(Component.literal("Speed: " + speed),true);
+            }
+        }
+
+        @Override
+        public void tick(ItemStack stack, Level level, Player player) {
+            if (getIDFromStack(stack).isValidArmour(player)) {
+                FlashUtil.modifyPlayerSpeed(player);
+            }
+        }
+
+        @Override
+        public void unequippedTick(ItemStack stack, Level level, Player player) {
+
+        }
     },
 
     // BATMAN
@@ -114,6 +165,11 @@ public enum SuperheroCapability implements StringRepresentable {
 
         @Override
         public void tick(ItemStack stack, Level level, Player player) {
+
+        }
+
+        @Override
+        public void unequippedTick(ItemStack stack, Level level, Player player) {
 
         }
     },
@@ -130,6 +186,11 @@ public enum SuperheroCapability implements StringRepresentable {
             if (stack.getEquipmentSlot() == EquipmentSlot.HEAD && player.getItemBySlot(EquipmentSlot.HEAD).getItem() instanceof SuperheroArmourItem) {
                 player.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, 11 * 20, 1, false, false, false));
             }
+        }
+
+        @Override
+        public void unequippedTick(ItemStack stack, Level level, Player player) {
+
         }
 
         @Override
@@ -150,6 +211,11 @@ public enum SuperheroCapability implements StringRepresentable {
         public void tick(ItemStack stack, Level level, Player player) {
 
         }
+
+        @Override
+        public void unequippedTick(ItemStack stack, Level level, Player player) {
+
+        }
     },
     SEAMLESS {
         @Override
@@ -167,6 +233,11 @@ public enum SuperheroCapability implements StringRepresentable {
         public void tick(ItemStack stack, Level level, Player player) {
 
         }
+
+        @Override
+        public void unequippedTick(ItemStack stack, Level level, Player player) {
+
+        }
     },
     BRACELET_LOCATING {
         @Override
@@ -178,6 +249,11 @@ public enum SuperheroCapability implements StringRepresentable {
         public void tick(ItemStack stack, Level level, Player player) {
 
         }
+
+        @Override
+        public void unequippedTick(ItemStack stack, Level level, Player player) {
+
+        }
     },
     BINDING {
         @Override
@@ -187,6 +263,11 @@ public enum SuperheroCapability implements StringRepresentable {
 
         @Override
         public void tick(ItemStack stack, Level level, Player player) {
+
+        }
+
+        @Override
+        public void unequippedTick(ItemStack stack, Level level, Player player) {
 
         }
     },
@@ -202,6 +283,11 @@ public enum SuperheroCapability implements StringRepresentable {
                 player.addEffect(new MobEffectInstance(MobEffects.WITHER, 2 * 20, 0, false, false, false));
             }
         }
+
+        @Override
+        public void unequippedTick(ItemStack stack, Level level, Player player) {
+
+        }
     },
     JARVIS {
         @Override
@@ -211,6 +297,11 @@ public enum SuperheroCapability implements StringRepresentable {
 
         @Override
         public void tick(ItemStack stack, Level level, Player player) {
+
+        }
+
+        @Override
+        public void unequippedTick(ItemStack stack, Level level, Player player) {
 
         }
     },
@@ -224,7 +315,16 @@ public enum SuperheroCapability implements StringRepresentable {
         public void tick(ItemStack stack, Level level, Player player) {
 
         }
+
+        @Override
+        public void unequippedTick(ItemStack stack, Level level, Player player) {
+
+        }
     },
+
+    /**
+     * Requires the identifier to have "vertical" and "blastoff" values set in its custom values
+     */
     IRON_MAN_FLIGHT {
         @Override
         public void runAbility(int num, Player player) {
@@ -242,6 +342,11 @@ public enum SuperheroCapability implements StringRepresentable {
                     bootsOnlyFlight(player,getIDFromStack(stack));
                 }
             }
+        }
+
+        @Override
+        public void unequippedTick(ItemStack stack, Level level, Player player) {
+
         }
     },
     IRON_MAN_WEAPONS {
@@ -264,6 +369,11 @@ public enum SuperheroCapability implements StringRepresentable {
         public void tick(ItemStack stack, Level level, Player player) {
 
         }
+
+        @Override
+        public void unequippedTick(ItemStack stack, Level level, Player player) {
+
+        }
     },
 
     // SPIDERMAN
@@ -279,6 +389,11 @@ public enum SuperheroCapability implements StringRepresentable {
         public void tick(ItemStack stack, Level level, Player player) {
 
         }
+
+        @Override
+        public void unequippedTick(ItemStack stack, Level level, Player player) {
+
+        }
     },
     WALL_CLIMBING {
         @Override
@@ -292,13 +407,33 @@ public enum SuperheroCapability implements StringRepresentable {
                 runWallClimbs(player);
             }
         }
+
+        @Override
+        public void unequippedTick(ItemStack stack, Level level, Player player) {
+
+        }
     };
     @Override
     public String getSerializedName() {
         return this.name().toLowerCase();
     }
     public abstract void runAbility(int num,Player player);
+
+    /**
+     * Tick thats ran when this suit is equipped
+     * @param stack
+     * @param level
+     * @param player
+     */
     public abstract void tick(ItemStack stack, Level level, Player player);
+
+    /**
+     * Tick thats ran when this suit is not equipped and is sat in the inventory.
+     * @param stack
+     * @param level
+     * @param player
+     */
+    public abstract void unequippedTick(ItemStack stack, Level level, Player player);
 
     public String getNameForText() {
         return fileNameToUsable(this.getSerializedName());

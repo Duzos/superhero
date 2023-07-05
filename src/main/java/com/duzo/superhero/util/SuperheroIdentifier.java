@@ -14,11 +14,26 @@ import static com.duzo.superhero.entities.ironman.IronManEntity.fileNameToUsable
 import static com.duzo.superhero.entities.ironman.IronManEntity.nameFromSlot;
 
 public enum SuperheroIdentifier implements StringRepresentable {
+    // FLASH
+    FLASH {
+        @Override
+        public SuperheroCapabilities getCapabilities() {
+            return new SuperheroCapabilities(SuperheroCapability.SPEEDSTER);
+        }
+
+        @Override
+        public String getLangFileName(EquipmentSlot slot) {
+            String slotName = fileNameToUsable(nameFromSlot(slot));
+
+            return "Flash" + " " + slotName;
+        }
+    },
+
     // BATMAN
     BATMAN_VS_SUPERMAN {
         @Override
         public SuperheroCapabilities getCapabilities() {
-            return new SuperheroCapabilities(SuperheroCapability.GRAPPLING_HOOK,SuperheroCapability.SUPER_STRENGTH,SuperheroCapability.NIGHT_VISION_HELMET_ONLY);
+            return new SuperheroCapabilities(SuperheroCapability.GRAPPLING_HOOK,SuperheroCapability.SUPER_STRENGTH,SuperheroCapability.NIGHT_VISION_HELMET_ONLY,SuperheroCapability.INVISIBILITY);
         }
 
         @Override
