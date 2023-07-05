@@ -118,7 +118,6 @@ public class FlashUtil {
             }
         }
     }
-
     // @TODO needs work.
     public static void walkOnWater(Player player) {
         if (player.level.isClientSide) {
@@ -127,7 +126,7 @@ public class FlashUtil {
                     Vec3 delta = player.getDeltaMovement();
                     if (delta.y < 0) {
 //                        player.setDeltaMovement(delta.add(1 + (getSpeed(player)/10),0,1+(getSpeed(player)/10)).multiply(1,0,1));
-                        player.setDeltaMovement(delta.x,0,delta.z);
+                        player.setDeltaMovement(delta.multiply(0.6 + (getSpeed(player) / 100),0,0.6 + (getSpeed(player) / 100)));
                     }
                 }
             }
