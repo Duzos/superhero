@@ -2,19 +2,25 @@ package com.duzo.superhero.entities.spiderman;
 
 import com.duzo.superhero.entities.SuperheroEntities;
 import com.duzo.superhero.network.Network;
+import com.duzo.superhero.network.packets.ChangeDeltaMovementS2CPacket;
 import com.duzo.superhero.network.packets.RequestWebRopePointsC2SPacket;
 import com.duzo.superhero.network.packets.UpdateWebRopeAlphaS2CPacket;
 import com.duzo.superhero.network.packets.UpdateWebRopePointsS2CPacket;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.TamableAnimal;
+import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
 public class WebRopeEntity extends Entity {
     @Deprecated
     public Vec3 origin,point;
+    public Player player;
 
     private float alpha = 1f;
 
@@ -23,10 +29,11 @@ public class WebRopeEntity extends Entity {
     }
 
     @Deprecated
-    public WebRopeEntity(Level level,Vec3 point) {
-        super(SuperheroEntities.WEB_ROPE_ENTITY.get(),level);
+    public WebRopeEntity(Level level, Vec3 point, Player player) {
+        super(SuperheroEntities.WEB_ROPE_ENTITY.get(), level);
         this.origin = this.position();
         this.point = point;
+        this.player = player;
     }
 
     public WebRopeEntity(EntityType<?> type, Level level) {
@@ -102,6 +109,23 @@ public class WebRopeEntity extends Entity {
             if (this.point == null) {
                 this.clientRequestUpdatedPoints();
             }
+        }
+        if (this.player != null && this.player.level == this.level) {
+            //this.restrictTo(this.player.blockPosition(), 5);
+            this.player.setPosRaw(this.blockPosition().getX(),this.blockPosition().getY() - 5, this.blockPosition().getZ());
+            float f = this.player.distanceTo(this);
+
+            if (f > 10.0F) {
+            } else if (f > 6.0F) {
+                double d0 = (this.getX() - this.player.getX()) / (double)f;
+                double d1 = (this.getY() - this.player.getY()) / (double)f;
+                double d2 = (this.getZ() - this.player.getZ()) / (double)f;
+                this.player.setDeltaMovement(this.player.getDeltaMovement().add(Math.copySign(d0 * d0 * 0.4D, d0), Math.copySign(d1 * d1 * 0.4D, d1), Math.copySign(d2 * d2 * 0.4D, d2)));
+                Vec3 playerVector = this.player.getDeltaMovement();
+                this.player.checkSlowFallDistance();
+                Network.sendToPlayer(new ChangeDeltaMovementS2CPacket(playerVector.add(this.player.getDeltaMovement().add(Math.copySign(d0 * d0 * 0.4D, d0), Math.copySign(d1 * d1 * 0.4D, d1), Math.copySign(d2 * d2 * 0.4D, d2)))), (ServerPlayer) this.player);
+            }
+
         }
     }
 }

@@ -84,19 +84,26 @@ public class SpiderManUtil {
 
         player.level.playSound(null,player, SuperheroSounds.SPIDERMAN_SHOOT.get(), SoundSource.PLAYERS,0.25f,1f);
 
-        WebRopeEntity rope = new WebRopeEntity(player.level, hitVec3);
+        WebRopeEntity rope = new WebRopeEntity(player.level, hitVec3, player);
 
         int i = Mth.clamp(0, 0, 64);
-        float f2 = Mth.cos(player.yBodyRot * ((float) Math.PI / 180F)) * (0F + 1.21F * (float) i);
-        float f3 = Mth.sin(player.yBodyRot * ((float) Math.PI / 180F)) * (0F + 1.21F * (float) i);
+        //float f2 = Mth.cos(player.yBodyRot * ((float) Math.PI / 180F)) * (0F + 1.21F * (float) i);
+        //float f3 = Mth.sin(player.yBodyRot * ((float) Math.PI / 180F)) * (0F + 1.21F * (float) i);
+        float f2 = Mth.cos(player.yBodyRot * ((float) Math.PI / 180F)) * (0F + 0F * (float) i);
+        float f3 = Mth.sin(player.yBodyRot * ((float) Math.PI / 180F)) * (0F + 0F * (float) i);
         float f6 = (0.3F * 0.45F) * ((float) i * 0.2F + 0.0F);
         player.level.addFreshEntity(rope);
-        rope.moveTo(player.getX() + (double) f2, player.getY() + (double) f6 + 1.25f, player.getZ() + (double) f3, player.getYRot(), player.getXRot());
+        BlockHitResult hit = SpiderManUtil.getPlayerPOVHitResult(player.level, player);
+        BlockPos hitPosition = hit.getBlockPos();
+        if(player.level.getBlockState(hitPos).isAir()) return;
+        rope.moveTo(hitPos.getCenter());
+        rope.setYBodyRot(-player.getYRot());
+        rope.setXRot(player.getXRot());
+        //rope.moveTo(player.getX() + (double) f2, player.getY() + (double) f6 + 1.25f, player.getZ() + (double) f3, player.getYRot(), player.getXRot());
         rope.setPointsChanged();
-//        rope.setPointsChanged();
 
-        Vec3 look = player.getLookAngle().normalize().multiply(2.5d, 2.5d, 2.5d);//.add(0,0.5d,0);
-        Network.sendToPlayer(new ChangeDeltaMovementS2CPacket(look.add(player.getDeltaMovement().x,0,player.getDeltaMovement().z)), (ServerPlayer) player);
+        //Vec3 look = player.getLookAngle().normalize().multiply(2.5d, 2.5d, 2.5d);//.add(0,0.5d,0);
+        //Network.sendToPlayer(new ChangeDeltaMovementS2CPacket(look.add(player.getDeltaMovement().x,0,player.getDeltaMovement().z)), (ServerPlayer) player);
     }
 
     /**

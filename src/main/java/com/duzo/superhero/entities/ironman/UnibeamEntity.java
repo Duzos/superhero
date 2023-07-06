@@ -5,9 +5,13 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 
 public class UnibeamEntity extends Entity {
@@ -53,16 +57,21 @@ public class UnibeamEntity extends Entity {
             }
 
             // @TODO damaging
-//            HitResult ray = ProjectileUtil.getEntityHitResult(this,this::rayPredicate);
-//
-//            System.out.println(ray.getLocation());
-//
-//            if (ray.getType() == HitResult.Type.ENTITY) {
-//                EntityHitResult eRay = (EntityHitResult) ray;
-//                if(eRay.getEntity() instanceof LivingEntity entity) {
-//                    entity.hurt(this.level.damageSources().inFire(), 10f);
-//                }
-//            }
+           /*HitResult ray = ProjectileUtil.getEntityHitResult(this.level, this, this.position(),
+                   this.getDeltaMovement(), this.getBoundingBox().expandTowards(this.getDeltaMovement()).inflate(1.0D), this::rayPredicate);
+
+           //System.out.println(ray.getLocation());
+
+           if (ray.getType() == HitResult.Type.ENTITY) {
+               EntityHitResult eRay = (EntityHitResult) ray;
+               if(eRay.getEntity() instanceof LivingEntity entity) {
+                   entity.hurt(this.level.damageSources().inFire(), 10f);
+               }
+           }*/
+           // HitResult hitresult = ProjectileUtil.getHitResult(this, this::rayPredicate);
+           // if (hitresult.getType() != HitResult.Type.MISS && !net.minecraftforge.event.ForgeEventFactory.onProjectileImpact(this, hitresult)) {
+            //    //this.onHit(hitresult);
+           // }
         }
 
 //        BlockHitResult result = getPlayerPOVHitResult(this.level,this);
