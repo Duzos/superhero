@@ -2,7 +2,7 @@ package com.duzo.superhero.items.ironman;
 
 import com.duzo.superhero.entities.SuperheroEntities;
 import com.duzo.superhero.entities.ironman.IronManEntity;
-import com.duzo.superhero.util.SuperheroIdentifier;
+import com.duzo.superhero.util.SuperheroIdentifierENUM;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -16,7 +16,7 @@ public abstract class IronManTestingItem extends Item {
         super(properties);
     }
 
-    protected SuperheroIdentifier getMark() {
+    protected SuperheroIdentifierENUM getMark() {
         return null;
     }
 

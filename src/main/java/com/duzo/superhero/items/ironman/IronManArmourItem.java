@@ -2,7 +2,7 @@ package com.duzo.superhero.items.ironman;
 
 import com.duzo.superhero.client.models.items.IronManArmourModel;
 import com.duzo.superhero.items.SuperheroArmourItem;
-import com.duzo.superhero.util.SuperheroIdentifier;
+import com.duzo.superhero.util.SuperheroIdentifierENUM;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.world.entity.Entity;
@@ -18,9 +18,9 @@ import org.jetbrains.annotations.Nullable;
 import java.util.function.Consumer;
 
 public class IronManArmourItem extends SuperheroArmourItem {
-    private SuperheroIdentifier mark;
+    private SuperheroIdentifierENUM mark;
 
-    public IronManArmourItem(ArmorMaterial material, Type type, Properties properties, SuperheroIdentifier id) {
+    public IronManArmourItem(ArmorMaterial material, Type type, Properties properties, SuperheroIdentifierENUM id) {
         super(material, type, properties, id);
     }
 
@@ -28,7 +28,7 @@ public class IronManArmourItem extends SuperheroArmourItem {
         super(material, type, properties);
     }
 
-    public void setMark(SuperheroIdentifier mark) {
+    public void setMark(SuperheroIdentifierENUM mark) {
         this.mark = mark;
     }
 
@@ -36,7 +36,7 @@ public class IronManArmourItem extends SuperheroArmourItem {
     /**
      * Use {@link SuperheroArmourItem#getIdentifier()}
      */
-    public SuperheroIdentifier getMark() {
+    public SuperheroIdentifierENUM getMark() {
         return this.mark;
     }
 

@@ -3,7 +3,7 @@ package com.duzo.superhero.blocks;
 import com.duzo.superhero.items.SuperheroItems;
 import com.duzo.superhero.items.ironman.IronManNanotechItem;
 import com.duzo.superhero.sounds.SuperheroSounds;
-import com.duzo.superhero.util.SuperheroIdentifier;
+import com.duzo.superhero.util.SuperheroIdentifierENUM;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundSource;
@@ -75,11 +75,11 @@ public class IronManSuitCaseBlock extends Block {
         return RenderShape.MODEL;
     }
 
-    public static boolean equipArmourForMark(SuperheroIdentifier mark, Player player) {
+    public static boolean equipArmourForMark(SuperheroIdentifierENUM mark, Player player) {
         return equipArmourForMark(mark,player,false);
     }
 
-    public static boolean equipArmourForMark(SuperheroIdentifier mark, Player player, boolean excludeNanotech) {
+    public static boolean equipArmourForMark(SuperheroIdentifierENUM mark, Player player, boolean excludeNanotech) {
         for (EquipmentSlot slot : EquipmentSlot.values()) {
             if (!slot.isArmor()) continue;
 
@@ -121,7 +121,7 @@ public class IronManSuitCaseBlock extends Block {
     @Override
     public InteractionResult use(BlockState p_60503_, Level level, BlockPos p_60505_, Player player, InteractionHand hand, BlockHitResult p_60508_) {
         if (!level.isClientSide && hand == InteractionHand.MAIN_HAND) {
-            if (equipArmourForMark(SuperheroIdentifier.IRONMAN_MARK_5,player)) {
+            if (equipArmourForMark(SuperheroIdentifierENUM.IRONMAN_MARK_5,player)) {
                 level.removeBlock(p_60505_,false);
                 level.playSound(null,player, SuperheroSounds.IRONMAN_POWERUP.get(), SoundSource.PLAYERS,1f,1f);
             }

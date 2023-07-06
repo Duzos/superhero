@@ -2,7 +2,7 @@ package com.duzo.superhero.util.ironman;
 
 import com.duzo.superhero.items.ironman.IronManArmourItem;
 import com.duzo.superhero.util.SuperheroCapability;
-import com.duzo.superhero.util.SuperheroIdentifier;
+import com.duzo.superhero.util.SuperheroIdentifierENUM;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.particles.ParticleTypes;
@@ -18,31 +18,31 @@ import java.util.Random;
 import static com.duzo.superhero.util.SuperheroUtil.keyDown;
 
 public class IronManUtil {
-    public static boolean isIronManSuit(SuperheroIdentifier id) {
+    public static boolean isIronManSuit(SuperheroIdentifierENUM id) {
         HashMap<String, ?> map = id.getEnumSpecificValues();
 
         return map.containsKey("vertical") || map.containsKey("blastOff");
     }
 
-    public static double getVerticalFlight(SuperheroIdentifier id) {
+    public static double getVerticalFlight(SuperheroIdentifierENUM id) {
         if (!isIronManSuit(id)) return 0d;
 
         return (double) id.getEnumSpecificValues().get("vertical");
     }
 
-    public static double getBlastOff(SuperheroIdentifier id) {
+    public static double getBlastOff(SuperheroIdentifierENUM id) {
         if (!isIronManSuit(id)) return 0d;
 
         return (double) id.getEnumSpecificValues().get("blastOff");
     }
 
-    public static String getHoverTextName(SuperheroIdentifier id) {
+    public static String getHoverTextName(SuperheroIdentifierENUM id) {
         return "Mark " + id.getSerializedName().substring(id.getSerializedName().length() - 1);
     }
 
     public static class FlightUtil {
         // Flight that only goes up
-        public static void bootsOnlyFlight(Player player, SuperheroIdentifier mark) {
+        public static void bootsOnlyFlight(Player player, SuperheroIdentifierENUM mark) {
             if(keyDown(GLFW.GLFW_KEY_SPACE)) {
                 Vec3 motion = player.getDeltaMovement();
                 double currentAccel = getVerticalFlight(mark) * (motion.y() < 0.3D ? 2.5D : 1.0D);
@@ -51,7 +51,7 @@ public class IronManUtil {
         }
 
         // @TODO movement to left right and back
-        public static void runFlight(Player player, SuperheroIdentifier mark) {
+        public static void runFlight(Player player, SuperheroIdentifierENUM mark) {
             Vec3 motion = player.getDeltaMovement();
             double currentAccel = getVerticalFlight(mark) * (motion.y() < 0.3D ? 2.5D : 1.0D);
 

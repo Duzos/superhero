@@ -6,7 +6,7 @@ import com.duzo.superhero.entities.SuperheroEntities;
 import com.duzo.superhero.items.SuperheroArmourItem;
 import com.duzo.superhero.sounds.SuperheroSounds;
 import com.duzo.superhero.util.SuperheroCapability;
-import com.duzo.superhero.util.SuperheroIdentifier;
+import com.duzo.superhero.util.SuperheroIdentifierENUM;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -31,7 +31,7 @@ import net.minecraft.world.level.Level;
 
 public class IronManEntity extends HumanoidEntity {
     private static final EntityDataAccessor<String> MARK = SynchedEntityData.defineId(IronManEntity.class, EntityDataSerializers.STRING);
-    public static final SuperheroIdentifier DEFAULT_MARK = SuperheroIdentifier.IRONMAN_MARK_7;
+    public static final SuperheroIdentifierENUM DEFAULT_MARK = SuperheroIdentifierENUM.IRONMAN_MARK_7;
     private Player owner;
 
     public IronManEntity(EntityType<? extends HumanoidEntity> entityType, Level level) {
@@ -105,7 +105,7 @@ public class IronManEntity extends HumanoidEntity {
         this.skin = new ResourceLocation(Superhero.MODID, "textures/entities/iron_man/" + this.getMark() + ".png");
     }
 
-    public void setMark(SuperheroIdentifier mark) {
+    public void setMark(SuperheroIdentifierENUM mark) {
         this.entityData.set(MARK,mark.getSerializedName());
         this.skin = new ResourceLocation(Superhero.MODID, "textures/entities/iron_man/" + this.getMark() + ".png");
         this.setCustomName(Component.translatable("Iron Man " + fileNameToUsable(this.getMark())));
@@ -113,13 +113,13 @@ public class IronManEntity extends HumanoidEntity {
     public String getMark() {
         return this.entityData.get(MARK);
     }
-    public SuperheroIdentifier getMarkEnum() {
-        return SuperheroIdentifier.valueOf(this.getMark().toUpperCase());
+    public SuperheroIdentifierENUM getMarkEnum() {
+        return SuperheroIdentifierENUM.valueOf(this.getMark().toUpperCase());
     }
     @Override
     public void readAdditionalSaveData(CompoundTag nbt) {
         super.readAdditionalSaveData(nbt);
-        this.setMark(SuperheroIdentifier.valueOf(nbt.getString("mark").toUpperCase()));
+        this.setMark(SuperheroIdentifierENUM.valueOf(nbt.getString("mark").toUpperCase()));
     }
 
     @Override
@@ -226,7 +226,7 @@ public class IronManEntity extends HumanoidEntity {
         return true;
     }
 
-    public static void spawnNew(SuperheroIdentifier mark,Level level, BlockPos pos, Player player) {
+    public static void spawnNew(SuperheroIdentifierENUM mark, Level level, BlockPos pos, Player player) {
         IronManEntity ironMan = new IronManEntity(SuperheroEntities.IRON_MAN_ENTITY.get(), level);
         ironMan.setMark(mark);
         ironMan.takeArmourOffPlayer(player);

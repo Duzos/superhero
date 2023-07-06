@@ -1,5 +1,8 @@
 package com.duzo.superhero.util;
 
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.ListCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -7,6 +10,14 @@ import java.util.Iterator;
 import java.util.List;
 
 public class SuperheroCapabilities implements Iterable<SuperheroCapability> {
+    public static final Codec<SuperheroCapabilities> CODEC = RecordCodecBuilder.create(
+            instance -> {
+                return instance.group(
+                        ListCodec.STRING.fieldOf("capabilities").forGetter()
+                ).apply(instance,SuperheroCapabilities::new);
+            }
+    );
+
     private List<SuperheroCapability> capabilities = new ArrayList<>();
 
     public SuperheroCapabilities(SuperheroCapability... capabilities) {

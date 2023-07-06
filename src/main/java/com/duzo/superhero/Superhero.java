@@ -10,7 +10,7 @@ import com.duzo.superhero.network.Network;
 import com.duzo.superhero.particles.SuperheroParticles;
 import com.duzo.superhero.sounds.SuperheroSounds;
 import com.duzo.superhero.util.SuperheroCapability;
-import com.duzo.superhero.util.SuperheroIdentifier;
+import com.duzo.superhero.util.SuperheroIdentifierENUM;
 import com.mojang.logging.LogUtils;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -77,7 +77,7 @@ public class Superhero {
         if (player.getItemBySlot(EquipmentSlot.FEET).getItem() instanceof IronManArmourItem) {
             event.setDistance(0);
         }
-        SuperheroIdentifier id = getIDFromStack(player.getItemBySlot(EquipmentSlot.FEET));
+        SuperheroIdentifierENUM id = getIDFromStack(player.getItemBySlot(EquipmentSlot.FEET));
         if (id != null) {
             if (id.getCapabilities().has(SuperheroCapability.FAST_MOBILITY)){
                 event.setDamageMultiplier(event.getDamageMultiplier() * 0.5f);

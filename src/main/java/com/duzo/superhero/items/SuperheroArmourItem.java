@@ -3,7 +3,7 @@ package com.duzo.superhero.items;
 import com.duzo.superhero.client.models.AlexSkinModel;
 import com.duzo.superhero.client.models.SteveSkinModel;
 import com.duzo.superhero.util.SuperheroCapability;
-import com.duzo.superhero.util.SuperheroIdentifier;
+import com.duzo.superhero.util.SuperheroIdentifierENUM;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
@@ -28,10 +28,10 @@ import java.util.function.Consumer;
 import static com.duzo.superhero.util.SuperheroUtil.isEquipped;
 
 public class SuperheroArmourItem extends ArmorItem {
-    private final SuperheroIdentifier id;
-    public static final SuperheroIdentifier DEFAULT_ID = SuperheroIdentifier.AMAZING_SPIDER_MAN;
+    private final SuperheroIdentifierENUM id;
+    public static final SuperheroIdentifierENUM DEFAULT_ID = SuperheroIdentifierENUM.AMAZING_SPIDER_MAN;
 
-    public SuperheroArmourItem(ArmorMaterial material, Type type, Properties properties, SuperheroIdentifier id) {
+    public SuperheroArmourItem(ArmorMaterial material, Type type, Properties properties, SuperheroIdentifierENUM id) {
         super(material, type, properties);
         this.id = id;
     }
@@ -99,7 +99,7 @@ public class SuperheroArmourItem extends ArmorItem {
         return "superhero:textures/heroes/" + this.getIdentifier().getSerializedName() + ".png";
     }
 
-    public SuperheroIdentifier getIdentifier() {
+    public SuperheroIdentifierENUM getIdentifier() {
         return this.id;
     }
 

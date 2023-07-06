@@ -3,7 +3,7 @@ package com.duzo.superhero.items.spiderman;
 import com.duzo.superhero.client.models.SteveSkinModel;
 import com.duzo.superhero.items.SuperheroArmourItem;
 import com.duzo.superhero.items.SuperheroItems;
-import com.duzo.superhero.util.SuperheroIdentifier;
+import com.duzo.superhero.util.SuperheroIdentifierENUM;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
@@ -69,15 +69,15 @@ public class SpiderManNanotechItem extends SuperheroArmourItem {
         super.appendHoverText(stack, level, components, flag);
     }
 
-    public static SuperheroIdentifier getID(ItemStack stack) {
+    public static SuperheroIdentifierENUM getID(ItemStack stack) {
         if (stack.hasTag()) {
             if (stack.getTag().getString("id").equals("")) return null;
 
-            return SuperheroIdentifier.valueOf(stack.getTag().getString("id").toUpperCase());
+            return SuperheroIdentifierENUM.valueOf(stack.getTag().getString("id").toUpperCase());
         }
         return null;
     };
-    public static void setID(ItemStack stack, SuperheroIdentifier id) {
+    public static void setID(ItemStack stack, SuperheroIdentifierENUM id) {
         if (stack.hasTag()) {
             stack.getTag().putString("id",id.getSerializedName());
         }
@@ -96,7 +96,7 @@ public class SpiderManNanotechItem extends SuperheroArmourItem {
         player.setItemSlot(EquipmentSlot.FEET,ItemStack.EMPTY);
     }
     public static void convertNanotechToArmour(ItemStack stack, Player player) {
-        SuperheroIdentifier id = getID(stack);
+        SuperheroIdentifierENUM id = getID(stack);
         if (id == null) return;
         equipSpiderSuitForID(id,player,true);
     }

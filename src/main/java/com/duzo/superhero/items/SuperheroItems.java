@@ -4,7 +4,7 @@ import com.duzo.superhero.Superhero;
 import com.duzo.superhero.items.ironman.IronManArmourItem;
 import com.duzo.superhero.items.ironman.IronManEdithGlasses;
 import com.duzo.superhero.items.spiderman.MilesHoodieItem;
-import com.duzo.superhero.util.SuperheroIdentifier;
+import com.duzo.superhero.util.SuperheroIdentifierENUM;
 import com.duzo.superhero.items.batman.GrapplingHookWeaponItem;
 import com.duzo.superhero.util.ironman.IronManUtil;
 import net.minecraft.world.item.ArmorItem;
@@ -37,7 +37,7 @@ public class SuperheroItems {
             () -> new GrapplingHookWeaponItem(new Item.Properties().stacksTo(1)));
 
     public static void init() {
-        for (SuperheroIdentifier id : SuperheroIdentifier.values()) {
+        for (SuperheroIdentifierENUM id : SuperheroIdentifierENUM.values()) {
             if (IronManUtil.isIronManSuit(id)) {
                 registerIronManSet(id);
             } else {
@@ -47,7 +47,7 @@ public class SuperheroItems {
     }
 
     // @TODO smelly loqor and his custom smelly model for iron man meaning this still exists
-    public static void registerIronManSet(SuperheroIdentifier mark) {
+    public static void registerIronManSet(SuperheroIdentifierENUM mark) {
         String name = mark.getSerializedName();
 
         ITEMS.register(name + "_helmet",
@@ -60,7 +60,7 @@ public class SuperheroItems {
                 () -> new IronManArmourItem(IRON_MAN, ArmorItem.Type.BOOTS,new Item.Properties().stacksTo(1),mark));
     }
 
-    public static void registerSuperheroSet(SuperheroIdentifier id) {
+    public static void registerSuperheroSet(SuperheroIdentifierENUM id) {
         String name = id.getSerializedName();
 
         ITEMS.register(name + "_helmet",

@@ -36,7 +36,7 @@ public class SuperheroUtil {
     public static boolean keyDown(int key) {
         return InputConstants.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), key);
     }
-    public static SuperheroIdentifier getIDFromStack(ItemStack stack) {
+    public static SuperheroIdentifierENUM getIDFromStack(ItemStack stack) {
         if (stack.getItem() instanceof SuperheroArmourItem item) {
             return item.getIdentifier();
         }
@@ -44,7 +44,7 @@ public class SuperheroUtil {
 //        return DEFAULT_ID;
         return null;
     }
-    public static boolean putSuitOntoPlayer(SuperheroIdentifier id, Player player, boolean excludeNanotech) {
+    public static boolean putSuitOntoPlayer(SuperheroIdentifierENUM id, Player player, boolean excludeNanotech) {
         for (EquipmentSlot slot : EquipmentSlot.values()) {
             if (!slot.isArmor()) continue;
 

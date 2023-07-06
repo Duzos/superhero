@@ -4,7 +4,7 @@ import com.duzo.superhero.client.models.SteveSkinModel;
 import com.duzo.superhero.items.SuperheroArmourItem;
 import com.duzo.superhero.items.SuperheroItems;
 import com.duzo.superhero.sounds.SuperheroSounds;
-import com.duzo.superhero.util.SuperheroIdentifier;
+import com.duzo.superhero.util.SuperheroIdentifierENUM;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
@@ -31,7 +31,7 @@ import static com.duzo.superhero.blocks.IronManSuitCaseBlock.equipArmourForMark;
 
 @Deprecated
 public class IronManNanotechItem extends SuperheroArmourItem {
-    private SuperheroIdentifier mark;
+    private SuperheroIdentifierENUM mark;
     public IronManNanotechItem(ArmorMaterial material, Type type, Item.Properties properties) {
         super(material, type, properties);
     }
@@ -71,15 +71,15 @@ public class IronManNanotechItem extends SuperheroArmourItem {
         }
     }
 
-    public static SuperheroIdentifier getMark(ItemStack stack) {
+    public static SuperheroIdentifierENUM getMark(ItemStack stack) {
         if (stack.hasTag()) {
             if (stack.getTag().getString("mark") == "") return null;
 
-            return SuperheroIdentifier.valueOf(stack.getTag().getString("mark").toUpperCase());
+            return SuperheroIdentifierENUM.valueOf(stack.getTag().getString("mark").toUpperCase());
         }
         return null;
     };
-    public static void setMark(ItemStack stack,SuperheroIdentifier mark) {
+    public static void setMark(ItemStack stack, SuperheroIdentifierENUM mark) {
         if (stack.hasTag()) {
             stack.getTag().putString("mark",mark.getSerializedName());
         }
@@ -98,7 +98,7 @@ public class IronManNanotechItem extends SuperheroArmourItem {
         player.setItemSlot(EquipmentSlot.FEET,ItemStack.EMPTY);
     }
     public static void convertNanotechToArmour(ItemStack stack, Player player) {
-        SuperheroIdentifier mark = getMark(stack);
+        SuperheroIdentifierENUM mark = getMark(stack);
         if (mark == null) return;
 
         equipArmourForMark(mark,player,true);
