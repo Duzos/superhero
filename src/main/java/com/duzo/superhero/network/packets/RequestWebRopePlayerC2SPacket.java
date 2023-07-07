@@ -1,37 +1,30 @@
 package com.duzo.superhero.network.packets;
 
 import com.duzo.superhero.entities.spiderman.WebRopeEntity;
-import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
-public class UpdatePlayerS2CPacket {
+public class RequestWebRopePlayerC2SPacket {
     public boolean messageIsValid;
 
     private int entityID;
-    private int playerID;
 
-    public UpdatePlayerS2CPacket(int entityID, int playerID) {
+    public RequestWebRopePlayerC2SPacket(int entityID) {
         this.entityID = entityID;
-        this.playerID = playerID;
         this.messageIsValid = true;
     }
-    public UpdatePlayerS2CPacket() {
+    public RequestWebRopePlayerC2SPacket() {
         this.messageIsValid = false;
     }
 
-    public static UpdatePlayerS2CPacket decode(FriendlyByteBuf buf) {
-        UpdatePlayerS2CPacket packet = new UpdatePlayerS2CPacket();
+    public static RequestWebRopePlayerC2SPacket decode(FriendlyByteBuf buf) {
+        RequestWebRopePlayerC2SPacket packet = new RequestWebRopePlayerC2SPacket();
 
         try {
             packet.entityID = buf.readInt();
-            packet.playerID = buf.readInt();
         } catch (IllegalArgumentException | IndexOutOfBoundsException e) {
             System.out.println("Exception while reading Packet: " + e);
             return packet;
@@ -45,20 +38,18 @@ public class UpdatePlayerS2CPacket {
         if (!this.messageIsValid) return;
 
         buf.writeInt(this.entityID);
-        buf.writeInt(this.playerID);
     }
 
     public boolean handle(Supplier<NetworkEvent.Context> supplier) {
         NetworkEvent.Context context = supplier.get();
         context.enqueueWork(() -> {
-            // Make sure it's only executed on the physical client
-            DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
-                Level level = Minecraft.getInstance().level;
+            Level level = context.getSender().level;
 
-                if (level.getEntity(this.entityID) instanceof WebRopeEntity rope && level.getEntity(this.playerID) instanceof Player player) {
-                    rope.setPlayer(player);
-                }
-            });
+            System.out.println(level.getEntity(this.entityID));
+
+            if (level.getEntity(this.entityID) instanceof WebRopeEntity rope) {
+                rope.syncPlayerToClient();
+            }
         });
         return true;
     }

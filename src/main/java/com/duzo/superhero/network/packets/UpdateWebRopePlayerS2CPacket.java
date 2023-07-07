@@ -11,23 +11,23 @@ import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
-public class RequestUpdatePlayerC2SPacket {
+public class UpdateWebRopePlayerS2CPacket {
     public boolean messageIsValid;
 
     private int entityID;
     private int playerID;
 
-    public RequestUpdatePlayerC2SPacket(int entityID, int playerID) {
+    public UpdateWebRopePlayerS2CPacket(int entityID, int playerID) {
         this.entityID = entityID;
         this.playerID = playerID;
         this.messageIsValid = true;
     }
-    public RequestUpdatePlayerC2SPacket() {
+    public UpdateWebRopePlayerS2CPacket() {
         this.messageIsValid = false;
     }
 
-    public static RequestUpdatePlayerC2SPacket decode(FriendlyByteBuf buf) {
-        RequestUpdatePlayerC2SPacket packet = new RequestUpdatePlayerC2SPacket();
+    public static UpdateWebRopePlayerS2CPacket decode(FriendlyByteBuf buf) {
+        UpdateWebRopePlayerS2CPacket packet = new UpdateWebRopePlayerS2CPacket();
 
         try {
             packet.entityID = buf.readInt();
@@ -56,7 +56,7 @@ public class RequestUpdatePlayerC2SPacket {
                 Level level = Minecraft.getInstance().level;
 
                 if (level.getEntity(this.entityID) instanceof WebRopeEntity rope && level.getEntity(this.playerID) instanceof Player player) {
-                    rope.player = player;
+                    rope.setPlayer(player);
                 }
             });
         });

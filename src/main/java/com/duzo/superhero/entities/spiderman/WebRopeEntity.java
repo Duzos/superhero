@@ -4,12 +4,9 @@ import com.duzo.superhero.entities.SuperheroEntities;
 import com.duzo.superhero.network.Network;
 import com.duzo.superhero.network.packets.*;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.TamableAnimal;
-import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
@@ -47,9 +44,21 @@ public class WebRopeEntity extends Entity {
 
     public Player getPlayer() {
         if(this.player == null) {
-            Network.sendToAll(new UpdatePlayerS2CPacket(this.getId(), this.player.getId()));
+            if (this.level.isClientSide) {
+                this.clientRequestUpdatePlayer();
+            } else { // Panic if you get here.
+                // Kill yourself, now.
+                this.remove(RemovalReason.DISCARDED);
+            }
         }
         return this.player;
+    }
+
+    public void clientRequestUpdatePlayer() {
+        Network.sendToServer(new RequestWebRopePlayerC2SPacket(this.getId()));
+    }
+    public void syncPlayerToClient() {
+        Network.sendToAll(new UpdateWebRopePlayerS2CPacket(this.getId(),this.getPlayer().getId()));
     }
 
     @Deprecated

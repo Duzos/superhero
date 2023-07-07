@@ -50,8 +50,11 @@ public class WebRopeEntityRenderer extends EntityRenderer<WebRopeEntity> {
         stack.mulPose(Axis.XP.rotationDegrees(entity.getXRot() + 95f)); // 95 is the magic number???? no, its not but it works mostly
 //        Vec3 dir = entity.point.subtract(entity.position());
         stack.popPose();
+        int length = 1;
 
-        int length = (int) Math.round(entity.player.position().distanceTo(entity.point));
+        if (entity.getPlayer() != null) {
+            length = (int) Math.round(entity.getPlayer().position().distanceTo(entity.point));
+        }
 
         quad(matrix4f, vertexconsumer, 0, -0, 0, 0, -1.25f, 1f, 1f, 1f, 0.025f, 0.025f,length,entity.getAlpha(), false, false, true, false);
         quad(matrix4f, vertexconsumer, 0, -0, 0, 0, -1.25f, 1f, 1f, 1f, 0.025f, 0.025f,length,entity.getAlpha(), true, false, true, true);
