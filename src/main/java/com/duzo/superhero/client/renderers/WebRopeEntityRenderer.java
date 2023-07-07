@@ -51,7 +51,7 @@ public class WebRopeEntityRenderer extends EntityRenderer<WebRopeEntity> {
 //        Vec3 dir = entity.point.subtract(entity.position());
         stack.popPose();
 
-        int length = (int) Math.round(entity.position().distanceTo(entity.point));
+        int length = (int) Math.round(entity.player.position().distanceTo(entity.point));
 
         quad(matrix4f, vertexconsumer, 0, -0, 0, 0, -1.25f, 1f, 1f, 1f, 0.025f, 0.025f,length,entity.getAlpha(), false, false, true, false);
         quad(matrix4f, vertexconsumer, 0, -0, 0, 0, -1.25f, 1f, 1f, 1f, 0.025f, 0.025f,length,entity.getAlpha(), true, false, true, true);

@@ -97,13 +97,13 @@ public class SpiderManUtil {
         BlockPos hitPosition = hit.getBlockPos();
         if(player.level.getBlockState(hitPos).isAir()) return;
         rope.moveTo(hitPos.getCenter());
-        rope.setYBodyRot(-player.getYRot());
+        rope.setYBodyRot(player.getYRot());
         rope.setXRot(player.getXRot());
         //rope.moveTo(player.getX() + (double) f2, player.getY() + (double) f6 + 1.25f, player.getZ() + (double) f3, player.getYRot(), player.getXRot());
         rope.setPointsChanged();
 
-        //Vec3 look = player.getLookAngle().normalize().multiply(2.5d, 2.5d, 2.5d);//.add(0,0.5d,0);
-        //Network.sendToPlayer(new ChangeDeltaMovementS2CPacket(look.add(player.getDeltaMovement().x,0,player.getDeltaMovement().z)), (ServerPlayer) player);
+        Vec3 look = player.getLookAngle().normalize().multiply(2.5d, 2.5d, 2.5d);//.add(0,0.5d,0);
+        Network.sendToPlayer(new ChangeDeltaMovementS2CPacket(look.add(player.getDeltaMovement().x,0,player.getDeltaMovement().z)), (ServerPlayer) player);
     }
 
     /**
