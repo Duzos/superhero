@@ -9,6 +9,7 @@ import com.duzo.superhero.network.packets.ChangeDeltaMovementS2CPacket;
 import com.duzo.superhero.network.packets.SwingArmS2CPacket;
 import com.duzo.superhero.particles.SuperheroParticles;
 import com.duzo.superhero.sounds.SuperheroSounds;
+import com.duzo.superhero.util.KeyBinds;
 import com.duzo.superhero.util.SuperheroIdentifier;
 import com.duzo.superhero.util.SuperheroUtil;
 import net.minecraft.client.Minecraft;
@@ -21,6 +22,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -71,6 +73,11 @@ public class SpiderManUtil {
     }
 
     public static void shootWebAndSwingToIt(Player player) {
+        if (KeyBinds.ABILITY_ONE.isDown() && !(canPlayerShootRope(player))) {
+            return;
+        }
+
+
         BlockHitResult blockhitresult = getPlayerPOVHitResult(player.level,player);
         BlockPos hitPos = blockhitresult.getBlockPos();
         BlockPos hitPosRelative = hitPos.relative(blockhitresult.getDirection());
@@ -96,7 +103,7 @@ public class SpiderManUtil {
         BlockHitResult hit = SpiderManUtil.getPlayerPOVHitResult(player.level, player);
         BlockPos hitPosition = hit.getBlockPos();
         if(player.level.getBlockState(hitPos).isAir()) return;
-        rope.moveTo(hitPos.getCenter());
+        rope.moveTo(hitVec3);
         rope.setYBodyRot(player.getYRot());
         rope.setXRot(player.getXRot());
         //rope.moveTo(player.getX() + (double) f2, player.getY() + (double) f6 + 1.25f, player.getZ() + (double) f3, player.getYRot(), player.getXRot());
@@ -104,6 +111,23 @@ public class SpiderManUtil {
 
         Vec3 look = player.getLookAngle().normalize().multiply(2.5d, 2.5d, 2.5d);//.add(0,0.5d,0);
         Network.sendToPlayer(new ChangeDeltaMovementS2CPacket(look.add(player.getDeltaMovement().x,0,player.getDeltaMovement().z)), (ServerPlayer) player);
+    }
+    public static boolean canPlayerShootRope(Player player) {
+        WebRopeEntity rope = getPlayersRope(player);
+        if (rope == null) return true;
+        return rope.getAlpha() < 0.5f;
+    }
+    public static boolean ropeExistsForPlayer(Player player) {
+        return getPlayersRope(player) != null;
+    }
+    public static WebRopeEntity getPlayersRope(Player player) {
+        if (!(player.level instanceof ServerLevel serverLevel)) return null;
+        for (Entity entity : serverLevel.getAllEntities()) {
+            if (!(entity instanceof WebRopeEntity rope)) continue;
+
+            if (rope.getPlayer() == player) return rope;
+        }
+        return null;
     }
 
     /**

@@ -3,6 +3,7 @@ package com.duzo.superhero.entities.spiderman;
 import com.duzo.superhero.entities.SuperheroEntities;
 import com.duzo.superhero.network.Network;
 import com.duzo.superhero.network.packets.*;
+import com.duzo.superhero.util.KeyBinds;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
@@ -102,13 +103,17 @@ public class WebRopeEntity extends Entity {
     }
 
     private void fadeOut() {
-        this.setAlpha(this.alpha - (0.0095f));
+        this.setAlpha(this.alpha - (0.0295f));
     }
-
     @Override
     public void tick() {
         super.tick();
-        fadeOut();
+
+        if (this.alpha > 0.85 && KeyBinds.ABILITY_ONE.isDown()) {
+            this.setAlpha(1f);
+        } else {
+            fadeOut();
+        }
 
         if (this.alpha == 0) {
             this.remove(RemovalReason.DISCARDED);
