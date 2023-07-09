@@ -163,8 +163,6 @@ public class WebRopeEntityRenderer extends EntityRenderer<WebRopeEntity> {
         float f7 = p_174312_ * f;
         p_174308_.vertex(p_254405_, f5 - p_174319_, f6 + p_174318_, f7 + p_174320_).color(1f, 1f, 1f, alpha).uv2(k).endVertex();
         p_174308_.vertex(p_254405_, f5 + p_174319_, f6 + p_174317_ - p_174318_, f7 - p_174320_).color(1f, 1f, 1f, alpha).uv2(k).endVertex();
-        p_174308_.vertex(p_254405_, f5 + p_174319_, f6 + p_174317_ - p_174318_, f7 + p_174320_).color(1f, 1f, 1f, alpha).uv2(k).endVertex();
-        p_174308_.vertex(p_254405_, f5 - p_174319_, f6 + p_174317_ - p_174318_, f7 - p_174320_).color(1f, 1f, 1f, alpha).uv2(k).endVertex();
     }
 
     private static void mergedVertex(VertexConsumer p_174308_,PoseStack.Pose pose, Matrix4f p_254405_, float p_174310_, float p_174311_, float p_174312_, int p_174313_, int p_174314_, int p_174315_, int p_174316_, float p_174317_, float p_174318_, float p_174319_, float p_174320_, int p_174321_, boolean p_174322_, float alpha) {
@@ -181,6 +179,9 @@ public class WebRopeEntityRenderer extends EntityRenderer<WebRopeEntity> {
         float f7 = p_174312_ * f;
         p_174308_.vertex(p_254405_, f5 - p_174319_, f6 + p_174318_, f7 + p_174320_).color(1f, 1f, 1f, alpha).normal(pose.normal(), f3, f4, f5).endVertex();
         p_174308_.vertex(p_254405_, f5 + p_174319_, f6 + p_174317_ - p_174318_, f7 - p_174320_).color(1f, 1f, 1f, alpha).normal(pose.normal(), f3, f4, f5).endVertex();
+//        p_174308_.vertex(p_254405_, f5 + p_174319_, f6 + p_174317_ - p_174318_, f7 + p_174320_).color(1f, 1f, 1f, alpha).normal(pose.normal(), f3, f4, f5).endVertex();
+//        p_174308_.vertex(p_254405_, f5 - p_174319_, f6 + p_174317_ - p_174318_, f7 - p_174320_).color(1f, 1f, 1f, alpha).normal(pose.normal(), f3, f4, f5).endVertex();
+//        p_174308_.vertex(p_254405_, f5, f6, f7).color(1f, 1f, 1f, alpha).normal(pose.normal(), f3, f4, f5).endVertex();
     }
 
     @Override

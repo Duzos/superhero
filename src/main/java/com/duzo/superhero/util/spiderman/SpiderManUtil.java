@@ -5,7 +5,6 @@ import com.duzo.superhero.items.SuperheroArmourItem;
 import com.duzo.superhero.items.SuperheroItems;
 import com.duzo.superhero.items.spiderman.SpiderManNanotechItem;
 import com.duzo.superhero.network.Network;
-import com.duzo.superhero.network.packets.ChangeDeltaMovementS2CPacket;
 import com.duzo.superhero.network.packets.SwingArmS2CPacket;
 import com.duzo.superhero.particles.SuperheroParticles;
 import com.duzo.superhero.sounds.SuperheroSounds;
@@ -125,6 +124,7 @@ public class SpiderManUtil {
         for (Entity entity : serverLevel.getAllEntities()) {
             if (!(entity instanceof WebRopeEntity rope)) continue;
 
+            if (rope.getAlpha() < 0.85f) continue;
             if (rope.getPlayer() == player) return rope;
         }
         return null;

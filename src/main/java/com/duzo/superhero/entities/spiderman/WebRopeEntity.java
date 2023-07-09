@@ -10,8 +10,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.AirBlock;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.Vec3;
 
 public class WebRopeEntity extends Entity {
@@ -107,12 +105,32 @@ public class WebRopeEntity extends Entity {
     private void fadeOut() {
         this.setAlpha(this.alpha - (0.0295f));
     }
+
+    private void runSwingPhysics() {
+        if (this.getPlayer() == null) return;
+
+        float distanceToPlayer = this.getPlayer().distanceTo(this);
+        if (distanceToPlayer > 6.0F) {
+            double d0 = (this.getX() - this.getPlayer().getX()) / (double) distanceToPlayer;
+            double d1 = (this.getY() - this.getPlayer().getY()) / (double) distanceToPlayer;
+            double d2 = (this.getZ() - this.getPlayer().getZ()) / (double) distanceToPlayer;
+
+            if (d1 < 0) {
+                d1 = 0;
+            }
+
+            this.getPlayer().setDeltaMovement(this.getPlayer().getDeltaMovement().add(Math.copySign(d0 * d0 * 0.4D, d0), Math.copySign(d1 * d1 * 0.25D, d1), Math.copySign(d2 * d2 * 0.4D, d2)));
+            this.getPlayer().checkSlowFallDistance();
+        }
+    }
+
     @Override
     public void tick() {
         super.tick();
 
         if (this.alpha > 0.85 && KeyBinds.ABILITY_ONE.isDown()) {
             this.setAlpha(1f);
+            this.runSwingPhysics();
         } else {
             fadeOut();
         }
@@ -132,18 +150,6 @@ public class WebRopeEntity extends Entity {
         } else {
             if (this.point == null) {
                 this.clientRequestUpdatedPoints();
-            }
-        }
-
-        if(this.getPlayer() == null) return;
-        if(KeyBinds.ABILITY_ONE.isDown()) {
-            float distanceToPlayer = this.getPlayer().distanceTo(this);
-            if (distanceToPlayer > 6.0F) {
-                double d0 = (this.getX() - this.getPlayer().getX()) / (double) distanceToPlayer;
-                double d1 = (this.getY() - this.getPlayer().getY()) / (double) distanceToPlayer;
-                double d2 = (this.getZ() - this.getPlayer().getZ()) / (double) distanceToPlayer;
-                this.getPlayer().setDeltaMovement(this.getPlayer().getDeltaMovement().add(Math.copySign(d0 * d0 * 0.4D, d0), Math.copySign(d1 * d1 * 0.2D, d1), Math.copySign(d2 * d2 * 0.4D, d2)));
-                this.getPlayer().checkSlowFallDistance();
             }
         }
     }

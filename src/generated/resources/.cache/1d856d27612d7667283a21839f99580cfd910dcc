@@ -1,4 +1,4 @@
-// 1.19.4	2023-07-02T21:16:08.5000167	Item Models: superhero
+// 1.19.4	2023-07-09T22:11:12.9527818	Item Models: superhero
 9f3d7830931f54e43d5d19b8e76ed63ab7ffcee9 assets/superhero/models/item/amazing_spider_man_boots.json
 46e5ca94352f59aba59e80a53ca3878ef1b00c78 assets/superhero/models/item/amazing_spider_man_chestplate.json
 323ebdf1562ff00e94e542f99feef2d78c53c01e assets/superhero/models/item/amazing_spider_man_helmet.json
@@ -9,6 +9,10 @@ bc44477f327346339702f93b1437dd2492da0deb assets/superhero/models/item/batman_vs_
 c42a11ca084a0036d615c3e845d8f7057453c7ef assets/superhero/models/item/batman_vs_superman_leggings.json
 f6f976d97aaabd54f474d239a4b89b86eff08781 assets/superhero/models/item/deepslate_palladium_ore.json
 5b86ace0365970012836b74d9f8c7cd0c8dbff18 assets/superhero/models/item/edith_glasses.json
+ed4464592377eec3abe7f6070837557aac57394f assets/superhero/models/item/flash_boots.json
+0d0aa6f83809bd5506354d2f803add527fe3a69f assets/superhero/models/item/flash_chestplate.json
+552c622f4336b2fd9b372272f0b99640d34174e3 assets/superhero/models/item/flash_helmet.json
+81747553b8996ed3e78d9d17a48aa52895237532 assets/superhero/models/item/flash_leggings.json
 7697fb3741805a40f7e42f7518b24dd95bfa1635 assets/superhero/models/item/grappling_hook.json
 92b0c8b035cbc8ef6baf6d9d99b10ab05c0ad2f9 assets/superhero/models/item/gwen_boots.json
 19b9974bb2c1e40070ef27343593e1c5b0c7fe06 assets/superhero/models/item/gwen_chestplate.json
