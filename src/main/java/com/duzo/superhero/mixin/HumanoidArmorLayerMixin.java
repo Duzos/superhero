@@ -45,6 +45,9 @@ public abstract class HumanoidArmorLayerMixin<T extends LivingEntity, M extends 
     @Inject(method = "renderArmorPiece", at = @At("HEAD"),cancellable = true)
     public void changePartVisibilities_SUPERHERO(PoseStack p_117119_, MultiBufferSource p_117120_, T p_117121_, EquipmentSlot p_117122_, int p_117123_, A p_117124_, CallbackInfo ci) {
         HumanoidArmorLayer layer = (HumanoidArmorLayer) (Object) this;
+
+        if (p_117122_ == null) return;
+
         ItemStack itemstack = p_117121_.getItemBySlot(p_117122_);
         Item $$9 = itemstack.getItem();
         if ($$9 instanceof SuperheroArmourItem armoritem) {
