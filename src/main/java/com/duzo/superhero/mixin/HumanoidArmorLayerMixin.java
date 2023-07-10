@@ -82,12 +82,12 @@ public abstract class HumanoidArmorLayerMixin<T extends LivingEntity, M extends 
                 this.getParentModel().copyPropertiesTo(p_117124_);
 //                this.setPartVisibility(p_117124_, p_117122_);
 
-                p_117124_.setAllVisible(false);
-                p_117124_.head.visible = true;
-                p_117124_.hat.visible = true;
-                p_117124_.body.visible = true;
-                p_117124_.rightArm.visible = true;
-                p_117124_.leftArm.visible = true;
+                p_117124_.setAllVisible(true);
+                //p_117124_.head.visible = true;
+                //p_117124_.hat.visible = true;
+                //p_117124_.body.visible = true;
+                //p_117124_.rightArm.visible = true;
+                //p_117124_.leftArm.visible = true;
 
                 net.minecraft.client.model.Model model = getArmorModelHook(p_117121_, itemstack, p_117122_, p_117124_);
                 boolean flag1 = this.usesInnerModel(p_117122_);

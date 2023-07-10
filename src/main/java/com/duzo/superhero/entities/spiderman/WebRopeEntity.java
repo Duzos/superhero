@@ -106,25 +106,26 @@ public class WebRopeEntity extends Entity {
         this.setAlpha(this.alpha - (0.0295f));
     }
 
-    /*private void runSwingPhysics() {
-        if (this.getPlayer() == null) return;
-
-        float distanceToPlayer = this.getPlayer().distanceTo(this);
-        if (distanceToPlayer > 6.0F) {
-            double d0 = (this.getX() - this.getPlayer().getX()) / (double) distanceToPlayer;
-            double d1 = (this.getY() - this.getPlayer().getY()) / (double) distanceToPlayer;
-            double d2 = (this.getZ() - this.getPlayer().getZ()) / (double) distanceToPlayer;
-
-            if (d1 < 0) {
-                d1 = 0;
-            }
-
-            this.getPlayer().setDeltaMovement(this.getPlayer().getDeltaMovement().add(Math.copySign(d0 * d0 * 0.4D, d0), Math.copySign(d1 * d1 * 0.25D, d1), Math.copySign(d2 * d2 * 0.4D, d2)));
-            this.getPlayer().checkSlowFallDistance();
-        }
-    }*/
-
     private void runSwingPhysics() {
+        if(KeyBinds.ABILITY_ONE.isDown()) {
+        if (this.getPlayer() == null) return;
+            float distanceToPlayer = this.getPlayer().distanceTo(this);
+            if (distanceToPlayer > 6.0F) {
+                double d0 = (this.getX() - this.getPlayer().getX()) / (double) distanceToPlayer;
+                double d1 = (this.getY() - this.getPlayer().getY()) / (double) distanceToPlayer;
+                double d2 = (this.getZ() - this.getPlayer().getZ()) / (double) distanceToPlayer;
+
+                if (d1 < 0) {
+                    d1 = 0;
+                }
+
+                this.getPlayer().setDeltaMovement(this.getPlayer().getDeltaMovement().add(Math.copySign(d0 * d0 * 0.4D, d0), Math.copySign(d1 * d1 * 0.2D, d1), Math.copySign(d2 * d2 * 0.4D, d2)));
+                this.getPlayer().checkSlowFallDistance();
+            }
+        }
+    }
+
+    /*private void runSwingPhysics() {
         //@TODO by Loqor: IDK IF THIS IS THE FINAL PRODUCT :( IT'S NOT MY FAVORITE AND IT NEEDS A LOT OF WORK, BUT IT DOES WHAT IT DOES. PREVIOUS CODE IS ABOVE IF THIS ONE TURNS OUT TO BE MORE SHITE.
         if (this.getPlayer() == null) return;
 
@@ -154,7 +155,7 @@ public class WebRopeEntity extends Entity {
             this.getPlayer().setDeltaMovement(this.getPlayer().getDeltaMovement().add(swingX, swingY, swingZ));
             this.getPlayer().checkSlowFallDistance();
         }
-    }
+    }*/
 
     @Override
     public void tick() {
