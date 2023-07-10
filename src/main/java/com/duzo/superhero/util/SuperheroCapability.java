@@ -407,6 +407,10 @@ public enum SuperheroCapability implements StringRepresentable {
             if (num == 1) {
                 shootWebAndSwingToIt(player);
             }
+            if (num == 2) {
+                shootWebAndZipToIt(player);
+                System.out.println("hello");
+            }
         }
 
         @Override

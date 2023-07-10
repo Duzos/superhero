@@ -5,6 +5,7 @@ import com.duzo.superhero.items.SuperheroArmourItem;
 import com.duzo.superhero.items.SuperheroItems;
 import com.duzo.superhero.items.spiderman.SpiderManNanotechItem;
 import com.duzo.superhero.network.Network;
+import com.duzo.superhero.network.packets.ChangeDeltaMovementS2CPacket;
 import com.duzo.superhero.network.packets.SwingArmS2CPacket;
 import com.duzo.superhero.particles.SuperheroParticles;
 import com.duzo.superhero.sounds.SuperheroSounds;
@@ -59,7 +60,7 @@ public class SpiderManUtil {
     }
 
     public static void climbWall(Player player) {
-        player.setDeltaMovement(player.getDeltaMovement().x,0.2,player.getDeltaMovement().z);
+        player.setDeltaMovement(player.getDeltaMovement().x,0.4, player.getDeltaMovement().z);
     }
 
     public static void runMilesInvisibility(Player player) {
@@ -111,6 +112,30 @@ public class SpiderManUtil {
         //Vec3 look = player.getLookAngle().normalize().multiply(2.5d, 2.5d, 2.5d);//.add(0,0.5d,0);
         //Network.sendToPlayer(new ChangeDeltaMovementS2CPacket(look.add(player.getDeltaMovement().x,0,player.getDeltaMovement().z)), (ServerPlayer) player);
     }
+
+    public static void shootWebAndZipToIt(Player player) {
+        if (KeyBinds.ABILITY_TWO.isDown() && !(canPlayerShootRope(player))) {
+            return;
+        }
+        BlockHitResult blockhitresult = getPlayerPOVHitResult(player.level,player);
+        BlockPos hitPos = blockhitresult.getBlockPos();
+        BlockPos hitPosRelative = hitPos.relative(blockhitresult.getDirection());
+        Vec3 hitVec3 = hitPosRelative.getCenter().relative(blockhitresult.getDirection().getOpposite(),0.45d);
+        Network.sendToPlayer(new SwingArmS2CPacket(InteractionHand.MAIN_HAND), (ServerPlayer) player);
+        if (player.level.getBlockState(hitPos).isAir()) return;
+        ((ServerLevel)player.level).sendParticles(SuperheroParticles.WEB_PARTICLES.get(),hitVec3.x(),hitVec3.y(),hitVec3.z(),1,0,0,0,0d);
+        player.level.playSound(null,player, SuperheroSounds.SPIDERMAN_SHOOT.get(), SoundSource.PLAYERS,0.25f,1f);
+        WebRopeEntity rope = new WebRopeEntity(player.level, hitVec3, player);
+        player.level.addFreshEntity(rope);
+        if(player.level.getBlockState(hitPos).isAir()) return;
+        rope.moveTo(hitVec3);
+        rope.setYBodyRot(player.getYRot());
+        rope.setXRot(player.getXRot());
+        rope.setPointsChanged();
+        Vec3 look = player.getLookAngle().normalize().multiply(2.5d, 2.5d, 2.5d);//.add(0,0.5d,0);
+        Network.sendToPlayer(new ChangeDeltaMovementS2CPacket(look.add(player.getDeltaMovement().x,0,player.getDeltaMovement().z)), (ServerPlayer) player);
+    }
+
     public static boolean canPlayerShootRope(Player player) {
         WebRopeEntity rope = getPlayersRope(player);
         if (rope == null) return true;
