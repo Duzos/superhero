@@ -139,7 +139,7 @@ public class WebRopeEntity extends Entity {
                 d1 = 0;
             }
 
-            double swingForce = 0.4D; // Adjust the swing force as needed
+            double swingForce = 0.3D; // Adjust the swing force as needed
 
             // Calculate the swing direction perpendicular to the rope
             double dx = d0;

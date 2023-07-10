@@ -6,6 +6,7 @@ import com.duzo.superhero.util.SuperheroIdentifier;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
@@ -68,6 +69,8 @@ public class IronManUtil {
         }
 
         public static void createParticles(Player player) {
+            if (player.level.isClientSide) return;
+
             Random random = new Random();
             if(!player.isOnGround()) {
                 if (canBlastOff(player)) {
@@ -78,14 +81,14 @@ public class IronManUtil {
                     float f5 = Mth.sin(player.getYHeadRot() * ((float) Math.PI / 180F)) * (0.4F + 5.21F * (float) i);
                     float f6 = (0.3F * 0.45F) * ((float) i * 0.2F + 9.0F);
                     float f7 = (0.3F * 0.45F) * ((float) i * 0.2F + 9.0F);
-                    player.getLevel().addParticle(ParticleTypes.SMOKE, player.getX() + (double) f2, player.getY() + (double) f6, player.getZ() + (double) f3, random.nextGaussian() * 0.05D, -0.25, random.nextGaussian() * 0.05D);
-                    player.getLevel().addParticle(ParticleTypes.SMOKE, player.getX() - (double) f2, player.getY() + (double) f6, player.getZ() - (double) f3, random.nextGaussian() * 0.05D, -0.25, random.nextGaussian() * 0.05D);
-                    player.getLevel().addParticle(ParticleTypes.SMOKE, player.getX() + (double) f4, player.getY() + (double) f7, player.getZ() + (double) f5, random.nextGaussian() * 0.05D, -0.25, random.nextGaussian() * 0.05D);
-                    player.getLevel().addParticle(ParticleTypes.SMOKE, player.getX() - (double) f4, player.getY() + (double) f7, player.getZ() - (double) f5, random.nextGaussian() * 0.05D, -0.25, random.nextGaussian() * 0.05D);
-                    player.getLevel().addParticle(ParticleTypes.SOUL_FIRE_FLAME, player.getX() + (double) f2, player.getY() + (double) f6, player.getZ() + (double) f3, random.nextGaussian() * 0.05D, -0.25, random.nextGaussian() * 0.05D);
-                    player.getLevel().addParticle(ParticleTypes.SOUL_FIRE_FLAME, player.getX() - (double) f2, player.getY() + (double) f6, player.getZ() - (double) f3, random.nextGaussian() * 0.05D, -0.25, random.nextGaussian() * 0.05D);
-                    player.getLevel().addParticle(ParticleTypes.SOUL_FIRE_FLAME, player.getX() + (double) f4, player.getY() + (double) f7, player.getZ() + (double) f5, random.nextGaussian() * 0.05D, -0.25, random.nextGaussian() * 0.05D);
-                    player.getLevel().addParticle(ParticleTypes.SOUL_FIRE_FLAME, player.getX() - (double) f4, player.getY() + (double) f7, player.getZ() - (double) f5, random.nextGaussian() * 0.05D, -0.25, random.nextGaussian() * 0.05D);
+                    ((ServerLevel)player.level).sendParticles(ParticleTypes.SMOKE, player.getX() + (double) f2, player.getY() + (double) f6, player.getZ() + (double) f3,1, random.nextGaussian() * 0.05D, -0.25, random.nextGaussian() * 0.05D,0.25d);
+                    ((ServerLevel)player.level).sendParticles(ParticleTypes.SMOKE, player.getX() - (double) f2, player.getY() + (double) f6, player.getZ() - (double) f3,1, random.nextGaussian() * 0.05D, -0.25, random.nextGaussian() * 0.05D,0.25d);
+                    ((ServerLevel)player.level).sendParticles(ParticleTypes.SMOKE, player.getX() + (double) f4, player.getY() + (double) f7, player.getZ() + (double) f5,1, random.nextGaussian() * 0.05D, -0.25, random.nextGaussian() * 0.05D,0.25d);
+                    ((ServerLevel)player.level).sendParticles(ParticleTypes.SMOKE, player.getX() - (double) f4, player.getY() + (double) f7, player.getZ() - (double) f5,1, random.nextGaussian() * 0.05D, -0.25, random.nextGaussian() * 0.05D,0.25d);
+                    ((ServerLevel)player.level).sendParticles(ParticleTypes.SOUL_FIRE_FLAME, player.getX() + (double) f2, player.getY() + (double) f6, player.getZ() + (double) f3,1, random.nextGaussian() * 0.05D, -0.25, random.nextGaussian() * 0.05D,0.25d);
+                    ((ServerLevel)player.level).sendParticles(ParticleTypes.SOUL_FIRE_FLAME, player.getX() - (double) f2, player.getY() + (double) f6, player.getZ() - (double) f3,1, random.nextGaussian() * 0.05D, -0.25, random.nextGaussian() * 0.05D,0.25d);
+                    ((ServerLevel)player.level).sendParticles(ParticleTypes.SOUL_FIRE_FLAME, player.getX() + (double) f4, player.getY() + (double) f7, player.getZ() + (double) f5,1, random.nextGaussian() * 0.05D, -0.25, random.nextGaussian() * 0.05D,0.25d);
+                    ((ServerLevel)player.level).sendParticles(ParticleTypes.SOUL_FIRE_FLAME, player.getX() - (double) f4, player.getY() + (double) f7, player.getZ() - (double) f5,1, random.nextGaussian() * 0.05D, -0.25, random.nextGaussian() * 0.05D,0.25d);
                 } else if (keyDown(GLFW.GLFW_KEY_SPACE)) {
                     int i = Mth.clamp(0, 0, 64);
                     float f2 = Mth.cos(player.yBodyRot * ((float) Math.PI / 180F)) * (0.1F + 0.21F * (float) i);
@@ -94,19 +97,17 @@ public class IronManUtil {
                     float f5 = Mth.sin(player.yBodyRot * ((float) Math.PI / 180F)) * (0.4F + 0.21F * (float) i);
                     float f6 = (0.3F * 0.45F) * ((float) i * 0.2F + 1F);
                     float f7 = (0.3F * 0.45F) * ((float) i * 0.2F + 6F);
-                    // @TODO replace with ((ServerLevel)player.level).sendParticles()
-                    player.getLevel().addParticle(ParticleTypes.SMOKE, player.getX() + (double) f2, player.getY() + (double) f6, player.getZ() + (double) f3, random.nextGaussian() * 0.05D, -0.25, random.nextGaussian() * 0.05D);
-                    player.getLevel().addParticle(ParticleTypes.SMOKE, player.getX() - (double) f2, player.getY() + (double) f6, player.getZ() - (double) f3, random.nextGaussian() * 0.05D, -0.25, random.nextGaussian() * 0.05D);
-                    player.getLevel().addParticle(ParticleTypes.SMOKE, player.getX() + (double) f4, player.getY() + (double) f7, player.getZ() + (double) f5, random.nextGaussian() * 0.05D, -0.25, random.nextGaussian() * 0.05D);
-                    player.getLevel().addParticle(ParticleTypes.SMOKE, player.getX() - (double) f4, player.getY() + (double) f7, player.getZ() - (double) f5, random.nextGaussian() * 0.05D, -0.25, random.nextGaussian() * 0.05D);
-                    player.getLevel().addParticle(ParticleTypes.SOUL_FIRE_FLAME, player.getX() + (double) f2, player.getY() + (double) f6, player.getZ() + (double) f3, random.nextGaussian() * 0.05D, -0.25, random.nextGaussian() * 0.05D);
-                    player.getLevel().addParticle(ParticleTypes.SOUL_FIRE_FLAME, player.getX() - (double) f2, player.getY() + (double) f6, player.getZ() - (double) f3, random.nextGaussian() * 0.05D, -0.25, random.nextGaussian() * 0.05D);
-                    player.getLevel().addParticle(ParticleTypes.SOUL_FIRE_FLAME, player.getX() + (double) f4, player.getY() + (double) f7, player.getZ() + (double) f5, random.nextGaussian() * 0.05D, -0.25, random.nextGaussian() * 0.05D);
-                    player.getLevel().addParticle(ParticleTypes.SOUL_FIRE_FLAME, player.getX() - (double) f4, player.getY() + (double) f7, player.getZ() - (double) f5, random.nextGaussian() * 0.05D, -0.25, random.nextGaussian() * 0.05D);
+                    ((ServerLevel)player.level).sendParticles(ParticleTypes.SMOKE, player.getX() + (double) f2, player.getY() + (double) f6, player.getZ() + (double) f3,1, random.nextGaussian() * 0.05D, -0.25, random.nextGaussian() * 0.05D,0.25d);
+                    ((ServerLevel)player.level).sendParticles(ParticleTypes.SMOKE, player.getX() - (double) f2, player.getY() + (double) f6, player.getZ() - (double) f3,1, random.nextGaussian() * 0.05D, -0.25, random.nextGaussian() * 0.05D,0.25d);
+                    ((ServerLevel)player.level).sendParticles(ParticleTypes.SMOKE, player.getX() + (double) f4, player.getY() + (double) f7, player.getZ() + (double) f5,1, random.nextGaussian() * 0.05D, -0.25, random.nextGaussian() * 0.05D,0.25d);
+                    ((ServerLevel)player.level).sendParticles(ParticleTypes.SMOKE, player.getX() - (double) f4, player.getY() + (double) f7, player.getZ() - (double) f5,1, random.nextGaussian() * 0.05D, -0.25, random.nextGaussian() * 0.05D,0.25d);
+                    ((ServerLevel)player.level).sendParticles(ParticleTypes.SOUL_FIRE_FLAME, player.getX() + (double) f2, player.getY() + (double) f6, player.getZ() + (double) f3,1, random.nextGaussian() * 0.05D, -0.25, random.nextGaussian() * 0.05D,0.25d);
+                    ((ServerLevel)player.level).sendParticles(ParticleTypes.SOUL_FIRE_FLAME, player.getX() - (double) f2, player.getY() + (double) f6, player.getZ() - (double) f3,1, random.nextGaussian() * 0.05D, -0.25, random.nextGaussian() * 0.05D,0.25d);
+                    ((ServerLevel)player.level).sendParticles(ParticleTypes.SOUL_FIRE_FLAME, player.getX() + (double) f4, player.getY() + (double) f7, player.getZ() + (double) f5,1, random.nextGaussian() * 0.05D, -0.25, random.nextGaussian() * 0.05D,0.25d);
+                    ((ServerLevel)player.level).sendParticles(ParticleTypes.SOUL_FIRE_FLAME, player.getX() - (double) f4, player.getY() + (double) f7, player.getZ() - (double) f5,1, random.nextGaussian() * 0.05D, -0.25, random.nextGaussian() * 0.05D,0.25d);
                 }
             }
         }
-
 
 
         public static boolean canBlastOff(Player player) {
