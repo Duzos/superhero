@@ -33,7 +33,7 @@ public enum SuperheroCapability implements StringRepresentable {
     INVISIBILITY {
         @Override
         public void runAbility(int num, Player player) {
-            if (num == 2) {
+            if (num == 3) {
                 runMilesInvisibility(player);
             }
         }
@@ -409,7 +409,6 @@ public enum SuperheroCapability implements StringRepresentable {
             }
             if (num == 2) {
                 shootWebAndZipToIt(player);
-                System.out.println("hello");
             }
         }
 
