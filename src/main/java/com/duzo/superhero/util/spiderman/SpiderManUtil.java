@@ -100,6 +100,7 @@ public class SpiderManUtil {
         //float f3 = Mth.sin(player.yBodyRot * ((float) Math.PI / 180F)) * (0F + 0F * (float) i);
         //float f6 = (0.3F * 0.45F) * ((float) i * 0.2F + 0.0F);
         player.level.addFreshEntity(rope);
+        //rope.setRestraintDistance();
         //BlockPos hitPosition = hit.getBlockPos();
         if(player.level.getBlockState(hitPos).isAir()) return;
         rope.moveTo(hitVec3);

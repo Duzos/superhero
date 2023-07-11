@@ -1,7 +1,10 @@
 package com.duzo.superhero.mixin;
 
+import com.duzo.superhero.client.models.items.IronManArmourModel;
 import com.duzo.superhero.items.SuperheroArmourItem;
 import com.duzo.superhero.items.spiderman.MilesHoodieItem;
+import com.duzo.superhero.util.KeyBinds;
+import com.duzo.superhero.util.ironman.IronManUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -28,7 +31,7 @@ public abstract class HumanoidArmorLayerMixin<T extends LivingEntity, M extends 
     }
 
     @Shadow
-    protected abstract void setPartVisibility(A p_117124_, EquipmentSlot p_117127_);
+    protected abstract void setPartVisibility(A pModel, EquipmentSlot p_117127_);
 
     @Shadow
     protected abstract net.minecraft.client.model.Model getArmorModelHook(T entity, ItemStack itemStack, EquipmentSlot slot, A model);
@@ -43,7 +46,7 @@ public abstract class HumanoidArmorLayerMixin<T extends LivingEntity, M extends 
     public abstract ResourceLocation getArmorResource(net.minecraft.world.entity.Entity entity, ItemStack stack, EquipmentSlot slot, @Nullable String type);
 
     @Inject(method = "renderArmorPiece", at = @At("HEAD"),cancellable = true)
-    public void changePartVisibilities_SUPERHERO(PoseStack p_117119_, MultiBufferSource p_117120_, T p_117121_, EquipmentSlot p_117122_, int p_117123_, A p_117124_, CallbackInfo ci) {
+    public void changePartVisibilities_SUPERHERO(PoseStack p_117119_, MultiBufferSource p_117120_, T p_117121_, EquipmentSlot p_117122_, int p_117123_, A pModel, CallbackInfo ci) {
         HumanoidArmorLayer layer = (HumanoidArmorLayer) (Object) this;
 
         if (p_117122_ == null) return;
@@ -52,26 +55,35 @@ public abstract class HumanoidArmorLayerMixin<T extends LivingEntity, M extends 
         Item $$9 = itemstack.getItem();
         if ($$9 instanceof SuperheroArmourItem armoritem) {
             if (armoritem.getEquipmentSlot() == p_117122_) {
-                this.getParentModel().copyPropertiesTo(p_117124_);
-//                this.setPartVisibility(p_117124_, p_117122_);
+                this.getParentModel().copyPropertiesTo(pModel);
+//                this.setPartVisibility(pModel, p_117122_);
 
-                p_117124_.setAllVisible(false);
+                pModel.setAllVisible(false);
                 switch (p_117122_) {
                     case HEAD -> {
-                        p_117124_.head.visible = true;
-                        p_117124_.hat.visible = true;
+                        pModel.head.visible = true;
+                        pModel.hat.visible = true;
+                        /*if(IronManUtil.isIronManSuit(armoritem.getIdentifier())) {
+                            float i = 0;
+                            if (KeyBinds.ABILITY_THREE.isDown() && i == 0) {
+                                i = -1.5707964f;
+                            } else {
+                                i = 0;
+                            }
+                            pModel.head.getChild("mask").setRotation(i, 0, 0);
+                        }*/
                     }
                     case CHEST -> {
-                        p_117124_.body.visible = true;
-                        p_117124_.rightArm.visible = true;
-                        p_117124_.leftArm.visible = true;
+                        pModel.body.visible = true;
+                        pModel.rightArm.visible = true;
+                        pModel.leftArm.visible = true;
                     }
                     case LEGS, FEET -> {
-                        p_117124_.rightLeg.visible = true;
-                        p_117124_.leftLeg.visible = true;
+                        pModel.rightLeg.visible = true;
+                        pModel.leftLeg.visible = true;
                     }
                 }
-                net.minecraft.client.model.Model model = getArmorModelHook(p_117121_, itemstack, p_117122_, p_117124_);
+                net.minecraft.client.model.Model model = getArmorModelHook(p_117121_, itemstack, p_117122_, pModel);
                 boolean flag1 = this.usesInnerModel(p_117122_);
                 boolean flag = itemstack.hasFoil();
                 this.renderModel(p_117119_, p_117120_, p_117123_, flag, model, 1.0F, 1.0F, 1.0F, this.getArmorResource(p_117121_, itemstack, p_117122_, null));
@@ -79,17 +91,17 @@ public abstract class HumanoidArmorLayerMixin<T extends LivingEntity, M extends 
             }
         } else if ($$9 instanceof MilesHoodieItem armoritem) {
             if (armoritem.getEquipmentSlot() == p_117122_) {
-                this.getParentModel().copyPropertiesTo(p_117124_);
-//                this.setPartVisibility(p_117124_, p_117122_);
+                this.getParentModel().copyPropertiesTo(pModel);
+//                this.setPartVisibility(pModel, p_117122_);
 
-                p_117124_.setAllVisible(true);
-                //p_117124_.head.visible = true;
-                //p_117124_.hat.visible = true;
-                //p_117124_.body.visible = true;
-                //p_117124_.rightArm.visible = true;
-                //p_117124_.leftArm.visible = true;
+                pModel.setAllVisible(true);
+                //pModel.head.visible = true;
+                //pModel.hat.visible = true;
+                //pModel.body.visible = true;
+                //pModel.rightArm.visible = true;
+                //pModel.leftArm.visible = true;
 
-                net.minecraft.client.model.Model model = getArmorModelHook(p_117121_, itemstack, p_117122_, p_117124_);
+                net.minecraft.client.model.Model model = getArmorModelHook(p_117121_, itemstack, p_117122_, pModel);
                 boolean flag1 = this.usesInnerModel(p_117122_);
                 boolean flag = itemstack.hasFoil();
                 this.renderModel(p_117119_, p_117120_, p_117123_, flag, model, 1.0F, 1.0F, 1.0F, this.getArmorResource(p_117121_, itemstack, p_117122_, null));

@@ -3,6 +3,7 @@ package com.duzo.superhero.events;
 import com.duzo.superhero.Superhero;
 import com.duzo.superhero.client.gui.FlashGUIOverlay;
 import com.duzo.superhero.client.gui.JarvisGUIOverlay;
+import com.duzo.superhero.client.gui.SpiderManGUIOverlay;
 import com.duzo.superhero.client.models.AlexSkinModel;
 import com.duzo.superhero.client.models.SteveSkinModel;
 import com.duzo.superhero.client.models.entities.HumanoidEntityModel;
@@ -92,6 +93,7 @@ public class SuperheroClientEvents {
         public static void renderOverlays(RegisterGuiOverlaysEvent event) {
             event.registerAboveAll("jarvis_hud", JarvisGUIOverlay.HUD_JARVIS);
             event.registerAboveAll("flash_hud", FlashGUIOverlay.HUD_FLASH);
+            event.registerAboveAll("spiderman_hud", SpiderManGUIOverlay.HUD_SPIDERMAN);
         }
     }
 }

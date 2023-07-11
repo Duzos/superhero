@@ -40,6 +40,27 @@ public class GrapplingHookWeaponItem extends SuperheroWeaponItem {
         Vec3 hitVec3 = hitPosRelative.getCenter().relative(hit.getDirection().getOpposite(),0.45d);
 
 
+        /*public static void rotatePlayerAroundEntity(Player player, Vec3 entityPosition, float radius) {
+            Vec3 deltaPosition = player.position().subtract(entityPosition);
+
+            double distance = deltaPosition.length();
+
+            double yaw = Math.atan2(deltaPosition.z, deltaPosition.x);
+            double pitch = Math.atan2(deltaPosition.y, distance);
+
+            double newX = entityPosition.x + (radius * Math.cos(yaw) * Math.cos(pitch));
+            double newY = entityPosition.y + (radius * Math.sin(pitch));
+            double newZ = entityPosition.z + (radius * Math.sin(yaw) * Math.cos(pitch));
+
+            Vec3 newPosition = new Vec3(newX, newY, newZ);
+
+            // Calculate the delta movement
+            Vec3 deltaMovement = newPosition.subtract(player.position()).normalize().multiply(0.4D, 0.4D, 0.4D);
+
+            // Move the player relative to its current position
+            player.setDeltaMovement(player.getDeltaMovement().add(deltaMovement.x, deltaMovement.y, deltaMovement.z));
+        }*/
+
         if (level.getBlockState(hitPos).isAir()) return InteractionResultHolder.pass(stack);
 
         if (!level.isClientSide) {
