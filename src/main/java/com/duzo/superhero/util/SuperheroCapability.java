@@ -422,6 +422,22 @@ public enum SuperheroCapability implements StringRepresentable {
 
         }
     },
+    SPIDERMAN_HUD {
+        @Override
+        public void runAbility(int num, Player player) {
+
+        }
+
+        @Override
+        public void tick(ItemStack stack, Level level, Player player) {
+
+        }
+
+        @Override
+        public void unequippedTick(ItemStack stack, Level level, Player player) {
+
+        }
+    },
     WALL_CLIMBING {
         @Override
         public void runAbility(int num, Player player) {
@@ -440,6 +456,8 @@ public enum SuperheroCapability implements StringRepresentable {
 
         }
     };
+
+
     @Override
     public String getSerializedName() {
         return this.name().toLowerCase();

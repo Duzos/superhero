@@ -64,13 +64,13 @@ public enum SuperheroIdentifier implements StringRepresentable {
         }
         @Override
         public SuperheroCapabilities getCapabilities() {
-            return new SuperheroCapabilities().add(SuperheroCapability.WEB_SHOOTING,SuperheroCapability.WALL_CLIMBING,SuperheroCapability.SUPER_STRENGTH,SuperheroCapability.FAST_MOBILITY);
+            return new SuperheroCapabilities().add(SuperheroCapability.WEB_SHOOTING,SuperheroCapability.WALL_CLIMBING,SuperheroCapability.SUPER_STRENGTH,SuperheroCapability.FAST_MOBILITY,SuperheroCapability.SPIDERMAN_HUD);
         }
     },
     IRON_SPIDER {
         @Override
         public SuperheroCapabilities getCapabilities() {
-            return new SuperheroCapabilities().add(SuperheroCapability.NANOTECH,SuperheroCapability.WEB_SHOOTING,SuperheroCapability.WALL_CLIMBING,SuperheroCapability.SUPER_STRENGTH,SuperheroCapability.FAST_MOBILITY);
+            return new SuperheroCapabilities().add(SuperheroCapability.NANOTECH,SuperheroCapability.WEB_SHOOTING,SuperheroCapability.WALL_CLIMBING,SuperheroCapability.SUPER_STRENGTH,SuperheroCapability.FAST_MOBILITY,SuperheroCapability.SPIDERMAN_HUD);
         }
 
         @Override
@@ -90,7 +90,7 @@ public enum SuperheroIdentifier implements StringRepresentable {
     AMAZING_SPIDER_MAN {
         @Override
         public SuperheroCapabilities getCapabilities() {
-            return new SuperheroCapabilities().add(SuperheroCapability.WEB_SHOOTING,SuperheroCapability.WALL_CLIMBING,SuperheroCapability.SUPER_STRENGTH,SuperheroCapability.FAST_MOBILITY);
+            return new SuperheroCapabilities().add(SuperheroCapability.WEB_SHOOTING,SuperheroCapability.WALL_CLIMBING,SuperheroCapability.SUPER_STRENGTH,SuperheroCapability.FAST_MOBILITY,SuperheroCapability.SPIDERMAN_HUD);
         }
 
         @Override
@@ -123,7 +123,7 @@ public enum SuperheroIdentifier implements StringRepresentable {
         }
         @Override
         public SuperheroCapabilities getCapabilities() {
-            return new SuperheroCapabilities().add(SuperheroCapability.INVISIBILITY,SuperheroCapability.WEB_SHOOTING,SuperheroCapability.WALL_CLIMBING,SuperheroCapability.SUPER_STRENGTH,SuperheroCapability.FAST_MOBILITY);
+            return new SuperheroCapabilities().add(SuperheroCapability.INVISIBILITY,SuperheroCapability.WEB_SHOOTING,SuperheroCapability.WALL_CLIMBING,SuperheroCapability.SUPER_STRENGTH,SuperheroCapability.FAST_MOBILITY,SuperheroCapability.SPIDERMAN_HUD);
         }
     },
     MILES {
@@ -146,7 +146,7 @@ public enum SuperheroIdentifier implements StringRepresentable {
 
         @Override
         public SuperheroCapabilities getCapabilities() {
-            return new SuperheroCapabilities().add(SuperheroCapability.INVISIBILITY,SuperheroCapability.WEB_SHOOTING,SuperheroCapability.WALL_CLIMBING,SuperheroCapability.SUPER_STRENGTH,SuperheroCapability.FAST_MOBILITY);
+            return new SuperheroCapabilities().add(SuperheroCapability.INVISIBILITY,SuperheroCapability.WEB_SHOOTING,SuperheroCapability.WALL_CLIMBING,SuperheroCapability.SUPER_STRENGTH,SuperheroCapability.FAST_MOBILITY,SuperheroCapability.SPIDERMAN_HUD);
         }
     },
 

@@ -2,14 +2,18 @@ package com.duzo.superhero.items.ironman;
 
 import com.duzo.superhero.client.models.items.IronManArmourModel;
 import com.duzo.superhero.items.SuperheroArmourItem;
+import com.duzo.superhero.util.KeyBinds;
 import com.duzo.superhero.util.SuperheroIdentifier;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorMaterial;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.client.ForgeHooksClient;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import org.jetbrains.annotations.NotNull;
@@ -50,8 +54,14 @@ public class IronManArmourItem extends SuperheroArmourItem {
 
                 if (equipmentSlot == EquipmentSlot.HEAD) {
                     model.hat.visible = true;
-                    model.hat.setRotation(-1.5707964f,0,0);
                     model.head.visible = true;
+                    float i = 0;
+                    if(KeyBinds.ABILITY_THREE.isDown() && i == 0) {
+                       i = -1.5707964f;
+                    } else {
+                        i = 0;
+                    }
+                    model.head.getChild("mask").setRotation(i, 0, 0);
                 } else if (equipmentSlot == EquipmentSlot.CHEST) {
                     model.body.visible = true;
                     model.leftArm.visible = true;
@@ -68,6 +78,7 @@ public class IronManArmourItem extends SuperheroArmourItem {
                 ForgeHooksClient.copyModelProperties(original,model);
 
                 //model.setAllVisible(false);
+
 
                 return model;
             }
