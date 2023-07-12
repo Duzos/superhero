@@ -1,7 +1,6 @@
 package com.duzo.superhero.util;
 
-import com.duzo.superhero.entities.SuperheroEntities;
-import com.duzo.superhero.entities.ironman.UnibeamEntity;
+import com.duzo.superhero.entities.ironman.RocketEntity;
 import com.duzo.superhero.items.SuperheroArmourItem;
 import com.duzo.superhero.items.SuperheroNanotechItem;
 import com.duzo.superhero.sounds.SuperheroSounds;
@@ -17,6 +16,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 
 import static com.duzo.superhero.blocks.IronManSuitCaseBlock.convertArmourToSuitcase;
 import static com.duzo.superhero.entities.ironman.IronManEntity.fileNameToUsable;
@@ -383,9 +383,15 @@ public enum SuperheroCapability implements StringRepresentable {
                 float f2 = Mth.cos(player.yBodyRot * ((float) Math.PI / 180F)) * (0F + 1.21F * (float) i);
                 float f3 = Mth.sin(player.yBodyRot * ((float) Math.PI / 180F)) * (0F + 1.21F * (float) i);
                 float f6 = (0.3F * 0.45F) * ((float) i * 0.2F + 0.0F);
-                UnibeamEntity unibeam = new UnibeamEntity(SuperheroEntities.UNIBEAM_ENTITY.get(), player.getLevel());
-                unibeam.moveTo(player.getX() + (double) f2, player.getY() + (double) f6, player.getZ() + (double) f3, player.getYRot(), player.getXRot());
-                player.getLevel().addFreshEntity(unibeam);
+//                UnibeamEntity unibeam = new UnibeamEntity(SuperheroEntities.UNIBEAM_ENTITY.get(), player.getLevel());
+//                unibeam.moveTo(player.getX() + (double) f2, player.getY() + (double) f6, player.getZ() + (double) f3, player.getYRot(), player.getXRot());
+//                player.getLevel().addFreshEntity(unibeam);
+
+                // Rocket
+                Vec3 look = player.getLookAngle().normalize();
+                RocketEntity rocket = new RocketEntity(player.getLevel(),player,look.x,look.y,look.z, 5);
+                rocket.moveTo(player.getX() + (double) f2, player.getY() + (double) f6, player.getZ() + (double) f3,player.getXRot(),player.getYRot());
+                player.getLevel().addFreshEntity(rocket);
             }
         }
 
