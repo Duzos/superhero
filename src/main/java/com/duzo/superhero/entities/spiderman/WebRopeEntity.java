@@ -241,8 +241,14 @@ public class WebRopeEntity extends Entity {
             double d2 = ((this.position().z() - playerPos.z()) / distanceToPlayer) * blend;
             System.out.println("X: " + d0 + " Y: " + d1 + " Z: " + d2);
 
-            double speedxz = 4.0D;
-            double speedy = 2.0D;
+            double clampX = Mth.clamp(this.position().x() - playerPos.x(), 2.0D, 1.0D);
+            double clampY = Mth.clamp(this.position().y() - playerPos.y(), 2.0D, 1.0D);
+            double clampZ = Mth.clamp(this.position().z() - playerPos.z(), 2.0D, 1.0D);
+
+            double clampedPosition = clampX + clampY + clampZ;
+
+            double speedxz = 4.0D * (clampedPosition / 3);
+            double speedy = 2.0D * (clampedPosition / 3);
 
             //if (d1 < 0) {
             //    d1 = 0;

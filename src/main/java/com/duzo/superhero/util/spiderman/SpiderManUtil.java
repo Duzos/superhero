@@ -132,7 +132,7 @@ public class SpiderManUtil {
         rope.setXRot(player.getXRot());
         rope.setPointsChanged();
         Vec3 look = player.getLookAngle().normalize().multiply(4d, 4d, 4d);//.add(0,0.5d,0);
-        Network.sendToPlayer(new ChangeDeltaMovementS2CPacket(look.add(player.getDeltaMovement().x,0,player.getDeltaMovement().z)), (ServerPlayer) player);
+        Network.sendToPlayer(new ChangeDeltaMovementS2CPacket(look.add(player.getDeltaMovement().x,0.125D,player.getDeltaMovement().z)), (ServerPlayer) player);
     }
 
     public static boolean canPlayerShootRope(Player player) {
