@@ -20,7 +20,7 @@ public class WebRopeEntity extends Entity {
 
     private float alpha = 1f;
 
-    private double initialDistance;
+    private double initialDistance = 0d;
 
     public WebRopeEntity(Level level) {
         super(SuperheroEntities.WEB_ROPE_ENTITY.get(),level);
@@ -32,10 +32,7 @@ public class WebRopeEntity extends Entity {
         this.origin = this.position();
         this.point = point;
         this.player = player;
-        if(this.player != null) {
-            Vec3 playerPos = this.player.position();
-            this.initialDistance = Math.abs(Math.sqrt(((playerPos.x() - this.position().x()) * (playerPos.x() - this.position().x())) + ((playerPos.y() - this.position().y()) * (playerPos.y() - this.position().y())) + ((playerPos.z() - this.position().z()) * (playerPos.z() - this.position().z()))));
-        }
+        this.setInitialDistance(point);
     }
 
     public WebRopeEntity(EntityType<?> type, Level level) {
@@ -48,17 +45,6 @@ public class WebRopeEntity extends Entity {
 
     public void setPlayer(Player player) {
         this.player = player;
-    }
-
-    //public void setRestraintDistance() {
-    //    if(this.getPlayer() != null) {
-    //        Vec3 playerPos = this.getPlayer().position();
-    //        this.initialDistance = Math.abs(Math.sqrt(((playerPos.x() - this.position().x()) * (playerPos.x() - this.position().x())) + ((playerPos.y() - this.position().y()) * (playerPos.y() - this.position().y())) + ((playerPos.z() - this.position().z()) * (playerPos.z() - this.position().z()))));
-    //    }
-    //}
-
-    public double getInitialDistance() {
-        return this.initialDistance;
     }
 
     public Player getPlayer() {
@@ -89,6 +75,10 @@ public class WebRopeEntity extends Entity {
         Network.sendToAll(new UpdateWebRopeAlphaS2CPacket(this.getId(),this.alpha));
     }
 
+    public void syncInitialDistanceToClient() {
+        Network.sendToAll(new UpdateInitialDistanceS2CPacket(this.getId(),this.initialDistance));
+    }
+
     @Override
     protected void defineSynchedData() {
 
@@ -98,7 +88,6 @@ public class WebRopeEntity extends Entity {
     protected void readAdditionalSaveData(CompoundTag tag) {
         this.origin = new Vec3(tag.getDouble("originX"),tag.getDouble("originY"),tag.getDouble("originZ"));
         this.point = new Vec3(tag.getDouble("pointX"),tag.getDouble("pointY"),tag.getDouble("pointZ"));
-        this.initialDistance = tag.getDouble("initialDistance");
     }
 
     @Override
@@ -112,8 +101,6 @@ public class WebRopeEntity extends Entity {
         tag.putDouble("pointX", this.point.x);
         tag.putDouble("pointY", this.point.y);
         tag.putDouble("pointZ", this.point.z);
-
-        tag.putDouble("initialDistance", this.initialDistance);
     }
 
     public float getAlpha() {
@@ -125,6 +112,22 @@ public class WebRopeEntity extends Entity {
 
     private void fadeOut() {
         this.setAlpha(this.alpha - (0.0295f));
+    }
+
+    public double getInitialDistance() {
+        return this.initialDistance;
+    }
+
+    public void setInitialDistance(Vec3 position) {
+        if (this.getPlayer() != null) {
+            Vec3 playerPos = this.getPlayer().position();
+            double distance = Math.abs(Math.sqrt(((playerPos.x() - position.x()) * (playerPos.x() - position.x())) + ((playerPos.y() - position.y()) * (playerPos.y() - position.y())) + ((playerPos.z() - position.z()) * (playerPos.z() - position.z()))));
+            this.initialDistance = distance;
+        }
+    }
+
+    public void setInitialDistance(double initialDistance) {
+        this.initialDistance = initialDistance;
     }
 
     /*public static Vec3 rotatePoint(Vec3 point, Vec3 anchor, double xRotation, double yRotation, double zRotation) {
@@ -222,32 +225,33 @@ public class WebRopeEntity extends Entity {
     }*/
     //@TODO this is the original better code. use the before this right below for better effect
 
-    public double getCurrentDistance() {
-        if(this.getPlayer() == null) return 0;
-        Vec3 playerPos = this.getPlayer().position();
-        return Math.abs(Math.sqrt(((playerPos.x() - this.position().x()) * (playerPos.x() - this.position().x())) + ((playerPos.y() - this.position().y()) * (playerPos.y() - this.position().y())) + ((playerPos.z() - this.position().z()) * (playerPos.z() - this.position().z()))));
-
-    }
-
     private void runSwingPhysics() {
         if(KeyBinds.ABILITY_ONE.isDown()) {
             if (this.getPlayer() == null) return;
             float distanceToPlayer = this.getPlayer().distanceTo(this);
             Vec3 playerPos = this.getPlayer().position();
             double length = Math.abs(Math.sqrt(((playerPos.x() - this.position().x()) * (playerPos.x() - this.position().x())) + ((playerPos.y() - this.position().y()) * (playerPos.y() - this.position().y())) + ((playerPos.z() - this.position().z()) * (playerPos.z() - this.position().z()))));
-            double blend = Mth.clamp(length - this.getInitialDistance(), 1.0, 0.0);
+            double blend = Mth.clamp(length - this.getInitialDistance(), 0.0, 1.0);
 
-            double d0 = (this.getX() - this.getPlayer().getX()) * blend;
-            double d1 = (this.getY() - this.getPlayer().getY()) * blend;
-            double d2 = (this.getZ() - this.getPlayer().getZ()) * blend;
+            //double d0 = ((this.getX() - this.getPlayer().getX()) / distanceToPlayer) * blend;
+            //double d1 = ((this.getY() - this.getPlayer().getY()) / distanceToPlayer) * blend;
+            //double d2 = ((this.getZ() - this.getPlayer().getZ()) / distanceToPlayer) * blend;
+            double d0 = ((this.position().x() - playerPos.x()) / distanceToPlayer) * blend;
+            double d1 = ((this.position().y() - playerPos.y()) / distanceToPlayer) * blend;
+            double d2 = ((this.position().z() - playerPos.z()) / distanceToPlayer) * blend;
+            System.out.println("X: " + d0 + " Y: " + d1 + " Z: " + d2);
 
-            if (d1 < 0) {
-                d1 = 0;
-            }
+            double speedxz = 4.0D;
+            double speedy = 2.0D;
 
-            this.getPlayer().setDeltaMovement(this.getPlayer().getDeltaMovement().add(Math.copySign(d0 * d0 * 0.4D, d0), Math.copySign(d1 * d1 * 0.2D, d1), Math.copySign(d2 * d2 * 0.4D, d2)));
+            //if (d1 < 0) {
+            //    d1 = 0;
+            //}
+
+            this.getPlayer().setDeltaMovement(this.getPlayer().getDeltaMovement().add(Math.copySign(d0 * d0 * speedxz, d0), Math.copySign(d1 * d1 * speedy, d1), Math.copySign(d2 * d2 * speedxz, d2)));
+            //this.getPlayer().setDeltaMovement(this.getPlayer().getDeltaMovement().add(distanceToPlayer * blend, distanceToPlayer * blend,distanceToPlayer * blend));
             this.getPlayer().checkSlowFallDistance();
-            System.out.println( "Length: " + length + " | Initial Distance: " + this.initialDistance);
+            System.out.println(this.getPlayer().getDeltaMovement());
         }
     }
 
@@ -268,6 +272,7 @@ public class WebRopeEntity extends Entity {
 
         if (!this.level.isClientSide) {
             this.syncAlphaToClient();
+            this.syncInitialDistanceToClient();
         }
 
         if (!this.level.isClientSide) {

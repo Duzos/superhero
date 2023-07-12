@@ -67,6 +67,11 @@ public class Network {
                 .encoder(UpdateWebRopeAlphaS2CPacket::encode)
                 .consumerMainThread(UpdateWebRopeAlphaS2CPacket::handle)
                 .add();
+        net.messageBuilder(UpdateInitialDistanceS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+                .decoder(UpdateInitialDistanceS2CPacket::decode)
+                .encoder(UpdateInitialDistanceS2CPacket::encode)
+                .consumerMainThread(UpdateInitialDistanceS2CPacket::handle)
+                .add();
         net.messageBuilder(UpdateGrappleRopePointsS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
                 .decoder(UpdateGrappleRopePointsS2CPacket::decode)
                 .encoder(UpdateGrappleRopePointsS2CPacket::encode)

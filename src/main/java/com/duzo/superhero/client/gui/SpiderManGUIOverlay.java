@@ -30,17 +30,17 @@ public class SpiderManGUIOverlay {
 
         if (!flag) return;
 
-        String i = KeyBinds.ABILITY_ONE.getKey().toString() + " - Web Swinging";
+        String i = KeyBinds.ABILITY_ONE.getKey().toString().toUpperCase() + " - Web Swinging";
         int iWdth = mc.font.width(i);
-        mc.font.drawShadow(poseStack,i,(screenWidth / 2) - 96 - iWdth,screenHeight - 11,0xfaab43);
+        mc.font.drawShadow(poseStack,i,(screenWidth / 2) - 50 - iWdth,screenHeight - 150,0xffffff);
 
-        String i1 = KeyBinds.ABILITY_TWO.getKey().toString() + " - Web Zip";
+        String i1 = KeyBinds.ABILITY_TWO.getKey().toString().toUpperCase() + " - Web Zip";
         int i1Wdth = mc.font.width(i1);
-        mc.font.drawShadow(poseStack,i1,(screenWidth / 2) - 96 - i1Wdth,screenHeight - 11,0xfaab43);
+        mc.font.drawShadow(poseStack,i1,(screenWidth / 2) - 50 - i1Wdth,screenHeight - 140,0xffffff);
 
-        String i2 = KeyBinds.ABILITY_THREE.getKey().toString() + " - invalid";
+        String i2 = KeyBinds.ABILITY_THREE.getKey().toString().toUpperCase() + " - invalid";
         int i2Wdth = mc.font.width(i2);
-        mc.font.drawShadow(poseStack,i2,(screenWidth / 2) - 96 - i2Wdth,screenHeight - 11,0xfaab43);
+        mc.font.drawShadow(poseStack,i2,(screenWidth / 2) - 50 - i2Wdth,screenHeight - 130,0xffffff);
 
         // BPS Speed
         //var deltaX = mc.player.getX() - mc.player.xOld;
