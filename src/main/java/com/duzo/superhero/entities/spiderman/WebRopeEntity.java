@@ -10,6 +10,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.vehicle.Minecart;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
@@ -135,11 +136,15 @@ public class WebRopeEntity extends Entity {
         double deltaX = point.x - anchor.x;
         double deltaY = point.y - anchor.y;
         double deltaZ = point.z - anchor.z;
+        System.out.println("deltaX: " + deltaX + " point.x: " + point.x + " anchor.x: " + anchor.x);
+        System.out.println("xRot: " + xRotation + " yRot: " + yRotation + " zRot: " + zRotation);
 
         // Convert rotation angles to radians
-        double xRad = Math.toRadians(xRotation);
-        double yRad = Math.toRadians(yRotation);
-        double zRad = Math.toRadians(zRotation);
+        double xRad = Math.abs(Math.toRadians(xRotation));
+        double yRad = Math.abs(Math.toRadians(yRotation));
+        double zRad = Math.abs(Math.toRadians(zRotation));
+
+        System.out.println("xRot after rads: " + xRad + " yRot after rads: " + yRad + " zRot after rads: " + zRad);
 
         // Apply rotation matrices
         double cosX = Math.cos(xRad);
@@ -149,17 +154,9 @@ public class WebRopeEntity extends Entity {
         double cosZ = Math.cos(zRad);
         double sinZ = Math.sin(zRad);
 
-        double rotatedX = deltaX;
-        double rotatedY = deltaY * cosX - deltaZ * sinX;
-        double rotatedZ = deltaY * sinX + deltaZ * cosX;
-
-        double finalX = rotatedX * cosY + rotatedZ * sinY;
-        double finalY = rotatedY;
-        double finalZ = -rotatedX * sinY + rotatedZ * cosY;
-
-        rotatedX = finalX * cosZ - finalY * sinZ;
-        rotatedY = finalX * sinZ + finalY * cosZ;
-        rotatedZ = finalZ;
+        double rotatedX = deltaX * cosY * cosZ - deltaY * cosY * sinZ + deltaZ * sinY;
+        double rotatedY = deltaX * (cosX * sinZ + sinX * sinY * cosZ) + deltaY * (cosX * cosZ - sinX * sinY * sinZ) - deltaZ * sinX * cosY;
+        double rotatedZ = deltaX * (sinX * sinZ - cosX * sinY * cosZ) + deltaY * (sinX * cosZ + cosX * sinY * sinZ) + deltaZ * cosX * cosY;
 
         // Translate the point back to the original position
         double newX = rotatedX + anchor.x;
@@ -190,30 +187,32 @@ public class WebRopeEntity extends Entity {
             if (getPlayer() == null)
                 return;
 
-            double radius = 6;
-            double distanceToPlayer = getPlayer().distanceTo(this);
+            double radius = this.initialDistance;
+            double distanceToPlayer = this.getPlayer().distanceTo(this);
 
             if (distanceToPlayer > radius) {
                 // Calculate the rotation angles for the swing arc
-                Vec3 rotationAngles = getRotationAngles(getPlayer().position(), this.position());
+                Vec3 rotationAngles = getRotationAngles(this.getPlayer().position(), this.position());
 
+                double blend = Mth.clamp((distanceToPlayer-this.initialDistance)*0.2+0.6,0.0,1.0);
 
                 // Calculate the velocity components for the swing motion
-                double xVel = (rotationAngles.x * radius) / distanceToPlayer;
-                double yVel = (rotationAngles.y * radius) / distanceToPlayer;
-                double zVel = (rotationAngles.z * radius) / distanceToPlayer;
+                double xVel = ((rotationAngles.x * radius) / distanceToPlayer) * blend;
+                double yVel = ((rotationAngles.y * radius) / distanceToPlayer) * blend;
+                double zVel = ((rotationAngles.z * radius) / distanceToPlayer) * blend;
 
                 // Calculate the new position for the player using the rotated point
-                Vec3 newPlayerPosition = rotatePoint(getPlayer().position(), this.position(), xVel, yVel, zVel);
+                Vec3 newPlayerPosition = rotatePoint(this.getPlayer().position(), this.position(), xVel, yVel, zVel);
 
                 // Calculate the delta movement
-                Vec3 deltaMovement = newPlayerPosition.subtract(getPlayer().position()).scale(0.5D);
+                //Vec3 deltaMovement = newPlayerPosition.add(this.getPlayer().position()).scale(0.5D).normalize();
+                Vec3 deltaMovement = newPlayerPosition.normalize();
 
                 // Move the player relative to its current position
-                getPlayer().setDeltaMovement(deltaMovement);
+                this.getPlayer().setDeltaMovement(deltaMovement.normalize());
 
                 System.out.println("Web Entity Position: " + this.position());
-                System.out.println("Original Player Position: " + getPlayer().position());
+                System.out.println("Original Player Position: " + this.getPlayer().position());
                 System.out.println("X Velocity: " + xVel + " Y Velocity: " + yVel + " Z Velocity: " + zVel);
                 System.out.println("New Player Position: " + newPlayerPosition);
 
@@ -225,13 +224,94 @@ public class WebRopeEntity extends Entity {
     }*/
     //@TODO this is the original better code. use the before this right below for better effect
 
+    private double yawVector(Player player, double radius) {
+        return ((player.getDeltaMovement().x() / radius) + (player.getDeltaMovement().z() / radius));
+    }
+
+    private double pitchVector(Player player, double radius) {
+        return (Math.sqrt((player.getDeltaMovement().x() * player.getDeltaMovement().x()) + (player.getDeltaMovement().z() * player.getDeltaMovement().z())) / radius) + (player.getDeltaMovement().y() / radius);
+    }
+
+    /*private Vec3 angleVectorBetweenPlayerPositionAndDesiredPoint(Vec3 point) {
+        Vec3 playerPos = this.getPlayer().position();
+        double distance = Math.abs((point.y() - playerPos.y()));
+        double length = Math.abs(Math.sqrt(((playerPos.x() - point.x()) * (playerPos.x() - point.x())) +
+                ((playerPos.y() - 0) * (playerPos.y() - 0)) +
+                ((playerPos.z() - point.z()) * (playerPos.z() - point.z()))));
+        double a = Math.asin(distance / length);
+        return
+    }*/
+
+    private Vec3 rotate(Vec3 playerPos, Vec3 center, double angle, double angle2) {
+        double ox = center.x();
+        double oy = center.y();
+        double oz = center.z();
+        double px = playerPos.x();
+        double py = playerPos.y();
+        double pz = playerPos.z();
+
+        //double xnew = Math.cos(angle) * (px - ox) - Math.sin(angle) * (pz - oz) + ox;
+        //double znew = Math.sin(angle) * (px - ox) + Math.cos(angle) * (pz - oz) + oz;
+        //double ynew = Math.sin(xnew)/Math.cos(znew);
+        double f = angle;
+        double ϕ = angle2;
+        double xnew = center.x() + (px - ox) * Math.cos(f) - (py - oy) * Math.sin(f) * Math.cos(pz) + (pz - oz) * Math.sin(f) * Math.sin(pz) * Math.cos(ϕ);
+        double ynew = center.y() + (px - ox) * Math.sin(f) + (py - oy) * Math.cos(f) * Math.cos(pz) + (pz - oz) * Math.cos(f) * Math.sin(pz) * Math.cos(ϕ);
+        double znew = center.z() + (py - oy) * Math.sin(pz) * Math.sin(ϕ) - (pz - oz) * Math.cos(pz) * Math.sin(ϕ);
+        return new Vec3(xnew, ynew, znew);
+    }
+
+    private Vec3 runAngleCalculations(Vec3 rotationalPoints) {
+        double xRot = rotationalPoints.x();
+        double zRot = rotationalPoints.z();
+        double yaw = yawAngle(xRot, this.getPlayer().position().x(), zRot, this.getPlayer().position().z());
+        System.out.println("yaw: " + yaw);
+        return new Vec3(yaw, yaw, yaw);
+    }
+
+    private double yawAngle(double xnew, double px, double znew, double pz) {
+        double yaw = Math.toDegrees(Math.atan((xnew - px)/(znew - pz)));
+        if(yaw < 0) {
+            yaw += 360;
+        }
+        return yaw;
+    }
+
     private void runSwingPhysics() {
+        if(KeyBinds.ABILITY_ONE.isDown()) {
+            if (this.getPlayer() != null) {
+                Vec3 center = this.position();
+                Vec3 playerPos = this.getPlayer().position();
+                double length = this.getPlayer().distanceTo(this);
+                double radius = this.initialDistance;
+                double yaw = yawVector(this.getPlayer(), radius);
+                double pitch = pitchVector(this.getPlayer(), radius);
+                Vec3 transposedPoint = rotate(playerPos, center, yaw, pitch);
+                double blend = Mth.clamp((length-radius)*0.2+0.6,1.0,0.0);
+                Vec3 propellantAngle = runAngleCalculations(transposedPoint).normalize().scale(blend);
+                System.out.print("propellantAngle: " + propellantAngle);
+
+                if(Double.isNaN(propellantAngle.x()) && Double.isNaN(propellantAngle.y()) && Double.isNaN(propellantAngle.z())) {
+                    propellantAngle = new Vec3(0,0,0);
+                    System.out.print("Error: propellant is NaN");
+                }
+
+                //this.getPlayer().setDeltaMovement(propellantAngle.subtract(this.getDeltaMovement().x(), 0, this.getDeltaMovement().z()));
+                this.getPlayer().setDeltaMovement(propellantAngle);
+                System.out.println(transposedPoint);
+            }
+        } else {
+            this.getPlayer().setDeltaMovement(0, 0,0);
+        }
+    }
+
+    /*private void runSwingPhysics() {//@TODO THIS IS THE BEST ONE DON'T DELETE
         if(KeyBinds.ABILITY_ONE.isDown()) {
             if (this.getPlayer() == null) return;
             float distanceToPlayer = this.getPlayer().distanceTo(this);
             Vec3 playerPos = this.getPlayer().position();
             double length = Math.abs(Math.sqrt(((playerPos.x() - this.position().x()) * (playerPos.x() - this.position().x())) + ((playerPos.y() - this.position().y()) * (playerPos.y() - this.position().y())) + ((playerPos.z() - this.position().z()) * (playerPos.z() - this.position().z()))));
-            double blend = Mth.clamp(length - this.getInitialDistance(), 0.0, 1.0);
+            double blend = Mth.clamp((length-this.initialDistance)*0.2+0.6,0.0,1.0);
 
             //double d0 = ((this.getX() - this.getPlayer().getX()) / distanceToPlayer) * blend;
             //double d1 = ((this.getY() - this.getPlayer().getY()) / distanceToPlayer) * blend;
@@ -239,27 +319,27 @@ public class WebRopeEntity extends Entity {
             double d0 = ((this.position().x() - playerPos.x()) / distanceToPlayer) * blend;
             double d1 = ((this.position().y() - playerPos.y()) / distanceToPlayer) * blend;
             double d2 = ((this.position().z() - playerPos.z()) / distanceToPlayer) * blend;
-            System.out.println("X: " + d0 + " Y: " + d1 + " Z: " + d2);
 
-            double clampX = Mth.clamp(this.position().x() - playerPos.x(), 2.0D, 1.0D);
-            double clampY = Mth.clamp(this.position().y() - playerPos.y(), 2.0D, 1.0D);
-            double clampZ = Mth.clamp(this.position().z() - playerPos.z(), 2.0D, 1.0D);
+            //System.out.println("X: " + xVel + " Y: " + yVel + " Z: " + zVel);
 
-            double clampedPosition = clampX + clampY + clampZ;
+            //double clampX = Mth.clamp(this.position().x() - playerPos.x(), 2.0D, 1.0D);
+            //double clampY = Mth.clamp(this.position().y() - playerPos.y(), 2.0D, 1.0D);
+            //double clampZ = Mth.clamp(this.position().z() - playerPos.z(), 2.0D, 1.0D);
 
-            double speedxz = 4.0D * (clampedPosition / 3);
-            double speedy = 2.0D * (clampedPosition / 3);
+            //double clampedPosition = clampX + clampY + clampZ;
 
-            //if (d1 < 0) {
-            //    d1 = 0;
-            //}
+            double speedxz = 4.0D;// * (clampedPosition / 3);
+            double speedy = 2.0D;// * (clampedPosition / 3);
+
+            if (d1 < 0.2) {
+                d1 = 0;
+            }
 
             this.getPlayer().setDeltaMovement(this.getPlayer().getDeltaMovement().add(Math.copySign(d0 * d0 * speedxz, d0), Math.copySign(d1 * d1 * speedy, d1), Math.copySign(d2 * d2 * speedxz, d2)));
-            //this.getPlayer().setDeltaMovement(this.getPlayer().getDeltaMovement().add(distanceToPlayer * blend, distanceToPlayer * blend,distanceToPlayer * blend));
             this.getPlayer().checkSlowFallDistance();
             System.out.println(this.getPlayer().getDeltaMovement());
         }
-    }
+    }*/
 
     @Override
     public void tick() {
