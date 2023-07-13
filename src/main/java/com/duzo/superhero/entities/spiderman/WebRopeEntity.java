@@ -242,7 +242,7 @@ public class WebRopeEntity extends Entity {
         return
     }*/
 
-    private Vec3 rotate(Vec3 playerPos, Vec3 center, double angle, double angle2) {
+    /*private Vec3 rotate(Vec3 playerPos, Vec3 center, double angle, double angle2) {
         double ox = center.x();
         double oy = center.y();
         double oz = center.z();
@@ -303,9 +303,38 @@ public class WebRopeEntity extends Entity {
         } else {
             this.getPlayer().setDeltaMovement(0, 0,0);
         }
-    }
+    }*/
+    //@TODO THIS IS THE CONTINUATION CODE, USE THIS.
 
-    /*private void runSwingPhysics() {//@TODO THIS IS THE BEST ONE DON'T DELETE
+    /*private void runSwingPhysics() {
+        if(KeyBinds.ABILITY_ONE.isDown()) {
+            if(this.getPlayer() != null) {
+                double distanceToPlayer = this.getPlayer().distanceTo(this);
+                double blend = Mth.clamp((distanceToPlayer-this.initialDistance)*0.2+0.6,0,1.0);
+                Vec3 playerPos = this.getPlayer().position();
+                double valX = this.position().x() - playerPos.x();
+                double valY = this.position().y() - playerPos.y();
+                double valZ = this.position().z() - playerPos.z();
+                if(valX < 0) {
+                    valX = Math.abs(valX);
+                }
+                if(valY < 0) {
+                    valY = Math.abs(valY);
+                }
+                if(valZ < 0) {
+                    valZ = Math.abs(valZ);
+                }
+                double yaw = Math.toDegrees(Math.atan(Math.abs(valX)/Math.abs(valZ)));
+                double hyp = Math.sqrt((valX*valX)+(valZ*valZ));
+                double pitch = -Math.toDegrees(Math.atan(valY/hyp));
+                Vec3 combinedVector = new Vec3(yaw, pitch, hyp);
+                this.getPlayer().setDeltaMovement();
+            }
+        }
+        //@TODO again.. another fucking runSwingPhysics()..
+    }*/
+
+    private void runSwingPhysics() {//@TODO THIS IS THE BEST ONE DON'T DELETE
         if(KeyBinds.ABILITY_ONE.isDown()) {
             if (this.getPlayer() == null) return;
             float distanceToPlayer = this.getPlayer().distanceTo(this);
@@ -335,11 +364,11 @@ public class WebRopeEntity extends Entity {
                 d1 = 0;
             }
 
-            this.getPlayer().setDeltaMovement(this.getPlayer().getDeltaMovement().add(Math.copySign(d0 * d0 * speedxz, d0), Math.copySign(d1 * d1 * speedy, d1), Math.copySign(d2 * d2 * speedxz, d2)));
+            this.getPlayer().setDeltaMovement(this.getPlayer().getDeltaMovement().add(Math.copySign(d0 * d0 * speedxz, d0), Math.copySign(d1 * d1 * speedy * blend, d1), Math.copySign(d2 * d2 * speedxz, d2)));
             this.getPlayer().checkSlowFallDistance();
-            System.out.println(this.getPlayer().getDeltaMovement());
+            //System.out.println(this.getPlayer().getDeltaMovement());
         }
-    }*/
+    }
 
     @Override
     public void tick() {
