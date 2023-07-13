@@ -79,18 +79,18 @@ public class JarvisGUIOverlay {
             mc.font.draw(poseStack,crosshair.getName(),((float)x-mc.font.width(crosshair.getName())/2f) + ((screenWidth / 10f)),y/2f,0x59d7e3);
             if (crosshair instanceof LivingEntity living) {
                 // Health
-                mc.font.draw(poseStack,"" + (int) living.getHealth() + "/" + (int)living.getMaxHealth() + "❤",(float)x-mc.font.width(crosshair.getName())/2f,y/2f,0x59d7e3);
+                mc.font.draw(poseStack,"" + (int) living.getHealth() + "/" + (int)living.getMaxHealth() + "❤",(float)x-mc.font.width("" + (int) living.getHealth() + "/" + (int)living.getMaxHealth() + "❤")/2f,y/2f,0x59d7e3);
                 // Damage
                 if (living.getAttribute(Attributes.ATTACK_DAMAGE) != null) {
-                    mc.font.draw(poseStack, "" + living.getAttribute(Attributes.ATTACK_DAMAGE).getValue() + "⚔❤",(float)x-mc.font.width(crosshair.getName())/2f,y/2f, 0x59d7e3);
+                    mc.font.draw(poseStack, "" + living.getAttribute(Attributes.ATTACK_DAMAGE).getValue() + "⚔❤",(float)x-mc.font.width("" + living.getAttribute(Attributes.ATTACK_DAMAGE).getValue() + "⚔❤")/2f,y/2f, 0x59d7e3);
                 }
             }
             // Speed
             var crossSpeed = Math.sqrt(Math.pow(crosshair.getX() - crosshair.xOld, 2) + Math.pow(crosshair.getY() - crosshair.yOld, 2) + Math.pow(crosshair.getZ() - crosshair.zOld, 2));
             String s = "" + Math.round(crossSpeed * 20) + " b/s";
-            mc.font.draw(poseStack,s,(float)x-mc.font.width(crosshair.getName())/2f,y/2f,0x59d7e3);
+            mc.font.draw(poseStack,s,(float)x-mc.font.width(s)/2f,y/2f,0x59d7e3);
             // Distance away
-            mc.font.draw(poseStack,"" + Math.round(mc.player.distanceTo(crosshair)) + " blocks",(float)x-mc.font.width(crosshair.getName())/2f,y/2f,0x59d7e3);
+            mc.font.draw(poseStack,"" + Math.round(mc.player.distanceTo(crosshair)) + " blocks",(float)x-mc.font.width("" + Math.round(mc.player.distanceTo(crosshair)) + " blocks")/2f,y/2f,0x59d7e3);
 
             // Rotating the circle
             drawJARVISCircle(poseStack,x / 2f,y / 2f, screenWidth / 8, screenHeight / 4,mc.player.distanceTo(crosshair) * 10);

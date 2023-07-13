@@ -3,6 +3,7 @@ package com.duzo.superhero.entities;
 import com.duzo.superhero.Superhero;
 import com.duzo.superhero.entities.batman.GrapplingHookRopeEntity;
 import com.duzo.superhero.entities.ironman.IronManEntity;
+import com.duzo.superhero.entities.ironman.RocketEntity;
 import com.duzo.superhero.entities.ironman.UnibeamEntity;
 import com.duzo.superhero.entities.spiderman.WebRopeEntity;
 import net.minecraft.resources.ResourceLocation;
@@ -20,7 +21,8 @@ public class SuperheroEntities {
 
     public static final RegistryObject<EntityType<UnibeamEntity>> UNIBEAM_ENTITY = ENTITIES.register("unibeam_entity", () ->
             EntityType.Builder.<UnibeamEntity>of(UnibeamEntity::new, MobCategory.MISC).sized(0.125f, 0.125f).build(new ResourceLocation(Superhero.MODID,"unibeam_entity").toString()));
-
+    public static final RegistryObject<EntityType<RocketEntity>> ROCKET_ENTITY = ENTITIES.register("rocket_entity", () ->
+            EntityType.Builder.<RocketEntity>of(RocketEntity::new, MobCategory.MISC).sized(0.125f, 0.125f).build(new ResourceLocation(Superhero.MODID,"rocket_entity").toString()));
     public static final RegistryObject<EntityType<WebRopeEntity>> WEB_ROPE_ENTITY = ENTITIES.register("web_rope_entity", () ->
             EntityType.Builder.<WebRopeEntity>of(WebRopeEntity::new, MobCategory.MISC).sized(0.125f, 0.125f).build(new ResourceLocation(Superhero.MODID,"web_rope_entity").toString()));
     public static final RegistryObject<EntityType<GrapplingHookRopeEntity>> GRAPPLE_ROPE_ENTITY = ENTITIES.register("grapple_rope_entity", () ->

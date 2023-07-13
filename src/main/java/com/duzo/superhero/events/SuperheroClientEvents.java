@@ -8,11 +8,9 @@ import com.duzo.superhero.client.models.AlexSkinModel;
 import com.duzo.superhero.client.models.SteveSkinModel;
 import com.duzo.superhero.client.models.entities.HumanoidEntityModel;
 import com.duzo.superhero.client.models.entities.IronManEntityModel;
+import com.duzo.superhero.client.models.entities.RocketModel;
 import com.duzo.superhero.client.models.items.IronManArmourModel;
-import com.duzo.superhero.client.renderers.GrapplingHookRopeEntityRenderer;
-import com.duzo.superhero.client.renderers.IronManEntityRenderer;
-import com.duzo.superhero.client.renderers.UnibeamRenderer;
-import com.duzo.superhero.client.renderers.WebRopeEntityRenderer;
+import com.duzo.superhero.client.renderers.*;
 import com.duzo.superhero.entities.SuperheroEntities;
 import com.duzo.superhero.items.SuperheroArmourItem;
 import com.duzo.superhero.network.Network;
@@ -37,6 +35,7 @@ public class SuperheroClientEvents {
     public static void registerRenderers(EntityRenderersEvent.RegisterRenderers renderers) {
         renderers.registerEntityRenderer(SuperheroEntities.IRON_MAN_ENTITY.get(), IronManEntityRenderer::new);
         renderers.registerEntityRenderer(SuperheroEntities.UNIBEAM_ENTITY.get(), UnibeamRenderer::new);
+        renderers.registerEntityRenderer(SuperheroEntities.ROCKET_ENTITY.get(), RocketRenderer::new);
         renderers.registerEntityRenderer(SuperheroEntities.WEB_ROPE_ENTITY.get(), WebRopeEntityRenderer::new);
         renderers.registerEntityRenderer(SuperheroEntities.GRAPPLE_ROPE_ENTITY.get(), GrapplingHookRopeEntityRenderer::new);
     }
@@ -46,6 +45,7 @@ public class SuperheroClientEvents {
         event.registerLayerDefinition(HumanoidEntityModel.LAYER_LOCATION,() -> LayerDefinition.create(PlayerModel.createMesh(CubeDeformation.NONE,false),64,64));
         event.registerLayerDefinition(SteveSkinModel.LAYER_LOCATION,() -> LayerDefinition.create(PlayerModel.createMesh(CubeDeformation.NONE,false),64,64));
         event.registerLayerDefinition(AlexSkinModel.LAYER_LOCATION,AlexSkinModel::createBodyLayer);
+        event.registerLayerDefinition(RocketModel.LAYER_LOCATION,RocketModel::createBodyLayer);
         event.registerLayerDefinition(IronManEntityModel.LAYER_LOCATION,() -> LayerDefinition.create(PlayerModel.createMesh(CubeDeformation.NONE,false),64,64));
         event.registerLayerDefinition(IronManArmourModel.LAYER_LOCATION,IronManArmourModel::createBodyLayer);
     }
