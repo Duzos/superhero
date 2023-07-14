@@ -166,7 +166,10 @@ public enum SuperheroIdentifier implements StringRepresentable {
 
             return map;
         }
-
+        @Override
+        public boolean usesDefaultRenderer() {
+            return false;
+        }
         @Override
         public String getLangFileName(EquipmentSlot slot) {
             String slotName = fileNameToUsable(nameFromSlot(slot));
@@ -193,7 +196,10 @@ public enum SuperheroIdentifier implements StringRepresentable {
 
             return map;
         }
-
+        @Override
+        public boolean usesDefaultRenderer() {
+            return false;
+        }
         @Override
         public String getLangFileName(EquipmentSlot slot) {
             String slotName = fileNameToUsable(nameFromSlot(slot));
@@ -220,7 +226,10 @@ public enum SuperheroIdentifier implements StringRepresentable {
 
             return map;
         }
-
+        @Override
+        public boolean usesDefaultRenderer() {
+            return false;
+        }
         @Override
         public String getLangFileName(EquipmentSlot slot) {
             String slotName = fileNameToUsable(nameFromSlot(slot));
@@ -246,7 +255,13 @@ public enum SuperheroIdentifier implements StringRepresentable {
             map.put("blastOff",1.25d);
 
             return map;
+
         }
+        @Override
+        public boolean usesDefaultRenderer() {
+            return false;
+        }
+
         @Override
         public String getLangFileName(EquipmentSlot slot) {
             String slotName = fileNameToUsable(nameFromSlot(slot));
@@ -262,6 +277,11 @@ public enum SuperheroIdentifier implements StringRepresentable {
         @Override
         public SuperheroCapabilities getCapabilities() {
             return new SuperheroCapabilities().add(SuperheroCapability.ICES_OVER,SuperheroCapability.BINDING,SuperheroCapability.IRON_MAN_FLIGHT);
+        }
+
+        @Override
+        public boolean usesDefaultRenderer() {
+            return false;
         }
 
         @Override
@@ -328,5 +348,9 @@ public enum SuperheroIdentifier implements StringRepresentable {
                 return false;
             }
         }
-        return true;    }
+        return true;
+    }
+    public boolean usesDefaultRenderer() {
+        return true;
+    }
 }

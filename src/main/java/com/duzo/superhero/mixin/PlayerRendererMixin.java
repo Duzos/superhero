@@ -1,8 +1,10 @@
 package com.duzo.superhero.mixin;
 
+import com.duzo.superhero.client.renderers.layers.GenericSuitRenderer;
 import com.duzo.superhero.client.renderers.layers.IronManSuitRenderer;
 import com.duzo.superhero.items.SuperheroArmourItem;
 import com.duzo.superhero.items.spiderman.MilesHoodieItem;
+import com.duzo.superhero.util.SuperheroUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.ModelPart;
@@ -49,12 +51,7 @@ public abstract class PlayerRendererMixin extends LivingEntityRenderer<AbstractC
         if (player.getItemBySlot(EquipmentSlot.CHEST).getItem() instanceof SuperheroArmourItem item) {
             // @TODO Loqor's silly iron man models mean this is broken for iron man
 
-            String skinString = item.getArmorTexture(player.getItemBySlot(EquipmentSlot.CHEST),player,EquipmentSlot.CHEST,"");
-            ResourceLocation skin = new ResourceLocation(skinString);
-
-            if (skinString.equals("superhero:textures/heroes/generic/" + "nanotech" + ".png")) {
-                skin = player.getSkinTextureLocation();
-            }
+            ResourceLocation skin = SuperheroUtil.getTextureFromID(item.getIdentifier());
 
             PlayerModel<AbstractClientPlayer> playermodel = this.getModel();
             this.setModelProperties(player);
@@ -118,6 +115,7 @@ public abstract class PlayerRendererMixin extends LivingEntityRenderer<AbstractC
             at = @At("TAIL"), cancellable = true  // signal that this void should be run at the method HEAD, meaning the first opcode
     )
     private void PlayerRenderer(EntityRendererProvider.Context p_174557_, boolean p_174558_, CallbackInfo ci) {
-        this.addLayer(new IronManSuitRenderer(this));
+        this.addLayer(new IronManSuitRenderer<>(this));
+        this.addLayer(new GenericSuitRenderer<>(this));
     }
 }

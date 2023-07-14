@@ -54,7 +54,7 @@ public class JarvisGUIOverlay {
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1f,1f,1f,1f);
         RenderSystem.setShaderTexture(0, FROST_EFFECT);
-        if(mc.player.getY() > 185) {
+        if(mc.player.getY() > 185 && id.getCapabilities().has(SuperheroCapability.ICES_OVER)) {
             blit(poseStack, 0, 0, 0, 0, screenWidth, screenHeight,screenWidth,screenHeight);
         }
         poseStack.popPose();

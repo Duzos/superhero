@@ -1,13 +1,15 @@
 package com.duzo.superhero.client.renderers.layers;
 
-import com.duzo.superhero.Superhero;
-import com.duzo.superhero.client.models.heroes.iron_man.IronManMagicModel;
-import com.duzo.superhero.items.ironman.IronManArmourItem;
+import com.duzo.superhero.client.models.AlexSkinModel;
+import com.duzo.superhero.client.models.SteveSkinModel;
+import com.duzo.superhero.items.SuperheroArmourItem;
 import com.duzo.superhero.util.SuperheroIdentifier;
-import com.duzo.superhero.util.ironman.IronManUtil;
+import com.duzo.superhero.util.SuperheroUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.EntityModel;
+import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -25,25 +27,16 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import static com.duzo.superhero.util.SuperheroUtil.getIDFromPlayer;
 
 @OnlyIn(Dist.CLIENT)
-public class IronManSuitRenderer<T extends AbstractClientPlayer, M extends EntityModel<T>> extends RenderLayer<T, M> {
+public class GenericSuitRenderer<T extends AbstractClientPlayer, M extends EntityModel<T>> extends RenderLayer<T, M> {
 
-    //Suit Textures (solid)
-    private static final ResourceLocation MK2 = new ResourceLocation(Superhero.MODID, "textures/heroes/iron_man/mk2.png");
-    private static final ResourceLocation MK3 = new ResourceLocation(Superhero.MODID, "textures/heroes/iron_man/mk3.png");
 
-    //Suit Lightmaps (lightmap)
-    private static final ResourceLocation MK2_L = new ResourceLocation(Superhero.MODID, "textures/heroes/iron_man/mk2_l.png");
-    private static final ResourceLocation MK3_L = new ResourceLocation(Superhero.MODID, "textures/heroes/iron_man/mk3_l.png");
+    public HumanoidModel model;
+    public ResourceLocation texture;
+    public ResourceLocation lightmap;
 
-    public IronManMagicModel ironman;
-    public ResourceLocation texture = MK3;
-    public ResourceLocation lightmap = MK3_L;
-
-    public IronManSuitRenderer(RenderLayerParent<T, M> p_117346_) {
+    public GenericSuitRenderer(RenderLayerParent<T, M> p_117346_) {
         super(p_117346_);
-        this.ironman = new IronManMagicModel(IronManMagicModel.createBodyLayer().bakeRoot());
-        this.texture = MK3;
-        this.lightmap = MK3_L;
+        this.model = new SteveSkinModel(Minecraft.getInstance().getEntityModels().bakeLayer(SteveSkinModel.LAYER_LOCATION));
     }
 
     @Override
@@ -128,78 +121,53 @@ public class IronManSuitRenderer<T extends AbstractClientPlayer, M extends Entit
         //copyPlayerMovement(playerModel, this.ironman.head, "leftLeg");
         //this.ironman.leftLeg.render(pose, buffer.getBuffer(RenderType.entityCutout(this.texture)), packedLight, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
         //pose.popPose();
+        if (!usesGenericRenderer(player)) return;
         pose.pushPose();
 
         updateTextures(player);
+        updateSlim(player);
 
-        copyPlayersMovement(playerModel, this.ironman);
-        this.ironman.setupAnim(player,w,e,r,t,y);
+        copyPlayersMovement(playerModel, this.model);
+        this.model.setupAnim(player,w,e,r,t,y);
         VertexConsumer vertexConsumer = buffer.getBuffer(RenderType.entityCutout(this.texture));
+//        VertexConsumer emission = buffer.getBuffer(RenderType.entityTranslucentEmissive(this.lightmap)); // @TODO fix emission
         Item head = player.getItemBySlot(EquipmentSlot.HEAD).getItem();
         Item chest = player.getItemBySlot(EquipmentSlot.CHEST).getItem();
         Item legs = player.getItemBySlot(EquipmentSlot.LEGS).getItem();
         Item feet = player.getItemBySlot(EquipmentSlot.FEET).getItem();
-        if(head instanceof IronManArmourItem) {
-            this.ironman.head.render(pose, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
+        if(head instanceof SuperheroArmourItem) {
+            this.model.head.render(pose, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
+//            if (!isInvisibleTexture(this.lightmap)) {
+//                this.model.head.render(pose, emission, packedLight, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
+//            }
         }
-        if(chest instanceof IronManArmourItem) {
-            this.ironman.body.render(pose, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
-            if(player.isOnGround()) {
-                this.ironman.rightArm.getChild("right_beam").visible = true;
-                this.ironman.leftArm.getChild("left_beam").visible = true;
-            } else {
-                this.ironman.rightArm.getChild("right_beam").visible = false;
-                this.ironman.leftArm.getChild("left_beam").visible = false;
-            }
-            this.ironman.rightArm.render(pose, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
-            this.ironman.leftArm.render(pose, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
+        if(chest instanceof SuperheroArmourItem) {
+            this.model.rightArm.render(pose, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
+            this.model.leftArm.render(pose, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
+//            if (!isInvisibleTexture(this.lightmap)) {
+//                this.model.rightArm.render(pose, emission, packedLight, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
+//                this.model.leftArm.render(pose, emission, packedLight, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
+//            }
         }
-        if(legs instanceof IronManArmourItem) {
-            if(player.isOnGround()) {
-                this.ironman.rightLeg.getChild("RightFoot").getChild("foot_right_beam").visible = true;
-                this.ironman.leftLeg.getChild("LeftFoot").getChild("foot_left_beam").visible = true;
-            } else {
-                this.ironman.rightLeg.getChild("RightFoot").getChild("foot_right_beam").visible = false;
-                this.ironman.leftLeg.getChild("LeftFoot").getChild("foot_left_beam").visible = false;
-            }
-            this.ironman.rightLeg.getChild("RightFoot").visible = true;
-            this.ironman.leftLeg.getChild("LeftFoot").visible = true;
-            this.ironman.rightLeg.render(pose, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
-            this.ironman.leftLeg.render(pose, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
-        }
-        VertexConsumer vertexConsumer1 = buffer.getBuffer(RenderType.text(this.lightmap));
-        if(head instanceof IronManArmourItem) {
-            this.ironman.head.render(pose, vertexConsumer1, packedLight, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
-        }
-        if(chest instanceof IronManArmourItem) {
-            if(player.isOnGround()) {
-                this.ironman.rightArm.getChild("right_beam").visible = true;
-                this.ironman.leftArm.getChild("left_beam").visible = true;
-            } else {
-                this.ironman.rightArm.getChild("right_beam").visible = false;
-                this.ironman.leftArm.getChild("left_beam").visible = false;
-            }
-            this.ironman.body.render(pose, vertexConsumer1, packedLight, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
-            this.ironman.rightArm.render(pose, vertexConsumer1, packedLight, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
-            this.ironman.leftArm.render(pose, vertexConsumer1, packedLight, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
-        }
-        if(legs instanceof IronManArmourItem) {
-            if(player.isOnGround()) {
-                this.ironman.rightLeg.getChild("RightFoot").getChild("foot_right_beam").visible = true;
-                this.ironman.leftLeg.getChild("LeftFoot").getChild("foot_left_beam").visible = true;
-            } else {
-                this.ironman.rightLeg.getChild("RightFoot").getChild("foot_right_beam").visible = false;
-                this.ironman.leftLeg.getChild("LeftFoot").getChild("foot_left_beam").visible = false;
-            }
-            this.ironman.rightLeg.getChild("RightFoot").visible = true;
-            this.ironman.leftLeg.getChild("LeftFoot").visible = true;
-            this.ironman.rightLeg.render(pose, vertexConsumer1, packedLight, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
-            this.ironman.leftLeg.render(pose, vertexConsumer1, packedLight, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
+        if(legs instanceof SuperheroArmourItem) {
+            this.model.rightLeg.render(pose, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
+            this.model.leftLeg.render(pose, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
+//            if (!isInvisibleTexture(this.lightmap)) {
+//                this.model.rightLeg.render(pose, emission, packedLight, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
+//                this.model.leftLeg.render(pose, emission, packedLight, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
+//            }
         }
         pose.popPose();
     }
 
-    private void copyPlayersMovement(PlayerModel pm, IronManMagicModel mp) {
+    private boolean usesGenericRenderer(Player player) {
+        // Get the correct texture
+        SuperheroIdentifier id = getIDFromPlayer(player);
+        if (id == null) return false;
+        return id.usesDefaultRenderer();
+    }
+
+    private void copyPlayersMovement(PlayerModel pm, HumanoidModel mp) {
         mp.head.setPos(pm.head.x, pm.head.y, pm.head.z);
         mp.head.setRotation(pm.head.xRot, pm.head.yRot, pm.head.zRot);
         mp.body.setPos(pm.body.x, pm.body.y, pm.body.z);
@@ -218,35 +186,23 @@ public class IronManSuitRenderer<T extends AbstractClientPlayer, M extends Entit
         // Get the correct texture
         SuperheroIdentifier id = getIDFromPlayer(player);
         if (id == null) return;
-        if (!IronManUtil.isIronManSuit(id)) return;
-        this.texture = IronManUtil.getTextureFromID(id);
-        this.lightmap = IronManUtil.getLightMapFromID(id);
+        this.texture = SuperheroUtil.getTextureFromID(id);
+        this.lightmap = SuperheroUtil.getLightMapFromID(id);
     }
+    private void updateSlim(Player player) {
+        // Get the correct texture
+        SuperheroIdentifier id = getIDFromPlayer(player);
+        if (id == null) return;
+        boolean slim = id.isSlim();
 
-    //private void copyPlayerMovement(PlayerModel pm, ModelPart mp, String name) {
-    //    if(name.equals("head")) {
-    //        mp.setPos(pm.head.x, pm.head.y, pm.head.z);
-    //        mp.setRotation(pm.head.xRot, pm.head.yRot, pm.head.zRot);
-    //    }
-    //    if(name.equals("body")) {
-    //        mp.setPos(pm.body.x, pm.body.y, pm.body.z);
-    //        mp.setRotation(pm.body.xRot, pm.body.yRot, pm.body.zRot);
-    //    }
-    //    if(name.equals("rightArm")) {
-    //        mp.setPos(pm.rightArm.x, pm.rightArm.y, pm.rightArm.z);
-    //        mp.setRotation(pm.rightArm.xRot, pm.rightArm.yRot, pm.rightArm.zRot);
-    //    }
-    //    if(name.equals("leftArm")) {
-    //        mp.setPos(pm.leftArm.x, pm.leftArm.y, pm.leftArm.z);
-    //        mp.setRotation(pm.leftArm.xRot, pm.leftArm.yRot, pm.leftArm.zRot);
-    //    }
-    //    if(name.equals("rightLeg")) {
-    //        mp.setPos(pm.rightLeg.x, pm.rightLeg.y, pm.rightLeg.z);
-    //        mp.setRotation(pm.rightLeg.xRot, pm.rightLeg.yRot, pm.rightLeg.zRot);
-    //    }
-    //    if(name.equals("leftLeg")) {
-    //        mp.setPos(pm.leftLeg.x, pm.leftLeg.y, pm.leftLeg.z);
-    //        mp.setRotation(pm.leftLeg.xRot, pm.leftLeg.yRot, pm.leftLeg.zRot);
-    //    }
-    //}
+        if (!slim) {
+            if (this.model instanceof SteveSkinModel<?>) return;
+
+            this.model = new SteveSkinModel(Minecraft.getInstance().getEntityModels().bakeLayer(SteveSkinModel.LAYER_LOCATION));
+        } else {
+            if (this.model instanceof AlexSkinModel<?>) return;
+
+            this.model = new AlexSkinModel(AlexSkinModel.createBodyLayer().bakeRoot());
+        }
+    }
 }

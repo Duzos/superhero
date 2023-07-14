@@ -1,11 +1,13 @@
 package com.duzo.superhero.util.ironman;
 
+import com.duzo.superhero.Superhero;
 import com.duzo.superhero.items.ironman.IronManArmourItem;
 import com.duzo.superhero.util.SuperheroCapability;
 import com.duzo.superhero.util.SuperheroIdentifier;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -16,9 +18,33 @@ import org.lwjgl.glfw.GLFW;
 import java.util.HashMap;
 import java.util.Random;
 
+import static com.duzo.superhero.util.SuperheroUtil.doesResourceLocationExist;
 import static com.duzo.superhero.util.SuperheroUtil.keyDown;
 
 public class IronManUtil {
+    private static final ResourceLocation DEFAULT_TEXTURE = new ResourceLocation(Superhero.MODID, "textures/heroes/iron_man/mk3.png");
+    private static final ResourceLocation DEFAULT_LIGHTMAP = new ResourceLocation(Superhero.MODID, "textures/heroes/iron_man/mk3_l.png");
+
+    private static String getMarkNumberString(SuperheroIdentifier identifier) {
+        return identifier.getSerializedName().substring(identifier.getSerializedName().length() - 1);
+    }
+    public static int getMarkNumber(SuperheroIdentifier identifier) {
+        return Integer.parseInt(getMarkNumberString(identifier));
+    }
+    public static ResourceLocation getTextureFromID(SuperheroIdentifier id) {
+        String s = "textures/heroes/iron_man/mk" + getMarkNumberString(id) + ".png";
+        if (!doesResourceLocationExist(s)) {
+            return DEFAULT_TEXTURE;
+        }
+        return new ResourceLocation(Superhero.MODID,s);
+    }
+    public static ResourceLocation getLightMapFromID(SuperheroIdentifier id) {
+        String s = "textures/heroes/iron_man/mk" + getMarkNumberString(id) + "_l.png";
+        if (!doesResourceLocationExist(s)) {
+            return DEFAULT_LIGHTMAP;
+        }
+        return new ResourceLocation(Superhero.MODID,s);
+    }
     public static boolean isIronManSuit(SuperheroIdentifier id) {
         HashMap<String, ?> map = id.getEnumSpecificValues();
 
