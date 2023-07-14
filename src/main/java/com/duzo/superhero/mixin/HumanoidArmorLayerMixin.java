@@ -2,9 +2,9 @@ package com.duzo.superhero.mixin;
 
 import com.duzo.superhero.client.models.items.IronManArmourModel;
 import com.duzo.superhero.items.SuperheroArmourItem;
+import com.duzo.superhero.items.ironman.IronManArmourItem;
 import com.duzo.superhero.items.spiderman.MilesHoodieItem;
 import com.duzo.superhero.util.KeyBinds;
-import com.duzo.superhero.util.ironman.IronManUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -53,7 +53,7 @@ public abstract class HumanoidArmorLayerMixin<T extends LivingEntity, M extends 
 
         ItemStack itemstack = p_117121_.getItemBySlot(p_117122_);
         Item $$9 = itemstack.getItem();
-        if ($$9 instanceof SuperheroArmourItem armoritem) {
+        if ($$9 instanceof SuperheroArmourItem armoritem && !($$9 instanceof IronManArmourItem)) {
             if (armoritem.getEquipmentSlot() == p_117122_) {
                 this.getParentModel().copyPropertiesTo(pModel);
 //                this.setPartVisibility(pModel, p_117122_);

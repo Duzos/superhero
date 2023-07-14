@@ -1,11 +1,14 @@
 package com.duzo.superhero.items.ironman;
 
 import com.duzo.superhero.client.models.items.IronManArmourModel;
+import com.duzo.superhero.client.renderers.animations.IronManAnimations;
 import com.duzo.superhero.items.SuperheroArmourItem;
 import com.duzo.superhero.util.KeyBinds;
 import com.duzo.superhero.util.SuperheroIdentifier;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.AnimationState;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -13,7 +16,11 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SandBlock;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.client.ForgeHooksClient;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import org.jetbrains.annotations.NotNull;
@@ -44,7 +51,7 @@ public class IronManArmourItem extends SuperheroArmourItem {
         return this.mark;
     }
 
-    @Override
+    /*@Override
     public void initializeClient(Consumer<IClientItemExtensions> consumer) {
         consumer.accept(new IClientItemExtensions() {
             @Override
@@ -73,11 +80,11 @@ public class IronManArmourItem extends SuperheroArmourItem {
                 return model;
             }
         });
-    }
+    }*/
 
     @Override
     public @Nullable String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
-        return "superhero:textures/entities/iron_man/" + this.getIdentifier().getSerializedName().toLowerCase() + ".png";
+        return "superhero:textures/heroes/generic/invisible.png";//"superhero:textures/entities/iron_man/" + this.getIdentifier().getSerializedName().toLowerCase() + ".png";
     }
 
     @Override

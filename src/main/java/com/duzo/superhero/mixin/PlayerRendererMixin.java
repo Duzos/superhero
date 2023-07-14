@@ -1,5 +1,6 @@
 package com.duzo.superhero.mixin;
 
+import com.duzo.superhero.client.renderers.layers.IronManSuitRenderer;
 import com.duzo.superhero.items.SuperheroArmourItem;
 import com.duzo.superhero.items.spiderman.MilesHoodieItem;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -110,5 +111,13 @@ public abstract class PlayerRendererMixin extends LivingEntityRenderer<AbstractC
             playerModel.leftLeg.xRot = 0;
             playerModel.rightLeg.xRot = 0;
         }*/
+    }
+
+    @Inject(
+            method = "<init>",  // the jvm bytecode signature for the constructor
+            at = @At("TAIL"), cancellable = true  // signal that this void should be run at the method HEAD, meaning the first opcode
+    )
+    private void PlayerRenderer(EntityRendererProvider.Context p_174557_, boolean p_174558_, CallbackInfo ci) {
+        this.addLayer(new IronManSuitRenderer(this));
     }
 }

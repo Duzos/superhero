@@ -21,6 +21,7 @@ import static net.minecraft.client.gui.GuiComponent.blit;
 public class JarvisGUIOverlay {
     private static final ResourceLocation BLUE_HUD = new ResourceLocation(Superhero.MODID,"textures/misc/jarvis_overlay.png");
     private static final ResourceLocation JARVIS_CIRCLE = new ResourceLocation(Superhero.MODID,"textures/misc/jarvis_circle.png");
+    private static final ResourceLocation FROST_EFFECT = new ResourceLocation(Superhero.MODID, "textures/misc/powder_snow_outline.png");
     //    private static final ResourceLocation BLUE_HUD = new ResourceLocation(Superhero.MODID,"textures/item/mark_5_chestplate.png");
     public static final IGuiOverlay HUD_JARVIS = (((gui, poseStack, partialTick, screenWidth, screenHeight) -> {
         int x = screenWidth / 2;
@@ -47,6 +48,15 @@ public class JarvisGUIOverlay {
         // Blue overlay
         poseStack.pushPose();
         blit(poseStack, 0, 0, 0, 0, screenWidth, screenHeight,screenWidth,screenHeight);
+        poseStack.popPose();
+
+        poseStack.pushPose();
+        RenderSystem.setShader(GameRenderer::getPositionTexShader);
+        RenderSystem.setShaderColor(1f,1f,1f,1f);
+        RenderSystem.setShaderTexture(0, FROST_EFFECT);
+        if(mc.player.getY() > 185) {
+            blit(poseStack, 0, 0, 0, 0, screenWidth, screenHeight,screenWidth,screenHeight);
+        }
         poseStack.popPose();
 
         // Coordinates
@@ -94,6 +104,7 @@ public class JarvisGUIOverlay {
 
             // Rotating the circle
             drawJARVISCircle(poseStack,x / 2f,y / 2f, screenWidth / 8, screenHeight / 4,mc.player.distanceTo(crosshair) * 10);
+
         }
     }));
 

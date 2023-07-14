@@ -305,6 +305,7 @@ public enum SuperheroCapability implements StringRepresentable {
         public void tick(ItemStack stack, Level level, Player player) {
             if (player.getY() > 185) {
                 player.addEffect(new MobEffectInstance(MobEffects.WITHER, 2 * 20, 0, false, false, false));
+
             }
         }
 

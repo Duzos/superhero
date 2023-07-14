@@ -4,6 +4,7 @@ import com.duzo.superhero.entities.SuperheroEntities;
 import com.duzo.superhero.network.Network;
 import com.duzo.superhero.network.packets.*;
 import com.duzo.superhero.util.KeyBinds;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Mth;
@@ -13,6 +14,10 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.vehicle.Minecart;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import org.joml.Vector3d;
+import org.joml.Vector3f;
+
+import java.util.Vector;
 
 public class WebRopeEntity extends Entity {
     @Deprecated
@@ -242,13 +247,20 @@ public class WebRopeEntity extends Entity {
         return
     }*/
 
-    /*private Vec3 rotate(Vec3 playerPos, Vec3 center, double angle, double angle2) {
+    /*private Vec3 rotate(Vec3 playerPos, Vec3 center, Player player) {
         double ox = center.x();
         double oy = center.y();
         double oz = center.z();
         double px = playerPos.x();
         double py = playerPos.y();
         double pz = playerPos.z();
+        //Vec3 dx = deltaMovement.xRot(1);
+        //Vec3 dy = deltaMovement.yRot(1);
+        //Vec3 dz = deltaMovement.zRot(1);
+        Direction dx = player.getMotionDirection();
+        if(dx == Direction.DOWN) {
+            py = py - 2;
+        }
 
         //double xnew = Math.cos(angle) * (px - ox) - Math.sin(angle) * (pz - oz) + ox;
         //double znew = Math.sin(angle) * (px - ox) + Math.cos(angle) * (pz - oz) + oz;
@@ -256,12 +268,12 @@ public class WebRopeEntity extends Entity {
         double f = angle;
         double ϕ = angle2;
         double xnew = center.x() + (px - ox) * Math.cos(f) - (py - oy) * Math.sin(f) * Math.cos(pz) + (pz - oz) * Math.sin(f) * Math.sin(pz) * Math.cos(ϕ);
-        double ynew = center.y() + (px - ox) * Math.sin(f) + (py - oy) * Math.cos(f) * Math.cos(pz) + (pz - oz) * Math.cos(f) * Math.sin(pz) * Math.cos(ϕ);
-        double znew = center.z() + (py - oy) * Math.sin(pz) * Math.sin(ϕ) - (pz - oz) * Math.cos(pz) * Math.sin(ϕ);
+        double znew = center.z() + (px - ox) * Math.sin(f) + (py - oy) * Math.cos(f) * Math.cos(pz) + (pz - oz) * Math.cos(f) * Math.sin(pz) * Math.cos(ϕ);
+        double ynew = center.y() + (py - oy) * Math.sin(pz) * Math.sin(ϕ) - (pz - oz) * Math.cos(pz) * Math.sin(ϕ);
         return new Vec3(xnew, ynew, znew);
-    }
+    }*/
 
-    private Vec3 runAngleCalculations(Vec3 rotationalPoints) {
+    /*private Vec3 runAngleCalculations(Vec3 rotationalPoints) {
         double xRot = rotationalPoints.x();
         double zRot = rotationalPoints.z();
         double yaw = yawAngle(xRot, this.getPlayer().position().x(), zRot, this.getPlayer().position().z());
@@ -306,10 +318,11 @@ public class WebRopeEntity extends Entity {
     }*/
     //@TODO THIS IS THE CONTINUATION CODE, USE THIS.
 
-    /*private void runSwingPhysics() {
+    /*private void ArunSwingPhysics() {
         if(KeyBinds.ABILITY_ONE.isDown()) {
             if(this.getPlayer() != null) {
                 double distanceToPlayer = this.getPlayer().distanceTo(this);
+                double radius = this.initialDistance;
                 double blend = Mth.clamp((distanceToPlayer-this.initialDistance)*0.2+0.6,0,1.0);
                 Vec3 playerPos = this.getPlayer().position();
                 double valX = this.position().x() - playerPos.x();
@@ -327,11 +340,36 @@ public class WebRopeEntity extends Entity {
                 double yaw = Math.toDegrees(Math.atan(Math.abs(valX)/Math.abs(valZ)));
                 double hyp = Math.sqrt((valX*valX)+(valZ*valZ));
                 double pitch = -Math.toDegrees(Math.atan(valY/hyp));
-                Vec3 combinedVector = new Vec3(yaw, pitch, hyp);
+                Vec3 newPoint = rotate(playerPos, this.position(), this.getPlayer());
+                Vec3 direction = calculatedVector(yaw, pitch).normalize();
                 this.getPlayer().setDeltaMovement();
             }
         }
         //@TODO again.. another fucking runSwingPhysics()..
+    }
+
+    private Vec3 divideByDouble(Vec3 vec, double i) {
+        double val1 = vec.x() / i;
+        double val2 = vec.y() / i;
+        double val3 = vec.z() / i;
+        return new Vec3(val1, val2, val3);
+    }
+
+    private Vec3 divide(Vec3 vec, Vec3 vec1) {
+        double val1 = vec.x() / vec1.x();
+        double val2 = vec.y() / vec1.y();
+        double val3 = vec.z() / vec1.z();
+        return new Vec3(val1, val2, val3);
+    }
+
+    public final Vec3 calculatedVector(double p_20172_, double p_20173_) {
+        double f = p_20172_ * (Math.PI / 180F);
+        double f1 = -p_20173_ * (Math.PI / 180F);
+        double f2 = Math.cos(f1);
+        double f3 = Math.sin(f1);
+        double f4 = Math.cos(f);
+        double f5 = Math.sin(f);
+        return new Vec3((f3 * f4), (-f5), (f2 * f4));
     }*/
 
     private void runSwingPhysics() {//@TODO THIS IS THE BEST ONE DON'T DELETE
@@ -345,9 +383,9 @@ public class WebRopeEntity extends Entity {
             //double d0 = ((this.getX() - this.getPlayer().getX()) / distanceToPlayer) * blend;
             //double d1 = ((this.getY() - this.getPlayer().getY()) / distanceToPlayer) * blend;
             //double d2 = ((this.getZ() - this.getPlayer().getZ()) / distanceToPlayer) * blend;
-            double d0 = ((this.position().x() - playerPos.x()) / distanceToPlayer) * blend;
-            double d1 = ((this.position().y() - playerPos.y()) / distanceToPlayer) * blend;
-            double d2 = ((this.position().z() - playerPos.z()) / distanceToPlayer) * blend;
+            double d0 = ((this.position().x() - playerPos.x()) / distanceToPlayer);// * blend;
+            double d1 = ((this.position().y() - playerPos.y()) / distanceToPlayer);// * blend;
+            double d2 = ((this.position().z() - playerPos.z()) / distanceToPlayer);// * blend;
 
             //System.out.println("X: " + xVel + " Y: " + yVel + " Z: " + zVel);
 
@@ -360,7 +398,7 @@ public class WebRopeEntity extends Entity {
             double speedxz = 4.0D;// * (clampedPosition / 3);
             double speedy = 2.0D;// * (clampedPosition / 3);
 
-            if (d1 < 0.2) {
+            if (d1 < 0) {
                 d1 = 0;
             }
 
