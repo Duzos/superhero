@@ -1,10 +1,7 @@
 package com.duzo.superhero.mixin;
 
-import com.duzo.superhero.client.models.items.IronManArmourModel;
 import com.duzo.superhero.items.SuperheroArmourItem;
 import com.duzo.superhero.items.ironman.IronManArmourItem;
-import com.duzo.superhero.items.spiderman.MilesHoodieItem;
-import com.duzo.superhero.util.KeyBinds;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -58,30 +55,30 @@ public abstract class HumanoidArmorLayerMixin<T extends LivingEntity, M extends 
                 this.getParentModel().copyPropertiesTo(pModel);
 //                this.setPartVisibility(pModel, p_117122_);
 
-                pModel.setAllVisible(false);
-                switch (p_117122_) {
-                    case HEAD -> {
-                        pModel.head.visible = true;
-                        pModel.hat.visible = true;
-                        /*if(IronManUtil.isIronManSuit(armoritem.getIdentifier())) {
-                            float i = 0;
-                            if (KeyBinds.ABILITY_THREE.isDown() && i == 0) {
-                                i = -1.5707964f;
-                            } else {
-                                i = 0;
-                            }
-                            pModel.head.getChild("mask").setRotation(i, 0, 0);
-                        }*/
-                    }
-                    case CHEST -> {
-                        pModel.body.visible = true;
-                        pModel.rightArm.visible = true;
-                        pModel.leftArm.visible = true;
-                    }
-                    case LEGS, FEET -> {
-                        pModel.rightLeg.visible = true;
-                        pModel.leftLeg.visible = true;
-                    }
+//                pModel.setAllVisible(false);
+//                switch (p_117122_) {
+//                    case HEAD -> {
+//                        pModel.head.visible = true;
+//                        pModel.hat.visible = true;
+//                        /*if(IronManUtil.isIronManSuit(armoritem.getIdentifier())) {
+//                            float i = 0;
+//                            if (KeyBinds.ABILITY_THREE.isDown() && i == 0) {
+//                                i = -1.5707964f;
+//                            } else {
+//                                i = 0;
+//                            }
+//                            pModel.head.getChild("mask").setRotation(i, 0, 0);
+//                        }*/
+//                    }
+//                    case CHEST -> {
+//                        pModel.body.visible = true;
+//                        pModel.rightArm.visible = true;
+//                        pModel.leftArm.visible = true;
+//                    }
+//                    case LEGS, FEET -> {
+//                        pModel.rightLeg.visible = true;
+//                        pModel.leftLeg.visible = true;
+//                    }
                 }
                 net.minecraft.client.model.Model model = getArmorModelHook(p_117121_, itemstack, p_117122_, pModel);
                 boolean flag1 = this.usesInnerModel(p_117122_);
@@ -89,24 +86,24 @@ public abstract class HumanoidArmorLayerMixin<T extends LivingEntity, M extends 
                 this.renderModel(p_117119_, p_117120_, p_117123_, flag, model, 1.0F, 1.0F, 1.0F, this.getArmorResource(p_117121_, itemstack, p_117122_, null));
                 ci.cancel();
             }
-        } else if ($$9 instanceof MilesHoodieItem armoritem) {
-            if (armoritem.getEquipmentSlot() == p_117122_) {
-                this.getParentModel().copyPropertiesTo(pModel);
-//                this.setPartVisibility(pModel, p_117122_);
-
-                pModel.setAllVisible(true);
-                //pModel.head.visible = true;
-                //pModel.hat.visible = true;
-                //pModel.body.visible = true;
-                //pModel.rightArm.visible = true;
-                //pModel.leftArm.visible = true;
-
-                net.minecraft.client.model.Model model = getArmorModelHook(p_117121_, itemstack, p_117122_, pModel);
-                boolean flag1 = this.usesInnerModel(p_117122_);
-                boolean flag = itemstack.hasFoil();
-                this.renderModel(p_117119_, p_117120_, p_117123_, flag, model, 1.0F, 1.0F, 1.0F, this.getArmorResource(p_117121_, itemstack, p_117122_, null));
-                ci.cancel();
-            }
-        }
+//        } else if ($$9 instanceof MilesHoodieItem armoritem) {
+//            if (armoritem.getEquipmentSlot() == p_117122_) {
+//                this.getParentModel().copyPropertiesTo(pModel);
+////                this.setPartVisibility(pModel, p_117122_);
+//
+//                pModel.setAllVisible(true);
+//                //pModel.head.visible = true;
+//                //pModel.hat.visible = true;
+//                //pModel.body.visible = true;
+//                //pModel.rightArm.visible = true;
+//                //pModel.leftArm.visible = true;
+//
+//                net.minecraft.client.model.Model model = getArmorModelHook(p_117121_, itemstack, p_117122_, pModel);
+//                boolean flag1 = this.usesInnerModel(p_117122_);
+//                boolean flag = itemstack.hasFoil();
+//                this.renderModel(p_117119_, p_117120_, p_117123_, flag, model, 1.0F, 1.0F, 1.0F, this.getArmorResource(p_117121_, itemstack, p_117122_, null));
+//                ci.cancel();
+//            }
+//        }
     }
 }

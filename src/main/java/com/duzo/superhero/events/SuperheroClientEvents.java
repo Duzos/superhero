@@ -43,7 +43,8 @@ public class SuperheroClientEvents {
     @SubscribeEvent
     public static void registerLayerDefinition(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(HumanoidEntityModel.LAYER_LOCATION,() -> LayerDefinition.create(PlayerModel.createMesh(CubeDeformation.NONE,false),64,64));
-        event.registerLayerDefinition(SteveSkinModel.LAYER_LOCATION,() -> LayerDefinition.create(PlayerModel.createMesh(CubeDeformation.NONE,false),64,64));
+//        event.registerLayerDefinition(SteveSkinModel.LAYER_LOCATION,() -> LayerDefinition.create(PlayerModel.createMesh(CubeDeformation.NONE,false),64,64));
+        event.registerLayerDefinition(SteveSkinModel.LAYER_LOCATION,SteveSkinModel::createBodyLayer);
         event.registerLayerDefinition(AlexSkinModel.LAYER_LOCATION,AlexSkinModel::createBodyLayer);
         event.registerLayerDefinition(RocketModel.LAYER_LOCATION,RocketModel::createBodyLayer);
         event.registerLayerDefinition(IronManEntityModel.LAYER_LOCATION,() -> LayerDefinition.create(PlayerModel.createMesh(CubeDeformation.NONE,false),64,64));

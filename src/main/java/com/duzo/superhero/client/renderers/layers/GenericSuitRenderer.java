@@ -1,6 +1,7 @@
 package com.duzo.superhero.client.renderers.layers;
 
 import com.duzo.superhero.client.models.AlexSkinModel;
+import com.duzo.superhero.client.models.SkinModel;
 import com.duzo.superhero.client.models.SteveSkinModel;
 import com.duzo.superhero.items.SuperheroArmourItem;
 import com.duzo.superhero.util.SuperheroIdentifier;
@@ -9,7 +10,6 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.EntityModel;
-import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -30,7 +30,7 @@ import static com.duzo.superhero.util.SuperheroUtil.getIDFromPlayer;
 public class GenericSuitRenderer<T extends AbstractClientPlayer, M extends EntityModel<T>> extends RenderLayer<T, M> {
 
 
-    public HumanoidModel model;
+    public SkinModel model;
     public ResourceLocation texture;
     public ResourceLocation lightmap;
 
@@ -137,21 +137,23 @@ public class GenericSuitRenderer<T extends AbstractClientPlayer, M extends Entit
         Item feet = player.getItemBySlot(EquipmentSlot.FEET).getItem();
         if(head instanceof SuperheroArmourItem) {
             this.model.head.render(pose, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
+            this.model.hat.render(pose, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
 //            if (!isInvisibleTexture(this.lightmap)) {
 //                this.model.head.render(pose, emission, packedLight, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
 //            }
         }
         if(chest instanceof SuperheroArmourItem) {
-            this.model.rightArm.render(pose, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
-            this.model.leftArm.render(pose, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
+            this.model.right_arm.render(pose, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
+            this.model.left_arm.render(pose, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
+            this.model.body.render(pose,vertexConsumer,packedLight,OverlayTexture.NO_OVERLAY,1,1,1,1);
 //            if (!isInvisibleTexture(this.lightmap)) {
 //                this.model.rightArm.render(pose, emission, packedLight, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
 //                this.model.leftArm.render(pose, emission, packedLight, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
 //            }
         }
         if(legs instanceof SuperheroArmourItem) {
-            this.model.rightLeg.render(pose, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
-            this.model.leftLeg.render(pose, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
+            this.model.right_leg.render(pose, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
+            this.model.left_leg.render(pose, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
 //            if (!isInvisibleTexture(this.lightmap)) {
 //                this.model.rightLeg.render(pose, emission, packedLight, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
 //                this.model.leftLeg.render(pose, emission, packedLight, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
@@ -167,19 +169,21 @@ public class GenericSuitRenderer<T extends AbstractClientPlayer, M extends Entit
         return id.usesDefaultRenderer();
     }
 
-    private void copyPlayersMovement(PlayerModel pm, HumanoidModel mp) {
+    private void copyPlayersMovement(PlayerModel pm, SkinModel mp) {
         mp.head.setPos(pm.head.x, pm.head.y, pm.head.z);
         mp.head.setRotation(pm.head.xRot, pm.head.yRot, pm.head.zRot);
+        mp.hat.setPos(pm.hat.x, pm.hat.y, pm.hat.z); // @TODO fix hat position for steve model
+        mp.hat.setRotation(pm.hat.xRot, pm.hat.yRot, pm.hat.zRot);
         mp.body.setPos(pm.body.x, pm.body.y, pm.body.z);
         mp.body.setRotation(pm.body.xRot, pm.body.yRot, pm.body.zRot);
-        mp.rightArm.setPos(pm.rightArm.x, pm.rightArm.y, pm.rightArm.z);
-        mp.rightArm.setRotation(pm.rightArm.xRot, pm.rightArm.yRot, pm.rightArm.zRot);
-        mp.leftArm.setPos(pm.leftArm.x, pm.leftArm.y, pm.leftArm.z);
-        mp.leftArm.setRotation(pm.leftArm.xRot, pm.leftArm.yRot, pm.leftArm.zRot);
-        mp.rightLeg.setPos(pm.rightLeg.x, pm.rightLeg.y, pm.rightLeg.z);
-        mp.rightLeg.setRotation(pm.rightLeg.xRot, pm.rightLeg.yRot, pm.rightLeg.zRot);
-        mp.leftLeg.setPos(pm.leftLeg.x, pm.leftLeg.y, pm.leftLeg.z);
-        mp.leftLeg.setRotation(pm.leftLeg.xRot, pm.leftLeg.yRot, pm.leftLeg.zRot);
+        mp.right_arm.setPos(pm.rightArm.x, pm.rightArm.y, pm.rightArm.z);
+        mp.right_arm.setRotation(pm.rightArm.xRot, pm.rightArm.yRot, pm.rightArm.zRot);
+        mp.left_arm.setPos(pm.leftArm.x, pm.leftArm.y, pm.leftArm.z);
+        mp.left_arm.setRotation(pm.leftArm.xRot, pm.leftArm.yRot, pm.leftArm.zRot);
+        mp.right_leg.setPos(pm.rightLeg.x, pm.rightLeg.y, pm.rightLeg.z);
+        mp.right_leg.setRotation(pm.rightLeg.xRot, pm.rightLeg.yRot, pm.rightLeg.zRot);
+        mp.left_leg.setPos(pm.leftLeg.x, pm.leftLeg.y, pm.leftLeg.z);
+        mp.left_leg.setRotation(pm.leftLeg.xRot, pm.leftLeg.yRot, pm.leftLeg.zRot);
     }
 
     private void updateTextures(Player player) {
@@ -198,7 +202,7 @@ public class GenericSuitRenderer<T extends AbstractClientPlayer, M extends Entit
         if (!slim) {
             if (this.model instanceof SteveSkinModel<?>) return;
 
-            this.model = new SteveSkinModel(Minecraft.getInstance().getEntityModels().bakeLayer(SteveSkinModel.LAYER_LOCATION));
+            this.model = new SteveSkinModel(SteveSkinModel.createBodyLayer().bakeRoot());
         } else {
             if (this.model instanceof AlexSkinModel<?>) return;
 
