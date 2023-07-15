@@ -1,13 +1,12 @@
 package com.duzo.superhero.network.packets;
 
+import com.duzo.superhero.data.SuperheroDataImpl;
 import com.duzo.superhero.items.SuperheroArmourItem;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
@@ -58,6 +57,15 @@ public class AbilityC2SPacket {
             if (!hero.getIdentifier().isValidArmour(player)) return;
 
             hero.runAbility(player,this.number);
+
+            //sue me
+            SuperheroDataImpl.get(player).ifPresent(superheroData ->
+            {
+                superheroData.setisMaskOpen(!superheroData.isMaskOpen());
+                superheroData.sync();
+            });
+
+
         });
         return true;
     }

@@ -2,6 +2,7 @@ package com.duzo.superhero.client.renderers.animations;
 
 import com.duzo.superhero.client.models.items.IronManArmourModel;
 import com.duzo.superhero.data.SuperheroData;
+import com.duzo.superhero.data.SuperheroDataImpl;
 import com.duzo.superhero.items.ironman.IronManArmourItem;
 import net.minecraft.client.animation.AnimationDefinition;
 import net.minecraft.client.model.HumanoidModel;
@@ -33,24 +34,4 @@ public class AnimationHandler {
     }
 
 
-    public static void resetPose(ModelPart... modelParts) {
-        for (ModelPart part : modelParts) {
-            part.resetPose();
-        }
-    }
-
-    private static void resetPoseAll(HumanoidModel<?> bipedModel) {
-        bipedModel.head.getAllParts().forEach(ModelPart::resetPose);
-        bipedModel.body.getAllParts().forEach(ModelPart::resetPose);
-        bipedModel.leftArm.getAllParts().forEach(ModelPart::resetPose);
-        bipedModel.rightArm.getAllParts().forEach(ModelPart::resetPose);
-        bipedModel.leftLeg.getAllParts().forEach(ModelPart::resetPose);
-        bipedModel.rightLeg.getAllParts().forEach(ModelPart::resetPose);
-    }
-
-    //private static void fixLayers(HumanoidModel<?> bipedModel) {
-    //    if (bipedModel instanceof humanoidModel<?> ironManModel) {
-    //
-    //    }
-    //}
 }

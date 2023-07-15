@@ -10,8 +10,12 @@ import net.minecraft.world.entity.AnimationState;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 import org.jetbrains.annotations.NotNull;
 
+@Mod.EventBusSubscriber
 public class SuperheroData {
 
     @NotNull
@@ -29,8 +33,6 @@ public class SuperheroData {
         this.player = player;
     }
 
-
-
     public void tick(LivingEntity livingEntity) {
         animateMask(livingEntity);
         //SuperheroUtil.onTickPlayerGlide(livingEntity.level, livingEntity);
@@ -45,9 +47,6 @@ public class SuperheroData {
                 setisMaskOpen(player.isHurt());
     }
 
-    //public static Optional<SuperheroData> get(LivingEntity player) {
-    //    throw new AssertionError();
-    //}
 
     public boolean isMaskOpen() {
         return isMaskOpen;
@@ -96,10 +95,6 @@ public class SuperheroData {
             case MASK_OPEN -> maskOpenAnimation;
             case MASK_CLOSE -> maskCloseAnimation;
         };
-    }
-
-    public static Optional<GliderData> get(LivingEntity player) {
-        throw player.getCapability(, null);
     }
 
 

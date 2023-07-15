@@ -149,6 +149,8 @@ public class IronManSuitRenderer<T extends AbstractClientPlayer, M extends Entit
         copyPlayersMovement(playerModel, this.ironman);
         //this.getParentModel().copyPropertiesTo(this.ironman);
         this.ironman.setupAnim(player, w, e, r, t, y);
+
+
         VertexConsumer vertexConsumer;
         Item head = player.getItemBySlot(EquipmentSlot.HEAD).getItem();
         Item chest = player.getItemBySlot(EquipmentSlot.CHEST).getItem();

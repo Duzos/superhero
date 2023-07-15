@@ -3,29 +3,19 @@ package com.duzo.superhero.client.models.heroes.iron_man;// Made with Blockbench
 // Paste this class into your mod and generate all required imports
 
 
+import com.duzo.superhero.client.renderers.animations.AnimationUtil;
 import com.duzo.superhero.client.renderers.animations.IronManAnimations;
-import com.duzo.superhero.items.ironman.IronManArmourItem;
-import com.duzo.superhero.util.KeyBinds;
-import com.duzo.superhero.util.ironman.IronManUtil;
+import com.duzo.superhero.data.SuperheroData;
+import com.duzo.superhero.data.SuperheroDataImpl;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import net.minecraft.client.KeyMapping;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.animation.AnimationDefinition;
-import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.model.HierarchicalModel;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.Mth;
-import net.minecraft.world.entity.AnimationState;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
-import org.lwjgl.glfw.GLFW;
 
 public class IronManMagicModel<T extends LivingEntity> extends HumanoidModel<T> {
 	// This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
@@ -119,7 +109,6 @@ public class IronManMagicModel<T extends LivingEntity> extends HumanoidModel<T> 
 
 	@Override
 	public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-		this.modelRoot.getAllParts().forEach(ModelPart::resetPose);
 		this.hat.visible = false;
 
 		//head.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
@@ -127,11 +116,20 @@ public class IronManMagicModel<T extends LivingEntity> extends HumanoidModel<T> 
 		//rightArm.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
 		//leftArm.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
 		//rightLeg.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-		//leftLeg.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+		leftLeg.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
 	}
 
 	@Override
 	public void setupAnim(T player, float p_102619_, float p_102620_, float tick, float p_102622_, float p_102623_) {
+/*
+		this.modelRoot.getAllParts().forEach(ModelPart::resetPose);
+*/
 
+System.out.println("hi");
+		SuperheroDataImpl.get(player).ifPresent(superheroData -> {
+			if (superheroData.isMaskOpen()) {
+				AnimationUtil.animate(this, superheroData.getAnimation(SuperheroData.AnimationStates.MASK_OPEN), IronManAnimations.SUPERHERO_IRONMANMAGICMODEL_MASK_OPEN, player.tickCount, 1);
+			}
+		});
 	}
 }
