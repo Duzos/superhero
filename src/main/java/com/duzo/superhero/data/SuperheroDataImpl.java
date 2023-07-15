@@ -1,4 +1,4 @@
-package net.venturecraft.gliders.data.forge;
+package com.duzo.superhero.data;
 
 import com.duzo.superhero.Superhero;
 import com.duzo.superhero.data.SuperheroData;

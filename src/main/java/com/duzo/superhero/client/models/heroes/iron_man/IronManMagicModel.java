@@ -39,8 +39,6 @@ public class IronManMagicModel<T extends LivingEntity> extends HumanoidModel<T> 
 	public final ModelPart hat;
 	public ModelPart modelRoot;
 
-	public AnimationState MASK_OPEN = new AnimationState();
-	public AnimationState MASK_CLOSE = new AnimationState();
 
 	public IronManMagicModel(ModelPart root) {
 		super(root);
@@ -123,6 +121,7 @@ public class IronManMagicModel<T extends LivingEntity> extends HumanoidModel<T> 
 	public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
 		this.modelRoot.getAllParts().forEach(ModelPart::resetPose);
 		this.hat.visible = false;
+
 		//head.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
 		//body.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
 		//rightArm.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);

@@ -31,6 +31,8 @@ public abstract class HumanoidModelMixin<T extends LivingEntity> {
             AnimationHandler.setupAnimPost(bipedModel, livingEntity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, callbackInfo);
         }
 
+
+
         if (!(livingEntity instanceof Player)) return;
 
         if (canBlastOff((Player) livingEntity)) {
