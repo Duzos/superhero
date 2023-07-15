@@ -28,6 +28,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.RegistryObject;
+import org.jline.utils.Log;
 import org.slf4j.Logger;
 
 import static com.duzo.superhero.util.SuperheroUtil.getIDFromStack;
@@ -39,7 +40,7 @@ public class Superhero {
     // Define mod id in a common place for everything to reference
     public static final String MODID = "superhero";
     // Directly reference a slf4j logger
-    private static final Logger LOGGER = LogUtils.getLogger();
+    public static final Logger LOGGER = LogUtils.getLogger();
 
     public Superhero() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
@@ -99,5 +100,9 @@ public class Superhero {
                                 output.accept(item.get());
                             }
         })));
+    }
+
+    public static ResourceLocation id(String location) {
+        return new ResourceLocation(MODID, location);
     }
 }

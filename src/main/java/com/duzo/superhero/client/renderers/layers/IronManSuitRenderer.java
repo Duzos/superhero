@@ -106,56 +106,67 @@ public class IronManSuitRenderer<T extends AbstractClientPlayer, M extends Entit
         PlayerModel playerModel = (PlayerModel) this.getParentModel();
         //pose.pushPose();
         //copyPlayerMovement(playerModel, this.ironman.head, "head");
-        //this.ironman.head.render(pose, buffer.getBuffer(RenderType.entityCutout(this.texture)), packedLight, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
+        //this.ironman.head.render(pose, buffer.getBuffer(RenderType.entityCutout(this.texture)), packedLight, OverlayTexture.NO_OVERLAY, e, r, t, 1);
         //pose.popPose();
         //pose.pushPose();
         //copyPlayerMovement(playerModel, this.ironman.head, "body");
-        //this.ironman.body.render(pose, buffer.getBuffer(RenderType.entityCutout(this.texture)), packedLight, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
+        //this.ironman.body.render(pose, buffer.getBuffer(RenderType.entityCutout(this.texture)), packedLight, OverlayTexture.NO_OVERLAY, e, r, t, 1);
         //pose.popPose();
         //pose.pushPose();
         //copyPlayerMovement(playerModel, this.ironman.head, "rightArm");
-        //this.ironman.rightArm.render(pose, buffer.getBuffer(RenderType.entityCutout(this.texture)), packedLight, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
+        //this.ironman.rightArm.render(pose, buffer.getBuffer(RenderType.entityCutout(this.texture)), packedLight, OverlayTexture.NO_OVERLAY, e, r, t, 1);
         //pose.popPose();
         //pose.pushPose();
         //copyPlayerMovement(playerModel, this.ironman.head, "leftArm");
-        //this.ironman.leftArm.render(pose, buffer.getBuffer(RenderType.entityCutout(this.texture)), packedLight, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
+        //this.ironman.leftArm.render(pose, buffer.getBuffer(RenderType.entityCutout(this.texture)), packedLight, OverlayTexture.NO_OVERLAY, e, r, t, 1);
         //pose.popPose();
         //pose.pushPose();
         //copyPlayerMovement(playerModel, this.ironman.head, "rightLeg");
-        //this.ironman.rightLeg.render(pose, buffer.getBuffer(RenderType.entityCutout(this.texture)), packedLight, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
+        //this.ironman.rightLeg.render(pose, buffer.getBuffer(RenderType.entityCutout(this.texture)), packedLight, OverlayTexture.NO_OVERLAY, e, r, t, 1);
         //pose.popPose();
         //pose.pushPose();
         //copyPlayerMovement(playerModel, this.ironman.head, "leftLeg");
-        //this.ironman.leftLeg.render(pose, buffer.getBuffer(RenderType.entityCutout(this.texture)), packedLight, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
+        //this.ironman.leftLeg.render(pose, buffer.getBuffer(RenderType.entityCutout(this.texture)), packedLight, OverlayTexture.NO_OVERLAY, e, r, t, 1);
         //pose.popPose();
+        if (player.getY() >= 185 && this.texture.equals(MK2)) {
+            e = 0.69411764705F;
+            r = 0.87450980392F;
+            t = 1F;
+        } else {
+            e = 1;
+            r = 1;
+            t = 1;
+        }
+
         pose.pushPose();
 
         updateTextures(player);
 
         copyPlayersMovement(playerModel, this.ironman);
-        this.ironman.setupAnim(player,w,e,r,t,y);
+        //this.getParentModel().copyPropertiesTo(this.ironman);
+        this.ironman.setupAnim(player, w, e, r, t, y);
         VertexConsumer vertexConsumer = buffer.getBuffer(RenderType.entityCutout(this.texture));
         Item head = player.getItemBySlot(EquipmentSlot.HEAD).getItem();
         Item chest = player.getItemBySlot(EquipmentSlot.CHEST).getItem();
         Item legs = player.getItemBySlot(EquipmentSlot.LEGS).getItem();
         Item feet = player.getItemBySlot(EquipmentSlot.FEET).getItem();
-        if(head instanceof IronManArmourItem) {
-            this.ironman.head.render(pose, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
+        if (head instanceof IronManArmourItem) {
+            this.ironman.head.render(pose, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY, e, r, t, 1);
         }
-        if(chest instanceof IronManArmourItem) {
-            this.ironman.body.render(pose, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
-            if(player.isOnGround()) {
+        if (chest instanceof IronManArmourItem) {
+            this.ironman.body.render(pose, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY, e, r, t, 1);
+            if (player.isOnGround()) {
                 this.ironman.rightArm.getChild("right_beam").visible = true;
                 this.ironman.leftArm.getChild("left_beam").visible = true;
             } else {
                 this.ironman.rightArm.getChild("right_beam").visible = false;
                 this.ironman.leftArm.getChild("left_beam").visible = false;
             }
-            this.ironman.rightArm.render(pose, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
-            this.ironman.leftArm.render(pose, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
+            this.ironman.rightArm.render(pose, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY, e, r, t, 1);
+            this.ironman.leftArm.render(pose, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY, e, r, t, 1);
         }
-        if(legs instanceof IronManArmourItem) {
-            if(player.isOnGround()) {
+        if (legs instanceof IronManArmourItem) {
+            if (player.isOnGround()) {
                 this.ironman.rightLeg.getChild("RightFoot").getChild("foot_right_beam").visible = true;
                 this.ironman.leftLeg.getChild("LeftFoot").getChild("foot_left_beam").visible = true;
             } else {
@@ -164,27 +175,27 @@ public class IronManSuitRenderer<T extends AbstractClientPlayer, M extends Entit
             }
             this.ironman.rightLeg.getChild("RightFoot").visible = true;
             this.ironman.leftLeg.getChild("LeftFoot").visible = true;
-            this.ironman.rightLeg.render(pose, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
-            this.ironman.leftLeg.render(pose, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
+            this.ironman.rightLeg.render(pose, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY, e, r, t, 1);
+            this.ironman.leftLeg.render(pose, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY, e, r, t, 1);
         }
         VertexConsumer vertexConsumer1 = buffer.getBuffer(RenderType.text(this.lightmap));
-        if(head instanceof IronManArmourItem) {
-            this.ironman.head.render(pose, vertexConsumer1, packedLight, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
+        if (head instanceof IronManArmourItem) {
+            this.ironman.head.render(pose, vertexConsumer1, packedLight, OverlayTexture.NO_OVERLAY, e, r, t, 1);
         }
-        if(chest instanceof IronManArmourItem) {
-            if(player.isOnGround()) {
+        if (chest instanceof IronManArmourItem) {
+            if (player.isOnGround()) {
                 this.ironman.rightArm.getChild("right_beam").visible = true;
                 this.ironman.leftArm.getChild("left_beam").visible = true;
             } else {
                 this.ironman.rightArm.getChild("right_beam").visible = false;
                 this.ironman.leftArm.getChild("left_beam").visible = false;
             }
-            this.ironman.body.render(pose, vertexConsumer1, packedLight, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
-            this.ironman.rightArm.render(pose, vertexConsumer1, packedLight, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
-            this.ironman.leftArm.render(pose, vertexConsumer1, packedLight, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
+            this.ironman.body.render(pose, vertexConsumer1, packedLight, OverlayTexture.NO_OVERLAY, e, r, t, 1);
+            this.ironman.rightArm.render(pose, vertexConsumer1, packedLight, OverlayTexture.NO_OVERLAY, e, r, t, 1);
+            this.ironman.leftArm.render(pose, vertexConsumer1, packedLight, OverlayTexture.NO_OVERLAY, e, r, t, 1);
         }
-        if(legs instanceof IronManArmourItem) {
-            if(player.isOnGround()) {
+        if (legs instanceof IronManArmourItem) {
+            if (player.isOnGround()) {
                 this.ironman.rightLeg.getChild("RightFoot").getChild("foot_right_beam").visible = true;
                 this.ironman.leftLeg.getChild("LeftFoot").getChild("foot_left_beam").visible = true;
             } else {
@@ -193,8 +204,8 @@ public class IronManSuitRenderer<T extends AbstractClientPlayer, M extends Entit
             }
             this.ironman.rightLeg.getChild("RightFoot").visible = true;
             this.ironman.leftLeg.getChild("LeftFoot").visible = true;
-            this.ironman.rightLeg.render(pose, vertexConsumer1, packedLight, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
-            this.ironman.leftLeg.render(pose, vertexConsumer1, packedLight, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
+            this.ironman.rightLeg.render(pose, vertexConsumer1, packedLight, OverlayTexture.NO_OVERLAY, e, r, t, 1);
+            this.ironman.leftLeg.render(pose, vertexConsumer1, packedLight, OverlayTexture.NO_OVERLAY, e, r, t, 1);
         }
         pose.popPose();
     }

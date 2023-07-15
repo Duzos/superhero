@@ -154,7 +154,7 @@ public enum SuperheroIdentifier implements StringRepresentable {
     IRONMAN_MARK_9() {
         @Override
         public SuperheroCapabilities getCapabilities() {
-            return new SuperheroCapabilities().add(SuperheroCapability.NANOTECH,SuperheroCapability.JARVIS,SuperheroCapability.NIGHT_VISION_HELMET_ONLY,SuperheroCapability.IRON_MAN_WEAPONS,SuperheroCapability.BLAST_OFF,SuperheroCapability.IRON_MAN_FLIGHT);
+            return new SuperheroCapabilities().add(SuperheroCapability.MASK_TOGGLE, SuperheroCapability.NANOTECH,SuperheroCapability.JARVIS,SuperheroCapability.NIGHT_VISION_HELMET_ONLY,SuperheroCapability.IRON_MAN_WEAPONS,SuperheroCapability.BLAST_OFF,SuperheroCapability.IRON_MAN_FLIGHT);
         }
 
         @Override
@@ -184,7 +184,7 @@ public enum SuperheroIdentifier implements StringRepresentable {
     IRONMAN_MARK_7() {
         @Override
         public SuperheroCapabilities getCapabilities() {
-            return new SuperheroCapabilities().add(SuperheroCapability.BRACELET_LOCATING,SuperheroCapability.JARVIS,SuperheroCapability.NIGHT_VISION_HELMET_ONLY,SuperheroCapability.IRON_MAN_WEAPONS,SuperheroCapability.BLAST_OFF,SuperheroCapability.IRON_MAN_FLIGHT);
+            return new SuperheroCapabilities().add(SuperheroCapability.MASK_TOGGLE, SuperheroCapability.BRACELET_LOCATING,SuperheroCapability.JARVIS,SuperheroCapability.NIGHT_VISION_HELMET_ONLY,SuperheroCapability.IRON_MAN_WEAPONS,SuperheroCapability.BLAST_OFF,SuperheroCapability.IRON_MAN_FLIGHT);
         }
 
         @Override
@@ -244,7 +244,7 @@ public enum SuperheroIdentifier implements StringRepresentable {
     IRONMAN_MARK_2() {
         @Override
         public SuperheroCapabilities getCapabilities() {
-            return new SuperheroCapabilities().add(SuperheroCapability.ICES_OVER,SuperheroCapability.JARVIS,SuperheroCapability.NIGHT_VISION_HELMET_ONLY,SuperheroCapability.BLAST_OFF,SuperheroCapability.BINDING,SuperheroCapability.IRON_MAN_FLIGHT);
+            return new SuperheroCapabilities().add(SuperheroCapability.MASK_TOGGLE, SuperheroCapability.ICES_OVER,SuperheroCapability.JARVIS,SuperheroCapability.NIGHT_VISION_HELMET_ONLY,SuperheroCapability.BLAST_OFF,SuperheroCapability.BINDING,SuperheroCapability.IRON_MAN_FLIGHT);
         }
 
         @Override
@@ -276,7 +276,7 @@ public enum SuperheroIdentifier implements StringRepresentable {
     IRONMAN_MARK_1() {
         @Override
         public SuperheroCapabilities getCapabilities() {
-            return new SuperheroCapabilities().add(SuperheroCapability.ICES_OVER,SuperheroCapability.BINDING,SuperheroCapability.IRON_MAN_FLIGHT);
+            return new SuperheroCapabilities().add(SuperheroCapability.MASK_TOGGLE, SuperheroCapability.ICES_OVER,SuperheroCapability.BINDING,SuperheroCapability.IRON_MAN_FLIGHT);
         }
 
         @Override

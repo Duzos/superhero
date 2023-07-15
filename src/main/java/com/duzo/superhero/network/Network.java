@@ -2,6 +2,7 @@ package com.duzo.superhero.network;
 
 import com.duzo.superhero.Superhero;
 import com.duzo.superhero.network.packets.*;
+import com.duzo.superhero.network.sync.SyncSuperheroData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkDirection;
@@ -41,6 +42,11 @@ public class Network {
                 .decoder(ChangeDeltaMovementS2CPacket::decode)
                 .encoder(ChangeDeltaMovementS2CPacket::encode)
                 .consumerMainThread(ChangeDeltaMovementS2CPacket::handle)
+                .add();
+        net.messageBuilder(SyncSuperheroData.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+                .decoder(SyncSuperheroData::decode)
+                .encoder(SyncSuperheroData::encode)
+                .consumerMainThread(SyncSuperheroData::handle)
                 .add();
         net.messageBuilder(SyncSpeedsterDataS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
                 .decoder(SyncSpeedsterDataS2CPacket::decode)
@@ -96,6 +102,10 @@ public class Network {
 
     public static <MSG> void sendToServer(MSG message) {
         INSTANCE.sendToServer(message);
+    }
+
+    public static <MSG> void sendToTracking(MSG message, ServerPlayer player) {
+        INSTANCE.send(PacketDistributor.TRACKING_ENTITY.with(()-> player), message);
     }
 
     public static <MSG> void sendToPlayer(MSG message, ServerPlayer player) {

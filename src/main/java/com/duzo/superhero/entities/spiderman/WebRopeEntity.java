@@ -4,6 +4,7 @@ import com.duzo.superhero.entities.SuperheroEntities;
 import com.duzo.superhero.network.Network;
 import com.duzo.superhero.network.packets.*;
 import com.duzo.superhero.util.KeyBinds;
+import com.duzo.superhero.util.spiderman.PendulumCalculations;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -27,6 +28,8 @@ public class WebRopeEntity extends Entity {
     private float alpha = 1f;
 
     private double initialDistance = 0d;
+    private Vec3 initialDistanceVec = new Vec3(0,0,0);
+    //PendulumCalculations pendulum = new PendulumCalculations();
 
     public WebRopeEntity(Level level) {
         super(SuperheroEntities.WEB_ROPE_ENTITY.get(),level);
@@ -82,7 +85,7 @@ public class WebRopeEntity extends Entity {
     }
 
     public void syncInitialDistanceToClient() {
-        Network.sendToAll(new UpdateInitialDistanceS2CPacket(this.getId(),this.initialDistance));
+        Network.sendToAll(new UpdateInitialDistanceS2CPacket(this.getId(),this.initialDistance, this.initialDistanceVec));
     }
 
     @Override
@@ -124,16 +127,35 @@ public class WebRopeEntity extends Entity {
         return this.initialDistance;
     }
 
+    public Vec3 getInitialDistanceVec() {
+        return this.initialDistanceVec;
+    }
+
+    public Vec3 initialDistanceVec() {
+        if (this.getPlayer() != null) {
+            Vec3 playerPos = this.getPlayer().position();
+            Vec3 newVec = new Vec3((playerPos.x() - this.position().x()) * (playerPos.x() - this.position().x()), (playerPos.y() - this.position().y()) * (playerPos.y() - this.position().y()), (playerPos.z() - this.position().z()) * (playerPos.z() - this.position().z()));
+            return newVec;
+        }
+        return new Vec3(0,0,0);
+    }
+
     public void setInitialDistance(Vec3 position) {
         if (this.getPlayer() != null) {
             Vec3 playerPos = this.getPlayer().position();
             double distance = Math.abs(Math.sqrt(((playerPos.x() - position.x()) * (playerPos.x() - position.x())) + ((playerPos.y() - position.y()) * (playerPos.y() - position.y())) + ((playerPos.z() - position.z()) * (playerPos.z() - position.z()))));
+            this.initialDistanceVec = initialDistanceVec();
             this.initialDistance = distance;
+            //this.pendulum.init(this.initialDistance, Math.atan(divideByDouble(this.initialDistanceVec.multiply(this.position()), this.initialDistanceVec.dot(this.position()))));
         }
     }
 
     public void setInitialDistance(double initialDistance) {
         this.initialDistance = initialDistance;
+    }
+
+    public void setInitialDistanceVec(Vec3 initialDistanceVec) {
+        this.initialDistanceVec = initialDistanceVec;
     }
 
     /*public static Vec3 rotatePoint(Vec3 point, Vec3 anchor, double xRotation, double yRotation, double zRotation) {
@@ -383,9 +405,9 @@ public class WebRopeEntity extends Entity {
             //double d0 = ((this.getX() - this.getPlayer().getX()) / distanceToPlayer) * blend;
             //double d1 = ((this.getY() - this.getPlayer().getY()) / distanceToPlayer) * blend;
             //double d2 = ((this.getZ() - this.getPlayer().getZ()) / distanceToPlayer) * blend;
-            double d0 = ((this.position().x() - playerPos.x()) / distanceToPlayer);// * blend;
-            double d1 = ((this.position().y() - playerPos.y()) / distanceToPlayer);// * blend;
-            double d2 = ((this.position().z() - playerPos.z()) / distanceToPlayer);// * blend;
+            double d0 = ((this.position().x() - playerPos.x()) / distanceToPlayer) * blend;
+            double d1 = ((this.position().y() - playerPos.y()) / distanceToPlayer) * blend;
+            double d2 = ((this.position().z() - playerPos.z()) / distanceToPlayer) * blend;
 
             //System.out.println("X: " + xVel + " Y: " + yVel + " Z: " + zVel);
 
@@ -407,6 +429,34 @@ public class WebRopeEntity extends Entity {
             //System.out.println(this.getPlayer().getDeltaMovement());
         }
     }
+
+
+    //@TODO Pendulum equations
+    //private void runSwingPhysics() {
+    //    if(KeyBinds.ABILITY_ONE.isDown()) {
+    //        if(this.getPlayer() == null) return;
+//
+    //        System.out.println(this.pendulum.pendulumCalc());
+    //
+    //        Vec3 newPosition = vectorFromAngle(this.pendulum.pendulumCalc(this.initialDistance, this.initialDistance / this.position().dot(new Vec3(this.initialDistance, this.initialDistance, this.initialDistance))) - Math.PI / 2, this.initialDistance, this.position().get(Direction.Axis.Z));
+    //        this.getPlayer().setDeltaMovement(this.getPlayer().position().subtract(newPosition).normalize());
+    //    }
+    //}
+//
+    //public Vec3 vectorFromAngle(double angle, double length, double rotateY) {
+    //    double cos = Math.cos(angle) * length;
+    //    double sin = Math.sin(angle) * length;
+    //    Vec3 vec = new Vec3(cos, sin, 0.0).yRot((float) rotateY);
+    //    return vec;
+    //}
+//
+    //private double divideByDouble(Vec3 vec, double d) {
+    //    double val1 = vec.x() / d;
+    //    double val2 = vec.y() / d;
+    //    double val3 = vec.z() / d;
+    //    double vecToDouble = Math.abs(Math.sqrt(((val1 - d) * (val1 - d)) + ((val2 - d) * (val2 - d)) + ((val3 - d) * (val3 - d))));
+    //    return vecToDouble;
+    //}
 
     @Override
     public void tick() {

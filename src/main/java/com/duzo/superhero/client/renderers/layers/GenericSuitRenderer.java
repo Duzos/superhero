@@ -36,7 +36,7 @@ public class GenericSuitRenderer<T extends AbstractClientPlayer, M extends Entit
 
     public GenericSuitRenderer(RenderLayerParent<T, M> p_117346_) {
         super(p_117346_);
-        this.model = new SteveSkinModel(Minecraft.getInstance().getEntityModels().bakeLayer(SteveSkinModel.LAYER_LOCATION));
+        this.model = new SteveSkinModel(SteveSkinModel.createBodyLayer().bakeRoot());
     }
 
     @Override

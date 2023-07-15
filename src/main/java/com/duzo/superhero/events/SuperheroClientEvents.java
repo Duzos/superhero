@@ -21,10 +21,12 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
+import net.minecraft.client.player.KeyboardInput;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.*;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -57,6 +59,7 @@ public class SuperheroClientEvents {
         @SubscribeEvent
         public static void onKeyInput(InputEvent.Key event) {
             if (KeyBinds.ABILITY_ONE.consumeClick()) {
+                System.out.println("is this continuously looping?");
                 Network.sendToServer(new AbilityC2SPacket(1));
             }
             if (KeyBinds.ABILITY_TWO.consumeClick()) {
@@ -69,6 +72,7 @@ public class SuperheroClientEvents {
                 Network.sendToServer(new AbilityC2SPacket(4));
             }
         }
+
         @SubscribeEvent
         public static void changeFOV(ComputeFovModifierEvent event) {
             ItemStack chest = event.getPlayer().getItemBySlot(EquipmentSlot.CHEST);
@@ -78,6 +82,13 @@ public class SuperheroClientEvents {
             if (!event.getPlayer().isOnGround() && Screen.hasControlDown() && hero.getIdentifier().isValidArmour(event.getPlayer()) && hero.getIdentifier().getCapabilities().has(SuperheroCapability.BLAST_OFF)) {
                 event.setNewFovModifier(event.getFovModifier() * 1.25f);
 //                event.setNewFovModifier((float) (event.getFovModifier() * hero.getMark().getBlastOffSpeed()));
+            }
+        }
+
+        @SubscribeEvent
+        public static void onClientTick(TickEvent.ClientTickEvent event) {
+            if(KeyBinds.ABILITY_THREE.isDown()) {
+                //event.get
             }
         }
     }

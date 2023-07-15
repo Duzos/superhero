@@ -1,5 +1,6 @@
 package com.duzo.superhero.util;
 
+import com.duzo.superhero.data.SuperheroData;
 import com.duzo.superhero.entities.ironman.RocketEntity;
 import com.duzo.superhero.items.SuperheroArmourItem;
 import com.duzo.superhero.items.SuperheroNanotechItem;
@@ -29,6 +30,7 @@ import static com.duzo.superhero.util.ironman.IronManUtil.FlightUtil.runFlight;
 import static com.duzo.superhero.util.spiderman.SpiderManUtil.*;
 
 public enum SuperheroCapability implements StringRepresentable {
+
     // GENERIC
     INVISIBILITY {
         @Override
@@ -61,6 +63,28 @@ public enum SuperheroCapability implements StringRepresentable {
             if (num == 1) {
                 if (chest.getItem() instanceof SuperheroNanotechItem) {
                     convertNanotechToArmour(chest,player);
+                }
+            }
+        }
+
+        @Override
+        public void tick(ItemStack stack, Level level, Player player) {
+
+        }
+
+        @Override
+        public void unequippedTick(ItemStack stack, Level level, Player player) {
+
+        }
+    },
+    MASK_TOGGLE {
+        @Override
+        public void runAbility(int num, Player player) {
+            ItemStack head = player.getItemBySlot(EquipmentSlot.HEAD);
+            if (num == 2) {
+                if (IronManUtil.isIronManSuit(getIDFromStack(head))) {
+                    //SuperheroData superheroData = new SuperheroData(player);
+                    System.out.println("HELLO");
                 }
             }
         }
