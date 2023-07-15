@@ -58,8 +58,8 @@ public class SyncSuperheroData {
             Entity entity = level.getEntity(this.entityId);
             // Make sure it's only executed on the physical client
             DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
-                if (entity instanceof Player player)
-                    SuperheroData.get(player).ifPresent(superheroData -> superheroData.deserializeNBT(this.nbt));
+                //if (entity instanceof Player player)
+                //    SuperheroData.get(player).ifPresent(superheroData -> superheroData.deserializeNBT(this.nbt));
             });
         });
         return true;
