@@ -3,6 +3,7 @@ package com.duzo.superhero.client.renderers.layers;
 import com.duzo.superhero.Superhero;
 import com.duzo.superhero.client.models.heroes.iron_man.IronManMagicModel;
 import com.duzo.superhero.items.ironman.IronManArmourItem;
+import com.duzo.superhero.util.SuperheroCapability;
 import com.duzo.superhero.util.SuperheroIdentifier;
 import com.duzo.superhero.util.ironman.IronManUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -128,7 +129,7 @@ public class IronManSuitRenderer<T extends AbstractClientPlayer, M extends Entit
         //copyPlayerMovement(playerModel, this.ironman.head, "leftLeg");
         //this.ironman.leftLeg.render(pose, buffer.getBuffer(RenderType.entityCutout(this.texture)), packedLight, OverlayTexture.NO_OVERLAY, e, r, t, 1);
         //pose.popPose();
-        if (player.getY() >= 185 && this.texture.equals(MK2)) {
+        if (player.getY() >= 185 && getIDFromPlayer(player).getCapabilities().has(SuperheroCapability.ICES_OVER)) { // @Loqor just check for the capability instead of the mk2 in future pls
             e = 0.69411764705F;
             r = 0.87450980392F;
             t = 1F;

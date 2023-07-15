@@ -14,6 +14,7 @@ import static com.duzo.superhero.entities.ironman.IronManEntity.fileNameToUsable
 import static com.duzo.superhero.entities.ironman.IronManEntity.nameFromSlot;
 
 public enum SuperheroIdentifier implements StringRepresentable {
+    // @TODO replace a list of enums with a registry that is editable at runtime for datapack capabilities.
     // FLASH
     FLASH {
         @Override
