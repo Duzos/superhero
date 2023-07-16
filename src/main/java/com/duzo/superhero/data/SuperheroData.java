@@ -4,6 +4,7 @@ import com.duzo.superhero.client.renderers.animations.IronManAnimations;
 import com.duzo.superhero.items.ironman.IronManArmourItem;
 import com.duzo.superhero.network.Network;
 import com.duzo.superhero.network.sync.SyncSuperheroData;
+import com.duzo.superhero.util.SuperheroUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.AnimationState;
@@ -35,7 +36,6 @@ public class SuperheroData {
 
     public void tick(LivingEntity livingEntity) {
         animateMask(livingEntity);
-        //SuperheroUtil.onTickPlayerGlide(livingEntity.level, livingEntity);
 
         if (livingEntity.level.isClientSide) return;
 
@@ -44,7 +44,7 @@ public class SuperheroData {
         }
         if(livingEntity instanceof Player player)
             if(player.getItemBySlot(EquipmentSlot.HEAD).getItem() instanceof IronManArmourItem)
-                setisMaskOpen(player.isHurt());
+                setisMaskOpen(true);
     }
 
 

@@ -124,12 +124,8 @@ public class IronManMagicModel<T extends LivingEntity> extends HumanoidModel<T> 
 /*
 		this.modelRoot.getAllParts().forEach(ModelPart::resetPose);
 */
-
-System.out.println("hi");
 		SuperheroDataImpl.get(player).ifPresent(superheroData -> {
-			if (superheroData.isMaskOpen()) {
-				AnimationUtil.animate(this, superheroData.getAnimation(SuperheroData.AnimationStates.MASK_OPEN), IronManAnimations.SUPERHERO_IRONMANMAGICMODEL_MASK_OPEN, player.tickCount, 1);
-			}
+			AnimationUtil.animate(this, superheroData.getAnimation(SuperheroData.AnimationStates.MASK_OPEN), IronManAnimations.SUPERHERO_IRONMANMAGICMODEL_MASK_OPEN, player.tickCount, 1);
 		});
 	}
 }
