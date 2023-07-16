@@ -7,6 +7,7 @@ import com.duzo.superhero.client.models.SuperheroModels;
 import com.duzo.superhero.items.SuperheroArmourItem;
 import com.duzo.superhero.util.SuperheroIdentifier;
 import com.duzo.superhero.util.SuperheroUtil;
+import com.duzo.superhero.util.ironman.IronManUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.EntityModel;
@@ -21,11 +22,13 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 import static com.duzo.superhero.client.models.SuperheroModels.getRoot;
 import static com.duzo.superhero.util.SuperheroUtil.getIDFromPlayer;
+import static com.duzo.superhero.util.SuperheroUtil.getIDFromStack;
 
 @OnlyIn(Dist.CLIENT)
 public class GenericSuitRenderer<T extends AbstractClientPlayer, M extends EntityModel<T>> extends RenderLayer<T, M> {
@@ -130,13 +133,14 @@ public class GenericSuitRenderer<T extends AbstractClientPlayer, M extends Entit
 
         copyPlayersMovement(playerModel, this.model);
         this.model.setupAnim(player,w,e,r,t,y);
-        VertexConsumer vertexConsumer = buffer.getBuffer(RenderType.entityCutout(this.texture));
+        VertexConsumer vertexConsumer;
 //        VertexConsumer emission = buffer.getBuffer(RenderType.entityTranslucentEmissive(this.lightmap)); // @TODO fix emission
         Item head = player.getItemBySlot(EquipmentSlot.HEAD).getItem();
         Item chest = player.getItemBySlot(EquipmentSlot.CHEST).getItem();
         Item legs = player.getItemBySlot(EquipmentSlot.LEGS).getItem();
         Item feet = player.getItemBySlot(EquipmentSlot.FEET).getItem();
         if(head instanceof SuperheroArmourItem) {
+            vertexConsumer = buffer.getBuffer(RenderType.entityCutout(getSolidTextureForSlotByID(EquipmentSlot.HEAD, player)));
             this.model.head.render(pose, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
             this.model.hat.render(pose, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
 //            if (!isInvisibleTexture(this.lightmap)) {
@@ -144,6 +148,7 @@ public class GenericSuitRenderer<T extends AbstractClientPlayer, M extends Entit
 //            }
         }
         if(chest instanceof SuperheroArmourItem) {
+            vertexConsumer = buffer.getBuffer(RenderType.entityCutout(getSolidTextureForSlotByID(EquipmentSlot.CHEST, player)));
             this.model.right_arm.render(pose, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
             this.model.left_arm.render(pose, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
             this.model.body.render(pose,vertexConsumer,packedLight,OverlayTexture.NO_OVERLAY,1,1,1,1);
@@ -153,6 +158,7 @@ public class GenericSuitRenderer<T extends AbstractClientPlayer, M extends Entit
 //            }
         }
         if(legs instanceof SuperheroArmourItem) {
+            vertexConsumer = buffer.getBuffer(RenderType.entityCutout(getSolidTextureForSlotByID(EquipmentSlot.LEGS, player)));
             this.model.right_leg.render(pose, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
             this.model.left_leg.render(pose, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
 //            if (!isInvisibleTexture(this.lightmap)) {
@@ -209,5 +215,23 @@ public class GenericSuitRenderer<T extends AbstractClientPlayer, M extends Entit
 
             this.model = new AlexSkinModel(getRoot(SuperheroModels.ALEX));
         }
+    }
+
+    private ResourceLocation getSolidTextureForSlotByID(EquipmentSlot slot, Player player) {
+        // Get texture from slot ID
+        ItemStack stack = player.getItemBySlot(slot);
+        SuperheroIdentifier id = getIDFromStack(stack);
+        if (id == null) return this.texture;
+        if (!IronManUtil.isIronManSuit(id)) return this.texture;
+        return IronManUtil.getTextureFromID(id);
+    }
+
+    private ResourceLocation getLightmapTextureForSlotByID(EquipmentSlot slot, Player player) {
+        // Get lightmap texture from slot ID
+        ItemStack stack = player.getItemBySlot(slot);
+        SuperheroIdentifier id = getIDFromStack(stack);
+        if (id == null) return this.texture;
+        if (!IronManUtil.isIronManSuit(id)) return this.texture;
+        return IronManUtil.getLightMapFromID(id);
     }
 }

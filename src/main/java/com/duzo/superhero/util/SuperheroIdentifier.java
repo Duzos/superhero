@@ -70,6 +70,11 @@ public enum SuperheroIdentifier implements StringRepresentable {
     },
     IRON_SPIDER {
         @Override
+        public boolean isSlim() {
+            return true;
+        }
+
+        @Override
         public SuperheroCapabilities getCapabilities() {
             return new SuperheroCapabilities().add(SuperheroCapability.NANOTECH,SuperheroCapability.WEB_SHOOTING,SuperheroCapability.WALL_CLIMBING,SuperheroCapability.SUPER_STRENGTH,SuperheroCapability.FAST_MOBILITY,SuperheroCapability.SPIDERMAN_HUD);
         }
@@ -89,6 +94,11 @@ public enum SuperheroIdentifier implements StringRepresentable {
      * The default identifier.
      */
     AMAZING_SPIDER_MAN {
+        @Override
+        public boolean isSlim() {
+            return true;
+        }
+
         @Override
         public SuperheroCapabilities getCapabilities() {
             return new SuperheroCapabilities().add(SuperheroCapability.WEB_SHOOTING,SuperheroCapability.WALL_CLIMBING,SuperheroCapability.SUPER_STRENGTH,SuperheroCapability.FAST_MOBILITY,SuperheroCapability.SPIDERMAN_HUD);
