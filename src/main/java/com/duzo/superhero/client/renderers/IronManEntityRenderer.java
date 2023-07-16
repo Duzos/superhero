@@ -1,9 +1,9 @@
 package com.duzo.superhero.client.renderers;
 
+import com.duzo.superhero.client.models.SuperheroModels;
 import com.duzo.superhero.client.models.entities.IronManEntityModel;
 import com.duzo.superhero.entities.ironman.IronManEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
@@ -11,10 +11,12 @@ import net.minecraft.client.renderer.entity.layers.CustomHeadLayer;
 import net.minecraft.client.renderer.entity.layers.ItemInHandLayer;
 import net.minecraft.resources.ResourceLocation;
 
+import static com.duzo.superhero.client.models.SuperheroModels.getRoot;
+
 // Copy paste of HumanoidEntityRenderer bc idk how to extend properly
 public class IronManEntityRenderer extends LivingEntityRenderer<IronManEntity, IronManEntityModel> {
     public IronManEntityRenderer(EntityRendererProvider.Context context) {
-        super(context, new IronManEntityModel(Minecraft.getInstance().getEntityModels().bakeLayer(IronManEntityModel.LAYER_LOCATION)), 0.5f);
+        super(context, new IronManEntityModel(getRoot(SuperheroModels.IRONMAN_ENTITY)), 0.5f);
         this.addLayer(new ItemInHandLayer<>(this, context.getItemInHandRenderer()));
 //        this.addLayer(new HumanoidArmorLayer<>(this, new HumanoidModel<>(context.bakeLayer(ModelLayers.PLAYER_SLIM_INNER_ARMOR)), new HumanoidModel<>(context.bakeLayer(ModelLayers.PLAYER_SLIM_OUTER_ARMOR)),context.getModelManager()));
         this.addLayer(new CustomHeadLayer<>(this, context.getModelSet(), context.getItemInHandRenderer()));

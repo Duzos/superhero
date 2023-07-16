@@ -1,6 +1,7 @@
 package com.duzo.superhero.client.renderers.layers;
 
 import com.duzo.superhero.Superhero;
+import com.duzo.superhero.client.models.SuperheroModels;
 import com.duzo.superhero.client.models.heroes.iron_man.IronManMagicModel;
 import com.duzo.superhero.items.ironman.IronManArmourItem;
 import com.duzo.superhero.util.SuperheroCapability;
@@ -23,6 +24,7 @@ import net.minecraft.world.item.Item;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+import static com.duzo.superhero.client.models.SuperheroModels.getRoot;
 import static com.duzo.superhero.util.SuperheroUtil.getIDFromPlayer;
 
 @OnlyIn(Dist.CLIENT)
@@ -42,7 +44,7 @@ public class IronManSuitRenderer<T extends AbstractClientPlayer, M extends Entit
 
     public IronManSuitRenderer(RenderLayerParent<T, M> p_117346_) {
         super(p_117346_);
-        this.ironman = new IronManMagicModel(IronManMagicModel.createBodyLayer().bakeRoot());
+        this.ironman = new IronManMagicModel(getRoot(SuperheroModels.IRONMAN_ARMOUR));
         this.texture = MK3;
         this.lightmap = MK3_L;
     }

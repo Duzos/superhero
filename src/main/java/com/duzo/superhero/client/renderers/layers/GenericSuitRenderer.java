@@ -3,12 +3,12 @@ package com.duzo.superhero.client.renderers.layers;
 import com.duzo.superhero.client.models.AlexSkinModel;
 import com.duzo.superhero.client.models.SkinModel;
 import com.duzo.superhero.client.models.SteveSkinModel;
+import com.duzo.superhero.client.models.SuperheroModels;
 import com.duzo.superhero.items.SuperheroArmourItem;
 import com.duzo.superhero.util.SuperheroIdentifier;
 import com.duzo.superhero.util.SuperheroUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.player.AbstractClientPlayer;
@@ -24,6 +24,7 @@ import net.minecraft.world.item.Item;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+import static com.duzo.superhero.client.models.SuperheroModels.getRoot;
 import static com.duzo.superhero.util.SuperheroUtil.getIDFromPlayer;
 
 @OnlyIn(Dist.CLIENT)
@@ -36,7 +37,7 @@ public class GenericSuitRenderer<T extends AbstractClientPlayer, M extends Entit
 
     public GenericSuitRenderer(RenderLayerParent<T, M> p_117346_) {
         super(p_117346_);
-        this.model = new SteveSkinModel(SteveSkinModel.createBodyLayer().bakeRoot());
+        this.model = new SteveSkinModel(getRoot(SuperheroModels.STEVE));
     }
 
     @Override
@@ -202,11 +203,11 @@ public class GenericSuitRenderer<T extends AbstractClientPlayer, M extends Entit
         if (!slim) {
             if (this.model instanceof SteveSkinModel<?>) return;
 
-            this.model = new SteveSkinModel(SteveSkinModel.createBodyLayer().bakeRoot());
+            this.model = new SteveSkinModel(getRoot(SuperheroModels.STEVE));
         } else {
             if (this.model instanceof AlexSkinModel<?>) return;
 
-            this.model = new AlexSkinModel(AlexSkinModel.createBodyLayer().bakeRoot());
+            this.model = new AlexSkinModel(getRoot(SuperheroModels.ALEX));
         }
     }
 }

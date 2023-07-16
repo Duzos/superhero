@@ -4,12 +4,7 @@ import com.duzo.superhero.Superhero;
 import com.duzo.superhero.client.gui.FlashGUIOverlay;
 import com.duzo.superhero.client.gui.JarvisGUIOverlay;
 import com.duzo.superhero.client.gui.SpiderManGUIOverlay;
-import com.duzo.superhero.client.models.AlexSkinModel;
-import com.duzo.superhero.client.models.SteveSkinModel;
-import com.duzo.superhero.client.models.entities.HumanoidEntityModel;
-import com.duzo.superhero.client.models.entities.IronManEntityModel;
-import com.duzo.superhero.client.models.entities.RocketModel;
-import com.duzo.superhero.client.models.items.IronManArmourModel;
+import com.duzo.superhero.client.models.SuperheroModels;
 import com.duzo.superhero.client.renderers.*;
 import com.duzo.superhero.entities.SuperheroEntities;
 import com.duzo.superhero.items.SuperheroArmourItem;
@@ -18,10 +13,6 @@ import com.duzo.superhero.network.packets.AbilityC2SPacket;
 import com.duzo.superhero.util.KeyBinds;
 import com.duzo.superhero.util.SuperheroCapability;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.model.PlayerModel;
-import net.minecraft.client.model.geom.builders.CubeDeformation;
-import net.minecraft.client.model.geom.builders.LayerDefinition;
-import net.minecraft.client.player.KeyboardInput;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
@@ -44,13 +35,7 @@ public class SuperheroClientEvents {
 
     @SubscribeEvent
     public static void registerLayerDefinition(EntityRenderersEvent.RegisterLayerDefinitions event) {
-        event.registerLayerDefinition(HumanoidEntityModel.LAYER_LOCATION,() -> LayerDefinition.create(PlayerModel.createMesh(CubeDeformation.NONE,false),64,64));
-//        event.registerLayerDefinition(SteveSkinModel.LAYER_LOCATION,() -> LayerDefinition.create(PlayerModel.createMesh(CubeDeformation.NONE,false),64,64));
-        event.registerLayerDefinition(SteveSkinModel.LAYER_LOCATION,SteveSkinModel::createBodyLayer);
-        event.registerLayerDefinition(AlexSkinModel.LAYER_LOCATION,AlexSkinModel::createBodyLayer);
-        event.registerLayerDefinition(RocketModel.LAYER_LOCATION,RocketModel::createBodyLayer);
-        event.registerLayerDefinition(IronManEntityModel.LAYER_LOCATION,() -> LayerDefinition.create(PlayerModel.createMesh(CubeDeformation.NONE,false),64,64));
-        event.registerLayerDefinition(IronManArmourModel.LAYER_LOCATION,IronManArmourModel::createBodyLayer);
+        SuperheroModels.addModels(event);
     }
 
     @Mod.EventBusSubscriber(modid = Superhero.MODID, value = Dist.CLIENT)

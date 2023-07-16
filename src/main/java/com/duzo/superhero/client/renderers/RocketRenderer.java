@@ -1,11 +1,11 @@
 package com.duzo.superhero.client.renderers;
 
 import com.duzo.superhero.Superhero;
+import com.duzo.superhero.client.models.SuperheroModels;
 import com.duzo.superhero.client.models.entities.RocketModel;
 import com.duzo.superhero.entities.ironman.RocketEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.culling.Frustum;
@@ -13,6 +13,8 @@ import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
+
+import static com.duzo.superhero.client.models.SuperheroModels.getRoot;
 
 public class RocketRenderer extends EntityRenderer<RocketEntity> {
     public RocketRenderer(EntityRendererProvider.Context context) {
@@ -24,7 +26,7 @@ public class RocketRenderer extends EntityRenderer<RocketEntity> {
     @Override
     public void render(RocketEntity entity, float p_114486_, float p_114487_, PoseStack stack, MultiBufferSource source, int p_114490_) {
         if (this.model == null) {
-            this.model = new RocketModel<RocketEntity>(Minecraft.getInstance().getEntityModels().bakeLayer(RocketModel.LAYER_LOCATION));
+            this.model = new RocketModel<RocketEntity>(getRoot(SuperheroModels.ROCKET));
         }
         stack.pushPose();
         stack.mulPose(Axis.XP.rotationDegrees(180f));
