@@ -3,13 +3,14 @@ package com.duzo.superhero;
 import com.duzo.superhero.blocks.SuperheroBlocks;
 import com.duzo.superhero.entities.SuperheroEntities;
 import com.duzo.superhero.events.FlyingEventHandler;
+import com.duzo.superhero.ids.SuperheroIdentifierRegistry;
 import com.duzo.superhero.items.SuperheroItems;
 import com.duzo.superhero.items.SuperheroNanotechItem;
 import com.duzo.superhero.items.ironman.IronManArmourItem;
 import com.duzo.superhero.network.Network;
 import com.duzo.superhero.particles.SuperheroParticles;
 import com.duzo.superhero.sounds.SuperheroSounds;
-import com.duzo.superhero.util.SuperheroCapability;
+import com.duzo.superhero.capabilities.SuperheroCapability;
 import com.duzo.superhero.util.SuperheroIdentifier;
 import com.mojang.logging.LogUtils;
 import net.minecraft.network.chat.Component;
@@ -28,7 +29,6 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.RegistryObject;
-import org.jline.utils.Log;
 import org.slf4j.Logger;
 
 import static com.duzo.superhero.util.SuperheroUtil.getIDFromStack;
@@ -46,6 +46,8 @@ public class Superhero {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         modEventBus.addListener(this::commonSetup);
+
+        SuperheroIdentifierRegistry.IDS.register(modEventBus);
 
         SuperheroEntities.ENTITIES.register(modEventBus);
         SuperheroItems.init();

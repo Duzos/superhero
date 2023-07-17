@@ -1,7 +1,7 @@
 package com.duzo.superhero.util.ironman;
 
-import com.duzo.superhero.util.SuperheroCapabilities;
-import com.duzo.superhero.util.SuperheroCapability;
+import com.duzo.superhero.capabilities.SuperheroCapabilities;
+import com.duzo.superhero.capabilities.SuperheroCapability;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.entity.EquipmentSlot;
 

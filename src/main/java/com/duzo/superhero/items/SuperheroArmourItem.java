@@ -1,6 +1,6 @@
 package com.duzo.superhero.items;
 
-import com.duzo.superhero.util.SuperheroCapability;
+import com.duzo.superhero.capabilities.SuperheroCapability;
 import com.duzo.superhero.util.SuperheroIdentifier;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;

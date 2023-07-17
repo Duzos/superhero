@@ -2,7 +2,7 @@ package com.duzo.superhero.items.batman;
 
 import com.duzo.superhero.entities.batman.GrapplingHookRopeEntity;
 import com.duzo.superhero.items.SuperheroWeaponItem;
-import com.duzo.superhero.util.SuperheroCapability;
+import com.duzo.superhero.capabilities.SuperheroCapability;
 import com.duzo.superhero.util.spiderman.SpiderManUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;

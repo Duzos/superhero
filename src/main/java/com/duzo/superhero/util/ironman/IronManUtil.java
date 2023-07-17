@@ -2,7 +2,7 @@ package com.duzo.superhero.util.ironman;
 
 import com.duzo.superhero.Superhero;
 import com.duzo.superhero.items.ironman.IronManArmourItem;
-import com.duzo.superhero.util.SuperheroCapability;
+import com.duzo.superhero.capabilities.SuperheroCapability;
 import com.duzo.superhero.util.SuperheroIdentifier;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;

@@ -1,4 +1,4 @@
-package com.duzo.superhero.util;
+package com.duzo.superhero.capabilities;
 
 import org.jetbrains.annotations.NotNull;
 

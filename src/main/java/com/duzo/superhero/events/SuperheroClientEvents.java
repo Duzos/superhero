@@ -11,7 +11,7 @@ import com.duzo.superhero.items.SuperheroArmourItem;
 import com.duzo.superhero.network.Network;
 import com.duzo.superhero.network.packets.AbilityC2SPacket;
 import com.duzo.superhero.util.KeyBinds;
-import com.duzo.superhero.util.SuperheroCapability;
+import com.duzo.superhero.capabilities.SuperheroCapability;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;

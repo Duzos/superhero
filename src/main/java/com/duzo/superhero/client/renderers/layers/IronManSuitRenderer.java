@@ -4,7 +4,7 @@ import com.duzo.superhero.Superhero;
 import com.duzo.superhero.client.models.SuperheroModels;
 import com.duzo.superhero.client.models.heroes.iron_man.IronManMagicModel;
 import com.duzo.superhero.items.ironman.IronManArmourItem;
-import com.duzo.superhero.util.SuperheroCapability;
+import com.duzo.superhero.capabilities.SuperheroCapability;
 import com.duzo.superhero.util.SuperheroIdentifier;
 import com.duzo.superhero.util.ironman.IronManUtil;
 import com.mojang.blaze3d.vertex.PoseStack;

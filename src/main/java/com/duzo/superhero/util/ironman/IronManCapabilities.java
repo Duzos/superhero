@@ -1,5 +1,6 @@
 package com.duzo.superhero.util.ironman;
 
+import com.duzo.superhero.capabilities.SuperheroCapabilities;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -8,7 +9,7 @@ import java.util.List;
 
 @Deprecated
 /**
- * Replace with {@link com.duzo.superhero.util.SuperheroCapabilities}
+ * Replace with {@link SuperheroCapabilities}
  */
 public class IronManCapabilities implements Iterable<IronManCapability> {
     private List<IronManCapability> capabilities = new ArrayList<>();

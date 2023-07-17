@@ -1,5 +1,7 @@
 package com.duzo.superhero.util;
 
+import com.duzo.superhero.capabilities.SuperheroCapabilities;
+import com.duzo.superhero.capabilities.SuperheroCapability;
 import com.duzo.superhero.items.SuperheroArmourItem;
 import com.duzo.superhero.util.ironman.IronManUtil;
 import com.duzo.superhero.util.spiderman.SpiderManUtil;

@@ -1,6 +1,6 @@
 package com.duzo.superhero.client.gui;
 
-import com.duzo.superhero.util.SuperheroCapability;
+import com.duzo.superhero.capabilities.SuperheroCapability;
 import com.duzo.superhero.util.SuperheroIdentifier;
 import com.duzo.superhero.util.flash.FlashUtil;
 import net.minecraft.client.Minecraft;

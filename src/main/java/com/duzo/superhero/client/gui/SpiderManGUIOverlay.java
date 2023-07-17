@@ -1,10 +1,8 @@
 package com.duzo.superhero.client.gui;
 
 import com.duzo.superhero.util.KeyBinds;
-import com.duzo.superhero.util.SuperheroCapability;
+import com.duzo.superhero.capabilities.SuperheroCapability;
 import com.duzo.superhero.util.SuperheroIdentifier;
-import com.duzo.superhero.util.flash.FlashUtil;
-import com.duzo.superhero.util.spiderman.SpiderManUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraftforge.client.gui.overlay.IGuiOverlay;

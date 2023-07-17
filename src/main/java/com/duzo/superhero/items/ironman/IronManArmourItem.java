@@ -1,33 +1,14 @@
 package com.duzo.superhero.items.ironman;
 
-import com.duzo.superhero.client.models.items.IronManArmourModel;
-import com.duzo.superhero.client.renderers.animations.IronManAnimations;
 import com.duzo.superhero.items.SuperheroArmourItem;
-import com.duzo.superhero.util.KeyBinds;
 import com.duzo.superhero.util.SuperheroIdentifier;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.HumanoidModel;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.AnimationState;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorMaterial;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.context.UseOnContext;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.SandBlock;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.client.ForgeHooksClient;
-import net.minecraftforge.client.extensions.common.IClientItemExtensions;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.function.Consumer;
-
+@Deprecated(forRemoval = true) // @TODO replace all class references with a check for iron man things
 public class IronManArmourItem extends SuperheroArmourItem {
     private SuperheroIdentifier mark;
 

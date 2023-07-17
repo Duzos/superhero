@@ -1,24 +1,16 @@
 package com.duzo.superhero.data;
 
-import com.duzo.superhero.Superhero;
 import com.duzo.superhero.client.renderers.animations.IronManAnimations;
 import com.duzo.superhero.items.ironman.IronManArmourItem;
 import com.duzo.superhero.network.Network;
 import com.duzo.superhero.network.sync.SyncSuperheroData;
-import com.duzo.superhero.util.SuperheroCapability;
-import com.duzo.superhero.util.SuperheroUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.AnimationState;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.behavior.DoNothing;
 import net.minecraft.world.entity.player.Player;
-import org.antlr.v4.codegen.model.Sync;
-import org.apache.http.annotation.Obsolete;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.Optional;
 
 public class SuperheroData {
 

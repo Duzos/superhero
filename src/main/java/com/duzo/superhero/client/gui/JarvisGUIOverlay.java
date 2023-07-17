@@ -2,7 +2,7 @@ package com.duzo.superhero.client.gui;
 
 import com.duzo.superhero.Superhero;
 import com.duzo.superhero.items.ironman.IronManEdithGlasses;
-import com.duzo.superhero.util.SuperheroCapability;
+import com.duzo.superhero.capabilities.SuperheroCapability;
 import com.duzo.superhero.util.SuperheroIdentifier;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;

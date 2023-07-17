@@ -5,7 +5,7 @@ import com.duzo.superhero.entities.HumanoidEntity;
 import com.duzo.superhero.entities.SuperheroEntities;
 import com.duzo.superhero.items.SuperheroArmourItem;
 import com.duzo.superhero.sounds.SuperheroSounds;
-import com.duzo.superhero.util.SuperheroCapability;
+import com.duzo.superhero.capabilities.SuperheroCapability;
 import com.duzo.superhero.util.SuperheroIdentifier;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;

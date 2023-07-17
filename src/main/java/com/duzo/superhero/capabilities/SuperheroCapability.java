@@ -1,4 +1,4 @@
-package com.duzo.superhero.util;
+package com.duzo.superhero.capabilities;
 
 import com.duzo.superhero.data.SuperheroData;
 import com.duzo.superhero.entities.ironman.RocketEntity;
