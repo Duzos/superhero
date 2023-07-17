@@ -11,7 +11,7 @@ import static com.duzo.superhero.entities.ironman.IronManEntity.fileNameToUsable
 import static com.duzo.superhero.entities.ironman.IronManEntity.nameFromSlot;
 
 public abstract class AbstractIdentifier {
-    protected final String name;
+    protected String name;
     protected SuperheroCapabilities caps;
 
     public AbstractIdentifier(String name, SuperheroCapabilities caps) {

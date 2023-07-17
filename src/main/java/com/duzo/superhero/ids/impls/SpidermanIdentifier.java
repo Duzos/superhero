@@ -1,7 +1,8 @@
-package com.duzo.superhero.ids;
+package com.duzo.superhero.ids.impls;
 
 import com.duzo.superhero.capabilities.SuperheroCapabilities;
 import com.duzo.superhero.capabilities.SuperheroCapability;
+import com.duzo.superhero.ids.BaseIdentifier;
 import com.duzo.superhero.util.spiderman.SpiderManUtil;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -27,6 +28,10 @@ public class SpidermanIdentifier extends BaseIdentifier {
     }
     public SpidermanIdentifier(String name, SuperheroCapabilities caps) {
         this(name,caps,false);
+    }
+
+    public SpidermanIdentifier(String name) {
+        this(name, new SuperheroCapabilities());
     }
 
     @Override

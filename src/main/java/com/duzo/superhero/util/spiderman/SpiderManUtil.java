@@ -1,5 +1,7 @@
 package com.duzo.superhero.util.spiderman;
 
+import com.duzo.superhero.capabilities.SuperheroCapabilities;
+import com.duzo.superhero.capabilities.SuperheroCapability;
 import com.duzo.superhero.entities.spiderman.WebRopeEntity;
 import com.duzo.superhero.items.SuperheroArmourItem;
 import com.duzo.superhero.items.SuperheroItems;
@@ -41,6 +43,7 @@ import java.util.List;
 import static com.duzo.superhero.util.SuperheroUtil.playerHasEffect;
 
 public class SpiderManUtil {
+    public static final SuperheroCapabilities DEFAULT_CAPABILITIES = new SuperheroCapabilities(SuperheroCapability.WEB_SHOOTING,SuperheroCapability.WALL_CLIMBING,SuperheroCapability.SUPER_STRENGTH,SuperheroCapability.FAST_MOBILITY,SuperheroCapability.SPIDERMAN_HUD);
 
     public static void runWallClimbs(Player player) {
         if (Minecraft.getInstance().player != null) {

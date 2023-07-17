@@ -15,10 +15,14 @@ import java.util.HashMap;
 import static com.duzo.superhero.entities.ironman.IronManEntity.fileNameToUsable;
 import static com.duzo.superhero.entities.ironman.IronManEntity.nameFromSlot;
 
+/**
+ * replace with {@link com.duzo.superhero.ids.AbstractIdentifier}
+ */
+@Deprecated
 public enum SuperheroIdentifier implements StringRepresentable {
     // @TODO replace a list of enums with a registry that is editable at runtime for datapack capabilities.
     // FLASH
-    FLASH {
+    FLASH { // Done
         @Override
         public SuperheroCapabilities getCapabilities() {
             return new SuperheroCapabilities(SuperheroCapability.SPEEDSTER,SuperheroCapability.FLASH_HUD);
@@ -48,7 +52,7 @@ public enum SuperheroIdentifier implements StringRepresentable {
     },
 
     // SPIDER-MAN
-    GWEN {
+    GWEN { // Done
         @Override
         public boolean isSlim() {
             return true;
@@ -70,7 +74,7 @@ public enum SuperheroIdentifier implements StringRepresentable {
             return new SuperheroCapabilities().add(SuperheroCapability.WEB_SHOOTING,SuperheroCapability.WALL_CLIMBING,SuperheroCapability.SUPER_STRENGTH,SuperheroCapability.FAST_MOBILITY,SuperheroCapability.SPIDERMAN_HUD);
         }
     },
-    IRON_SPIDER {
+    IRON_SPIDER { // Done
         @Override
         public boolean isSlim() {
             return true;
@@ -95,7 +99,7 @@ public enum SuperheroIdentifier implements StringRepresentable {
     /**
      * The default identifier.
      */
-    AMAZING_SPIDER_MAN {
+    AMAZING_SPIDER_MAN { // Done
         @Override
         public boolean isSlim() {
             return true;
@@ -117,7 +121,7 @@ public enum SuperheroIdentifier implements StringRepresentable {
             return "Spider-Man" + " " + slotName;
         }
     },
-    MILES_CLOTHED {
+    MILES_CLOTHED { // Done
         @Override
         public boolean isSlim() {
             return true;
@@ -139,7 +143,7 @@ public enum SuperheroIdentifier implements StringRepresentable {
             return new SuperheroCapabilities().add(SuperheroCapability.INVISIBILITY,SuperheroCapability.WEB_SHOOTING,SuperheroCapability.WALL_CLIMBING,SuperheroCapability.SUPER_STRENGTH,SuperheroCapability.FAST_MOBILITY,SuperheroCapability.SPIDERMAN_HUD);
         }
     },
-    MILES {
+    MILES { // Done
         @Override
         public boolean isSlim() {
             return true;
