@@ -37,7 +37,7 @@ public enum SuperheroIdentifier implements StringRepresentable {
     },
 
     // BATMAN
-    BATMAN_VS_SUPERMAN {
+    BATMAN_VS_SUPERMAN { // Done
         @Override
         public SuperheroCapabilities getCapabilities() {
             return new SuperheroCapabilities(SuperheroCapability.GRAPPLING_HOOK,SuperheroCapability.SUPER_STRENGTH,SuperheroCapability.NIGHT_VISION_HELMET_ONLY,SuperheroCapability.INVISIBILITY);
@@ -168,7 +168,7 @@ public enum SuperheroIdentifier implements StringRepresentable {
     },
 
     // IRON MAN
-    IRONMAN_MARK_9() {
+    IRONMAN_MARK_9() { // Done
         @Override
         public SuperheroCapabilities getCapabilities() {
             return new SuperheroCapabilities().add(SuperheroCapability.MASK_TOGGLE, SuperheroCapability.NANOTECH,SuperheroCapability.JARVIS,SuperheroCapability.NIGHT_VISION_HELMET_ONLY,SuperheroCapability.IRON_MAN_WEAPONS,SuperheroCapability.BLAST_OFF,SuperheroCapability.IRON_MAN_FLIGHT);
@@ -198,7 +198,7 @@ public enum SuperheroIdentifier implements StringRepresentable {
             return IronManUtil.getHoverTextName(this);
         }
     },
-    IRONMAN_MARK_7() {
+    IRONMAN_MARK_7() { // Done
         @Override
         public SuperheroCapabilities getCapabilities() {
             return new SuperheroCapabilities().add(SuperheroCapability.MASK_TOGGLE, SuperheroCapability.BRACELET_LOCATING,SuperheroCapability.JARVIS,SuperheroCapability.NIGHT_VISION_HELMET_ONLY,SuperheroCapability.IRON_MAN_WEAPONS,SuperheroCapability.BLAST_OFF,SuperheroCapability.IRON_MAN_FLIGHT);
@@ -228,7 +228,7 @@ public enum SuperheroIdentifier implements StringRepresentable {
             return IronManUtil.getHoverTextName(this);
         }
     },
-    IRONMAN_MARK_5() {
+    IRONMAN_MARK_5() { // Done
         @Override
         public SuperheroCapabilities getCapabilities() {
             return new SuperheroCapabilities().add(SuperheroCapability.SUITCASE,SuperheroCapability.JARVIS,SuperheroCapability.NIGHT_VISION_HELMET_ONLY,SuperheroCapability.IRON_MAN_WEAPONS,SuperheroCapability.BLAST_OFF,SuperheroCapability.IRON_MAN_FLIGHT);
@@ -258,7 +258,7 @@ public enum SuperheroIdentifier implements StringRepresentable {
             return IronManUtil.getHoverTextName(this);
         }
     },
-    IRONMAN_MARK_2() {
+    IRONMAN_MARK_2() { // Done
         @Override
         public SuperheroCapabilities getCapabilities() {
             return new SuperheroCapabilities().add(SuperheroCapability.MASK_TOGGLE, SuperheroCapability.ICES_OVER,SuperheroCapability.JARVIS,SuperheroCapability.NIGHT_VISION_HELMET_ONLY,SuperheroCapability.BLAST_OFF,SuperheroCapability.BINDING,SuperheroCapability.IRON_MAN_FLIGHT);
@@ -290,7 +290,7 @@ public enum SuperheroIdentifier implements StringRepresentable {
             return IronManUtil.getHoverTextName(this);
         }
     },
-    IRONMAN_MARK_1() {
+    IRONMAN_MARK_1() { // Done
         @Override
         public SuperheroCapabilities getCapabilities() {
             return new SuperheroCapabilities().add(SuperheroCapability.MASK_TOGGLE, SuperheroCapability.ICES_OVER,SuperheroCapability.BINDING,SuperheroCapability.IRON_MAN_FLIGHT);

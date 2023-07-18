@@ -21,7 +21,7 @@ import java.util.List;
 
 public class SuperheroUtil {
 
-    private static final ResourceLocation DEFAULT_TEXTURE = new ResourceLocation(Superhero.MODID,"textures/heroes/generic/invisible.png");
+    public static final ResourceLocation DEFAULT_TEXTURE = new ResourceLocation(Superhero.MODID,"textures/heroes/generic/invisible.png");
 
     public static boolean isInvisibleTexture(ResourceLocation location) {
         return location.equals(DEFAULT_TEXTURE);
@@ -43,6 +43,7 @@ public class SuperheroUtil {
         }
         return new ResourceLocation(Superhero.MODID,s);
     }
+
     public static boolean doesResourceLocationExist(String location) {
         return doesResourceLocationExist(new ResourceLocation(Superhero.MODID,location));
     }

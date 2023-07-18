@@ -1,6 +1,8 @@
 package com.duzo.superhero.util.ironman;
 
 import com.duzo.superhero.Superhero;
+import com.duzo.superhero.ids.AbstractIdentifier;
+import com.duzo.superhero.ids.impls.IronManIdentifier;
 import com.duzo.superhero.items.ironman.IronManArmourItem;
 import com.duzo.superhero.capabilities.SuperheroCapability;
 import com.duzo.superhero.util.SuperheroIdentifier;
@@ -50,6 +52,10 @@ public class IronManUtil {
 
         return map.containsKey("vertical") || map.containsKey("blastOff");
     }
+    public static boolean isIronManSuit(AbstractIdentifier id) {
+        return id instanceof IronManIdentifier;
+    }
+
 
     public static double getVerticalFlight(SuperheroIdentifier id) {
         if (!isIronManSuit(id)) return 0d;

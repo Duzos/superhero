@@ -1,18 +1,24 @@
 package com.duzo.superhero.ids;
 
+import com.duzo.superhero.Superhero;
 import com.duzo.superhero.capabilities.SuperheroCapabilities;
 import com.duzo.superhero.items.SuperheroArmourItem;
 import com.duzo.superhero.util.SuperheroIdentifier;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 
 import static com.duzo.superhero.entities.ironman.IronManEntity.fileNameToUsable;
 import static com.duzo.superhero.entities.ironman.IronManEntity.nameFromSlot;
+import static com.duzo.superhero.util.SuperheroUtil.DEFAULT_TEXTURE;
+import static com.duzo.superhero.util.SuperheroUtil.doesResourceLocationExist;
 
 public abstract class AbstractIdentifier {
     protected String name;
     protected SuperheroCapabilities caps;
+    protected ResourceLocation texture = new ResourceLocation(Superhero.MODID,"textures/heroes/" + this.getSerializedName() + ".png");
+    protected ResourceLocation lightmap = new ResourceLocation(Superhero.MODID,"textures/heroes/" + this.getSerializedName() + "_l.png");
 
     public AbstractIdentifier(String name, SuperheroCapabilities caps) {
         this.name = name;
@@ -55,6 +61,20 @@ public abstract class AbstractIdentifier {
 //    public HashMap<String,?> getEnumSpecificValues() {
 //        return new HashMap<>();
 //    }
+
+    public ResourceLocation texture() {
+        if (!doesResourceLocationExist(this.texture)) {
+            return DEFAULT_TEXTURE;
+        }
+        return this.texture;
+    }
+
+    public ResourceLocation lightmap() {
+        if (!doesResourceLocationExist(this.lightmap)) {
+            return DEFAULT_TEXTURE;
+        }
+        return this.lightmap;
+    }
 
     public boolean isValidArmour(LivingEntity player) {
         SuperheroIdentifier currentID = null;

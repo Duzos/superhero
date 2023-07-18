@@ -3,6 +3,8 @@ package com.duzo.superhero.ids;
 import com.duzo.superhero.Superhero;
 import com.duzo.superhero.capabilities.SuperheroCapability;
 import com.duzo.superhero.ids.impls.IdentifierBuilder;
+import com.duzo.superhero.ids.impls.IronManIdentifier;
+import com.duzo.superhero.util.batman.BatManUtil;
 import com.duzo.superhero.util.flash.FlashUtil;
 import com.duzo.superhero.util.spiderman.SpiderManUtil;
 import net.minecraft.resources.ResourceLocation;
@@ -55,6 +57,51 @@ public class SuperheroIdentifierRegistry {
             .capabilities(FlashUtil.DEFAULT_CAPABILITIES)
     );
 
+    // Batman
+    public static final RegistryObject<AbstractIdentifier> BATMAN_VS_SUPERMAN = IDS.register("batman_vs_superman", () -> new IdentifierBuilder("batman_vs_superman")
+            .itemPrefix("BatMan")
+            .capabilities(BatManUtil.DEFAULT_CAPABILITIES)
+    );
+
+
+    // Iron-Man
+
+    // The order the properties are set matters here as it returns IdentifierBuilder for the other things, @TODO is there a way to return the right thing?
+    public static final RegistryObject<AbstractIdentifier> IRONMAN_MARK_1 = IDS.register("ironman_mark_1", () -> new IronManIdentifier("ironman_mark_1")
+            .mark(1)
+            .vertical(0.005)
+            .blast(1d)
+            .itemPrefix("Iron-Man")
+            .capabilities(SuperheroCapability.MASK_TOGGLE, SuperheroCapability.ICES_OVER,SuperheroCapability.BINDING,SuperheroCapability.IRON_MAN_FLIGHT)
+    );
+    public static final RegistryObject<AbstractIdentifier> IRONMAN_MARK_2 = IDS.register("ironman_mark_2", () -> new IronManIdentifier("ironman_mark_2")
+            .mark(2)
+            .vertical(0.01)
+            .blast(1.25d)
+            .itemPrefix("Iron-Man")
+            .capabilities(SuperheroCapability.MASK_TOGGLE, SuperheroCapability.ICES_OVER,SuperheroCapability.JARVIS,SuperheroCapability.NIGHT_VISION_HELMET_ONLY,SuperheroCapability.BLAST_OFF,SuperheroCapability.BINDING,SuperheroCapability.IRON_MAN_FLIGHT)
+    );
+    public static final RegistryObject<AbstractIdentifier> IRONMAN_MARK_5 = IDS.register("ironman_mark_5", () -> new IronManIdentifier("ironman_mark_5")
+            .mark(5)
+            .vertical(0.015)
+            .blast(1.5d)
+            .itemPrefix("Iron-Man")
+            .capabilities(SuperheroCapability.SUITCASE,SuperheroCapability.JARVIS,SuperheroCapability.NIGHT_VISION_HELMET_ONLY,SuperheroCapability.IRON_MAN_WEAPONS,SuperheroCapability.BLAST_OFF,SuperheroCapability.IRON_MAN_FLIGHT)
+    );
+    public static final RegistryObject<AbstractIdentifier> IRONMAN_MARK_7 = IDS.register("ironman_mark_7", () -> new IronManIdentifier("ironman_mark_7")
+            .mark(7)
+            .vertical(0.0175)
+            .blast(2d)
+            .itemPrefix("Iron-Man")
+            .capabilities(SuperheroCapability.MASK_TOGGLE, SuperheroCapability.BRACELET_LOCATING,SuperheroCapability.JARVIS,SuperheroCapability.NIGHT_VISION_HELMET_ONLY,SuperheroCapability.IRON_MAN_WEAPONS,SuperheroCapability.BLAST_OFF,SuperheroCapability.IRON_MAN_FLIGHT)
+    );
+    public static final RegistryObject<AbstractIdentifier> IRONMAN_MARK_9 = IDS.register("ironman_mark_9", () -> new IronManIdentifier("ironman_mark_9")
+            .mark(9)
+            .vertical(0.02)
+            .blast(2.5d)
+            .itemPrefix("Iron-Man")
+            .capabilities(SuperheroCapability.MASK_TOGGLE, SuperheroCapability.NANOTECH,SuperheroCapability.JARVIS,SuperheroCapability.NIGHT_VISION_HELMET_ONLY,SuperheroCapability.IRON_MAN_WEAPONS,SuperheroCapability.BLAST_OFF,SuperheroCapability.IRON_MAN_FLIGHT)
+    );
 
 
     public static Supplier<IForgeRegistry<AbstractIdentifier>> IDS_REGISTRY = IDS.makeRegistry(() -> new RegistryBuilder<AbstractIdentifier>().setMaxID(Integer.MAX_VALUE - 1));
