@@ -4,8 +4,8 @@ import com.duzo.superhero.client.models.AlexSkinModel;
 import com.duzo.superhero.client.models.SkinModel;
 import com.duzo.superhero.client.models.SteveSkinModel;
 import com.duzo.superhero.client.models.SuperheroModels;
+import com.duzo.superhero.ids.AbstractIdentifier;
 import com.duzo.superhero.items.SuperheroArmourItem;
-import com.duzo.superhero.util.SuperheroIdentifier;
 import com.duzo.superhero.util.SuperheroUtil;
 import com.duzo.superhero.util.ironman.IronManUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -171,7 +171,7 @@ public class GenericSuitRenderer<T extends AbstractClientPlayer, M extends Entit
 
     private boolean usesGenericRenderer(Player player) {
         // Get the correct texture
-        SuperheroIdentifier id = getIDFromPlayer(player);
+        AbstractIdentifier id = getIDFromPlayer(player);
         if (id == null) return false;
         return id.usesDefaultRenderer();
     }
@@ -195,14 +195,14 @@ public class GenericSuitRenderer<T extends AbstractClientPlayer, M extends Entit
 
     private void updateTextures(Player player) {
         // Get the correct texture
-        SuperheroIdentifier id = getIDFromPlayer(player);
+        AbstractIdentifier id = getIDFromPlayer(player);
         if (id == null) return;
         this.texture = SuperheroUtil.getTextureFromID(id);
         this.lightmap = SuperheroUtil.getLightMapFromID(id);
     }
     private void updateSlim(Player player) {
         // Get the correct texture
-        SuperheroIdentifier id = getIDFromPlayer(player);
+        AbstractIdentifier id = getIDFromPlayer(player);
         if (id == null) return;
         boolean slim = id.isSlim();
 
@@ -220,7 +220,7 @@ public class GenericSuitRenderer<T extends AbstractClientPlayer, M extends Entit
     private ResourceLocation getSolidTextureForSlotByID(EquipmentSlot slot, Player player) {
         // Get texture from slot ID
         ItemStack stack = player.getItemBySlot(slot);
-        SuperheroIdentifier id = getIDFromStack(stack);
+        AbstractIdentifier id = getIDFromStack(stack);
         if (id == null) return this.texture;
         if (!IronManUtil.isIronManSuit(id)) return this.texture;
         return IronManUtil.getTextureFromID(id);
@@ -229,7 +229,7 @@ public class GenericSuitRenderer<T extends AbstractClientPlayer, M extends Entit
     private ResourceLocation getLightmapTextureForSlotByID(EquipmentSlot slot, Player player) {
         // Get lightmap texture from slot ID
         ItemStack stack = player.getItemBySlot(slot);
-        SuperheroIdentifier id = getIDFromStack(stack);
+        AbstractIdentifier id = getIDFromStack(stack);
         if (id == null) return this.texture;
         if (!IronManUtil.isIronManSuit(id)) return this.texture;
         return IronManUtil.getLightMapFromID(id);

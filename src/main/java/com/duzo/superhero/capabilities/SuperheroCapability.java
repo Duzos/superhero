@@ -1,7 +1,7 @@
 package com.duzo.superhero.capabilities;
 
-import com.duzo.superhero.data.SuperheroData;
 import com.duzo.superhero.entities.ironman.RocketEntity;
+import com.duzo.superhero.ids.impls.IronManIdentifier;
 import com.duzo.superhero.items.SuperheroArmourItem;
 import com.duzo.superhero.items.SuperheroNanotechItem;
 import com.duzo.superhero.sounds.SuperheroSounds;
@@ -272,7 +272,9 @@ public enum SuperheroCapability implements StringRepresentable {
                 ItemStack head = player.getItemBySlot(EquipmentSlot.HEAD);
                 SuperheroArmourItem item = (SuperheroArmourItem) head.getItem();
 
-                spawnNew(item.getIdentifier(),player.getLevel(),player.getOnPos(),player);
+                if (!IronManUtil.isIronManSuit(item.getIdentifier())) return;
+
+                spawnNew((IronManIdentifier) item.getIdentifier(),player.getLevel(),player.getOnPos(),player);
                 player.getLevel().playSound(null,player, SuperheroSounds.IRONMAN_POWERDOWN.get(), SoundSource.PLAYERS,1f,1f);
             }
         }
@@ -383,12 +385,16 @@ public enum SuperheroCapability implements StringRepresentable {
         @Override
         public void tick(ItemStack stack, Level level, Player player) {
             if (getIDFromStack(stack).isValidArmour(player)) {
-                runFlight(player,getIDFromStack(stack));
+                if (IronManUtil.isIronManSuit(stack)) {
+                    runFlight(player, (IronManIdentifier) getIDFromStack(stack));
+                }
             }
 
             if (stack.getEquipmentSlot() == EquipmentSlot.FEET && player.getItemBySlot(EquipmentSlot.FEET).getItem() instanceof SuperheroArmourItem) {
                 if (!getIDFromStack(stack).isValidArmour(player)) {
-                    bootsOnlyFlight(player,getIDFromStack(stack));
+                    if (IronManUtil.isIronManSuit(stack)) {
+                        bootsOnlyFlight(player, (IronManIdentifier) getIDFromStack(stack));
+                    }
                 }
             }
         }

@@ -1,7 +1,7 @@
 package com.duzo.superhero.client.gui;
 
 import com.duzo.superhero.capabilities.SuperheroCapability;
-import com.duzo.superhero.util.SuperheroIdentifier;
+import com.duzo.superhero.ids.AbstractIdentifier;
 import com.duzo.superhero.util.flash.FlashUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -20,7 +20,7 @@ public class FlashGUIOverlay {
 
         if (!mc.options.getCameraType().isFirstPerson()) return;
 
-        SuperheroIdentifier id = getIDFromStack(mc.player.getItemBySlot(EquipmentSlot.HEAD));
+        AbstractIdentifier id = getIDFromStack(mc.player.getItemBySlot(EquipmentSlot.HEAD));
 
         if (id == null) return;
 

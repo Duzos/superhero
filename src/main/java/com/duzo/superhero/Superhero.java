@@ -1,17 +1,17 @@
 package com.duzo.superhero;
 
 import com.duzo.superhero.blocks.SuperheroBlocks;
+import com.duzo.superhero.capabilities.SuperheroCapability;
 import com.duzo.superhero.entities.SuperheroEntities;
 import com.duzo.superhero.events.FlyingEventHandler;
+import com.duzo.superhero.ids.AbstractIdentifier;
 import com.duzo.superhero.ids.SuperheroIdentifierRegistry;
 import com.duzo.superhero.items.SuperheroItems;
 import com.duzo.superhero.items.SuperheroNanotechItem;
-import com.duzo.superhero.items.ironman.IronManArmourItem;
 import com.duzo.superhero.network.Network;
 import com.duzo.superhero.particles.SuperheroParticles;
 import com.duzo.superhero.sounds.SuperheroSounds;
-import com.duzo.superhero.capabilities.SuperheroCapability;
-import com.duzo.superhero.util.SuperheroIdentifier;
+import com.duzo.superhero.util.ironman.IronManUtil;
 import com.mojang.logging.LogUtils;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -50,8 +50,8 @@ public class Superhero {
         SuperheroIdentifierRegistry.IDS.register(modEventBus);
 
         SuperheroEntities.ENTITIES.register(modEventBus);
-        SuperheroItems.init();
         SuperheroItems.ITEMS.register(modEventBus);
+        SuperheroItems.init(); // @TODO crashes game, dk why
         SuperheroBlocks.BLOCKS.register(modEventBus);
         SuperheroSounds.SOUNDS.register(modEventBus);
         SuperheroParticles.PARTICLE_TYPES.register(modEventBus);
@@ -77,10 +77,10 @@ public class Superhero {
         if (!(event.getEntity() instanceof Player player)) return;
 
         // @TODO this better? as a capability but cba
-        if (player.getItemBySlot(EquipmentSlot.FEET).getItem() instanceof IronManArmourItem) {
+        if (IronManUtil.isIronManSuit(player.getItemBySlot(EquipmentSlot.LEGS))) {
             event.setDistance(0);
         }
-        SuperheroIdentifier id = getIDFromStack(player.getItemBySlot(EquipmentSlot.FEET));
+        AbstractIdentifier id = getIDFromStack(player.getItemBySlot(EquipmentSlot.FEET));
         if (id != null) {
             if (id.getCapabilities().has(SuperheroCapability.FAST_MOBILITY)){
                 event.setDamageMultiplier(event.getDamageMultiplier() * 0.5f);

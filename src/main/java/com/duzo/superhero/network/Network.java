@@ -28,11 +28,6 @@ public class Network {
 
         INSTANCE = net;
 
-        net.messageBuilder(TakeOffIronManSuitC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
-                .decoder(TakeOffIronManSuitC2SPacket::new)
-                .encoder(TakeOffIronManSuitC2SPacket::toBytes)
-                .consumerMainThread(TakeOffIronManSuitC2SPacket::handle)
-                .add();
         net.messageBuilder(AbilityC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
                 .decoder(AbilityC2SPacket::decode)
                 .encoder(AbilityC2SPacket::encode)

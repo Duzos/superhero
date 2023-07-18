@@ -3,7 +3,6 @@ package com.duzo.superhero.ids;
 import com.duzo.superhero.Superhero;
 import com.duzo.superhero.capabilities.SuperheroCapabilities;
 import com.duzo.superhero.items.SuperheroArmourItem;
-import com.duzo.superhero.util.SuperheroIdentifier;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -77,7 +76,7 @@ public abstract class AbstractIdentifier {
     }
 
     public boolean isValidArmour(LivingEntity player) {
-        SuperheroIdentifier currentID = null;
+        AbstractIdentifier currentID = null;
 
         for (EquipmentSlot equipmentSlot : EquipmentSlot.values()) {
             if (!equipmentSlot.isArmor()) continue;

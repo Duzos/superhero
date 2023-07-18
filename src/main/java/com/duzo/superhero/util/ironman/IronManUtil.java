@@ -1,11 +1,11 @@
 package com.duzo.superhero.util.ironman;
 
 import com.duzo.superhero.Superhero;
-import com.duzo.superhero.ids.AbstractIdentifier;
-import com.duzo.superhero.ids.impls.IronManIdentifier;
-import com.duzo.superhero.items.ironman.IronManArmourItem;
 import com.duzo.superhero.capabilities.SuperheroCapability;
-import com.duzo.superhero.util.SuperheroIdentifier;
+import com.duzo.superhero.ids.AbstractIdentifier;
+import com.duzo.superhero.ids.SuperheroIdentifierRegistry;
+import com.duzo.superhero.ids.impls.IronManIdentifier;
+import com.duzo.superhero.items.SuperheroArmourItem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.particles.ParticleTypes;
@@ -14,10 +14,12 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.registries.RegistryObject;
 import org.lwjgl.glfw.GLFW;
 
-import java.util.HashMap;
 import java.util.Random;
 
 import static com.duzo.superhero.util.SuperheroUtil.doesResourceLocationExist;
@@ -27,66 +29,69 @@ public class IronManUtil {
     private static final ResourceLocation DEFAULT_TEXTURE = new ResourceLocation(Superhero.MODID, "textures/heroes/iron_man/mk3.png");
     private static final ResourceLocation DEFAULT_LIGHTMAP = new ResourceLocation(Superhero.MODID, "textures/heroes/iron_man/mk3_l.png");
 
-    private static String getMarkNumberString(SuperheroIdentifier identifier) {
+    private static String getMarkNumberString(AbstractIdentifier identifier) {
         return identifier.getSerializedName().substring(identifier.getSerializedName().length() - 1);
     }
-    public static int getMarkNumber(SuperheroIdentifier identifier) {
+    public static int getMarkNumber(AbstractIdentifier identifier) {
         return Integer.parseInt(getMarkNumberString(identifier));
     }
-    public static ResourceLocation getTextureFromID(SuperheroIdentifier id) {
+    public static ResourceLocation getTextureFromID(AbstractIdentifier id) {
         String s = "textures/heroes/iron_man/mk" + getMarkNumberString(id) + ".png";
         if (!doesResourceLocationExist(s)) {
             return DEFAULT_TEXTURE;
         }
         return new ResourceLocation(Superhero.MODID,s);
     }
-    public static ResourceLocation getLightMapFromID(SuperheroIdentifier id) {
+    public static ResourceLocation getLightMapFromID(AbstractIdentifier id) {
         String s = "textures/heroes/iron_man/mk" + getMarkNumberString(id) + "_l.png";
         if (!doesResourceLocationExist(s)) {
             return DEFAULT_LIGHTMAP;
         }
         return new ResourceLocation(Superhero.MODID,s);
     }
-    public static boolean isIronManSuit(SuperheroIdentifier id) {
-        HashMap<String, ?> map = id.getEnumSpecificValues();
-
-        return map.containsKey("vertical") || map.containsKey("blastOff");
-    }
     public static boolean isIronManSuit(AbstractIdentifier id) {
         return id instanceof IronManIdentifier;
     }
-
-
-    public static double getVerticalFlight(SuperheroIdentifier id) {
-        if (!isIronManSuit(id)) return 0d;
-
-        return (double) id.getEnumSpecificValues().get("vertical");
+    public static boolean isIronManSuit(ItemStack stack) {
+        return isIronManSuit(stack.getItem());
+    }
+    public static boolean isIronManSuit(Item item) {
+        if (item instanceof SuperheroArmourItem superheroArmourItem) {
+            return isIronManSuit(superheroArmourItem.getIdentifier());
+        }
+        return false;
     }
 
-    public static double getBlastOff(SuperheroIdentifier id) {
-        if (!isIronManSuit(id)) return 0d;
-
-        return (double) id.getEnumSpecificValues().get("blastOff");
+    public static IronManIdentifier getIDFromMark(int mark) {
+        for (RegistryObject<AbstractIdentifier> reg : SuperheroIdentifierRegistry.IDS.getEntries()) {
+            AbstractIdentifier id = reg.get();
+            if (isIronManSuit(id)) {
+                if (((IronManIdentifier) id).mark() == mark) {
+                    return (IronManIdentifier) id;
+                }
+            }
+        }
+        return null;
     }
 
-    public static String getHoverTextName(SuperheroIdentifier id) {
+    public static String getHoverTextName(AbstractIdentifier id) {
         return "Mark " + id.getSerializedName().substring(id.getSerializedName().length() - 1);
     }
 
     public static class FlightUtil {
         // Flight that only goes up
-        public static void bootsOnlyFlight(Player player, SuperheroIdentifier mark) {
+        public static void bootsOnlyFlight(Player player, IronManIdentifier mark) {
             if(keyDown(GLFW.GLFW_KEY_SPACE)) {
                 Vec3 motion = player.getDeltaMovement();
-                double currentAccel = getVerticalFlight(mark) * (motion.y() < 0.3D ? 2.5D : 1.0D);
+                double currentAccel = mark.vertical() * (motion.y() < 0.3D ? 2.5D : 1.0D);
                 player.setDeltaMovement(motion.x(), motion.y() + currentAccel, motion.z());
             }
         }
 
         // @TODO movement to left right and back
-        public static void runFlight(Player player, SuperheroIdentifier mark) {
+        public static void runFlight(Player player, IronManIdentifier mark) {
             Vec3 motion = player.getDeltaMovement();
-            double currentAccel = getVerticalFlight(mark) * (motion.y() < 0.3D ? 2.5D : 1.0D);
+            double currentAccel = mark.vertical() * (motion.y() < 0.3D ? 2.5D : 1.0D);
 
             createParticles(player);
 
@@ -94,7 +99,7 @@ public class IronManUtil {
 
             if (canBlastOff(player)) {
                 // @TODO hitbox code
-                blastOff(player,getBlastOff(mark));
+                blastOff(player,mark.blast());
             } else if (Minecraft.getInstance().player.input.jumping) {
                 verticalFlight(player, motion, currentAccel);
             }
@@ -178,7 +183,10 @@ public class IronManUtil {
 
         public static boolean canBlastOff(Player player) {
             if (Minecraft.getInstance().player == null) return false;
-            if (!(player.getItemBySlot(EquipmentSlot.CHEST).getItem() instanceof IronManArmourItem hero)) return false;
+            Item chest = player.getItemBySlot(EquipmentSlot.CHEST).getItem();
+            if (!(isIronManSuit(chest))) return false;
+
+            SuperheroArmourItem hero = (SuperheroArmourItem) chest;
 
             return Screen.hasControlDown() && Minecraft.getInstance().player.input.up && !player.isOnGround() && hero.getIdentifier().getCapabilities().has(SuperheroCapability.BLAST_OFF) && !player.isSwimming();
         }

@@ -1,21 +1,16 @@
 package com.duzo.superhero.mixin;
 
 import com.duzo.superhero.Superhero;
-import com.duzo.superhero.items.ironman.IronManArmourItem;
 import com.duzo.superhero.items.ironman.IronManEdithGlasses;
+import com.duzo.superhero.util.ironman.IronManUtil;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.model.HumanoidModel;
-import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.renderer.entity.EntityRenderer;
-import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.renderer.entity.player.PlayerRenderer;
-import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -47,7 +42,7 @@ public abstract class EntityRendererMixin<T extends Entity> {
 
         if (!mc.options.getCameraType().isFirstPerson()) return;
 
-        boolean flag = mc.player.getItemBySlot(EquipmentSlot.HEAD).getItem() instanceof IronManArmourItem || mc.player.getItemBySlot(EquipmentSlot.HEAD).getItem() instanceof IronManEdithGlasses;
+        boolean flag = IronManUtil.isIronManSuit(mc.player.getItemBySlot(EquipmentSlot.CHEST)) || mc.player.getItemBySlot(EquipmentSlot.HEAD).getItem() instanceof IronManEdithGlasses;
         if (!flag) return;
         // Everything past here is only shown with JARVIS hud up
 

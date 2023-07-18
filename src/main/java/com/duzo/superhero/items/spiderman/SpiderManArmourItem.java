@@ -1,7 +1,7 @@
 package com.duzo.superhero.items.spiderman;
 
+import com.duzo.superhero.ids.AbstractIdentifier;
 import com.duzo.superhero.items.SuperheroArmourItem;
-import com.duzo.superhero.util.SuperheroIdentifier;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
@@ -17,7 +17,7 @@ import static com.duzo.superhero.entities.ironman.IronManEntity.fileNameToUsable
 
 @Deprecated(forRemoval = true)
 public class SpiderManArmourItem extends SuperheroArmourItem {
-    public SpiderManArmourItem(ArmorMaterial material, Type type, Properties properties, SuperheroIdentifier id) {
+    public SpiderManArmourItem(ArmorMaterial material, Type type, Properties properties, AbstractIdentifier id) {
         super(material, type, properties,id);
     }
 

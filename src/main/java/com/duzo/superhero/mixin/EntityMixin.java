@@ -1,7 +1,7 @@
 package com.duzo.superhero.mixin;
 
-import com.duzo.superhero.items.ironman.IronManArmourItem;
 import com.duzo.superhero.sounds.SuperheroSounds;
+import com.duzo.superhero.util.ironman.IronManUtil;
 import com.duzo.superhero.util.player.IEntityDataSaver;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -11,6 +11,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.HitResult;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -23,6 +24,12 @@ public abstract class EntityMixin implements IEntityDataSaver {
     private CompoundTag persistentData;
 
     @Shadow public abstract void playSound(SoundEvent p_19938_, float p_19939_, float p_19940_);
+
+    @Shadow public abstract HitResult pick(double p_19908_, float p_19909_, boolean p_19910_);
+
+    @Shadow public abstract void playSound(SoundEvent p_216991_);
+
+    @Shadow public abstract void playerTouch(Player p_20081_);
 
     // Saving custom data to entities
     // @TODO i dont think this is necessary
@@ -54,7 +61,7 @@ public abstract class EntityMixin implements IEntityDataSaver {
             Entity entity = (Entity) (Object) this;
             if (!(entity instanceof Player player)) return;
 
-            if (player.getItemBySlot(EquipmentSlot.FEET).getItem() instanceof IronManArmourItem) {
+            if (IronManUtil.isIronManSuit(player.getItemBySlot(EquipmentSlot.FEET))) {
                 this.playSound(SuperheroSounds.IRONMAN_STEP.get(), 1f, 1f);
             }
         }

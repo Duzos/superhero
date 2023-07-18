@@ -3,6 +3,7 @@ package com.duzo.superhero.util.spiderman;
 import com.duzo.superhero.capabilities.SuperheroCapabilities;
 import com.duzo.superhero.capabilities.SuperheroCapability;
 import com.duzo.superhero.entities.spiderman.WebRopeEntity;
+import com.duzo.superhero.ids.AbstractIdentifier;
 import com.duzo.superhero.items.SuperheroArmourItem;
 import com.duzo.superhero.items.SuperheroItems;
 import com.duzo.superhero.items.spiderman.SpiderManNanotechItem;
@@ -12,7 +13,6 @@ import com.duzo.superhero.network.packets.SwingArmS2CPacket;
 import com.duzo.superhero.particles.SuperheroParticles;
 import com.duzo.superhero.sounds.SuperheroSounds;
 import com.duzo.superhero.util.KeyBinds;
-import com.duzo.superhero.util.SuperheroIdentifier;
 import com.duzo.superhero.util.SuperheroUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
@@ -158,10 +158,10 @@ public class SpiderManUtil {
     }
 
     /**
-     * Use {@link SuperheroUtil#putSuitOntoPlayer(SuperheroIdentifier, Player, boolean)}#
+     * Use {@link SuperheroUtil#putSuitOntoPlayer(AbstractIdentifier, Player, boolean)}#
      **/
     @Deprecated
-    public static boolean equipSpiderSuitForID(SuperheroIdentifier id, Player player, boolean excludeNanotech) {
+    public static boolean equipSpiderSuitForID(AbstractIdentifier id, Player player, boolean excludeNanotech) {
         for (EquipmentSlot slot : EquipmentSlot.values()) {
             if (!slot.isArmor()) continue;
 
@@ -198,7 +198,7 @@ public class SpiderManUtil {
      * @return
      */
     public static boolean isValidArmor(LivingEntity player) {
-        SuperheroIdentifier currentMark = null;
+        AbstractIdentifier currentMark = null;
 
         for (EquipmentSlot equipmentSlot : EquipmentSlot.values()) {
             if (!equipmentSlot.isArmor() || equipmentSlot == EquipmentSlot.HEAD) continue;

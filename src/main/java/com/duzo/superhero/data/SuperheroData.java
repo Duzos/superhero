@@ -1,9 +1,9 @@
 package com.duzo.superhero.data;
 
 import com.duzo.superhero.client.renderers.animations.IronManAnimations;
-import com.duzo.superhero.items.ironman.IronManArmourItem;
 import com.duzo.superhero.network.Network;
 import com.duzo.superhero.network.sync.SyncSuperheroData;
+import com.duzo.superhero.util.ironman.IronManUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.AnimationState;
@@ -39,7 +39,7 @@ public class SuperheroData {
             sync();
         }
         if(livingEntity instanceof Player player)
-            if(player.getItemBySlot(EquipmentSlot.HEAD).getItem() instanceof IronManArmourItem)
+            if(IronManUtil.isIronManSuit(player.getItemBySlot(EquipmentSlot.HEAD)))
                 setIsOpen(player.isHurt());
     }
 

@@ -4,7 +4,8 @@ package com.duzo.superhero.client.models.items;// Made with Blockbench 4.7.4
 
 
 import com.duzo.superhero.Superhero;
-import com.duzo.superhero.items.ironman.IronManArmourItem;
+import com.duzo.superhero.items.SuperheroArmourItem;
+import com.duzo.superhero.util.ironman.IronManUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.HumanoidModel;
@@ -15,7 +16,6 @@ import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
-import org.joml.Vector3f;
 
 public class IronManArmourModel<T extends LivingEntity> extends HumanoidModel<T> {
 	// This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
@@ -97,10 +97,12 @@ public class IronManArmourModel<T extends LivingEntity> extends HumanoidModel<T>
 	@Override
 	public void prepareMobModel(T entity, float p_102862_, float p_102863_, float p_102864_) {
 		super.prepareMobModel(entity, p_102862_, p_102863_, p_102864_);
-		if(entity.getItemBySlot(EquipmentSlot.HEAD).getItem() instanceof IronManArmourItem item) {
-			head.getChild("mask").setRotation(-86 * ((float) Math.PI / 180F), head.getChild("mask").yRot, head.getChild("mask").zRot);
-			head.getChild("mask").y = head.getChild("mask").y + 1;
-			head.getChild("mask").z = head.getChild("mask").z + 3;
+		if(entity.getItemBySlot(EquipmentSlot.HEAD).getItem() instanceof SuperheroArmourItem item) {
+			if (IronManUtil.isIronManSuit(item.getIdentifier())) {
+				head.getChild("mask").setRotation(-86 * ((float) Math.PI / 180F), head.getChild("mask").yRot, head.getChild("mask").zRot);
+				head.getChild("mask").y = head.getChild("mask").y + 1;
+				head.getChild("mask").z = head.getChild("mask").z + 3;
+			}
 		}
 	}
 

@@ -1,7 +1,7 @@
 package com.duzo.superhero.items;
 
 import com.duzo.superhero.capabilities.SuperheroCapability;
-import com.duzo.superhero.util.SuperheroIdentifier;
+import com.duzo.superhero.ids.AbstractIdentifier;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
@@ -52,7 +52,7 @@ public class SuperheroWeaponItem extends Item {
     }
 
     public static boolean canWeaponBeUsed(ItemStack stack, Player player) {
-        SuperheroIdentifier id = getIDFromStack(player.getItemBySlot(EquipmentSlot.CHEST));
+        AbstractIdentifier id = getIDFromStack(player.getItemBySlot(EquipmentSlot.CHEST));
         if (id == null) return false;
 
         if (!(stack.getItem() instanceof SuperheroWeaponItem weapon)) return false;

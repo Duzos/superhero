@@ -1,7 +1,8 @@
 package com.duzo.superhero.items;
 
 import com.duzo.superhero.capabilities.SuperheroCapability;
-import com.duzo.superhero.util.SuperheroIdentifier;
+import com.duzo.superhero.ids.AbstractIdentifier;
+import com.duzo.superhero.util.SuperheroUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
@@ -50,15 +51,15 @@ public class SuperheroNanotechItem extends SuperheroArmourItem {
         }
     }
 
-    public static SuperheroIdentifier getID(ItemStack stack) {
+    public static AbstractIdentifier getID(ItemStack stack) {
         if (stack.hasTag()) {
             if (stack.getTag().getString("id").equals("")) return null;
 
-            return SuperheroIdentifier.valueOf(stack.getTag().getString("id").toUpperCase());
+            return SuperheroUtil.getIDFromStack(stack);
         }
         return null;
     }
-    public static void setID(ItemStack stack, SuperheroIdentifier id) {
+    public static void setID(ItemStack stack, AbstractIdentifier id) {
         if (stack.hasTag()) {
             stack.getTag().putString("id",id.getSerializedName());
         }
@@ -77,7 +78,7 @@ public class SuperheroNanotechItem extends SuperheroArmourItem {
         player.setItemSlot(EquipmentSlot.FEET,ItemStack.EMPTY);
     }
     public static void convertNanotechToArmour(ItemStack stack, Player player) {
-        SuperheroIdentifier id = getID(stack);
+        AbstractIdentifier id = getID(stack);
         if (id == null) return;
         putSuitOntoPlayer(id,player,true);
     }

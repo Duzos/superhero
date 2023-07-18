@@ -3,10 +3,11 @@ package com.duzo.superhero.entities.ironman;
 import com.duzo.superhero.Superhero;
 import com.duzo.superhero.entities.HumanoidEntity;
 import com.duzo.superhero.entities.SuperheroEntities;
+import com.duzo.superhero.ids.AbstractIdentifier;
+import com.duzo.superhero.ids.SuperheroIdentifierRegistry;
+import com.duzo.superhero.ids.impls.IronManIdentifier;
 import com.duzo.superhero.items.SuperheroArmourItem;
 import com.duzo.superhero.sounds.SuperheroSounds;
-import com.duzo.superhero.capabilities.SuperheroCapability;
-import com.duzo.superhero.util.SuperheroIdentifier;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -29,9 +30,11 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
+import static com.duzo.superhero.util.ironman.IronManUtil.getIDFromMark;
+
 public class IronManEntity extends HumanoidEntity {
-    private static final EntityDataAccessor<String> MARK = SynchedEntityData.defineId(IronManEntity.class, EntityDataSerializers.STRING);
-    public static final SuperheroIdentifier DEFAULT_MARK = SuperheroIdentifier.IRONMAN_MARK_7;
+    private static final EntityDataAccessor<Integer> MARK = SynchedEntityData.defineId(IronManEntity.class, EntityDataSerializers.INT);
+    public static final AbstractIdentifier DEFAULT_MARK = SuperheroIdentifierRegistry.IRONMAN_MARK_7.get();
     private Player owner;
 
     public IronManEntity(EntityType<? extends HumanoidEntity> entityType, Level level) {
@@ -105,21 +108,26 @@ public class IronManEntity extends HumanoidEntity {
         this.skin = new ResourceLocation(Superhero.MODID, "textures/entities/iron_man/" + this.getMark() + ".png");
     }
 
-    public void setMark(SuperheroIdentifier mark) {
-        this.entityData.set(MARK,mark.getSerializedName());
+    public void setMark(IronManIdentifier mark) {
+        this.entityData.set(MARK,mark.mark());
         this.skin = new ResourceLocation(Superhero.MODID, "textures/entities/iron_man/" + this.getMark() + ".png");
         this.setCustomName(Component.translatable("Iron Man " + fileNameToUsable(this.getMark())));
     }
     public String getMark() {
+        return this.entityData.get(MARK).toString();
+    }
+    public int getMarkInt() {
         return this.entityData.get(MARK);
     }
-    public SuperheroIdentifier getMarkEnum() {
-        return SuperheroIdentifier.valueOf(this.getMark().toUpperCase());
+
+    public IronManIdentifier getMarkID() {
+        return getIDFromMark(this.getMarkInt());
     }
+
     @Override
     public void readAdditionalSaveData(CompoundTag nbt) {
         super.readAdditionalSaveData(nbt);
-        this.setMark(SuperheroIdentifier.valueOf(nbt.getString("mark").toUpperCase()));
+        this.setMark(getIDFromMark(nbt.getInt("mark")));
     }
 
     @Override
@@ -131,7 +139,7 @@ public class IronManEntity extends HumanoidEntity {
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
-        this.entityData.define(MARK, DEFAULT_MARK.getSerializedName());
+        this.entityData.define(MARK, ((IronManIdentifier) DEFAULT_MARK).mark());
     }
 
     // @TODO iron man entity despawns
@@ -226,7 +234,7 @@ public class IronManEntity extends HumanoidEntity {
         return true;
     }
 
-    public static void spawnNew(SuperheroIdentifier mark,Level level, BlockPos pos, Player player) {
+    public static void spawnNew(IronManIdentifier mark, Level level, BlockPos pos, Player player) {
         IronManEntity ironMan = new IronManEntity(SuperheroEntities.IRON_MAN_ENTITY.get(), level);
         ironMan.setMark(mark);
         ironMan.takeArmourOffPlayer(player);
@@ -242,12 +250,12 @@ public class IronManEntity extends HumanoidEntity {
         super.tick();
 
         // Code to move towards player, may be useful for calling the iron man suit to the player.
-        if (!this.level.isClientSide) {
-            if (!(this.isNoAi()) && this.owner != null && !(this.getTarget() == this.owner) && this.getMarkEnum().getCapabilities().has(SuperheroCapability.BRACELET_LOCATING)) {
-                this.setSpeed(1);
-                this.getNavigation().moveTo(this.owner,1d);
-            }
-        }
+//        if (!this.level.isClientSide) {
+//            if (!(this.isNoAi()) && this.owner != null && !(this.getTarget() == this.owner) && this.getMarkEnum().getCapabilities().has(SuperheroCapability.BRACELET_LOCATING)) {
+//                this.setSpeed(1);
+//                this.getNavigation().moveTo(this.owner,1d);
+//            }
+//        }
     }
 
     public static AttributeSupplier.Builder getIronManAttributes() {

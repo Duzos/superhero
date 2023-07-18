@@ -1,12 +1,11 @@
 package com.duzo.superhero.items;
 
 import com.duzo.superhero.Superhero;
-import com.duzo.superhero.items.ironman.IronManArmourItem;
+import com.duzo.superhero.ids.AbstractIdentifier;
+import com.duzo.superhero.ids.SuperheroIdentifierRegistry;
+import com.duzo.superhero.items.batman.GrapplingHookWeaponItem;
 import com.duzo.superhero.items.ironman.IronManEdithGlasses;
 import com.duzo.superhero.items.spiderman.MilesHoodieItem;
-import com.duzo.superhero.util.SuperheroIdentifier;
-import com.duzo.superhero.items.batman.GrapplingHookWeaponItem;
-import com.duzo.superhero.util.ironman.IronManUtil;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterials;
 import net.minecraft.world.item.Item;
@@ -37,30 +36,36 @@ public class SuperheroItems {
             () -> new GrapplingHookWeaponItem(new Item.Properties().stacksTo(1)));
 
     public static void init() {
-        for (SuperheroIdentifier id : SuperheroIdentifier.values()) {
-            if (IronManUtil.isIronManSuit(id)) {
-                registerIronManSet(id);
-            } else {
+//        for (SuperheroIdentifier id : SuperheroIdentifier.values()) {
+//            if (IronManUtil.isIronManSuit(id)) {
+//                registerIronManSet(id);
+//            } else {
+//                registerSuperheroSet(id);
+//            }
+//        }
+        for (RegistryObject<AbstractIdentifier> reg : SuperheroIdentifierRegistry.IDS.getEntries()) {
+            AbstractIdentifier id = reg.get();
+            if (id.autoAdd()) {
                 registerSuperheroSet(id);
             }
         }
     }
 
     // @TODO smelly loqor and his custom smelly model for iron man meaning this still exists
-    public static void registerIronManSet(SuperheroIdentifier mark) {
-        String name = mark.getSerializedName();
+//    public static void registerIronManSet(IronManIdentifier mark) {
+//        String name = mark.getSerializedName();
+//
+//        ITEMS.register(name + "_helmet",
+//                () -> new IronManArmourItem(IRON_MAN, ArmorItem.Type.HELMET,new Item.Properties().stacksTo(1),mark));
+//        ITEMS.register(name + "_chestplate",
+//                () -> new IronManArmourItem(IRON_MAN, ArmorItem.Type.CHESTPLATE,new Item.Properties().stacksTo(1),mark));
+//        ITEMS.register(name + "_leggings",
+//                () -> new IronManArmourItem(IRON_MAN, ArmorItem.Type.LEGGINGS,new Item.Properties().stacksTo(1),mark));
+//        ITEMS.register(name + "_boots",
+//                () -> new IronManArmourItem(IRON_MAN, ArmorItem.Type.BOOTS,new Item.Properties().stacksTo(1),mark));
+//    }
 
-        ITEMS.register(name + "_helmet",
-                () -> new IronManArmourItem(IRON_MAN, ArmorItem.Type.HELMET,new Item.Properties().stacksTo(1),mark));
-        ITEMS.register(name + "_chestplate",
-                () -> new IronManArmourItem(IRON_MAN, ArmorItem.Type.CHESTPLATE,new Item.Properties().stacksTo(1),mark));
-        ITEMS.register(name + "_leggings",
-                () -> new IronManArmourItem(IRON_MAN, ArmorItem.Type.LEGGINGS,new Item.Properties().stacksTo(1),mark));
-        ITEMS.register(name + "_boots",
-                () -> new IronManArmourItem(IRON_MAN, ArmorItem.Type.BOOTS,new Item.Properties().stacksTo(1),mark));
-    }
-
-    public static void registerSuperheroSet(SuperheroIdentifier id) {
+    public static void registerSuperheroSet(AbstractIdentifier id) {
         String name = id.getSerializedName();
 
         ITEMS.register(name + "_helmet",

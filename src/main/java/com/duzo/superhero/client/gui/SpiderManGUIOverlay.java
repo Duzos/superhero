@@ -1,8 +1,8 @@
 package com.duzo.superhero.client.gui;
 
-import com.duzo.superhero.util.KeyBinds;
 import com.duzo.superhero.capabilities.SuperheroCapability;
-import com.duzo.superhero.util.SuperheroIdentifier;
+import com.duzo.superhero.ids.AbstractIdentifier;
+import com.duzo.superhero.util.KeyBinds;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraftforge.client.gui.overlay.IGuiOverlay;
@@ -20,7 +20,7 @@ public class SpiderManGUIOverlay {
 
         if (!mc.options.getCameraType().isFirstPerson()) return;
 
-        SuperheroIdentifier id = getIDFromStack(mc.player.getItemBySlot(EquipmentSlot.HEAD));
+        AbstractIdentifier id = getIDFromStack(mc.player.getItemBySlot(EquipmentSlot.HEAD));
 
         if (id == null) return;
 

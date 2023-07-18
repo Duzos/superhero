@@ -1,8 +1,7 @@
 package com.duzo.superhero.mixin;
 
-import com.duzo.superhero.client.models.heroes.iron_man.IronManMagicModel;
 import com.duzo.superhero.client.renderers.animations.AnimationHandler;
-import com.duzo.superhero.items.ironman.IronManArmourItem;
+import com.duzo.superhero.util.ironman.IronManUtil;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -27,7 +26,7 @@ public abstract class HumanoidModelMixin<T extends LivingEntity> {
     @Inject(at = @At("TAIL"), method = "setupAnim(Lnet/minecraft/world/entity/LivingEntity;FFFFF)V")
     private void setupAnimTail(LivingEntity livingEntity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, CallbackInfo callbackInfo) {
         HumanoidModel<LivingEntity> bipedModel = (HumanoidModel) (Object) this;
-        if(livingEntity.getItemBySlot(EquipmentSlot.HEAD).getItem() instanceof IronManArmourItem) {
+        if(IronManUtil.isIronManSuit(livingEntity.getItemBySlot(EquipmentSlot.HEAD))) {
             AnimationHandler.setupAnimPost(bipedModel, livingEntity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, callbackInfo);
         }
 

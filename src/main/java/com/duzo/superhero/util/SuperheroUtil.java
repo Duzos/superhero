@@ -1,6 +1,7 @@
 package com.duzo.superhero.util;
 
 import com.duzo.superhero.Superhero;
+import com.duzo.superhero.ids.AbstractIdentifier;
 import com.duzo.superhero.items.SuperheroArmourItem;
 import com.duzo.superhero.items.SuperheroItems;
 import com.mojang.blaze3d.platform.InputConstants;
@@ -27,7 +28,7 @@ public class SuperheroUtil {
         return location.equals(DEFAULT_TEXTURE);
     }
 
-    public static ResourceLocation getTextureFromID(SuperheroIdentifier id) {
+    public static ResourceLocation getTextureFromID(AbstractIdentifier id) {
         String s = "textures/heroes/" + id.getSerializedName() + ".png";
         if (!doesResourceLocationExist(s)) {
             return DEFAULT_TEXTURE;
@@ -35,7 +36,7 @@ public class SuperheroUtil {
         return new ResourceLocation(Superhero.MODID, s);
     }
 
-    public static ResourceLocation getLightMapFromID(SuperheroIdentifier id) {
+    public static ResourceLocation getLightMapFromID(AbstractIdentifier id) {
         String s = "textures/heroes/" + id.getSerializedName() + "_l.png";
         if (!doesResourceLocationExist(s)) {
 //            return getTextureFromID(id);
@@ -74,7 +75,7 @@ public class SuperheroUtil {
     public static boolean keyDown(int key) {
         return InputConstants.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), key);
     }
-    public static SuperheroIdentifier getIDFromStack(ItemStack stack) {
+    public static AbstractIdentifier getIDFromStack(ItemStack stack) {
         if (stack.getItem() instanceof SuperheroArmourItem item) {
             return item.getIdentifier();
         }
@@ -83,7 +84,7 @@ public class SuperheroUtil {
         return null;
     }
 
-    public static SuperheroIdentifier getIDFromPlayer(Player player) {
+    public static AbstractIdentifier getIDFromPlayer(Player player) {
         for (EquipmentSlot slot : EquipmentSlot.values()) {
             if (!slot.isArmor()) continue;
 
@@ -93,7 +94,7 @@ public class SuperheroUtil {
         }
         return null;
     }
-    public static boolean putSuitOntoPlayer(SuperheroIdentifier id, Player player, boolean excludeNanotech) {
+    public static boolean putSuitOntoPlayer(AbstractIdentifier id, Player player, boolean excludeNanotech) {
         for (EquipmentSlot slot : EquipmentSlot.values()) {
             if (!slot.isArmor()) continue;
 

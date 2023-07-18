@@ -1,9 +1,9 @@
 package com.duzo.superhero.client.gui;
 
 import com.duzo.superhero.Superhero;
-import com.duzo.superhero.items.ironman.IronManEdithGlasses;
 import com.duzo.superhero.capabilities.SuperheroCapability;
-import com.duzo.superhero.util.SuperheroIdentifier;
+import com.duzo.superhero.ids.AbstractIdentifier;
+import com.duzo.superhero.items.ironman.IronManEdithGlasses;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
@@ -37,7 +37,7 @@ public class JarvisGUIOverlay {
 
         if (!mc.options.getCameraType().isFirstPerson()) return;
 
-        SuperheroIdentifier id = getIDFromStack(mc.player.getItemBySlot(EquipmentSlot.HEAD));
+        AbstractIdentifier id = getIDFromStack(mc.player.getItemBySlot(EquipmentSlot.HEAD));
 
         if (id == null) return;
 
