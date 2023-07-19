@@ -25,8 +25,8 @@ import static com.duzo.superhero.util.spiderman.SpiderManUtil.equipSpiderSuitFor
 
 @Deprecated
 public class SpiderManNanotechItem extends SuperheroArmourItem {
-    public SpiderManNanotechItem(ArmorMaterial material, Type type, Item.Properties properties) {
-        super(material, type, properties);
+    public SpiderManNanotechItem(ArmorMaterial material, Type type, Item.Properties properties, AbstractIdentifier id) {
+        super(material, type, properties,id);
     }
 
     @Override

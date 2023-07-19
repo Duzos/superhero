@@ -22,8 +22,19 @@ import static com.duzo.superhero.util.SuperheroUtil.isEquipped;
 import static com.duzo.superhero.util.SuperheroUtil.putSuitOntoPlayer;
 
 public class SuperheroNanotechItem extends SuperheroArmourItem {
-    public SuperheroNanotechItem(ArmorMaterial material, Type type, Item.Properties properties) {
-        super(material, type, properties);
+    public SuperheroNanotechItem(ArmorMaterial material, Type type, Item.Properties properties, AbstractIdentifier identifier) {
+        super(material, type, properties,identifier);
+    }
+
+    /**
+     * Do not use for creating instances, is just for registering the item!!
+     * @param material
+     * @param type
+     * @param properties
+     */
+    public SuperheroNanotechItem(ArmorMaterial material,Type type,Item.Properties properties) {
+        super(material,type,properties);
+        // Do nothing, is just for registering
     }
 
     @Override

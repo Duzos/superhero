@@ -27,8 +27,8 @@ import static com.duzo.superhero.blocks.IronManSuitCaseBlock.equipArmourForMark;
 
 @Deprecated
 public class IronManNanotechItem extends SuperheroArmourItem {
-    public IronManNanotechItem(ArmorMaterial material, Type type, Item.Properties properties) {
-        super(material, type, properties);
+    public IronManNanotechItem(ArmorMaterial material, Type type, Item.Properties properties, AbstractIdentifier identifier) {
+        super(material, type, properties,identifier);
     }
 
     @Override

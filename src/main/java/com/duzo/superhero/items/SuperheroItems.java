@@ -2,7 +2,6 @@ package com.duzo.superhero.items;
 
 import com.duzo.superhero.Superhero;
 import com.duzo.superhero.ids.AbstractIdentifier;
-import com.duzo.superhero.ids.SuperheroIdentifierRegistry;
 import com.duzo.superhero.items.batman.GrapplingHookWeaponItem;
 import com.duzo.superhero.items.ironman.IronManEdithGlasses;
 import com.duzo.superhero.items.spiderman.MilesHoodieItem;
@@ -35,21 +34,6 @@ public class SuperheroItems {
     public static final RegistryObject<GrapplingHookWeaponItem> GRAPPLING_HOOK = ITEMS.register("grappling_hook",
             () -> new GrapplingHookWeaponItem(new Item.Properties().stacksTo(1)));
 
-    public static void init() {
-//        for (SuperheroIdentifier id : SuperheroIdentifier.values()) {
-//            if (IronManUtil.isIronManSuit(id)) {
-//                registerIronManSet(id);
-//            } else {
-//                registerSuperheroSet(id);
-//            }
-//        }
-        for (RegistryObject<AbstractIdentifier> reg : SuperheroIdentifierRegistry.IDS.getEntries()) {
-            AbstractIdentifier id = reg.get();
-            if (id.autoAdd()) {
-                registerSuperheroSet(id);
-            }
-        }
-    }
 
     // @TODO smelly loqor and his custom smelly model for iron man meaning this still exists
 //    public static void registerIronManSet(IronManIdentifier mark) {

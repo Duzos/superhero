@@ -2,7 +2,6 @@ package com.duzo.superhero.items;
 
 import com.duzo.superhero.capabilities.SuperheroCapability;
 import com.duzo.superhero.ids.AbstractIdentifier;
-import com.duzo.superhero.ids.SuperheroIdentifierRegistry;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
@@ -20,76 +19,16 @@ import java.util.List;
 import static com.duzo.superhero.util.SuperheroUtil.isEquipped;
 
 public class SuperheroArmourItem extends ArmorItem {
-    private final AbstractIdentifier id;
-    public static final AbstractIdentifier DEFAULT_ID = SuperheroIdentifierRegistry.AMAZING_SPIDER_MAN.get();
+    protected final AbstractIdentifier id;
 
     public SuperheroArmourItem(ArmorMaterial material, Type type, Properties properties, AbstractIdentifier id) {
         super(material, type, properties);
         this.id = id;
     }
     public SuperheroArmourItem(ArmorMaterial material, Type type, Properties properties) {
-        this(material,type,properties,DEFAULT_ID);
+        super(material,type,properties);
+        this.id = null;
     }
-
-//    @Override
-//    public void initializeClient(Consumer<IClientItemExtensions> consumer) {
-//        consumer.accept(new IClientItemExtensions() {
-//            @Override
-//            public @NotNull HumanoidModel<?> getHumanoidArmorModel(LivingEntity livingEntity, ItemStack itemStack, EquipmentSlot equipmentSlot, HumanoidModel<?> original) {
-//                SuperheroArmourItem item = (SuperheroArmourItem) itemStack.getItem(); // frick you craig im casting
-//
-//                if (item.getIdentifier().isSlim()) {
-//                    AlexSkinModel<?> model = new AlexSkinModel<>(Minecraft.getInstance().getEntityModels().bakeLayer(AlexSkinModel.LAYER_LOCATION));
-//
-//                    model.setAllVisible(false);
-//
-//                    if (equipmentSlot == EquipmentSlot.HEAD) {
-//                        model.hat.visible = true;
-//                        model.head.visible = true;
-//                    } else if (equipmentSlot == EquipmentSlot.CHEST) {
-//                        model.body.visible = true;
-//                        model.leftArm.visible = true;
-//                        model.rightArm.visible = true;
-//                    } else if (equipmentSlot == EquipmentSlot.FEET || equipmentSlot == EquipmentSlot.LEGS) {
-//                        model.leftLeg.visible = true;
-//                        model.rightLeg.visible = true;
-//                    }
-//
-//                    if (livingEntity.isInvisible()) model.setAllVisible(false);
-//
-//                    return model;
-//                } else {
-//                    SteveSkinModel<?> model = new SteveSkinModel<>(Minecraft.getInstance().getEntityModels().bakeLayer(SteveSkinModel.LAYER_LOCATION));
-//
-//                    model.setAllVisible(false);
-//
-//                    if (equipmentSlot == EquipmentSlot.HEAD) {
-//                        model.hat.visible = true;
-//                        model.head.visible = true;
-//                    } else if (equipmentSlot == EquipmentSlot.CHEST) {
-//                        model.body.visible = true;
-//                        model.leftArm.visible = true;
-//                        model.rightArm.visible = true;
-//                    } else if (equipmentSlot == EquipmentSlot.FEET || equipmentSlot == EquipmentSlot.LEGS) {
-//                        model.leftLeg.visible = true;
-//                        model.rightLeg.visible = true;
-//                    }
-//
-//                    if (livingEntity.isInvisible()) model.setAllVisible(false);
-//
-//                    return model;
-//                }
-//            }
-//        });
-//        super.initializeClient(consumer);
-//    }
-
-//    @Override
-//    public @Nullable String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
-//        if (entity.isInvisible()) return "superhero:textures/heroes/generic/invisible.png";
-//
-//        return "superhero:textures/heroes/" + this.getIdentifier().getSerializedName() + ".png";
-//    }
 
     public AbstractIdentifier getIdentifier() {
         return this.id;
