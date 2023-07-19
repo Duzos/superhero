@@ -3,7 +3,6 @@ package com.duzo.superhero.items;
 import com.duzo.superhero.Superhero;
 import com.duzo.superhero.ids.AbstractIdentifier;
 import com.duzo.superhero.items.batman.GrapplingHookWeaponItem;
-import com.duzo.superhero.items.ironman.IronManEdithGlasses;
 import com.duzo.superhero.items.spiderman.MilesHoodieItem;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterials;
@@ -19,8 +18,8 @@ public class SuperheroItems {
 
     public static final RegistryObject<SuperheroNanotechItem> NANOTECH = ITEMS.register("nanotech",
             () -> new SuperheroNanotechItem(IRON_MAN, ArmorItem.Type.CHESTPLATE,new Item.Properties().stacksTo(1)));
-    public static final RegistryObject<IronManEdithGlasses> EDITH_GLASSES = ITEMS.register("edith_glasses",
-            () -> new IronManEdithGlasses(IRON_MAN,ArmorItem.Type.HELMET,new Item.Properties().stacksTo(1)));
+//    public static final RegistryObject<IronManEdithGlasses> EDITH_GLASSES = ITEMS.register("edith_glasses",
+//            () -> new IronManEdithGlasses(IRON_MAN,ArmorItem.Type.HELMET,new Item.Properties().stacksTo(1)));
 
     public static final RegistryObject<MilesHoodieItem> MILES_HOODIE = ITEMS.register("miles_hoodie",
             () -> new MilesHoodieItem(ArmorMaterials.LEATHER,ArmorItem.Type.CHESTPLATE,new Item.Properties().stacksTo(1)));

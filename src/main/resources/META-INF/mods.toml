@@ -21,7 +21,7 @@ modId="superhero" #mandatory
 # see the associated build.gradle script for how to populate this completely automatically during a build
 version="${file.jarVersion}" #mandatory
 # A display name for the mod
-displayName="superhero" #mandatory
+displayName="Timeless Heroes" #mandatory
 # A URL to query for updates for this mod. See the JSON update specification https://docs.minecraftforge.net/en/latest/misc/updatechecker/
 #updateJSONURL="https://change.me.example.invalid/updates.json" #optional
 # A URL for the "homepage" for this mod, displayed in the mod UI
@@ -31,7 +31,7 @@ logoFile="superhero.png" #optional
 # A text field displayed in the mod UI
 #credits="Thanks for this example mod goes to Java" #optional
 # A text field displayed in the mod UI
-authors="Duzo, Loqor, Doctor_Aurus" #optional
+authors="Duzo, Loqor, Magic Man, Craig" #optional
 # Display Test controls the display for your mod in the server connection screen
 # MATCH_VERSION means that your mod will cause a red X if the versions on client and server differ. This is the default behaviour and should be what you choose if you have server and client elements to your mod.
 # IGNORE_SERVER_VERSION means that your mod will not cause a red X if it's present on the server but not on the client. This is what you should use if you're a server only mod.
@@ -39,7 +39,6 @@ authors="Duzo, Loqor, Doctor_Aurus" #optional
 # The description text for the mod (multi line!) (#mandatory)
 description='''
 Adds your favourite superheroes into 1.19.4!
-All skin textures by Doctor_Aurus
 '''
 # A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
 [[dependencies.superhero]] #optional# A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
