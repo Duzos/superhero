@@ -7,19 +7,14 @@ import com.duzo.superhero.events.FlyingEventHandler;
 import com.duzo.superhero.ids.AbstractIdentifier;
 import com.duzo.superhero.ids.SuperheroIdentifierRegistry;
 import com.duzo.superhero.items.SuperheroItems;
-import com.duzo.superhero.items.SuperheroNanotechItem;
 import com.duzo.superhero.network.Network;
 import com.duzo.superhero.particles.SuperheroParticles;
 import com.duzo.superhero.sounds.SuperheroSounds;
 import com.duzo.superhero.util.ironman.IronManUtil;
 import com.mojang.logging.LogUtils;
-import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.CreativeModeTabEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
@@ -28,7 +23,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.registries.RegistryObject;
 import org.slf4j.Logger;
 
 import static com.duzo.superhero.util.SuperheroUtil.getIDFromStack;
@@ -89,19 +83,19 @@ public class Superhero {
     }
 
     private void registerCreative(CreativeModeTabEvent.Register event) {
-        event.registerCreativeModeTab(new ResourceLocation(MODID,"superhero"), builder ->
-                builder.title(Component.translatable("item_group." + MODID + ".superhero"))
-                        .icon(() -> new ItemStack(SuperheroItems.NANOTECH.get()))
-                        .displayItems(((parms, output) -> {
-                            for (RegistryObject<Block> block : SuperheroBlocks.BLOCKS.getEntries()) {
-                                output.accept(block.get().asItem());
-                            }
-                            for (RegistryObject<Item> item : SuperheroItems.ITEMS.getEntries()) {
-                                if (item.get() instanceof SuperheroNanotechItem) continue;
-
-                                output.accept(item.get());
-                            }
-        })));
+//        event.registerCreativeModeTab(new ResourceLocation(MODID,"superhero"), builder ->
+//                builder.title(Component.translatable("item_group." + MODID + ".superhero"))
+//                        .icon(() -> new ItemStack(SuperheroItems.NANOTECH.get()))
+//                        .displayItems(((parms, output) -> {
+//                            for (RegistryObject<Block> block : SuperheroBlocks.BLOCKS.getEntries()) {
+//                                output.accept(block.get().asItem());
+//                            }
+//                            for (RegistryObject<Item> item : SuperheroItems.ITEMS.getEntries()) {
+//                                if (item.get() instanceof SuperheroNanotechItem) continue;
+//
+//                                output.accept(item.get());
+//                            }
+//        })));
     }
 
     public static ResourceLocation id(String location) {

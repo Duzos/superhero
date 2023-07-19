@@ -16,12 +16,14 @@ import static com.duzo.superhero.util.SuperheroUtil.doesResourceLocationExist;
 public abstract class AbstractIdentifier {
     protected String name;
     protected SuperheroCapabilities caps;
-    protected ResourceLocation texture = new ResourceLocation(Superhero.MODID,"textures/heroes/" + this.getSerializedName() + ".png");
-    protected ResourceLocation lightmap = new ResourceLocation(Superhero.MODID,"textures/heroes/" + this.getSerializedName() + "_l.png");
+    protected ResourceLocation texture;
+    protected ResourceLocation lightmap;
 
     public AbstractIdentifier(String name, SuperheroCapabilities caps) {
         this.name = name;
         this.caps = caps;
+        this.texture = new ResourceLocation(Superhero.MODID,"textures/heroes/" + this.getSerializedName() + ".png");
+        this.lightmap = new ResourceLocation(Superhero.MODID,"textures/heroes/" + this.getSerializedName() + "_l.png");
     }
     public AbstractIdentifier(String name) {
         this(name,new SuperheroCapabilities());
