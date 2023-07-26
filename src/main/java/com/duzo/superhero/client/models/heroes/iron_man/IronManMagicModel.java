@@ -108,14 +108,9 @@ public class IronManMagicModel<T extends LivingEntity> extends HumanoidModel<T> 
 
 	@Override
 	public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-		this.modelRoot.getAllParts().forEach(ModelPart::resetPose);
+//		this.modelRoot.getAllParts().forEach(ModelPart::resetPose);
 		this.hat.visible = false;
-		//head.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-		//body.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-		//rightArm.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-		//leftArm.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-		//rightLeg.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-		//leftLeg.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+		this.modelRoot.render(poseStack,vertexConsumer,packedLight,packedOverlay,red,green,blue,alpha);
 	}
 
 	@Override
