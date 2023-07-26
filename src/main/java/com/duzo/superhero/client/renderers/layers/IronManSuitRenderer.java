@@ -238,6 +238,9 @@ public class IronManSuitRenderer<T extends AbstractClientPlayer, M extends Entit
     private void setVisibilities(Player player, EquipmentSlot slot) {
         if (player.getItemBySlot(slot).isEmpty()) return;
         if (IronManUtil.isIronManSuit(player.getItemBySlot(slot))) return;
+        if (this.ironman == null || !(this.ironman instanceof IronManMagicModel<?>)) {
+            this.ironman = new IronManMagicModel(getRoot(SuperheroModels.IRONMAN_ARMOUR));
+        }
 
         switch (slot) {
             case HEAD:

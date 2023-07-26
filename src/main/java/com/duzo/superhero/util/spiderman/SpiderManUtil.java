@@ -75,6 +75,24 @@ public class SpiderManUtil {
 //        player.setInvisible(!player.isInvisible()); // This is good because its not an effect, but it causes more problems than it fixes
     }
 
+    public static float playerDistanceToVec3(Player player, Vec3 point) {
+        float f = (float)(player.getX() - point.x());
+        float f1 = (float)(player.getY() - point.y());
+        float f2 = (float)(player.getZ() - point.z());
+        return Mth.sqrt(f * f + f1 * f1 + f2 * f2);
+    }
+
+    public static void swingPlayerAlongPoint(Player player, Vec3 anchor) {
+        float distanceToPlayer = playerDistanceToVec3(player,anchor);
+        if (distanceToPlayer > 6.0F) {
+            double d0 = (anchor.x() - player.getX()) / (double) distanceToPlayer;
+            double d1 = (anchor.y() - player.getY()) / (double) distanceToPlayer;
+            double d2 = (anchor.z() - player.getZ()) / (double) distanceToPlayer;
+            player.setDeltaMovement(player.getDeltaMovement().add(Math.copySign(d0 * d0 * 0.4D, d0), Math.copySign(d1 * d1 * 0.2D, d1), Math.copySign(d2 * d2 * 0.4D, d2)));
+            player.checkSlowFallDistance();
+        }
+    }
+
     public static void shootWebAndSwingToIt(Player player) {
         if (KeyBinds.ABILITY_ONE.isDown() && !(canPlayerShootRope(player))) {
             return;

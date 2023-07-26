@@ -4,21 +4,14 @@ import com.duzo.superhero.entities.SuperheroEntities;
 import com.duzo.superhero.network.Network;
 import com.duzo.superhero.network.packets.*;
 import com.duzo.superhero.util.KeyBinds;
-import com.duzo.superhero.util.spiderman.PendulumCalculations;
-import net.minecraft.client.Minecraft;
-import net.minecraft.core.Direction;
+import com.duzo.superhero.util.spiderman.SpiderManUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.vehicle.Minecart;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import org.joml.Vector3d;
-import org.joml.Vector3f;
-
-import java.util.Vector;
 
 public class WebRopeEntity extends Entity {
     @Deprecated
@@ -464,7 +457,10 @@ public class WebRopeEntity extends Entity {
 
         if (this.alpha > 0.85 && KeyBinds.ABILITY_ONE.isDown()) {
             this.setAlpha(1f);
-            this.runSwingPhysics();
+//            this.runSwingPhysics();
+            if (this.getPlayer() != null) {
+                SpiderManUtil.swingPlayerAlongPoint(this.getPlayer(), this.position());
+            }
         } else {
             fadeOut();
         }
