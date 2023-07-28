@@ -38,7 +38,7 @@ authors="Duzo, Loqor, Magic Man, Craig" #optional
 
 # The description text for the mod (multi line!) (#mandatory)
 description='''
-Adds your favourite superheroes into 1.19.4!
+Adds your favourite superheroes into Minecraft!
 '''
 # A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
 [[dependencies.superhero]] #optional# A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.

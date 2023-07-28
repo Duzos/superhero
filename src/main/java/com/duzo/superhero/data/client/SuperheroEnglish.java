@@ -52,7 +52,7 @@ public class SuperheroEnglish extends LanguageProvider {
         add(SuperheroBlocks.DEEPSLATE_PALLADIUM_ORE.get(), "Deepslate Palladium Ore");
 
         // Tabs
-        add("item_group.superhero.superhero","Duzo's Superheroes");
+        add("item_group.superhero.superhero","Timeless Heroes");
 
         // Keybinds
         add(KeyBinds.KEY_ABILITY_ONE, "Suit Ability One");

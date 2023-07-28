@@ -28,6 +28,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import org.slf4j.Logger;
 
@@ -90,7 +91,7 @@ public class Superhero {
     private void registerCreative(CreativeModeTabEvent.Register event) {
         event.registerCreativeModeTab(new ResourceLocation(MODID,"superhero"), builder ->
                 builder.title(Component.translatable("item_group." + MODID + ".superhero"))
-                        .icon(() -> new ItemStack(SuperheroItems.NANOTECH.get()))
+                        .icon(() -> new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(MODID,"iron_spider_helmet"))))
                         .displayItems(((parms, output) -> {
                             for (RegistryObject<Block> block : SuperheroBlocks.BLOCKS.getEntries()) {
                                 output.accept(block.get().asItem());
