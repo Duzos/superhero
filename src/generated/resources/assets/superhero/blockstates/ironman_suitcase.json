@@ -1,20 +1,25 @@
 {
   "variants": {
+    "facing=down": {
+      "model": "superhero:block/ironman_suitcase",
+    },
     "facing=east": {
       "model": "superhero:block/ironman_suitcase",
-      "y": 270
+      "y": 90
     },
     "facing=north": {
       "model": "superhero:block/ironman_suitcase",
-      "y": 180
     },
     "facing=south": {
       "model": "superhero:block/ironman_suitcase",
-      "y": 0
+      "y": 180
+    },
+    "facing=up": {
+      "model": "superhero:block/ironman_suitcase"
     },
     "facing=west": {
       "model": "superhero:block/ironman_suitcase",
-      "y": 90
+      "y": 270
     }
   }
 }

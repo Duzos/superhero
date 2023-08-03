@@ -32,7 +32,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-public class IronManSuitCaseBlock extends Block {
+public class IronManSuitCaseBlock extends DirectionalBlock {
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
 
     // Shapes for each direction so the hitbox is the right size
@@ -52,7 +52,7 @@ public class IronManSuitCaseBlock extends Block {
             case SOUTH -> SOUTH_AABB;
             case EAST -> EAST_AABB;
             case WEST -> WEST_AABB;
-            default -> throw new RuntimeException("Invalid facing direction in getShape() for RadioBlock");
+            default -> throw new RuntimeException("Invalid facing direction in getShape() for SuitCaseBlock");
         };
     }
 

@@ -26,5 +26,6 @@ public class DataGenerationEvent {
         generator.addProvider(true, new SoundDataGeneration(packOutput,existingFileHelper));
         generator.addProvider(true, new SuperheroEnglish(packOutput));
         generator.addProvider(event.includeServer(), new SuperheroWorldGenProvider(packOutput, lookupProvider));
+        generator.addProvider(true,new BlockStateGenerator(packOutput,Superhero.MODID,existingFileHelper));
     }
 }
