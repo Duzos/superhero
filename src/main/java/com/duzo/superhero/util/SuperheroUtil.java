@@ -29,6 +29,8 @@ public class SuperheroUtil {
     }
 
     public static ResourceLocation getTextureFromID(AbstractIdentifier id) {
+        if (id == null) return DEFAULT_TEXTURE;
+
         String s = "textures/heroes/" + id.getSerializedName() + ".png";
         if (!doesResourceLocationExist(s)) {
             return DEFAULT_TEXTURE;
@@ -37,6 +39,8 @@ public class SuperheroUtil {
     }
 
     public static ResourceLocation getLightMapFromID(AbstractIdentifier id) {
+        if (id == null) return DEFAULT_TEXTURE;
+
         String s = "textures/heroes/" + id.getSerializedName() + "_l.png";
         if (!doesResourceLocationExist(s)) {
 //            return getTextureFromID(id);

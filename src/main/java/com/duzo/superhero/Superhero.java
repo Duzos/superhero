@@ -1,13 +1,16 @@
 package com.duzo.superhero;
 
+import com.duzo.superhero.blocks.IronManSuitCaseBlock;
 import com.duzo.superhero.blocks.SuperheroBlocks;
 import com.duzo.superhero.capabilities.SuperheroCapability;
 import com.duzo.superhero.entities.SuperheroEntities;
 import com.duzo.superhero.events.FlyingEventHandler;
 import com.duzo.superhero.ids.AbstractIdentifier;
 import com.duzo.superhero.ids.SuperheroIdentifierRegistry;
+import com.duzo.superhero.items.SuperheroArmourItem;
 import com.duzo.superhero.items.SuperheroItems;
 import com.duzo.superhero.items.SuperheroNanotechItem;
+import com.duzo.superhero.items.batman.GrapplingHookWeaponItem;
 import com.duzo.superhero.network.Network;
 import com.duzo.superhero.particles.SuperheroParticles;
 import com.duzo.superhero.sounds.SuperheroSounds;
@@ -17,6 +20,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
@@ -94,10 +98,19 @@ public class Superhero {
                         .icon(() -> new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(MODID,"iron_spider_helmet"))))
                         .displayItems(((parms, output) -> {
                             for (RegistryObject<Block> block : SuperheroBlocks.BLOCKS.getEntries()) {
+                                if (block.get() instanceof IronManSuitCaseBlock) continue;
+
                                 output.accept(block.get().asItem());
                             }
                             for (RegistryObject<Item> item : SuperheroItems.ITEMS.getEntries()) {
-                                if (item.get() instanceof SuperheroNanotechItem) continue;
+                                if (item.get() instanceof SuperheroNanotechItem || item.get() instanceof GrapplingHookWeaponItem) continue;
+                                if (item.get() instanceof SuperheroArmourItem hero) {
+                                    if (!hero.getIdentifier().getCapabilities().has(SuperheroCapability.WEB_SHOOTING)) continue;
+                                    if (hero.getIdentifier().name() == "iron_spider") continue;
+                                }
+                                if (item.get() instanceof BlockItem block) {
+                                    if (block.getBlock() instanceof IronManSuitCaseBlock) continue;
+                                }
 
                                 output.accept(item.get());
                             }

@@ -50,11 +50,12 @@ public enum SuperheroCapability implements StringRepresentable {
 
         }
     },
+    // @TODO fix, is brokey and using outdated pre-registry stuff
     NANOTECH {
         @Override
         public void runAbility(int num, Player player) {
             ItemStack chest = player.getItemBySlot(EquipmentSlot.CHEST);
-            if (num == 2) {
+            if (num == 3) {
                 convertArmourToNanotech(player);
                 if (IronManUtil.isIronManSuit(getIDFromStack(chest))) {
                     player.getLevel().playSound(null, player, SuperheroSounds.IRONMAN_POWERDOWN.get(), SoundSource.PLAYERS, 1f, 1f);

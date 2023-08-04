@@ -2,7 +2,6 @@ package com.duzo.superhero.client.gui;
 
 import com.duzo.superhero.capabilities.SuperheroCapability;
 import com.duzo.superhero.ids.AbstractIdentifier;
-import com.duzo.superhero.util.KeyBinds;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraftforge.client.gui.overlay.IGuiOverlay;
@@ -28,17 +27,17 @@ public class SpiderManGUIOverlay {
 
         if (!flag) return;
 
-        String i = KeyBinds.ABILITY_ONE.getKey().toString().toUpperCase() + " - Web Swinging";
-        int iWdth = mc.font.width(i);
-        mc.font.drawShadow(poseStack,i,(screenWidth / 2) - 50 - iWdth,screenHeight - 150,0xffffff);
-
-        String i1 = KeyBinds.ABILITY_TWO.getKey().toString().toUpperCase() + " - Web Zip";
-        int i1Wdth = mc.font.width(i1);
-        mc.font.drawShadow(poseStack,i1,(screenWidth / 2) - 50 - i1Wdth,screenHeight - 140,0xffffff);
-
-        String i2 = KeyBinds.ABILITY_THREE.getKey().toString().toUpperCase() + " - invalid";
-        int i2Wdth = mc.font.width(i2);
-        mc.font.drawShadow(poseStack,i2,(screenWidth / 2) - 50 - i2Wdth,screenHeight - 130,0xffffff);
+//        String i = KeyBinds.ABILITY_ONE.getKey().toString().toUpperCase() + " - Web Swinging";
+//        int iWdth = mc.font.width(i);
+//        mc.font.drawShadow(poseStack,i,(screenWidth / 2) - 50 - iWdth,screenHeight - 150,0xffffff);
+//
+//        String i1 = KeyBinds.ABILITY_TWO.getKey().toString().toUpperCase() + " - Web Zip";
+//        int i1Wdth = mc.font.width(i1);
+//        mc.font.drawShadow(poseStack,i1,(screenWidth / 2) - 50 - i1Wdth,screenHeight - 140,0xffffff);
+//
+//        String i2 = KeyBinds.ABILITY_THREE.getKey().toString().toUpperCase() + " - invalid";
+//        int i2Wdth = mc.font.width(i2);
+//        mc.font.drawShadow(poseStack,i2,(screenWidth / 2) - 50 - i2Wdth,screenHeight - 130,0xffffff);
 
         // BPS Speed
         //var deltaX = mc.player.getX() - mc.player.xOld;
