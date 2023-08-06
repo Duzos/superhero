@@ -6,12 +6,15 @@ import com.duzo.superhero.client.gui.JarvisGUIOverlay;
 import com.duzo.superhero.client.gui.SpiderManGUIOverlay;
 import com.duzo.superhero.client.models.SuperheroModels;
 import com.duzo.superhero.client.renderers.*;
+import com.duzo.superhero.client.screen.SuitMakerScreen;
+import com.duzo.superhero.client.screen.SuperheroMenuTypes;
 import com.duzo.superhero.entities.SuperheroEntities;
 import com.duzo.superhero.items.SuperheroArmourItem;
 import com.duzo.superhero.network.Network;
 import com.duzo.superhero.network.packets.AbilityC2SPacket;
 import com.duzo.superhero.util.KeyBinds;
 import com.duzo.superhero.capabilities.SuperheroCapability;
+import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
@@ -20,9 +23,15 @@ import net.minecraftforge.client.event.*;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
 @Mod.EventBusSubscriber(value = Dist.CLIENT, modid = Superhero.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class SuperheroClientEvents {
+
+    @SubscribeEvent
+    public static void onClientSetup(FMLClientSetupEvent event) {
+        MenuScreens.register(SuperheroMenuTypes.SUIT_MAKER_MENU.get(), SuitMakerScreen::new);
+    }
 
     @SubscribeEvent
     public static void registerRenderers(EntityRenderersEvent.RegisterRenderers renderers) {

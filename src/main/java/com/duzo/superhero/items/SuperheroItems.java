@@ -11,6 +11,8 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
+import java.util.List;
+
 import static com.duzo.superhero.items.SuperheroArmourMaterials.IRON_MAN;
 
 public class SuperheroItems {
@@ -48,16 +50,30 @@ public class SuperheroItems {
 //                () -> new IronManArmourItem(IRON_MAN, ArmorItem.Type.BOOTS,new Item.Properties().stacksTo(1),mark));
 //    }
 
-    public static void registerSuperheroSet(AbstractIdentifier id) {
+    public static List<RegistryObject<Item>> registerSuperheroSet(AbstractIdentifier id) {
         String name = id.getSerializedName();
 
-        ITEMS.register(name + "_helmet",
+        RegistryObject<Item> helmet = ITEMS.register(name + "_helmet",
                 () -> new SuperheroArmourItem(IRON_MAN, ArmorItem.Type.HELMET,new Item.Properties().stacksTo(1),id));
-        ITEMS.register(name + "_chestplate",
+        RegistryObject<Item> chestplate = ITEMS.register(name + "_chestplate",
                 () -> new SuperheroArmourItem(IRON_MAN, ArmorItem.Type.CHESTPLATE,new Item.Properties().stacksTo(1),id));
-        ITEMS.register(name + "_leggings",
+        RegistryObject<Item> leggings = ITEMS.register(name + "_leggings",
                 () -> new SuperheroArmourItem(IRON_MAN, ArmorItem.Type.LEGGINGS,new Item.Properties().stacksTo(1),id));
-        ITEMS.register(name + "_boots",
+        RegistryObject<Item> boots = ITEMS.register(name + "_boots",
                 () -> new SuperheroArmourItem(IRON_MAN, ArmorItem.Type.BOOTS,new Item.Properties().stacksTo(1),id));
+
+        return List.of(helmet,chestplate,leggings,boots);
+    }
+    public static Item getItemFromId(String id) {
+        for (RegistryObject<Item> reg : ITEMS.getEntries()) {
+            if (!reg.isPresent()) {
+                throw new RuntimeException("getItemFromId tried to get an item but none were present, make sure this is being ran after items are registered!");
+            }
+            Item item = reg.get();
+            if (item.getDescriptionId() == id) {
+                return item;
+            }
+        }
+        return null;
     }
 }

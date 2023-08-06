@@ -3,7 +3,6 @@ package com.duzo.superhero.blocks;
 import com.duzo.superhero.Superhero;
 import com.duzo.superhero.items.SuperheroItems;
 import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
@@ -21,6 +20,8 @@ public class SuperheroBlocks {
 
     public static final RegistryObject<Block> IRONMAN_SUITCASE = register("ironman_suitcase", () ->
             new IronManSuitCaseBlock(BlockBehaviour.Properties.of(Material.METAL).noOcclusion()),new Item.Properties().stacksTo(1));
+    public static final RegistryObject<Block> SUIT_MAKER = register("suit_maker", () ->
+            new SuitMakerBlock(BlockBehaviour.Properties.of(Material.METAL).noOcclusion()),new Item.Properties().stacksTo(1));
 
     public static final RegistryObject<Block> PALLADIUM_ORE = register("palladium_ore", () ->
             new Block(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops()

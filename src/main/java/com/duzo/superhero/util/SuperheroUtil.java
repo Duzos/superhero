@@ -2,8 +2,10 @@ package com.duzo.superhero.util;
 
 import com.duzo.superhero.Superhero;
 import com.duzo.superhero.ids.AbstractIdentifier;
+import com.duzo.superhero.ids.SuperheroIdentifierRegistry;
 import com.duzo.superhero.items.SuperheroArmourItem;
 import com.duzo.superhero.items.SuperheroItems;
+import com.duzo.superhero.recipes.SuperheroSuitRecipe;
 import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
@@ -26,6 +28,18 @@ public class SuperheroUtil {
 
     public static boolean isInvisibleTexture(ResourceLocation location) {
         return location.equals(DEFAULT_TEXTURE);
+    }
+
+    public static List<SuperheroSuitRecipe> getRecipes() {
+        List<SuperheroSuitRecipe> list = new ArrayList<>();
+        for (RegistryObject<AbstractIdentifier> reg : SuperheroIdentifierRegistry.IDS.getEntries()) {
+            AbstractIdentifier id = reg.get();
+
+            if (!id.autoAdd() || id.getRecipe() == null) continue;
+
+            list.add(id.getRecipe());
+        }
+        return list;
     }
 
     public static ResourceLocation getTextureFromID(AbstractIdentifier id) {

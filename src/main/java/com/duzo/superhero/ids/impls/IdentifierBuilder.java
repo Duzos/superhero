@@ -3,6 +3,7 @@ package com.duzo.superhero.ids.impls;
 import com.duzo.superhero.capabilities.SuperheroCapabilities;
 import com.duzo.superhero.capabilities.SuperheroCapability;
 import com.duzo.superhero.ids.AbstractIdentifier;
+import com.duzo.superhero.recipes.SuperheroSuitRecipe;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 
@@ -95,6 +96,11 @@ public class IdentifierBuilder extends AbstractIdentifier {
     }
     public IdentifierBuilder lightmap(ResourceLocation location) {
         this.lightmap = location;
+        return this;
+    }
+
+    public IdentifierBuilder recipe(SuperheroSuitRecipe recipe) {
+        this.recipe = recipe;
         return this;
     }
 }

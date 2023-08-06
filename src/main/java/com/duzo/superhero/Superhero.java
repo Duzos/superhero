@@ -2,7 +2,9 @@ package com.duzo.superhero;
 
 import com.duzo.superhero.blocks.IronManSuitCaseBlock;
 import com.duzo.superhero.blocks.SuperheroBlocks;
+import com.duzo.superhero.blocks.entities.SuperheroBlockEntities;
 import com.duzo.superhero.capabilities.SuperheroCapability;
+import com.duzo.superhero.client.screen.SuperheroMenuTypes;
 import com.duzo.superhero.entities.SuperheroEntities;
 import com.duzo.superhero.events.FlyingEventHandler;
 import com.duzo.superhero.ids.AbstractIdentifier;
@@ -53,6 +55,8 @@ public class Superhero {
         modEventBus.addListener(this::commonSetup);
 
         SuperheroEntities.ENTITIES.register(modEventBus);
+        SuperheroBlockEntities.BLOCK_ENTITIES.register(modEventBus);
+        SuperheroMenuTypes.MENUS.register(modEventBus);
         SuperheroItems.ITEMS.register(modEventBus);
         SuperheroIdentifierRegistry.IDS.register(modEventBus);
         SuperheroBlocks.BLOCKS.register(modEventBus);

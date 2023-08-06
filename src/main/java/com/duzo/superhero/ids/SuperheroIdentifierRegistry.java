@@ -4,22 +4,27 @@ import com.duzo.superhero.Superhero;
 import com.duzo.superhero.capabilities.SuperheroCapability;
 import com.duzo.superhero.ids.impls.IdentifierBuilder;
 import com.duzo.superhero.ids.impls.IronManIdentifier;
+import com.duzo.superhero.recipes.SuperheroSuitRecipe;
 import com.duzo.superhero.util.batman.BatManUtil;
 import com.duzo.superhero.util.flash.FlashUtil;
 import com.duzo.superhero.util.spiderman.SpiderManUtil;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.IForgeRegistry;
-import net.minecraftforge.registries.RegistryBuilder;
-import net.minecraftforge.registries.RegistryObject;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraftforge.registries.*;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.function.Supplier;
 
 import static com.duzo.superhero.items.SuperheroItems.registerSuperheroSet;
 
 public class SuperheroIdentifierRegistry {
     public static final DeferredRegister<AbstractIdentifier> IDS = DeferredRegister.create(new ResourceLocation(Superhero.MODID,"ids"), Superhero.MODID);
+    public static HashMap<AbstractIdentifier, List<RegistryObject<Item>>> ID_TO_ITEMS = new HashMap<>();
 
     // Register IDs here
 
@@ -28,6 +33,8 @@ public class SuperheroIdentifierRegistry {
             .itemPrefix("Miles")
             .capabilities(SpiderManUtil.DEFAULT_CAPABILITIES)
             .capabilities(SuperheroCapability.INVISIBILITY)
+            .recipe(new SuperheroSuitRecipe()
+                    .putRecipe(EquipmentSlot.CHEST, () -> new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(Superhero.MODID,"miles_chestplate"))), List.of(new ItemStack(Items.STRING).copyWithCount(32))))
             .slim(true)
     );
     public static final RegistryObject<AbstractIdentifier> MILES_CLOTHED = register("miles_clothed", () -> new IdentifierBuilder("miles_clothed")
@@ -129,6 +136,7 @@ public class SuperheroIdentifierRegistry {
         RegistryObject<T> id = IDS.register(name,supplier);
         if (supplier.get().autoAdd()) {
             registerSuperheroSet(supplier.get());
+//            ID_TO_ITEMS.put(supplier.get(),registerSuperheroSet(supplier.get()));
         }
         return id;
     }
