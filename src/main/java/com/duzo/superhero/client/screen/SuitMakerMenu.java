@@ -3,7 +3,6 @@ package com.duzo.superhero.client.screen;
 import com.duzo.superhero.blocks.SuperheroBlocks;
 import com.duzo.superhero.blocks.entities.SuitMakerBlockEntity;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -28,29 +27,30 @@ public class SuitMakerMenu extends AbstractContainerMenu {
 //        if (!(entity instanceof SuitMakerBlockEntity)) return;
 
         blockEntity = (SuitMakerBlockEntity) entity;
-        TE_INVENTORY_SLOT_COUNT = blockEntity.selectedSuitRecipe.getRecipe(blockEntity.selectedSuitSlot).size();
+        System.out.println(blockEntity.selectedSuitRecipe);
+        TE_INVENTORY_SLOT_COUNT = blockEntity.selectedSuitRecipe.getRecipe(blockEntity.selectedSuitSlot).size() - 1;
         this.level = inv.player.level;
 
         addPlayerInventory(inv);
         addPlayerHotbar(inv);
 
         this.blockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(handler -> {
-            this.addSlot(new SlotItemHandler(handler, 1, 53, 34));
             this.addSlot(new SlotItemHandler(handler, 0, 108, 34));
+            this.addSlot(new SlotItemHandler(handler, 1, 53, 34));
         });
 
-        SimpleContainer recipeInv = SuitMakerBlockEntity.createContainerFromList(blockEntity.selectedSuitRecipe.getRecipe(blockEntity.selectedSuitSlot));
-        int count = 0;
-        for (ItemStack stack : blockEntity.selectedSuitRecipe.getRecipe(blockEntity.selectedSuitSlot)) {
-            this.addSlot(new Slot(recipeInv,count,5 + (16*count),6+ (16*count)));
-            count++;
-        }
+//        SimpleContainer recipeInv = SuitMakerBlockEntity.createContainerFromList(blockEntity.selectedSuitRecipe.getRecipe(blockEntity.selectedSuitSlot));
+//        int count = 0;
+//        for (ItemStack stack : blockEntity.selectedSuitRecipe.getRecipe(blockEntity.selectedSuitSlot)) {
+//            this.addSlot(new Slot(recipeInv,count,5 + (16*count),6+ (16*count)));
+//            count++;
+//        }
     }
 
-    private void addPlayerInventory(Inventory playerInv) {
+    private void addPlayerInventory(Inventory playerInventory) {
         for (int i = 0; i < 3; ++i) {
             for (int l = 0; l < 9; ++l) {
-                this.addSlot(new Slot(playerInv,l + i + 9 + 9,8 + l * 18,86 + i * 18));
+                this.addSlot(new Slot(playerInventory, l + i * 9 + 9, 8 + l * 18, 86 + i * 18));
             }
         }
     }

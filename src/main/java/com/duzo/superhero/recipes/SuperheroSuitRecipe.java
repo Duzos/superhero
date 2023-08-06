@@ -15,10 +15,10 @@ import java.util.function.Supplier;
  */
 public class SuperheroSuitRecipe extends HashMap<EquipmentSlot, HashMap<Supplier<ItemStack>,List<ItemStack>>> implements INBTSerializable<CompoundTag> {
 
-    public ItemStack getResult(EquipmentSlot slot) {
+    public Supplier<ItemStack> getResult(EquipmentSlot slot) {
         if (this.get(slot).keySet().stream().findAny().isEmpty()) return null;
 
-        return this.get(slot).keySet().stream().findAny().get().get();
+        return this.get(slot).keySet().stream().findAny().get();
     }
     public List<ItemStack> getRecipe(EquipmentSlot slot) {
         return this.get(slot).get(this.getResult(slot));
@@ -39,10 +39,10 @@ public class SuperheroSuitRecipe extends HashMap<EquipmentSlot, HashMap<Supplier
 
             if (map.keySet().stream().findAny().isEmpty()) return tag;
 
-            ItemStack result = map.keySet().stream().findAny().get().get();
+            Supplier<ItemStack> result = map.keySet().stream().findAny().get();
             List<ItemStack> recipe = map.get(result);
 
-            t.put("result",result.serializeNBT());
+            t.put("result",result.get().serializeNBT());
 
             CompoundTag recipeTag = new CompoundTag();
             recipe.forEach(item -> recipeTag.put(String.valueOf(recipe.indexOf(item)),item.serializeNBT()));

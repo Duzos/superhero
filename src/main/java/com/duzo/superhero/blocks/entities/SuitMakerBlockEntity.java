@@ -31,7 +31,7 @@ import java.util.List;
 import java.util.function.Supplier;
 
 public class SuitMakerBlockEntity extends BlockEntity implements MenuProvider {
-    private final ItemStackHandler itemHandler = new ItemStackHandler() {
+    private final ItemStackHandler itemHandler = new ItemStackHandler(64) {
         @Override
         protected void onContentsChanged(int slot) {
             setChanged();
@@ -130,6 +130,11 @@ public class SuitMakerBlockEntity extends BlockEntity implements MenuProvider {
     public static void tick(Level level, BlockPos pos, BlockState state, SuitMakerBlockEntity entity) {
         if (level.isClientSide) return;
 
+        if (hasIngredientInInput(entity)) {
+            moveIngredientIntoInventory(entity);
+            setChanged(level,pos,state);
+        }
+
         if (hasCompletedRecipe(entity)) {
             craftItem(entity);
             setChanged(level,pos,state);
@@ -141,8 +146,49 @@ public class SuitMakerBlockEntity extends BlockEntity implements MenuProvider {
             for (int i = 0; i <= entity.itemHandler.getSlots();i++) {
                 entity.itemHandler.extractItem(i,64,false);
             }
-            entity.itemHandler.setStackInSlot(0,entity.selectedSuitRecipe.getResult(entity.selectedSuitSlot));
+            entity.itemHandler.setStackInSlot(0,entity.selectedSuitRecipe.getResult(entity.selectedSuitSlot).get());
         }
+    }
+
+    private static boolean hasIngredientInInput(SuitMakerBlockEntity entity) {
+        ItemStack input = entity.itemHandler.getStackInSlot(0);
+
+        if (hasItemInInventory(entity,input)) {
+            return false;
+        }
+
+        HashMap<Supplier<ItemStack>, List<ItemStack>> map = entity.selectedSuitRecipe.get(entity.selectedSuitSlot);
+        if (map == null) return false;
+        if (map.keySet().stream().findAny().isEmpty()) return false;
+
+        Supplier<ItemStack> result = map.keySet().stream().findAny().get();
+
+        for (ItemStack stack : map.get(result)) {
+            if (stack.equals(input,false)) return true;
+        }
+        return false;
+    }
+
+    private static void moveIngredientIntoInventory(SuitMakerBlockEntity entity) {
+        if (!hasIngredientInInput(entity)) return;
+
+        entity.itemHandler.insertItem(getNextFreeSlot(entity),entity.itemHandler.extractItem(0,64,false),false);
+    }
+
+    private static int getNextFreeSlot(SuitMakerBlockEntity entity) {
+        ItemStack stack;
+        for (int i = 2; i <= entity.itemHandler.getSlots(); i++) {
+            stack = entity.itemHandler.getStackInSlot(i);
+            if (stack.isEmpty()) return i;
+        }
+        return -1;
+    }
+
+    private static boolean hasItemInInventory(SuitMakerBlockEntity entity,ItemStack stack) {
+        for (int i = 2; i <= entity.itemHandler.getSlots(); i++) {
+            if (entity.itemHandler.getStackInSlot(i).equals(stack,false)) return true;
+        }
+        return false;
     }
 
     private static boolean hasCompletedRecipe(SuitMakerBlockEntity entity) {
@@ -150,14 +196,15 @@ public class SuitMakerBlockEntity extends BlockEntity implements MenuProvider {
 
         if (entity.selectedSuitRecipe == null) return false;
 
-        return isCompletedRecipe(entity.selectedSuitSlot,entity.selectedSuitRecipe,inventory) && canInsertAmountIntoOutputSlot(inventory) && canInsertItemIntoOutputSlot(inventory,entity.selectedSuitRecipe.getResult(entity.selectedSuitSlot));
+        return isCompletedRecipe(entity.selectedSuitSlot,entity.selectedSuitRecipe,inventory) && canInsertAmountIntoOutputSlot(inventory) && canInsertItemIntoOutputSlot(inventory,entity.selectedSuitRecipe.getResult(entity.selectedSuitSlot).get());
     }
 
     public static boolean isCompletedRecipe(EquipmentSlot slot, SuperheroSuitRecipe recipe, SimpleContainer container) {
         HashMap<Supplier<ItemStack>, List<ItemStack>> map = recipe.get(slot);
+        if (map == null) return false;
         if (map.keySet().stream().findAny().isEmpty()) return false;
 
-        ItemStack result = map.keySet().stream().findAny().get().get();
+        Supplier<ItemStack> result = map.keySet().stream().findAny().get();
 
         for (ItemStack stack : map.get(result)) {
             boolean doesContain = container.hasAnyMatching(stack1 -> stack.equals(stack1,false));
