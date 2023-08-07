@@ -27,7 +27,6 @@ public class SuitMakerMenu extends AbstractContainerMenu {
 //        if (!(entity instanceof SuitMakerBlockEntity)) return;
 
         blockEntity = (SuitMakerBlockEntity) entity;
-        System.out.println(blockEntity.selectedSuitRecipe);
         TE_INVENTORY_SLOT_COUNT = blockEntity.selectedSuitRecipe.getRecipe(blockEntity.selectedSuitSlot).size() - 1;
         this.level = inv.player.level;
 
@@ -35,8 +34,8 @@ public class SuitMakerMenu extends AbstractContainerMenu {
         addPlayerHotbar(inv);
 
         this.blockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(handler -> {
-            this.addSlot(new SlotItemHandler(handler, 0, 108, 34));
-            this.addSlot(new SlotItemHandler(handler, 1, 53, 34));
+            this.addSlot(new SlotItemHandler(handler, 0, 80, 61));
+//            this.addSlot(new SlotItemHandler(handler, 1, 53, 34));
         });
 
 //        SimpleContainer recipeInv = SuitMakerBlockEntity.createContainerFromList(blockEntity.selectedSuitRecipe.getRecipe(blockEntity.selectedSuitSlot));

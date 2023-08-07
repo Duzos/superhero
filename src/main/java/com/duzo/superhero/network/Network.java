@@ -93,6 +93,11 @@ public class Network {
                 .encoder(UpdateWebRopePlayerS2CPacket::encode)
                 .consumerMainThread(UpdateWebRopePlayerS2CPacket::handle)
                 .add();
+        net.messageBuilder(SyncSuitMakerHandlerS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+                .decoder(SyncSuitMakerHandlerS2CPacket::decode)
+                .encoder(SyncSuitMakerHandlerS2CPacket::encode)
+                .consumerMainThread(SyncSuitMakerHandlerS2CPacket::handle)
+                .add();
     }
 
     public static <MSG> void sendToServer(MSG message) {

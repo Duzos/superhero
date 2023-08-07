@@ -1,6 +1,7 @@
 package com.duzo.superhero.client.screen;
 
 import com.duzo.superhero.Superhero;
+import com.duzo.superhero.blocks.entities.SuitMakerBlockEntity;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -43,12 +44,17 @@ public class SuitMakerScreen extends AbstractContainerScreen<SuitMakerMenu> {
         int j = (height - imageHeight) / 2;
 
         int count = 0;
+        int vert = 0;
         for (ItemStack item : list) {
-            if (isEven(count)) {
-                renderItem(stack, item, i + 5 + 16, j + 16 + (16* workOutRow(count)));
-            } else {
-                renderItem(stack, item, i + 5, j + 16 + (16* workOutRow(count)));
+            if (SuitMakerBlockEntity.hasItemInInventory(this.menu.blockEntity,item)) continue;
+
+            if (count == 10) {
+                vert++;
+                count = 0;
             }
+
+            renderItem(stack, item, i + 5 + (16*count), j + 16 + (16*vert));
+
             count++;
         }
     }

@@ -2,6 +2,8 @@ package com.duzo.superhero.blocks.entities;
 
 import com.duzo.superhero.client.screen.SuitMakerMenu;
 import com.duzo.superhero.ids.SuperheroIdentifierRegistry;
+import com.duzo.superhero.network.Network;
+import com.duzo.superhero.network.packets.SyncSuitMakerHandlerS2CPacket;
 import com.duzo.superhero.recipes.SuperheroSuitRecipe;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -133,17 +135,19 @@ public class SuitMakerBlockEntity extends BlockEntity implements MenuProvider {
         if (hasIngredientInInput(entity)) {
             moveIngredientIntoInventory(entity);
             setChanged(level,pos,state);
+            entity.syncItemHandlerToClient();
         }
 
         if (hasCompletedRecipe(entity)) {
             craftItem(entity);
             setChanged(level,pos,state);
+            entity.syncItemHandlerToClient();
         }
     }
 
     private static void craftItem(SuitMakerBlockEntity entity) {
         if (hasCompletedRecipe(entity)) {
-            for (int i = 0; i <= entity.itemHandler.getSlots();i++) {
+            for (int i = 0; i < entity.itemHandler.getSlots();i++) {
                 entity.itemHandler.extractItem(i,64,false);
             }
             entity.itemHandler.setStackInSlot(0,entity.selectedSuitRecipe.getResult(entity.selectedSuitSlot).get());
@@ -172,21 +176,22 @@ public class SuitMakerBlockEntity extends BlockEntity implements MenuProvider {
     private static void moveIngredientIntoInventory(SuitMakerBlockEntity entity) {
         if (!hasIngredientInInput(entity)) return;
 
-        entity.itemHandler.insertItem(getNextFreeSlot(entity),entity.itemHandler.extractItem(0,64,false),false);
+        int slot = getNextFreeSlot(entity);
+        entity.itemHandler.insertItem(slot,entity.itemHandler.extractItem(0,64,false),false);
     }
 
     private static int getNextFreeSlot(SuitMakerBlockEntity entity) {
         ItemStack stack;
-        for (int i = 2; i <= entity.itemHandler.getSlots(); i++) {
+        for (int i = 2; i < entity.itemHandler.getSlots(); i++) {
             stack = entity.itemHandler.getStackInSlot(i);
             if (stack.isEmpty()) return i;
         }
         return -1;
     }
 
-    private static boolean hasItemInInventory(SuitMakerBlockEntity entity,ItemStack stack) {
-        for (int i = 2; i <= entity.itemHandler.getSlots(); i++) {
-            if (entity.itemHandler.getStackInSlot(i).equals(stack,false)) return true;
+    public static boolean hasItemInInventory(SuitMakerBlockEntity entity,ItemStack stack) {
+        for (int i = 1; i < entity.itemHandler.getSlots(); i++) {
+            if (entity.itemHandler.getStackInSlot(i).equals(stack,true)) return true;
         }
         return false;
     }
@@ -227,5 +232,16 @@ public class SuitMakerBlockEntity extends BlockEntity implements MenuProvider {
     }
     private static boolean canInsertAmountIntoOutputSlot(SimpleContainer inv) {
         return inv.getItem(0).getMaxStackSize() > inv.getItem(0).getCount();
+    }
+
+    /**
+     * Only use when syncing server to client
+     * @param tag
+     */
+    public void setItemHandlerData(CompoundTag tag) {
+        this.itemHandler.deserializeNBT(tag);
+    }
+    public void syncItemHandlerToClient() {
+        Network.sendToAll(new SyncSuitMakerHandlerS2CPacket(this.worldPosition,this.itemHandler.serializeNBT()));
     }
 }
