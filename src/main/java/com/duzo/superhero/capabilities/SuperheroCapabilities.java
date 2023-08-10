@@ -23,6 +23,12 @@ public class SuperheroCapabilities implements Iterable<SuperheroCapability> {
         }
         return this;
     }
+    public SuperheroCapabilities add(SuperheroCapabilities caps) {
+        for (SuperheroCapability cap : caps) {
+            this.add(cap);
+        }
+        return this;
+    }
     public boolean has(SuperheroCapability capability) {
         return this.capabilities.contains(capability);
     }

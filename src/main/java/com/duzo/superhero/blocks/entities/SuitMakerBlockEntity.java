@@ -1,14 +1,16 @@
 package com.duzo.superhero.blocks.entities;
 
-import com.duzo.superhero.client.screen.SuitMakerMenu;
-import com.duzo.superhero.ids.SuperheroIdentifierRegistry;
+import com.duzo.superhero.client.gui.menu.SuitMakerMenu;
 import com.duzo.superhero.network.Network;
+import com.duzo.superhero.network.packets.OpenSelectSuitMakerS2CPacket;
 import com.duzo.superhero.network.packets.SyncSuitMakerHandlerS2CPacket;
 import com.duzo.superhero.recipes.SuperheroSuitRecipe;
+import com.mojang.logging.LogUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Containers;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleContainer;
@@ -25,6 +27,7 @@ import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
+import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -40,11 +43,12 @@ public class SuitMakerBlockEntity extends BlockEntity implements MenuProvider {
         }
     };
     private LazyOptional<IItemHandler> lazyItemHandler = LazyOptional.empty();
-    public SuperheroSuitRecipe selectedSuitRecipe = SuperheroIdentifierRegistry.MILES.get().getRecipe();
-    public EquipmentSlot selectedSuitSlot = EquipmentSlot.CHEST;
+    public SuperheroSuitRecipe selectedSuitRecipe;
+    public EquipmentSlot selectedSuitSlot;
     public SuitMakerBlockEntity(BlockPos p_155229_, BlockState p_155230_) {
         super(SuperheroBlockEntities.SUIT_MAKER.get(), p_155229_, p_155230_);
     }
+
 
     @Override
     public Component getDisplayName() {
@@ -88,7 +92,7 @@ public class SuitMakerBlockEntity extends BlockEntity implements MenuProvider {
             tag.put("selectedRecipe",selectedSuitRecipe.serializeNBT());
         }
         if (selectedSuitSlot != null) {
-            tag.putInt("suitSlot",selectedSuitSlot.getIndex());
+            tag.putInt("suitSlot",selectedSuitSlot.ordinal());
         }
 
         super.saveAdditional(tag);
@@ -103,6 +107,20 @@ public class SuitMakerBlockEntity extends BlockEntity implements MenuProvider {
             this.selectedSuitRecipe = SuperheroSuitRecipe.fromNBT(tag.getCompound("selectedRecipe"));
         }
         this.selectedSuitSlot = EquipmentSlot.values()[tag.getInt("suitSlot")];
+    }
+
+    public void use(Player player,BlockPos pos) {
+        if (this.selectedSuitSlot != null && this.selectedSuitRecipe != null) {
+            NetworkHooks.openScreen((ServerPlayer) player, this,pos);
+        } else {
+            openSelectScreen(player);
+        }
+    }
+
+    public void openSelectScreen(Player player) {
+        if (!(player instanceof ServerPlayer)) return;
+
+        Network.sendToPlayer(new OpenSelectSuitMakerS2CPacket(this.worldPosition), (ServerPlayer) player);
     }
 
     public void dropContents() {
@@ -243,5 +261,13 @@ public class SuitMakerBlockEntity extends BlockEntity implements MenuProvider {
     }
     public void syncItemHandlerToClient() {
         Network.sendToAll(new SyncSuitMakerHandlerS2CPacket(this.worldPosition,this.itemHandler.serializeNBT()));
+    }
+
+    public void verifyRecipe() {
+        if (!this.selectedSuitRecipe.verifyRecipeExistsInIdentifiers()) {
+            LogUtils.getLogger().error("Recipe didn't exist in identifiers recipes, is someone being cheeky??");
+            this.selectedSuitRecipe = null;
+            this.selectedSuitSlot = null;
+        }
     }
 }

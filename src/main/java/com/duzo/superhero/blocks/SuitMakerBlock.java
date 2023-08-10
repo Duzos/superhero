@@ -3,10 +3,8 @@ package com.duzo.superhero.blocks;
 import com.duzo.superhero.blocks.entities.SuitMakerBlockEntity;
 import com.duzo.superhero.blocks.entities.SuperheroBlockEntities;
 import net.minecraft.core.BlockPos;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
@@ -16,7 +14,6 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.Nullable;
 
 public class SuitMakerBlock extends BaseEntityBlock {
@@ -47,7 +44,7 @@ public class SuitMakerBlock extends BaseEntityBlock {
         if (!level.isClientSide) {
             BlockEntity blockEntity = level.getBlockEntity(pos);
             if (blockEntity instanceof SuitMakerBlockEntity) {
-                NetworkHooks.openScreen((ServerPlayer) player, (MenuProvider) blockEntity,pos);
+                ((SuitMakerBlockEntity) blockEntity).use(player,pos);
             } else {
                 throw new IllegalStateException("SuitMakerBlock is missing block entity");
             }

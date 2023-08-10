@@ -18,7 +18,8 @@ public class FlashIdentifier extends BaseIdentifier {
      * @param caps The additional capabilities to be added to the base ones
      */
     public FlashIdentifier(String name, SuperheroCapabilities caps) {
-        super(name, caps);
+        super(name);
+        this.caps.add(caps);
         this.caps.add(SuperheroCapability.SPEEDSTER,SuperheroCapability.FLASH_HUD);
     }
 

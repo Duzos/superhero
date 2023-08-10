@@ -98,6 +98,16 @@ public class Network {
                 .encoder(SyncSuitMakerHandlerS2CPacket::encode)
                 .consumerMainThread(SyncSuitMakerHandlerS2CPacket::handle)
                 .add();
+        net.messageBuilder(OpenSelectSuitMakerS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+                .decoder(OpenSelectSuitMakerS2CPacket::decode)
+                .encoder(OpenSelectSuitMakerS2CPacket::encode)
+                .consumerMainThread(OpenSelectSuitMakerS2CPacket::handle)
+                .add();
+        net.messageBuilder(UpdateSuitMakerRecipeC2SPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(UpdateSuitMakerRecipeC2SPacket::decode)
+                .encoder(UpdateSuitMakerRecipeC2SPacket::encode)
+                .consumerMainThread(UpdateSuitMakerRecipeC2SPacket::handle)
+                .add();
     }
 
     public static <MSG> void sendToServer(MSG message) {

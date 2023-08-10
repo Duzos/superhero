@@ -22,7 +22,7 @@ public class SpidermanIdentifier extends BaseIdentifier {
      * @param female "Spider-Woman" instead of "SpiderMan"
      */
     public SpidermanIdentifier(String name, SuperheroCapabilities caps, boolean female) {
-        super(name, caps);
+        super(name);
         this.female = female;
         this.caps.add(SuperheroCapability.WEB_SHOOTING,SuperheroCapability.WALL_CLIMBING,SuperheroCapability.SUPER_STRENGTH,SuperheroCapability.FAST_MOBILITY,SuperheroCapability.SPIDERMAN_HUD);
     }

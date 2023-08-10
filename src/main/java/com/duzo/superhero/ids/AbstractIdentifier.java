@@ -8,6 +8,9 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+
+import java.util.function.Supplier;
 
 import static com.duzo.superhero.entities.ironman.IronManEntity.fileNameToUsable;
 import static com.duzo.superhero.entities.ironman.IronManEntity.nameFromSlot;
@@ -20,21 +23,15 @@ public abstract class AbstractIdentifier {
     protected ResourceLocation texture;
     protected ResourceLocation lightmap;
     protected SuperheroSuitRecipe recipe;
-
-    public AbstractIdentifier(String name, SuperheroCapabilities caps, SuperheroSuitRecipe recipe) {
-        this.name = name;
-        this.caps = caps;
-        this.recipe = recipe;
-        this.texture = new ResourceLocation(Superhero.MODID,"textures/heroes/" + this.getSerializedName() + ".png");
-        this.lightmap = new ResourceLocation(Superhero.MODID,"textures/heroes/" + this.getSerializedName() + "_l.png");
-    }
-
-    public AbstractIdentifier(String name, SuperheroCapabilities caps) {
-        this(name,caps,new SuperheroSuitRecipe());
-    }
+    protected Supplier<ItemStack> icon;
 
     public AbstractIdentifier(String name) {
-        this(name,new SuperheroCapabilities());
+        this.name = name;
+        this.caps = new SuperheroCapabilities();
+        this.recipe = new SuperheroSuitRecipe();
+        this.icon = Items.AIR::getDefaultInstance;
+        this.texture = new ResourceLocation(Superhero.MODID,"textures/heroes/" + this.getSerializedName() + ".png");
+        this.lightmap = new ResourceLocation(Superhero.MODID,"textures/heroes/" + this.getSerializedName() + "_l.png");
     }
 
     public String name() {return this.name;}
@@ -110,5 +107,9 @@ public abstract class AbstractIdentifier {
     }
     public boolean usesDefaultRenderer() {
         return true;
+    }
+
+    public ItemStack icon() {
+        return this.icon.get();
     }
 }

@@ -1,4 +1,4 @@
-package com.duzo.superhero.client.screen;
+package com.duzo.superhero.client.gui.menu;
 
 import com.duzo.superhero.Superhero;
 import net.minecraft.world.inventory.AbstractContainerMenu;

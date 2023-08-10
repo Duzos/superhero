@@ -6,6 +6,9 @@ import com.duzo.superhero.ids.AbstractIdentifier;
 import com.duzo.superhero.recipes.SuperheroSuitRecipe;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ItemStack;
+
+import java.util.function.Supplier;
 
 import static com.duzo.superhero.entities.ironman.IronManEntity.fileNameToUsable;
 import static com.duzo.superhero.entities.ironman.IronManEntity.nameFromSlot;
@@ -18,7 +21,6 @@ public class IdentifierBuilder extends AbstractIdentifier {
     public IdentifierBuilder(String name) {
         super(name);
     }
-
 
     public IdentifierBuilder capabilities(SuperheroCapability... caps) {
         for (SuperheroCapability cap : caps) {
@@ -101,6 +103,10 @@ public class IdentifierBuilder extends AbstractIdentifier {
 
     public IdentifierBuilder recipe(SuperheroSuitRecipe recipe) {
         this.recipe = recipe;
+        return this;
+    }
+    public IdentifierBuilder icon(Supplier<ItemStack> supplier) {
+        this.icon = supplier;
         return this;
     }
 }

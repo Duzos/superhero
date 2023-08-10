@@ -4,7 +4,7 @@ import com.duzo.superhero.blocks.IronManSuitCaseBlock;
 import com.duzo.superhero.blocks.SuperheroBlocks;
 import com.duzo.superhero.blocks.entities.SuperheroBlockEntities;
 import com.duzo.superhero.capabilities.SuperheroCapability;
-import com.duzo.superhero.client.screen.SuperheroMenuTypes;
+import com.duzo.superhero.client.gui.menu.SuperheroMenuTypes;
 import com.duzo.superhero.entities.SuperheroEntities;
 import com.duzo.superhero.events.FlyingEventHandler;
 import com.duzo.superhero.ids.AbstractIdentifier;

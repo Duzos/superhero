@@ -1,7 +1,8 @@
-package com.duzo.superhero.client.screen;
+package com.duzo.superhero.client.gui.screen;
 
 import com.duzo.superhero.Superhero;
 import com.duzo.superhero.blocks.entities.SuitMakerBlockEntity;
+import com.duzo.superhero.client.gui.menu.SuitMakerMenu;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -15,8 +16,8 @@ import java.util.List;
 
 public class SuitMakerScreen extends AbstractContainerScreen<SuitMakerMenu> {
     private static final ResourceLocation BG_TEXTURE = new ResourceLocation(Superhero.MODID,"textures/gui/suit_maker_gui.png");
-    public SuitMakerScreen(SuitMakerMenu menu, Inventory inventory, Component component) {
-        super(menu, inventory, component);
+    public SuitMakerScreen(SuitMakerMenu menu, Inventory inventory, Component title) {
+        super(menu, inventory, title);
     }
 
     @Override

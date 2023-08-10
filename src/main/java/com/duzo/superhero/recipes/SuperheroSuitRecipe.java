@@ -1,5 +1,7 @@
 package com.duzo.superhero.recipes;
 
+import com.duzo.superhero.ids.AbstractIdentifier;
+import com.duzo.superhero.ids.SuperheroIdentifierRegistry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
@@ -15,7 +17,21 @@ import java.util.function.Supplier;
  */
 public class SuperheroSuitRecipe extends HashMap<EquipmentSlot, HashMap<Supplier<ItemStack>,List<ItemStack>>> implements INBTSerializable<CompoundTag> {
 
+    public boolean verifyRecipeExistsInIdentifiers() {
+        List<SuperheroSuitRecipe> list = List.of();
+
+        for (AbstractIdentifier identifier : SuperheroIdentifierRegistry.IDS_REGISTRY.get().getValues()) {
+            list.add(identifier.getRecipe());
+        }
+
+        for (SuperheroSuitRecipe recipe : list) {
+            if (recipe.equals(this)) return true;
+        }
+        return false;
+    }
+
     public Supplier<ItemStack> getResult(EquipmentSlot slot) {
+        if (!this.containsKey(slot)) return null;
         if (this.get(slot).keySet().stream().findAny().isEmpty()) return null;
 
         return this.get(slot).keySet().stream().findAny().get();

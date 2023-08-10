@@ -1,4 +1,4 @@
-package com.duzo.superhero.client.screen;
+package com.duzo.superhero.client.gui.menu;
 
 import com.duzo.superhero.blocks.SuperheroBlocks;
 import com.duzo.superhero.blocks.entities.SuitMakerBlockEntity;
@@ -27,6 +27,7 @@ public class SuitMakerMenu extends AbstractContainerMenu {
 //        if (!(entity instanceof SuitMakerBlockEntity)) return;
 
         blockEntity = (SuitMakerBlockEntity) entity;
+        System.out.println(blockEntity.selectedSuitSlot);
         TE_INVENTORY_SLOT_COUNT = blockEntity.selectedSuitRecipe.getRecipe(blockEntity.selectedSuitSlot).size() - 1;
         this.level = inv.player.level;
 

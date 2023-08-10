@@ -33,8 +33,18 @@ public class SuperheroIdentifierRegistry {
             .itemPrefix("Miles")
             .capabilities(SpiderManUtil.DEFAULT_CAPABILITIES)
             .capabilities(SuperheroCapability.INVISIBILITY)
+            .icon(ForgeRegistries.ITEMS.getValue(new ResourceLocation(Superhero.MODID,"miles_helmet")).asItem()::getDefaultInstance)
             .recipe(new SuperheroSuitRecipe()
-                    .putRecipe(EquipmentSlot.CHEST, () -> new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(Superhero.MODID,"miles_chestplate"))), List.of(new ItemStack(Items.STRING).copyWithCount(32),new ItemStack(Items.TNT).copyWithCount(32),new ItemStack(Items.SLIME_BALL).copyWithCount(32),new ItemStack(Items.GUNPOWDER).copyWithCount(32))))
+                    .putRecipe(EquipmentSlot.HEAD,ForgeRegistries.ITEMS.getValue(new ResourceLocation(Superhero.MODID,"miles_helmet"))::getDefaultInstance,List.of(
+                                    new ItemStack(Items.STRING)
+                    ))
+                    .putRecipe(EquipmentSlot.CHEST, ForgeRegistries.ITEMS.getValue(new ResourceLocation(Superhero.MODID,"miles_chestplate"))::getDefaultInstance, List.of(
+                            new ItemStack(Items.STRING).copyWithCount(32),
+                            new ItemStack(Items.TNT).copyWithCount(32),
+                            new ItemStack(Items.SLIME_BALL).copyWithCount(32),
+                            new ItemStack(Items.GUNPOWDER).copyWithCount(32))
+                    )
+            )
             .slim(true)
     );
     public static final RegistryObject<AbstractIdentifier> MILES_CLOTHED = register("miles_clothed", () -> new IdentifierBuilder("miles_clothed")
