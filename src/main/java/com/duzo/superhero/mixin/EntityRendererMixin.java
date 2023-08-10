@@ -22,8 +22,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import static net.minecraft.client.gui.GuiComponent.blit;
-
 @Mixin(EntityRenderer.class)
 public abstract class EntityRendererMixin<T extends Entity> {
 
@@ -72,7 +70,7 @@ public abstract class EntityRendererMixin<T extends Entity> {
         stack.pushPose();
 //        stack.translate(-entity.getBbWidth(),0,-entity.getBbWidth());
         stack.rotateAround(this.entityRenderDispatcher.cameraOrientation(), entity.getBbWidth(), 0,entity.getBbWidth());
-        blit(stack, 0, 0, 0, 0, 1,1,1,1);
+//        blit(stack, 0, 0, 0, 0, 1,1,1,1);
         stack.popPose();
     }
 

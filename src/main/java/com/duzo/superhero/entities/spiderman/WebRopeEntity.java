@@ -51,7 +51,7 @@ public class WebRopeEntity extends Entity {
 
     public Player getPlayer() {
         if(this.player == null) {
-            if (this.level.isClientSide) {
+            if (this.level().isClientSide) {
                 this.clientRequestUpdatePlayer();
             } else { // Panic if you get here.
                 // Kill yourself, now.
@@ -469,12 +469,12 @@ public class WebRopeEntity extends Entity {
             this.remove(RemovalReason.DISCARDED);
         }
 
-        if (!this.level.isClientSide) {
+        if (!this.level().isClientSide) {
             this.syncAlphaToClient();
             this.syncInitialDistanceToClient();
         }
 
-        if (!this.level.isClientSide) {
+        if (!this.level().isClientSide) {
             if (this.point == null) {
                 this.remove(RemovalReason.DISCARDED);
             }

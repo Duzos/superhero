@@ -10,7 +10,7 @@ import net.minecraftforge.client.gui.overlay.IGuiOverlay;
 import static com.duzo.superhero.util.SuperheroUtil.getIDFromStack;
 
 public class FlashGUIOverlay {
-    public static final IGuiOverlay HUD_FLASH = (((gui, poseStack, partialTick, screenWidth, screenHeight) -> {
+    public static final IGuiOverlay HUD_FLASH = (((gui, graphics, partialTick, screenWidth, screenHeight) -> {
         int x = screenWidth / 2;
         int y = screenHeight;
 
@@ -36,7 +36,7 @@ public class FlashGUIOverlay {
         String i = "Speed: " + mod;
         int iWdth = mc.font.width(i);
 //        mc.font.draw(poseStack,i,(screenWidth / 2) - 96 - iWdth,screenHeight - 22,0xfad543);
-        mc.font.drawShadow(poseStack,i,(screenWidth / 2) - 96 - iWdth,screenHeight - 22,0xfaab43);
+        graphics.drawString(mc.font,i,(screenWidth / 2) - 96 - iWdth,screenHeight - 22,0xfaab43);
 
         // BPS Speed
         var deltaX = mc.player.getX() - mc.player.xOld;
@@ -47,6 +47,6 @@ public class FlashGUIOverlay {
         String l = "" + Math.round(speed * 20) + " b/s";
         int spdWdth = mc.font.width(l);
 //        mc.font.draw(poseStack,l,(screenWidth / 2) - 96 - spdWdth,screenHeight - 11,0xfad543);
-        mc.font.drawShadow(poseStack,l,(screenWidth / 2) - 96 - spdWdth,screenHeight - 11,0xfaab43);
+        graphics.drawString(mc.font,l,(screenWidth / 2) - 96 - spdWdth,screenHeight - 11,0xfaab43);
     }));
 }

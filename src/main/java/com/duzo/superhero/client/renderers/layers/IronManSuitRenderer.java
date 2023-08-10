@@ -249,16 +249,16 @@ public class IronManSuitRenderer<T extends AbstractClientPlayer, M extends Entit
                 this.ironman.body.visible = true;
                 this.ironman.rightArm.visible = true;
                 this.ironman.leftArm.visible = true;
-                this.ironman.rightArm.getChild("right_beam").visible = player.isOnGround();
-                this.ironman.leftArm.getChild("left_beam").visible = player.isOnGround();
+                this.ironman.rightArm.getChild("right_beam").visible = player.onGround();
+                this.ironman.leftArm.getChild("left_beam").visible = player.onGround();
             case LEGS:
                 this.ironman.rightLeg.visible = true;
                 this.ironman.leftLeg.visible = true;
             case FEET:
                 this.ironman.rightLeg.getChild("RightFoot").visible = true;
                 this.ironman.rightLeg.getChild("LeftFoot").visible = true;
-                this.ironman.rightLeg.getChild("RightFoot").getChild("foot_right_beam").visible = player.isOnGround();
-                this.ironman.leftLeg.getChild("LeftFoot").getChild("foot_left_beam").visible = player.isOnGround();
+                this.ironman.rightLeg.getChild("RightFoot").getChild("foot_right_beam").visible = player.onGround();
+                this.ironman.leftLeg.getChild("LeftFoot").getChild("foot_left_beam").visible = player.onGround();
         }
     }
 

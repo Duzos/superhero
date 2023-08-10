@@ -5,13 +5,9 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.EntityHitResult;
-import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 
 public class UnibeamEntity extends Entity {
@@ -51,7 +47,7 @@ public class UnibeamEntity extends Entity {
     public void tick() {
         super.tick();
 
-        if (!this.getLevel().isClientSide) {
+        if (!this.level().isClientSide) {
             if (this.life <= 0) {
                 this.remove(RemovalReason.DISCARDED);
             }

@@ -25,9 +25,9 @@ public class RocketEntity extends AbstractHurtingProjectile {
 
     protected void onHit(HitResult p_37218_) {
         super.onHit(p_37218_);
-        if (!this.level.isClientSide) {
-            boolean flag = net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.level, this.getOwner());
-            this.level.explode(this, this.getX(), this.getY(), this.getZ(), (float)this.explosionPower, flag, Level.ExplosionInteraction.MOB);
+        if (!this.level().isClientSide) {
+            boolean flag = net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.level(), this.getOwner());
+            this.level().explode(this, this.getX(), this.getY(), this.getZ(), (float)this.explosionPower, flag, Level.ExplosionInteraction.MOB);
             this.discard();
         }
 
@@ -35,7 +35,7 @@ public class RocketEntity extends AbstractHurtingProjectile {
 
     protected void onHitEntity(EntityHitResult p_37216_) {
         super.onHitEntity(p_37216_);
-        if (!this.level.isClientSide) {
+        if (!this.level().isClientSide) {
             Entity entity = p_37216_.getEntity();
             Entity entity1 = this.getOwner();
             entity.hurt(this.damageSources().explosion(this, entity1), 6.0F);

@@ -104,8 +104,8 @@ public class WebRopeEntityRenderer extends EntityRenderer<WebRopeEntity> {
         int i = this.getBlockLightLevel(entity, blockpos);
         int j = i;
 //        int j = this.entityRenderDispatcher.getRenderer(entity.getPlayer()).getBlockLightLevel(entity.getPlayer(), blockpos1);
-        int k = entity.level.getBrightness(LightLayer.SKY, blockpos);
-        int l = entity.level.getBrightness(LightLayer.SKY, blockpos1);
+        int k = entity.level().getBrightness(LightLayer.SKY, blockpos);
+        int l = entity.level().getBrightness(LightLayer.SKY, blockpos1);
         PoseStack.Pose pose = stack.last();
 
         for(int i1 = 0; i1 <= 24; ++i1) {

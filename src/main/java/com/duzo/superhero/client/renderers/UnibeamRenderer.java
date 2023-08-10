@@ -58,7 +58,7 @@ public class UnibeamRenderer extends EntityRenderer<UnibeamEntity> {
     }
 
     private static void updateEntityPosition(UnibeamEntity entity) {
-        Player player = entity.level.getNearestPlayer(entity,10d);
+        Player player = entity.level().getNearestPlayer(entity,10d);
 
         if (player == null) return;
 

@@ -73,7 +73,7 @@ public class SuperheroClientEvents {
 
             if (!(chest.getItem() instanceof SuperheroArmourItem hero)) return;
 
-            if (!event.getPlayer().isOnGround() && Screen.hasControlDown() && hero.getIdentifier().isValidArmour(event.getPlayer()) && hero.getIdentifier().getCapabilities().has(SuperheroCapability.BLAST_OFF)) {
+            if (!event.getPlayer().onGround() && Screen.hasControlDown() && hero.getIdentifier().isValidArmour(event.getPlayer()) && hero.getIdentifier().getCapabilities().has(SuperheroCapability.BLAST_OFF)) {
                 event.setNewFovModifier(event.getFovModifier() * 1.25f);
 //                event.setNewFovModifier((float) (event.getFovModifier() * hero.getMark().getBlastOffSpeed()));
             }

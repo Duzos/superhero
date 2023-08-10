@@ -26,7 +26,7 @@ public class FlashUtil {
     public static final UUID SPEED_UUID = UUID.fromString("fff934a3-13f8-47c6-877d-7067fb9a842f");
 
     public static double syncSpeed(Player player) {
-        if (!player.level.isClientSide) {
+        if (!player.level().isClientSide) {
             Network.sendToPlayer(new SyncSpeedsterDataS2CPacket(player.getPersistentData().getDouble("speedster.speed")), (ServerPlayer) player);
         }
         return player.getPersistentData().getDouble("speedster.speed");
@@ -99,7 +99,7 @@ public class FlashUtil {
     }
 
     public static void modifyPlayerSpeed(Player player) {
-        if (player.level.isClientSide) {
+        if (player.level().isClientSide) {
 //            System.out.println(player.getDeltaMovement().multiply(getSpeed(player),1,getSpeed(player)));
             // Dont even ask me what this is
 
@@ -126,9 +126,9 @@ public class FlashUtil {
     }
     // @TODO needs work.
     public static void walkOnWater(Player player) {
-        if (player.level.isClientSide) {
+        if (player.level().isClientSide) {
             if (Minecraft.getInstance().player.input.up) {
-                if (player.level.getBlockState(player.getOnPos()).is(Blocks.WATER)) {
+                if (player.level().getBlockState(player.getOnPos()).is(Blocks.WATER)) {
                     Vec3 delta = player.getDeltaMovement();
                     if (delta.y < 0) {
 //                        player.setDeltaMovement(delta.add(1 + (getSpeed(player)/10),0,1+(getSpeed(player)/10)).multiply(1,0,1));

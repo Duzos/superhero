@@ -106,10 +106,10 @@ public class IronManUtil {
         }
 
         public static void createParticles(Player player) {
-            if (player.level.isClientSide) return;
+            if (player.level().isClientSide) return;
 
             Random random = new Random();
-            if(!player.isOnGround()) {
+            if(!player.onGround()) {
                 if (canBlastOff(player)) {
                     int i = Mth.clamp(0, 0, 64);
                     float f2 = Mth.cos(player.getYRot() * ((float) Math.PI / 180F)) * (0.1F + 1.21F * (float) i);
@@ -119,7 +119,7 @@ public class IronManUtil {
                     float f6 = (0.3F * 0.45F) * ((float) i * 0.2F + 9.0F);
                     float f7 = (0.3F * 0.45F) * ((float) i * 0.2F + 9.0F);
                     float f8 = (0.3F * 0.45F) * ((float) i * 0.3F + 9.0F);
-                    ServerLevel serverLevel = (ServerLevel) player.level;
+                    ServerLevel serverLevel = (ServerLevel) player.level();
                     //player.getLevel().addParticle(ParticleTypes.SMOKE, player.getX() + (double) f2, player.getY() + (double) f6, player.getZ() + (double) f3, random.nextGaussian() * 0.05D, -0.25, random.nextGaussian() * 0.05D);
                     //player.getLevel().addParticle(ParticleTypes.SMOKE, player.getX() - (double) f2, player.getY() + (double) f6, player.getZ() - (double) f3, random.nextGaussian() * 0.05D, -0.25, random.nextGaussian() * 0.05D);
                     //player.getLevel().addParticle(ParticleTypes.SMOKE, player.getX() + (double) f4, player.getY() + (double) f7, player.getZ() + (double) f5, random.nextGaussian() * 0.05D, -0.25, random.nextGaussian() * 0.05D);
@@ -160,7 +160,7 @@ public class IronManUtil {
                     float f5 = Mth.sin(player.yBodyRot * ((float) Math.PI / 180F)) * (0.4F + 0.21F * (float) i);
                     float f6 = (0.3F * 0.45F) * ((float) i * 0.2F + 1F);
                     float f7 = (0.3F * 0.45F) * ((float) i * 0.2F + 6F);
-                    ServerLevel serverLevel = (ServerLevel) player.level;
+                    ServerLevel serverLevel = (ServerLevel) player.level();
                     //player.getLevel().addParticle(ParticleTypes.SMOKE, player.getX() + (double) f2, player.getY() + (double) f6, player.getZ() + (double) f3, random.nextGaussian() * 0.05D, -0.25, random.nextGaussian() * 0.05D);
                     //player.getLevel().addParticle(ParticleTypes.SMOKE, player.getX() - (double) f2, player.getY() + (double) f6, player.getZ() - (double) f3, random.nextGaussian() * 0.05D, -0.25, random.nextGaussian() * 0.05D);
                     //player.getLevel().addParticle(ParticleTypes.SMOKE, player.getX() + (double) f4, player.getY() + (double) f7, player.getZ() + (double) f5, random.nextGaussian() * 0.05D, -0.25, random.nextGaussian() * 0.05D);
@@ -188,7 +188,7 @@ public class IronManUtil {
 
             SuperheroArmourItem hero = (SuperheroArmourItem) chest;
 
-            return Screen.hasControlDown() && Minecraft.getInstance().player.input.up && !player.isOnGround() && hero.getIdentifier().getCapabilities().has(SuperheroCapability.BLAST_OFF) && !player.isSwimming();
+            return Screen.hasControlDown() && Minecraft.getInstance().player.input.up && !player.onGround() && hero.getIdentifier().getCapabilities().has(SuperheroCapability.BLAST_OFF) && !player.isSwimming();
         }
 
         public static void blastOff(Player player,double factor) {
@@ -209,7 +209,7 @@ public class IronManUtil {
                 } else {
                     movement = new Vec3(movement.x() * horizAccel, movement.y() + vertAccel, movement.z() * horizAccel);
                 }
-            } else if (!player.isOnGround()) {
+            } else if (!player.onGround()) {
                 if (!player.isSprinting()) {
                     movement = new Vec3(movement.x() / horizAccel, movement.y(), movement.z() / horizAccel);
                 } else {
@@ -217,7 +217,7 @@ public class IronManUtil {
                 }
             }
 
-            if (!player.isOnGround()) {
+            if (!player.onGround()) {
                 player.setDeltaMovement(movement);
             }
         }
@@ -232,7 +232,7 @@ public class IronManUtil {
                 } else {
                     movement = new Vec3(movement.x() * 2, movement.y() + vertAccel, movement.z() * 2);
                 }
-            } else if (!player.isOnGround()) {
+            } else if (!player.onGround()) {
                 if (!player.isSprinting()) {
                     movement = new Vec3(movement.x() / 2, movement.y(), movement.z() / 2);
                 } else {
@@ -240,7 +240,7 @@ public class IronManUtil {
                 }
             }
 
-            if (!player.isOnGround()) {
+            if (!player.onGround()) {
                 player.moveRelative(1f,movement);
             }
         }

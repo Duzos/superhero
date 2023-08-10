@@ -11,6 +11,7 @@ import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
@@ -37,7 +38,7 @@ public abstract class HumanoidArmorLayerMixin<T extends LivingEntity, M extends 
     protected abstract boolean usesInnerModel(EquipmentSlot p_117129_);
 
     @Shadow
-    protected abstract void renderModel(PoseStack p_117107_, MultiBufferSource p_117108_, int p_117109_, boolean p_117111_, net.minecraft.client.model.Model p_117112_, float p_117114_, float p_117115_, float p_117116_, ResourceLocation armorResource);
+    protected abstract void renderModel(PoseStack p_289664_, MultiBufferSource p_289689_, int p_289681_, ArmorItem p_289650_, net.minecraft.client.model.Model p_289658_, boolean p_289668_, float p_289678_, float p_289674_, float p_289693_, ResourceLocation armorResource);
 
     @Shadow
     public abstract ResourceLocation getArmorResource(net.minecraft.world.entity.Entity entity, ItemStack stack, EquipmentSlot slot, @Nullable String type);
@@ -83,7 +84,7 @@ public abstract class HumanoidArmorLayerMixin<T extends LivingEntity, M extends 
                 net.minecraft.client.model.Model model = getArmorModelHook(p_117121_, itemstack, p_117122_, pModel);
                 boolean flag1 = this.usesInnerModel(p_117122_);
                 boolean flag = itemstack.hasFoil();
-                this.renderModel(p_117119_, p_117120_, p_117123_, flag, model, 1.0F, 1.0F, 1.0F, this.getArmorResource(p_117121_, itemstack, p_117122_, null));
+                this.renderModel(p_117119_, p_117120_, p_117123_,armoritem, model,flag, 1.0F, 1.0F, 1.0F, this.getArmorResource(p_117121_, itemstack, p_117122_, null));
                 ci.cancel();
             }
 //        } else if ($$9 instanceof MilesHoodieItem armoritem) {

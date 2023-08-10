@@ -62,11 +62,11 @@ public class GrapplingHookRopeEntity extends Entity {
     @Override
     public void tick() {
         super.tick();
-        if (!this.level.isClientSide) {
+        if (!this.level().isClientSide) {
             if (this.point == null) {
                 this.remove(RemovalReason.DISCARDED);
             }
-            Player player = this.level.getNearestPlayer(this,10d);
+            Player player = this.level().getNearestPlayer(this,10d);
 
             if (player == null) this.remove(RemovalReason.DISCARDED);
             assert player != null;

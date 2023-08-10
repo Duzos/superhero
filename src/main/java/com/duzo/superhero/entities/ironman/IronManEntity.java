@@ -43,7 +43,7 @@ public class IronManEntity extends HumanoidEntity {
         this.setCustomName(Component.translatable("Iron Man " + fileNameToUsable(this.getMark())));
         this.refreshSkin();
         this.moveControl = new FlyingMoveControl(this, 20, false);
-        this.navigation = new FlyingPathNavigation(this, this.level);
+        this.navigation = new FlyingPathNavigation(this, this.level());
         this.navigation.setCanFloat(false);
     }
 
@@ -53,7 +53,7 @@ public class IronManEntity extends HumanoidEntity {
         this.setCustomName(Component.translatable("Iron Man " + fileNameToUsable(this.getMark())));
         this.refreshSkin();
         this.moveControl = new FlyingMoveControl(this, 20, false);
-        this.navigation = new FlyingPathNavigation(this, this.level);
+        this.navigation = new FlyingPathNavigation(this, this.level());
         this.navigation.setCanFloat(false);
     }
 
@@ -63,7 +63,7 @@ public class IronManEntity extends HumanoidEntity {
         this.setCustomName(Component.translatable("Iron Man " + fileNameToUsable(this.getMark())));
         this.refreshSkin();
         this.moveControl = new FlyingMoveControl(this, 20, false);
-        this.navigation = new FlyingPathNavigation(this, this.level);
+        this.navigation = new FlyingPathNavigation(this, this.level());
         this.navigation.setCanFloat(false);
     }
 
@@ -73,13 +73,13 @@ public class IronManEntity extends HumanoidEntity {
         this.setCustomName(Component.translatable("Iron Man " + fileNameToUsable(this.getMark())));
         this.refreshSkin();
         this.moveControl = new FlyingMoveControl(this, 20, false);
-        this.navigation = new FlyingPathNavigation(this, this.level);
+        this.navigation = new FlyingPathNavigation(this, this.level());
         this.navigation.setCanFloat(false);
     }
 
     @Override
     protected InteractionResult mobInteract(Player player, InteractionHand hand) {
-        if (!player.level.isClientSide && hand == InteractionHand.MAIN_HAND) {
+        if (!player.level().isClientSide && hand == InteractionHand.MAIN_HAND) {
             if (armourSlotsEmpty(player)) {
                 this.putSelfOntoPlayer(player);
             }
@@ -213,7 +213,7 @@ public class IronManEntity extends HumanoidEntity {
         player.setItemSlot(EquipmentSlot.LEGS,this.getItemBySlot(EquipmentSlot.LEGS));
         player.setItemSlot(EquipmentSlot.FEET,this.getItemBySlot(EquipmentSlot.FEET));
 
-        this.level.playSound(null,player,SuperheroSounds.IRONMAN_POWERUP.get(),SoundSource.PLAYERS,1f,1f);
+        this.level().playSound(null,player,SuperheroSounds.IRONMAN_POWERUP.get(),SoundSource.PLAYERS,1f,1f);
 
         this.remove(RemovalReason.DISCARDED);
     }

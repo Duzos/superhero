@@ -33,7 +33,7 @@ public class SuperheroData {
         openAndCloseLogic(livingEntity);
         //SuperheroUtil.onTickPlayerGlide(livingEntity.level, livingEntity);
 
-        if (livingEntity.level.isClientSide) return;
+        if (livingEntity.level().isClientSide) return;
 
         if (livingEntity.tickCount % 40 == 0) {
             sync();
@@ -83,14 +83,14 @@ public class SuperheroData {
     }
 
     public void sync() {
-        if (this.player.level.isClientSide) {
+        if (this.player.level().isClientSide) {
             throw new IllegalStateException("Don't sync client -> server");
         }
         Network.sendToTracking(new SyncSuperheroData(this.player.getId(), serializeNBT()),(ServerPlayer) this.player);
     }
 
     public void syncTo(ServerPlayer receiver) {
-        if (this.player.level.isClientSide) {
+        if (this.player.level().isClientSide) {
             throw new IllegalStateException("Don't sync client -> server");
         }
         Network.sendToTracking(new SyncSuperheroData(this.player.getId(), serializeNBT()),(ServerPlayer) receiver);

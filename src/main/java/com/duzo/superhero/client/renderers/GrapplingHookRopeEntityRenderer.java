@@ -51,7 +51,7 @@ public class GrapplingHookRopeEntityRenderer extends EntityRenderer<GrapplingHoo
     }
 
     private static void updateEntityPosition(GrapplingHookRopeEntity entity) {
-        Player player = entity.level.getNearestPlayer(entity,10d);
+        Player player = entity.level().getNearestPlayer(entity,10d);
 
         if (player == null) return;
 

@@ -3,10 +3,8 @@ package com.duzo.superhero.client.gui.screen;
 import com.duzo.superhero.Superhero;
 import com.duzo.superhero.blocks.entities.SuitMakerBlockEntity;
 import com.duzo.superhero.client.gui.menu.SuitMakerMenu;
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
-import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
@@ -26,17 +24,14 @@ public class SuitMakerScreen extends AbstractContainerScreen<SuitMakerMenu> {
     }
 
     @Override
-    protected void renderBg(PoseStack stack, float partialTick, int mouseX, int mouseY) {
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
-        RenderSystem.setShaderColor(1f,1f,1f,1f);
-        RenderSystem.setShaderTexture(0,BG_TEXTURE);
+    protected void renderBg(GuiGraphics graphics, float partialTick, int mouseX, int mouseY) {
         int x = (width - imageWidth) / 2;
         int y = (height - imageHeight) / 2;
 
-        blit(stack,x,y,0,0,imageWidth,imageHeight);
+        graphics.blit(BG_TEXTURE,x,y,0,0,imageWidth,imageHeight);
     }
 
-    protected void renderRecipeItems(PoseStack stack) {
+    protected void renderRecipeItems(GuiGraphics graphics) {
         if (this.menu.blockEntity.selectedSuitRecipe == null || this.menu.blockEntity.selectedSuitSlot == null) return;
 
         List<ItemStack> list = this.menu.blockEntity.selectedSuitRecipe.getRecipe(this.menu.blockEntity.selectedSuitSlot);
@@ -54,7 +49,7 @@ public class SuitMakerScreen extends AbstractContainerScreen<SuitMakerMenu> {
                 count = 0;
             }
 
-            renderItem(stack, item, i + 5 + (16*count), j + 16 + (16*vert));
+            graphics.renderItem(item, i + 5 + (16*count), j + 16 + (16*vert));
 
             count++;
         }
@@ -71,20 +66,20 @@ public class SuitMakerScreen extends AbstractContainerScreen<SuitMakerMenu> {
         return num % 2 == 0;
     }
 
-    protected void renderItem(PoseStack stack, ItemStack itemstack,int x,int y) {
-        if (itemstack.isEmpty()) return;
-        stack.pushPose();
-        stack.translate(0.0F, 0.0F, 100.0F);
-        this.itemRenderer.renderAndDecorateItem(stack, this.minecraft.player, itemstack, x, y,x + y * this.imageWidth);
-        this.itemRenderer.renderGuiItemDecorations(stack, this.font, itemstack, x, y, null);
-        stack.popPose();
-    }
+//    protected void renderItem(GuiGraphics graphics, ItemStack itemstack,int x,int y) {
+//        if (itemstack.isEmpty()) return;
+//        graphics.pushPose();
+//        stack.translate(0.0F, 0.0F, 100.0F);
+//        this.itemRenderer.renderAndDecorateItem(stack, this.minecraft.player, itemstack, x, y,x + y * this.imageWidth);
+//        this.itemRenderer.renderGuiItemDecorations(stack, this.font, itemstack, x, y, null);
+//        stack.popPose();
+//    }
 
     @Override
-    public void render(PoseStack stack, int mouseX, int mouseY, float delta) {
-        renderBackground(stack);
-        super.render(stack, mouseX, mouseY, delta);
-        renderTooltip(stack,mouseX,mouseY );
-        renderRecipeItems(stack);
+    public void render(GuiGraphics graphics, int mouseX, int mouseY, float delta) {
+        renderBackground(graphics);
+        super.render(graphics, mouseX, mouseY, delta);
+        renderTooltip(graphics,mouseX,mouseY );
+        renderRecipeItems(graphics);
     }
 }

@@ -10,8 +10,8 @@ import com.duzo.superhero.ids.SuperheroIdentifierRegistry;
 import com.duzo.superhero.network.Network;
 import com.duzo.superhero.network.packets.UpdateSuitMakerRecipeC2SPacket;
 import com.duzo.superhero.recipes.SuperheroSuitRecipe;
-import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -123,31 +123,31 @@ public class SuitMakerSelectScreen extends Screen {
         Network.sendToServer(new UpdateSuitMakerRecipeC2SPacket(entity.getBlockPos(),this.selectedSlot,this.selectedRecipe));
     }
     @Override
-    public void render(PoseStack stack, int mouseX, int mouseY, float delta) {
-        super.render(stack, mouseX, mouseY, delta);
+    public void render(GuiGraphics graphics, int mouseX, int mouseY, float delta) {
+        super.render(graphics, mouseX, mouseY, delta);
 
         if (this.getSelectedId() == null) {
-            this.renderButtons(stack, mouseX, mouseY, delta);
+            this.renderButtons(graphics, mouseX, mouseY, delta);
         } else {
-            this.renderRecipeSelect(stack, mouseX, mouseY, delta);
+            this.renderRecipeSelect(graphics, mouseX, mouseY, delta);
         }
     }
 
-    public void renderButtons(PoseStack stack, int mouseX, int mouseY, float delta) {
+    public void renderButtons(GuiGraphics graphics, int mouseX, int mouseY, float delta) {
         if (!(this.recipeButtons.isEmpty()) && this.recipeButtons.get(0).visible) this.setRecipeButtonsVisible(false);
         if (this.buttons.isEmpty()) this.generateButtons();
 
         for (IdentifierButton button : this.buttons) {
-            button.render(stack, mouseX, mouseY, delta);
+            button.render(graphics, mouseX, mouseY, delta);
         }
     }
 
-    public void renderRecipeSelect(PoseStack stack,int mouseX,int mouseY, float delta) {
+    public void renderRecipeSelect(GuiGraphics graphics,int mouseX,int mouseY, float delta) {
         if (!this.buttons.isEmpty() && this.buttons.get(0).visible) this.setButtonsVisible(false);
         if (this.recipeButtons.isEmpty()) this.generateRecipeButtons();
 
         for (ItemButton button : this.recipeButtons) {
-            button.render(stack, mouseX, mouseY, delta);
+            button.render(graphics, mouseX, mouseY, delta);
         }
     }
 

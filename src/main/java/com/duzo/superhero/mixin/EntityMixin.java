@@ -10,6 +10,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.HitResult;
 import org.spongepowered.asm.mixin.Mixin;
@@ -30,6 +31,10 @@ public abstract class EntityMixin implements IEntityDataSaver {
     @Shadow public abstract void playSound(SoundEvent p_216991_);
 
     @Shadow public abstract void playerTouch(Player p_20081_);
+
+    @Shadow public abstract Level level();
+
+    @Shadow public abstract void positionRider(Entity p_20312_);
 
     // Saving custom data to entities
     // @TODO i dont think this is necessary
@@ -57,13 +62,11 @@ public abstract class EntityMixin implements IEntityDataSaver {
 
     @Inject(at = @At("HEAD"),method = "Lnet/minecraft/world/entity/Entity;playStepSound(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)V", cancellable = true)
     private void playCustomStepSound(BlockPos pos, BlockState state, CallbackInfo ci) {
-        if (!state.getMaterial().isLiquid()) {
-            Entity entity = (Entity) (Object) this;
-            if (!(entity instanceof Player player)) return;
+        Entity entity = (Entity) (Object) this;
+        if (!(entity instanceof Player player)) return;
 
-            if (IronManUtil.isIronManSuit(player.getItemBySlot(EquipmentSlot.FEET))) {
-                this.playSound(SuperheroSounds.IRONMAN_STEP.get(), 1f, 1f);
-            }
+        if (IronManUtil.isIronManSuit(player.getItemBySlot(EquipmentSlot.FEET))) {
+            this.playSound(SuperheroSounds.IRONMAN_STEP.get(), 1f, 1f);
         }
     }
 }

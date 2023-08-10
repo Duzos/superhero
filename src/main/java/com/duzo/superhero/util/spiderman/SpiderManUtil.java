@@ -99,20 +99,20 @@ public class SpiderManUtil {
         }
 
 
-        BlockHitResult blockhitresult = getPlayerPOVHitResult(player.level,player);
+        BlockHitResult blockhitresult = getPlayerPOVHitResult(player.level(),player);
         BlockPos hitPos = blockhitresult.getBlockPos();
         BlockPos hitPosRelative = hitPos.relative(blockhitresult.getDirection());
         Vec3 hitVec3 = hitPosRelative.getCenter().relative(blockhitresult.getDirection().getOpposite(),0.45d);
 
         Network.sendToPlayer(new SwingArmS2CPacket(InteractionHand.MAIN_HAND), (ServerPlayer) player);
 
-        if (player.level.getBlockState(hitPos).isAir()) return;
+        if (player.level().getBlockState(hitPos).isAir()) return;
 
-        ((ServerLevel)player.level).sendParticles(SuperheroParticles.WEB_PARTICLES.get(),hitVec3.x(),hitVec3.y(),hitVec3.z(),1,0,0,0,0d);
+        ((ServerLevel)player.level()).sendParticles(SuperheroParticles.WEB_PARTICLES.get(),hitVec3.x(),hitVec3.y(),hitVec3.z(),1,0,0,0,0d);
 
-        player.level.playSound(null,player, SuperheroSounds.SPIDERMAN_SHOOT.get(), SoundSource.PLAYERS,0.25f,1f);
+        player.level().playSound(null,player, SuperheroSounds.SPIDERMAN_SHOOT.get(), SoundSource.PLAYERS,0.25f,1f);
 
-        WebRopeEntity rope = new WebRopeEntity(player.level, hitVec3, player);
+        WebRopeEntity rope = new WebRopeEntity(player.level(), hitVec3, player);
 
         //int i = Mth.clamp(0, 0, 64);
         //float f2 = Mth.cos(player.yBodyRot * ((float) Math.PI / 180F)) * (0F + 1.21F * (float) i);
@@ -120,9 +120,9 @@ public class SpiderManUtil {
         //float f2 = Mth.cos(player.yBodyRot * ((float) Math.PI / 180F)) * (0F + 0F * (float) i);
         //float f3 = Mth.sin(player.yBodyRot * ((float) Math.PI / 180F)) * (0F + 0F * (float) i);
         //float f6 = (0.3F * 0.45F) * ((float) i * 0.2F + 0.0F);
-        player.level.addFreshEntity(rope);
+        player.level().addFreshEntity(rope);
         //BlockPos hitPosition = hit.getBlockPos();
-        if(player.level.getBlockState(hitPos).isAir()) return;
+        if(player.level().getBlockState(hitPos).isAir()) return;
         rope.moveTo(hitVec3);
         rope.setYBodyRot(player.getYRot());
         rope.setXRot(player.getXRot());
@@ -137,17 +137,17 @@ public class SpiderManUtil {
         if (KeyBinds.ABILITY_TWO.isDown() && !(canPlayerShootRope(player))) {
             return;
         }
-        BlockHitResult blockhitresult = getPlayerPOVHitResult(player.level,player);
+        BlockHitResult blockhitresult = getPlayerPOVHitResult(player.level(),player);
         BlockPos hitPos = blockhitresult.getBlockPos();
         BlockPos hitPosRelative = hitPos.relative(blockhitresult.getDirection());
         Vec3 hitVec3 = hitPosRelative.getCenter().relative(blockhitresult.getDirection().getOpposite(),0.45d);
         Network.sendToPlayer(new SwingArmS2CPacket(InteractionHand.MAIN_HAND), (ServerPlayer) player);
-        if (player.level.getBlockState(hitPos).isAir()) return;
-        ((ServerLevel)player.level).sendParticles(SuperheroParticles.WEB_PARTICLES.get(),hitVec3.x(),hitVec3.y(),hitVec3.z(),1,0,0,0,0d);
-        player.level.playSound(null,player, SuperheroSounds.SPIDERMAN_SHOOT.get(), SoundSource.PLAYERS,0.25f,1f);
-        WebRopeEntity rope = new WebRopeEntity(player.level, hitVec3, player);
-        player.level.addFreshEntity(rope);
-        if(player.level.getBlockState(hitPos).isAir()) return;
+        if (player.level().getBlockState(hitPos).isAir()) return;
+        ((ServerLevel)player.level()).sendParticles(SuperheroParticles.WEB_PARTICLES.get(),hitVec3.x(),hitVec3.y(),hitVec3.z(),1,0,0,0,0d);
+        player.level().playSound(null,player, SuperheroSounds.SPIDERMAN_SHOOT.get(), SoundSource.PLAYERS,0.25f,1f);
+        WebRopeEntity rope = new WebRopeEntity(player.level(), hitVec3, player);
+        player.level().addFreshEntity(rope);
+        if(player.level().getBlockState(hitPos).isAir()) return;
         rope.moveTo(hitVec3);
         rope.setYBodyRot(player.getYRot());
         rope.setXRot(player.getXRot());
@@ -165,7 +165,7 @@ public class SpiderManUtil {
         return getPlayersRope(player) != null;
     }
     public static WebRopeEntity getPlayersRope(Player player) {
-        if (!(player.level instanceof ServerLevel serverLevel)) return null;
+        if (!(player.level() instanceof ServerLevel serverLevel)) return null;
         for (Entity entity : serverLevel.getAllEntities()) {
             if (!(entity instanceof WebRopeEntity rope)) continue;
 

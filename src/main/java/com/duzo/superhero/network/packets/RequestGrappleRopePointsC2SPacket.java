@@ -44,7 +44,7 @@ public class RequestGrappleRopePointsC2SPacket {
     public boolean handle(Supplier<NetworkEvent.Context> supplier) {
         NetworkEvent.Context context = supplier.get();
         context.enqueueWork(() -> {
-            Level level = context.getSender().getLevel();
+            Level level = context.getSender().level();
 
             if (level.getEntity(this.entityID) instanceof GrapplingHookRopeEntity rope) {
                 rope.setPointsChanged();

@@ -31,7 +31,7 @@ public class SpiderManNanotechItem extends SuperheroArmourItem {
 
     @Override
     public void runAbility(Player player, int number) {
-        Level level = player.getLevel();
+        Level level = player.level();
         ItemStack chest = player.getItemBySlot(EquipmentSlot.CHEST);
         if (number == 2) {
             if (chest.getItem() instanceof SpiderManNanotechItem) {

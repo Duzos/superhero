@@ -43,7 +43,7 @@ public class RequestWebRopePlayerC2SPacket {
     public boolean handle(Supplier<NetworkEvent.Context> supplier) {
         NetworkEvent.Context context = supplier.get();
         context.enqueueWork(() -> {
-            Level level = context.getSender().level;
+            Level level = context.getSender().level();
 
             System.out.println(level.getEntity(this.entityID));
 

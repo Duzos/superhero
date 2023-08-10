@@ -1,8 +1,8 @@
 package com.duzo.superhero.client.gui.widgets;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.renderer.entity.ItemRenderer;
@@ -28,8 +28,8 @@ public class ItemButton extends AbstractWidget {
     }
 
     @Override
-    public void renderWidget(PoseStack stack, int mouseX, int mouseY, float delta) {
-        this.renderItem(stack);
+    public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float delta) {
+        this.renderItem(graphics);
     }
 
     protected int getCenterX() {
@@ -49,19 +49,19 @@ public class ItemButton extends AbstractWidget {
         return this.height / 16f;
     }
 
-    protected void renderItem(PoseStack stack) {
-        this.renderItem(stack,this.item,this.getCenterX(),this.getCenterY()-8);
+    protected void renderItem(GuiGraphics graphics) {
+        graphics.renderItem(this.item,this.getCenterX(),this.getCenterY()-8);
     }
 
-    protected void renderItem(PoseStack stack, ItemStack itemstack, int x, int y) {
-        if (itemstack.isEmpty()) return;
-        stack.pushPose();
-        stack.translate(0.0F, 0.0F, 100.0F);
-//        stack.scale(this.getItemScaleX(),this.getItemScaleY(),0); // @TODO scaling
-        this.itemRenderer.renderAndDecorateItem(stack, this.minecraft.player, itemstack, x, y,x + y);
-        this.itemRenderer.renderGuiItemDecorations(stack, this.font, itemstack, x, y, null);
-        stack.popPose();
-    }
+//    protected void renderItem(GuiGraphics graphics, ItemStack itemstack, int x, int y) {
+//        if (itemstack.isEmpty()) return;
+//        stack.pushPose();
+//        stack.translate(0.0F, 0.0F, 100.0F);
+////        stack.scale(this.getItemScaleX(),this.getItemScaleY(),0); // @TODO scaling
+//        this.itemRenderer.renderAndDecorateItem(stack, this.minecraft.player, itemstack, x, y,x + y);
+//        this.itemRenderer.renderGuiItemDecorations(stack, this.font, itemstack, x, y, null);
+//        stack.popPose();
+//    }
 
     @Override
     public void onClick(double mouseX, double mouseY) {

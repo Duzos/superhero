@@ -58,7 +58,7 @@ public enum SuperheroCapability implements StringRepresentable {
             if (num == 3) {
                 convertArmourToNanotech(player);
                 if (IronManUtil.isIronManSuit(getIDFromStack(chest))) {
-                    player.getLevel().playSound(null, player, SuperheroSounds.IRONMAN_POWERDOWN.get(), SoundSource.PLAYERS, 1f, 1f);
+                    player.level().playSound(null, player, SuperheroSounds.IRONMAN_POWERDOWN.get(), SoundSource.PLAYERS, 1f, 1f);
                 }
             }
             if (num == 1) {
@@ -252,7 +252,7 @@ public enum SuperheroCapability implements StringRepresentable {
         public void runAbility(int num, Player player) {
             if (num == 1) {
                 convertArmourToSuitcase(player);
-                player.getLevel().playSound(null,player, SuperheroSounds.IRONMAN_POWERDOWN.get(), SoundSource.PLAYERS,1f,1f);
+                player.level().playSound(null,player, SuperheroSounds.IRONMAN_POWERDOWN.get(), SoundSource.PLAYERS,1f,1f);
             }
         }
 
@@ -275,8 +275,8 @@ public enum SuperheroCapability implements StringRepresentable {
 
                 if (!IronManUtil.isIronManSuit(item.getIdentifier())) return;
 
-                spawnNew((IronManIdentifier) item.getIdentifier(),player.getLevel(),player.getOnPos(),player);
-                player.getLevel().playSound(null,player, SuperheroSounds.IRONMAN_POWERDOWN.get(), SoundSource.PLAYERS,1f,1f);
+                spawnNew((IronManIdentifier) item.getIdentifier(),player.level(),player.getOnPos(),player);
+                player.level().playSound(null,player, SuperheroSounds.IRONMAN_POWERDOWN.get(), SoundSource.PLAYERS,1f,1f);
             }
         }
 
@@ -415,15 +415,15 @@ public enum SuperheroCapability implements StringRepresentable {
                 float f2 = Mth.cos(player.yBodyRot * ((float) Math.PI / 180F)) * (0F + 1.21F * (float) i);
                 float f3 = Mth.sin(player.yBodyRot * ((float) Math.PI / 180F)) * (0F + 1.21F * (float) i);
                 float f6 = (0.3F * 0.45F) * ((float) i * 0.2F + 0.0F);
-//                UnibeamEntity unibeam = new UnibeamEntity(SuperheroEntities.UNIBEAM_ENTITY.get(), player.getLevel());
+//                UnibeamEntity unibeam = new UnibeamEntity(SuperheroEntities.UNIBEAM_ENTITY.get(), player.level());
 //                unibeam.moveTo(player.getX() + (double) f2, player.getY() + (double) f6, player.getZ() + (double) f3, player.getYRot(), player.getXRot());
-//                player.getLevel().addFreshEntity(unibeam);
+//                player.level().addFreshEntity(unibeam);
 
                 // Rocket
                 Vec3 look = player.getLookAngle().normalize();
-                RocketEntity rocket = new RocketEntity(player.getLevel(),player,look.x,look.y,look.z, 5);
+                RocketEntity rocket = new RocketEntity(player.level(),player,look.x,look.y,look.z, 5);
                 rocket.moveTo(player.getX() + (double) f2, player.getY() + (double) f6, player.getZ() + (double) f3,player.getXRot(),player.getYRot());
-                player.getLevel().addFreshEntity(rocket);
+                player.level().addFreshEntity(rocket);
             }
         }
 

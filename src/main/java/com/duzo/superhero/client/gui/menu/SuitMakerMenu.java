@@ -19,7 +19,7 @@ public class SuitMakerMenu extends AbstractContainerMenu {
     private final Level level;
 
     public SuitMakerMenu(int id, Inventory inv, FriendlyByteBuf extraData) {
-        this(id,inv,inv.player.level.getBlockEntity(extraData.readBlockPos()));
+        this(id,inv,inv.player.level().getBlockEntity(extraData.readBlockPos()));
     }
     public SuitMakerMenu(int id, Inventory inv, BlockEntity entity) {
         super(SuperheroMenuTypes.SUIT_MAKER_MENU.get() , id);
@@ -29,7 +29,7 @@ public class SuitMakerMenu extends AbstractContainerMenu {
         blockEntity = (SuitMakerBlockEntity) entity;
         System.out.println(blockEntity.selectedSuitSlot);
         TE_INVENTORY_SLOT_COUNT = blockEntity.selectedSuitRecipe.getRecipe(blockEntity.selectedSuitSlot).size() - 1;
-        this.level = inv.player.level;
+        this.level = inv.player.level();
 
         addPlayerInventory(inv);
         addPlayerHotbar(inv);

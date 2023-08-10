@@ -53,7 +53,7 @@ public class UpdateSuitMakerRecipeC2SPacket {
     public boolean handle(Supplier<NetworkEvent.Context> supplier) {
         NetworkEvent.Context context = supplier.get();
         context.enqueueWork(() -> {
-            Level level = context.getSender().level;
+            Level level = context.getSender().level();
 
             if (level.getBlockEntity(this.pos) instanceof SuitMakerBlockEntity suit) {
                 suit.selectedSuitSlot = this.slot;
