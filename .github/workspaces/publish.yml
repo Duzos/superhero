@@ -1,0 +1,2 @@
+- name: mc-publish
+  uses: Kir-Antipov/mc-publish@v3.3
