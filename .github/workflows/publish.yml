@@ -42,7 +42,7 @@ jobs:
 #          modrinth-id: 1q2w3e4r                                             #The id of your modrinth project
 #          modrinth-token: "${{env.MODRINTH_TOKEN}}"
 
-          github-token: "${{env.GITHUB_TOKEN}}"
+          github-token: "${{secrets.GITHUB_TOKEN}}"
 
           github-generate-changelog: true
           version-type: beta
