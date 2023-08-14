@@ -12,6 +12,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
@@ -25,6 +26,25 @@ import java.util.List;
 public class SuperheroUtil {
 
     public static final ResourceLocation DEFAULT_TEXTURE = new ResourceLocation(Superhero.MODID,"textures/heroes/generic/invisible.png");
+
+    public static boolean isValidArmour(LivingEntity player) {
+        AbstractIdentifier currentID = null;
+
+        for (EquipmentSlot equipmentSlot : EquipmentSlot.values()) {
+            if (!equipmentSlot.isArmor()) continue;
+            ItemStack currentSlot = player.getItemBySlot(equipmentSlot);
+            if (currentSlot.getItem() instanceof SuperheroArmourItem item) {
+                if (currentID == null) {
+                    currentID = item.getIdentifier();
+                } else if (!currentID.equals(item.getIdentifier())) {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        }
+        return true;
+    }
 
     public static boolean isInvisibleTexture(ResourceLocation location) {
         return location.equals(DEFAULT_TEXTURE);

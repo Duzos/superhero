@@ -45,28 +45,33 @@ public class SuperheroIdentifierRegistry {
                             new ItemStack(Items.GUNPOWDER).copyWithCount(32))
                     )
             )
+            .validArmour(SpiderManUtil::isValidArmor)
             .slim(true)
     );
     public static final RegistryObject<AbstractIdentifier> MILES_CLOTHED = register("miles_clothed", () -> new IdentifierBuilder("miles_clothed")
             .itemPrefix("Miles")
             .capabilities(SpiderManUtil.DEFAULT_CAPABILITIES)
             .capabilities(SuperheroCapability.INVISIBILITY)
+            .validArmour(SpiderManUtil::isValidArmor)
             .slim(true)
     );
     public static final RegistryObject<AbstractIdentifier> GWEN = register("gwen", () -> new IdentifierBuilder("gwen")
             .itemPrefix("SpiderWoman")
             .capabilities(SpiderManUtil.DEFAULT_CAPABILITIES)
+            .validArmour(SpiderManUtil::isValidArmor)
             .slim(true)
     );
     public static final RegistryObject<AbstractIdentifier> AMAZING_SPIDER_MAN = register("amazing_spider_man", () -> new IdentifierBuilder("amazing_spider_man")
             .itemPrefix("SpiderMan")
             .capabilities(SpiderManUtil.DEFAULT_CAPABILITIES)
+            .validArmour(SpiderManUtil::isValidArmor)
             .slim(true)
     );
     public static final RegistryObject<AbstractIdentifier> IRON_SPIDER = register("iron_spider", () -> new IdentifierBuilder("iron_spider")
             .itemPrefix("SpiderMan")
             .capabilities(SpiderManUtil.DEFAULT_CAPABILITIES)
             .capabilities(SuperheroCapability.NANOTECH)
+            .validArmour(SpiderManUtil::isValidArmor)
             .slim(true)
     );
 

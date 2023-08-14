@@ -2,8 +2,8 @@ package com.duzo.superhero.ids;
 
 import com.duzo.superhero.Superhero;
 import com.duzo.superhero.capabilities.SuperheroCapabilities;
-import com.duzo.superhero.items.SuperheroArmourItem;
 import com.duzo.superhero.recipes.SuperheroSuitRecipe;
+import com.duzo.superhero.util.SuperheroUtil;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -24,12 +24,14 @@ public abstract class AbstractIdentifier {
     protected ResourceLocation lightmap;
     protected SuperheroSuitRecipe recipe;
     protected Supplier<ItemStack> icon;
+    protected validArmour validArmour;
 
     public AbstractIdentifier(String name) {
         this.name = name;
         this.caps = new SuperheroCapabilities();
         this.recipe = new SuperheroSuitRecipe();
         this.icon = Items.AIR::getDefaultInstance;
+        this.validArmour = SuperheroUtil::isValidArmour;
         this.texture = new ResourceLocation(Superhero.MODID,"textures/heroes/" + this.getSerializedName() + ".png");
         this.lightmap = new ResourceLocation(Superhero.MODID,"textures/heroes/" + this.getSerializedName() + "_l.png");
     }
@@ -88,22 +90,7 @@ public abstract class AbstractIdentifier {
     }
 
     public boolean isValidArmour(LivingEntity player) {
-        AbstractIdentifier currentID = null;
-
-        for (EquipmentSlot equipmentSlot : EquipmentSlot.values()) {
-            if (!equipmentSlot.isArmor()) continue;
-            ItemStack currentSlot = player.getItemBySlot(equipmentSlot);
-            if (currentSlot.getItem() instanceof SuperheroArmourItem item) {
-                if (currentID == null) {
-                    currentID = item.getIdentifier();
-                } else if (!currentID.equals(item.getIdentifier())) {
-                    return false;
-                }
-            } else {
-                return false;
-            }
-        }
-        return true;
+        return validArmour.isValidArmour(player);
     }
     public boolean usesDefaultRenderer() {
         return true;
@@ -111,5 +98,9 @@ public abstract class AbstractIdentifier {
 
     public ItemStack icon() {
         return this.icon.get();
+    }
+
+    public interface validArmour {
+        boolean isValidArmour(LivingEntity player);
     }
 }

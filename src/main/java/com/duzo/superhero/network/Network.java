@@ -10,6 +10,8 @@ import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.network.simple.SimpleChannel;
 
+import static com.duzo.superhero.Superhero.LOGGER;
+
 public class Network {
     private static SimpleChannel INSTANCE;
 
@@ -123,6 +125,12 @@ public class Network {
     }
 
     public static <MSG> void sendToAll(MSG message) {
-        INSTANCE.send(PacketDistributor.ALL.noArg(), message);
+        if (INSTANCE != null && message != null) {
+            try {
+                INSTANCE.send(PacketDistributor.ALL.noArg(), message);
+            } catch (NullPointerException e) {
+                LOGGER.warn("Failed to send message to all players.");
+            }
+        }
     }
 }

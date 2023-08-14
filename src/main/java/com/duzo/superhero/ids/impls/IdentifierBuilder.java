@@ -109,4 +109,9 @@ public class IdentifierBuilder extends AbstractIdentifier {
         this.icon = supplier;
         return this;
     }
+
+    public IdentifierBuilder validArmour(validArmour check) {
+        this.validArmour = check;
+        return this;
+    }
 }
