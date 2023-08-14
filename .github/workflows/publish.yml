@@ -16,4 +16,8 @@ jobs:
 
           # Only include this section if you wish to publish
           # your assets on GitHub.
+          java: Java 18
+
           github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-generate-changelog: true
+
