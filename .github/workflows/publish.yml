@@ -1,24 +1,52 @@
+name: Publish on GitHub
+
+on: [ pull_request, workflow_dispatch ]
+
+env:
+  JAVA_VERSION: 17
+
+permissions:
+  contents: write
+
 jobs:
   build:
-    # ...
+    runs-on: ubuntu-latest
     steps:
-      - uses: Kir-Antipov/mc-publish@v3.3
+      - name: Check Environment Variables
+        run: env
+
+      - name: Checkout Repository
+        uses: actions/checkout@v3
         with:
-          # Only include this section if you wish to publish
-          # your assets on Modrinth.
-          # modrinth-id: AANobbMI
-          # modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+          submodules: true
 
-          # Only include this section if you wish to publish
-          # your assets on CurseForge.
-          # curseforge-id: 394468
-          # curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
+      - name: Setup Java
+        uses: actions/setup-java@v2
+        with:
+          distribution: "temurin"
+          java-version: 17
 
-          # Only include this section if you wish to publish
-          # your assets on GitHub.
-          java: Java 18
+      - name: Make Gradle Wrapper Executable
+        if: ${{ runner.os != 'Windows' }}
+        run: chmod +x ./gradlew
 
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build
+        run: ./gradlew clean build
+
+      - name: Publish (CurseForge/Modrinth/GitHub)
+        uses: Kir-Antipov/mc-publish@v3.2                                   #The specified MC-Publish GitHub Action in the version 3.2
+        with:
+#          curseforge-id: 123456                                             #The id of your CurseForge project
+#          curseforge-token: "${{env.CURSEFORGE_TOKEN}}"
+
+#          modrinth-id: 1q2w3e4r                                             #The id of your modrinth project
+#          modrinth-token: "${{env.MODRINTH_TOKEN}}"
+
+          github-token: "${{env.GITHUB_TOKEN}}"
+
           github-generate-changelog: true
-          github-prerelease: true
+          version-type: beta
+
+          loaders: forge
+          java: "${{env.JAVA_VERSION}}"
 
