@@ -1,2 +1,19 @@
-- name: mc-publish
-  uses: Kir-Antipov/mc-publish@v3.3
+jobs:
+  build:
+    # ...
+    steps:
+      - uses: Kir-Antipov/mc-publish@v3.3
+        with:
+          # Only include this section if you wish to publish
+          # your assets on Modrinth.
+          # modrinth-id: AANobbMI
+          # modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+
+          # Only include this section if you wish to publish
+          # your assets on CurseForge.
+          # curseforge-id: 394468
+          # curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
+
+          # Only include this section if you wish to publish
+          # your assets on GitHub.
+          github-token: ${{ secrets.GITHUB_TOKEN }}
