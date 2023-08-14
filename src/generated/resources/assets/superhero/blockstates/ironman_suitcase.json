@@ -8,7 +8,7 @@
       "y": 90
     },
     "facing=north": {
-      "model": "superhero:block/ironman_suitcase",
+      "model": "superhero:block/ironman_suitcase"
     },
     "facing=south": {
       "model": "superhero:block/ironman_suitcase",
