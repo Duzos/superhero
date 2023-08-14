@@ -1,7 +1,7 @@
 package com.duzo.superhero.ids;
 
 import com.duzo.superhero.Superhero;
-import com.duzo.superhero.capabilities.SuperheroCapability;
+import com.duzo.superhero.capabilities.SuperheroCapabilityRegistry;
 import com.duzo.superhero.ids.impls.IdentifierBuilder;
 import com.duzo.superhero.ids.impls.IronManIdentifier;
 import com.duzo.superhero.recipes.SuperheroSuitRecipe;
@@ -32,7 +32,7 @@ public class SuperheroIdentifierRegistry {
     public static final RegistryObject<AbstractIdentifier> MILES = register("miles", () -> new IdentifierBuilder("miles")
             .itemPrefix("Miles")
             .capabilities(SpiderManUtil.DEFAULT_CAPABILITIES)
-            .capabilities(SuperheroCapability.INVISIBILITY)
+            .capabilities(SuperheroCapabilityRegistry.INVISIBILITY)
             .icon(ForgeRegistries.ITEMS.getValue(new ResourceLocation(Superhero.MODID,"miles_helmet")).asItem()::getDefaultInstance)
             .recipe(new SuperheroSuitRecipe()
                     .putRecipe(EquipmentSlot.HEAD,ForgeRegistries.ITEMS.getValue(new ResourceLocation(Superhero.MODID,"miles_helmet"))::getDefaultInstance,List.of(
@@ -51,7 +51,7 @@ public class SuperheroIdentifierRegistry {
     public static final RegistryObject<AbstractIdentifier> MILES_CLOTHED = register("miles_clothed", () -> new IdentifierBuilder("miles_clothed")
             .itemPrefix("Miles")
             .capabilities(SpiderManUtil.DEFAULT_CAPABILITIES)
-            .capabilities(SuperheroCapability.INVISIBILITY)
+            .capabilities(SuperheroCapabilityRegistry.INVISIBILITY)
             .validArmour(SpiderManUtil::isValidArmor)
             .slim(true)
     );
@@ -70,7 +70,7 @@ public class SuperheroIdentifierRegistry {
     public static final RegistryObject<AbstractIdentifier> IRON_SPIDER = register("iron_spider", () -> new IdentifierBuilder("iron_spider")
             .itemPrefix("SpiderMan")
             .capabilities(SpiderManUtil.DEFAULT_CAPABILITIES)
-            .capabilities(SuperheroCapability.NANOTECH)
+            .capabilities(SuperheroCapabilityRegistry.NANOTECH)
             .validArmour(SpiderManUtil::isValidArmor)
             .slim(true)
     );
@@ -96,35 +96,35 @@ public class SuperheroIdentifierRegistry {
             .vertical(0.005)
             .blast(1d)
             .itemPrefix("Iron-Man")
-            .capabilities(SuperheroCapability.MASK_TOGGLE, SuperheroCapability.ICES_OVER,SuperheroCapability.BINDING,SuperheroCapability.IRON_MAN_FLIGHT)
+            .capabilities(SuperheroCapabilityRegistry.MASK_TOGGLE, SuperheroCapabilityRegistry.ICES_OVER,SuperheroCapabilityRegistry.BINDING,SuperheroCapabilityRegistry.IRON_MAN_FLIGHT)
     );
     public static final RegistryObject<AbstractIdentifier> IRONMAN_MARK_2 = register("ironman_mark_2", () -> new IronManIdentifier("ironman_mark_2")
             .mark(2)
             .vertical(0.01)
             .blast(1.25d)
             .itemPrefix("Iron-Man")
-            .capabilities(SuperheroCapability.MASK_TOGGLE, SuperheroCapability.ICES_OVER,SuperheroCapability.JARVIS,SuperheroCapability.NIGHT_VISION_HELMET_ONLY,SuperheroCapability.BLAST_OFF,SuperheroCapability.BINDING,SuperheroCapability.IRON_MAN_FLIGHT)
+            .capabilities(SuperheroCapabilityRegistry.MASK_TOGGLE, SuperheroCapabilityRegistry.ICES_OVER,SuperheroCapabilityRegistry.JARVIS,SuperheroCapabilityRegistry.NIGHT_VISION_HELMET_ONLY,SuperheroCapabilityRegistry.BLAST_OFF,SuperheroCapabilityRegistry.BINDING,SuperheroCapabilityRegistry.IRON_MAN_FLIGHT)
     );
     public static final RegistryObject<AbstractIdentifier> IRONMAN_MARK_5 = register("ironman_mark_5", () -> new IronManIdentifier("ironman_mark_5")
             .mark(5)
             .vertical(0.015)
             .blast(1.5d)
             .itemPrefix("Iron-Man")
-            .capabilities(SuperheroCapability.SUITCASE,SuperheroCapability.JARVIS,SuperheroCapability.NIGHT_VISION_HELMET_ONLY,SuperheroCapability.IRON_MAN_WEAPONS,SuperheroCapability.BLAST_OFF,SuperheroCapability.IRON_MAN_FLIGHT)
+            .capabilities(SuperheroCapabilityRegistry.SUITCASE,SuperheroCapabilityRegistry.JARVIS,SuperheroCapabilityRegistry.NIGHT_VISION_HELMET_ONLY,SuperheroCapabilityRegistry.IRON_MAN_WEAPONS,SuperheroCapabilityRegistry.BLAST_OFF,SuperheroCapabilityRegistry.IRON_MAN_FLIGHT)
     );
     public static final RegistryObject<AbstractIdentifier> IRONMAN_MARK_7 = register("ironman_mark_7", () -> new IronManIdentifier("ironman_mark_7")
             .mark(7)
             .vertical(0.0175)
             .blast(2d)
             .itemPrefix("Iron-Man")
-            .capabilities(SuperheroCapability.MASK_TOGGLE, SuperheroCapability.BRACELET_LOCATING,SuperheroCapability.JARVIS,SuperheroCapability.NIGHT_VISION_HELMET_ONLY,SuperheroCapability.IRON_MAN_WEAPONS,SuperheroCapability.BLAST_OFF,SuperheroCapability.IRON_MAN_FLIGHT)
+            .capabilities(SuperheroCapabilityRegistry.MASK_TOGGLE, SuperheroCapabilityRegistry.BRACELET_LOCATING,SuperheroCapabilityRegistry.JARVIS,SuperheroCapabilityRegistry.NIGHT_VISION_HELMET_ONLY,SuperheroCapabilityRegistry.IRON_MAN_WEAPONS,SuperheroCapabilityRegistry.BLAST_OFF,SuperheroCapabilityRegistry.IRON_MAN_FLIGHT)
     );
     public static final RegistryObject<AbstractIdentifier> IRONMAN_MARK_9 = register("ironman_mark_9", () -> new IronManIdentifier("ironman_mark_9")
             .mark(9)
             .vertical(0.02)
             .blast(2.5d)
             .itemPrefix("Iron-Man")
-            .capabilities(SuperheroCapability.MASK_TOGGLE, SuperheroCapability.NANOTECH,SuperheroCapability.JARVIS,SuperheroCapability.NIGHT_VISION_HELMET_ONLY,SuperheroCapability.IRON_MAN_WEAPONS,SuperheroCapability.BLAST_OFF,SuperheroCapability.IRON_MAN_FLIGHT)
+            .capabilities(SuperheroCapabilityRegistry.MASK_TOGGLE, SuperheroCapabilityRegistry.NANOTECH,SuperheroCapabilityRegistry.JARVIS,SuperheroCapabilityRegistry.NIGHT_VISION_HELMET_ONLY,SuperheroCapabilityRegistry.IRON_MAN_WEAPONS,SuperheroCapabilityRegistry.BLAST_OFF,SuperheroCapabilityRegistry.IRON_MAN_FLIGHT)
     );
 
 

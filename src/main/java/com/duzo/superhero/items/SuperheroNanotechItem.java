@@ -1,6 +1,6 @@
 package com.duzo.superhero.items;
 
-import com.duzo.superhero.capabilities.SuperheroCapability;
+import com.duzo.superhero.capabilities.SuperheroCapabilityRegistry;
 import com.duzo.superhero.ids.AbstractIdentifier;
 import com.duzo.superhero.util.SuperheroUtil;
 import net.minecraft.ChatFormatting;
@@ -44,7 +44,7 @@ public class SuperheroNanotechItem extends SuperheroArmourItem {
 
     @Override
     public void runAbility(Player player, int number) {
-        SuperheroCapability.NANOTECH.runAbility(number,player);
+        SuperheroCapabilityRegistry.NANOTECH.get().runAbility(number,player);
     }
 
     @Override
@@ -52,7 +52,7 @@ public class SuperheroNanotechItem extends SuperheroArmourItem {
         if (entity instanceof Player player) {
             if (!isEquipped(stack,player)) return;
 
-            SuperheroCapability.NANOTECH.tick(stack, level,player);
+            SuperheroCapabilityRegistry.NANOTECH.get().tick(stack, level,player);
         }
     }
     @Override

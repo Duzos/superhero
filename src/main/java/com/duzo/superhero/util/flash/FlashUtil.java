@@ -1,7 +1,7 @@
 package com.duzo.superhero.util.flash;
 
 import com.duzo.superhero.capabilities.SuperheroCapabilities;
-import com.duzo.superhero.capabilities.SuperheroCapability;
+import com.duzo.superhero.capabilities.SuperheroCapabilityRegistry;
 import com.duzo.superhero.network.Network;
 import com.duzo.superhero.network.packets.SyncSpeedsterDataS2CPacket;
 import com.duzo.superhero.util.player.IEntityDataSaver;
@@ -21,7 +21,7 @@ import net.minecraft.world.phys.Vec3;
 import java.util.UUID;
 
 public class FlashUtil {
-    public static final SuperheroCapabilities DEFAULT_CAPABILITIES = new SuperheroCapabilities(SuperheroCapability.SPEEDSTER,SuperheroCapability.FLASH_HUD);
+    public static final SuperheroCapabilities DEFAULT_CAPABILITIES = new SuperheroCapabilities(SuperheroCapabilityRegistry.SPEEDSTER,SuperheroCapabilityRegistry.FLASH_HUD);
 
     public static final UUID SPEED_UUID = UUID.fromString("fff934a3-13f8-47c6-877d-7067fb9a842f");
 

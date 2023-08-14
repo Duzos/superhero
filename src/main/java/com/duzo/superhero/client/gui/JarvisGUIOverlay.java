@@ -1,7 +1,7 @@
 package com.duzo.superhero.client.gui;
 
 import com.duzo.superhero.Superhero;
-import com.duzo.superhero.capabilities.SuperheroCapability;
+import com.duzo.superhero.capabilities.SuperheroCapabilityRegistry;
 import com.duzo.superhero.ids.AbstractIdentifier;
 import com.duzo.superhero.items.ironman.IronManEdithGlasses;
 import net.minecraft.client.Minecraft;
@@ -34,7 +34,7 @@ public class JarvisGUIOverlay {
 
         if (id == null) return;
 
-        boolean flag = id.getCapabilities().has(SuperheroCapability.JARVIS) || mc.player.getItemBySlot(EquipmentSlot.HEAD).getItem() instanceof IronManEdithGlasses;
+        boolean flag = id.getCapabilities().has(SuperheroCapabilityRegistry.JARVIS) || mc.player.getItemBySlot(EquipmentSlot.HEAD).getItem() instanceof IronManEdithGlasses;
 
         if (!flag) return;
 
@@ -44,7 +44,7 @@ public class JarvisGUIOverlay {
         graphics.pose().popPose();
 
         graphics.pose().pushPose();
-        if(mc.player.getY() > 185 && id.getCapabilities().has(SuperheroCapability.ICES_OVER)) {
+        if(mc.player.getY() > 185 && id.getCapabilities().has(SuperheroCapabilityRegistry.ICES_OVER)) {
             graphics.blit(FROST_EFFECT, 0, 0, 0, 0, screenWidth, screenHeight,screenWidth,screenHeight);
         }
         graphics.pose().popPose();

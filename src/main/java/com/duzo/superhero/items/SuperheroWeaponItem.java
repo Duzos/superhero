@@ -1,6 +1,7 @@
 package com.duzo.superhero.items;
 
-import com.duzo.superhero.capabilities.SuperheroCapability;
+import com.duzo.superhero.capabilities.AbstractCapability;
+import com.duzo.superhero.capabilities.SuperheroCapabilityRegistry;
 import com.duzo.superhero.ids.AbstractIdentifier;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
@@ -15,20 +16,22 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Supplier;
 
 import static com.duzo.superhero.util.SuperheroUtil.getIDFromStack;
 
 public class SuperheroWeaponItem extends Item {
-    public static final SuperheroCapability DEFAULT_CAPABILITY = SuperheroCapability.SUPER_STRENGTH;
+    public static final Supplier<AbstractCapability> DEFAULT_CAPABILITY = SuperheroCapabilityRegistry.SUPER_STRENGTH;
     /**
      * The capabilities required for this weapon to run.
      */
-    private List<SuperheroCapability> capabilities = new ArrayList<>();
-    public SuperheroWeaponItem(Properties properties, SuperheroCapability... requiredCapability) {
+    private List<Supplier<AbstractCapability>> capabilities = new ArrayList<>();
+    @SafeVarargs
+    public SuperheroWeaponItem(Properties properties, Supplier<AbstractCapability>... requiredCapability) {
         super(properties);
         this.capabilities.addAll(List.of(requiredCapability));
     }
-    public SuperheroWeaponItem(Properties properties, SuperheroCapability requiredCapability) {
+    public SuperheroWeaponItem(Properties properties, Supplier<AbstractCapability> requiredCapability) {
         super(properties);
         this.capabilities.add(requiredCapability);
     }
@@ -43,8 +46,8 @@ public class SuperheroWeaponItem extends Item {
         if (Screen.hasShiftDown()) {
             components.add(Component.literal("Required abilities to use:").withStyle(ChatFormatting.BOLD, ChatFormatting.DARK_GREEN));
 
-            for (SuperheroCapability cap : this.capabilities) {
-                components.add(Component.literal(cap.getNameForText()).withStyle(ChatFormatting.GREEN));
+            for (Supplier<AbstractCapability> cap : this.capabilities) {
+                components.add(Component.literal(cap.get().getNameForText()).withStyle(ChatFormatting.GREEN));
             }
         } else {
             components.add(Component.literal("Press <Shift> for more info").withStyle(ChatFormatting.GRAY));

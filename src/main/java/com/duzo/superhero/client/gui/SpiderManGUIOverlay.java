@@ -1,6 +1,6 @@
 package com.duzo.superhero.client.gui;
 
-import com.duzo.superhero.capabilities.SuperheroCapability;
+import com.duzo.superhero.capabilities.SuperheroCapabilityRegistry;
 import com.duzo.superhero.ids.AbstractIdentifier;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -23,7 +23,7 @@ public class SpiderManGUIOverlay {
 
         if (id == null) return;
 
-        boolean flag = id.getCapabilities().has(SuperheroCapability.SPIDERMAN_HUD);
+        boolean flag = id.getCapabilities().has(SuperheroCapabilityRegistry.SPIDERMAN_HUD);
 
         if (!flag) return;
 

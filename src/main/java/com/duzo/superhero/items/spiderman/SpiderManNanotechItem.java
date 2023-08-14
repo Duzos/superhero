@@ -1,6 +1,6 @@
 package com.duzo.superhero.items.spiderman;
 
-import com.duzo.superhero.capabilities.SuperheroCapability;
+import com.duzo.superhero.capabilities.SuperheroCapabilityRegistry;
 import com.duzo.superhero.ids.AbstractIdentifier;
 import com.duzo.superhero.items.SuperheroArmourItem;
 import com.duzo.superhero.items.SuperheroItems;
@@ -82,7 +82,7 @@ public class SpiderManNanotechItem extends SuperheroArmourItem {
     public static void convertArmourToNanotech(Player player) {
         if (!(player.getItemBySlot(EquipmentSlot.HEAD).getItem() instanceof SuperheroArmourItem item)) return;
 
-        if (!item.getIdentifier().getCapabilities().has(SuperheroCapability.NANOTECH)) return;
+        if (!item.getIdentifier().getCapabilities().has(SuperheroCapabilityRegistry.NANOTECH)) return;
 
         ItemStack stack = new ItemStack(SuperheroItems.NANOTECH.get());
         setID(stack,item.getIdentifier());

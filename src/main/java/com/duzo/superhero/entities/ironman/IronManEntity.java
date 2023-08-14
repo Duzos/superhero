@@ -30,11 +30,13 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
+import java.util.function.Supplier;
+
 import static com.duzo.superhero.util.ironman.IronManUtil.getIDFromMark;
 
 public class IronManEntity extends HumanoidEntity {
     private static final EntityDataAccessor<Integer> MARK = SynchedEntityData.defineId(IronManEntity.class, EntityDataSerializers.INT);
-    public static final AbstractIdentifier DEFAULT_MARK = SuperheroIdentifierRegistry.IRONMAN_MARK_7.get();
+    public static final Supplier<AbstractIdentifier> DEFAULT_MARK = SuperheroIdentifierRegistry.IRONMAN_MARK_7;
     private Player owner;
 
     public IronManEntity(EntityType<? extends HumanoidEntity> entityType, Level level) {
@@ -139,7 +141,7 @@ public class IronManEntity extends HumanoidEntity {
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
-        this.entityData.define(MARK, ((IronManIdentifier) DEFAULT_MARK).mark());
+        this.entityData.define(MARK, ((IronManIdentifier) DEFAULT_MARK.get()).mark());
     }
 
     // @TODO iron man entity despawns

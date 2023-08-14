@@ -1,6 +1,6 @@
 package com.duzo.superhero.items;
 
-import com.duzo.superhero.capabilities.SuperheroCapability;
+import com.duzo.superhero.capabilities.AbstractCapability;
 import com.duzo.superhero.ids.AbstractIdentifier;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
@@ -15,6 +15,7 @@ import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+import java.util.function.Supplier;
 
 import static com.duzo.superhero.util.SuperheroUtil.isEquipped;
 
@@ -37,8 +38,8 @@ public class SuperheroArmourItem extends ArmorItem {
 //    public abstract void runAbility(Player player, int number);
 
     public void runAbility(Player player, int number) {
-        for (SuperheroCapability cap : this.getIdentifier().getCapabilities()) {
-            cap.runAbility(number,player);
+        for (Supplier<AbstractCapability> cap : this.getIdentifier().getCapabilities()) {
+            cap.get().runAbility(number,player);
         }
     }
 
@@ -48,11 +49,11 @@ public class SuperheroArmourItem extends ArmorItem {
 
         if (entity instanceof Player player) {
 
-            for (SuperheroCapability cap : this.getIdentifier().getCapabilities()) {
+            for (Supplier<AbstractCapability> cap : this.getIdentifier().getCapabilities()) {
                 if (!isEquipped(stack,player)) {
-                    cap.unequippedTick(stack,level,player);
+                    cap.get().unequippedTick(stack,level,player);
                 } else {
-                    cap.tick(stack, level, player);
+                    cap.get().tick(stack, level, player);
                 }
             }
         }
@@ -94,8 +95,8 @@ public class SuperheroArmourItem extends ArmorItem {
     public String getShiftingHoverTextMessage() {
         StringBuilder base = new StringBuilder();
 
-        for (SuperheroCapability capability : this.getIdentifier().getCapabilities()) {
-            base.append("/n").append(capability.getNameForText());
+        for (Supplier<AbstractCapability> capability : this.getIdentifier().getCapabilities()) {
+            base.append("/n").append(capability.get().getNameForText());
         }
 
         return base.toString();

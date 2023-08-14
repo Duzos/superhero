@@ -1,7 +1,7 @@
 package com.duzo.superhero.ids.impls;
 
+import com.duzo.superhero.capabilities.AbstractCapability;
 import com.duzo.superhero.capabilities.SuperheroCapabilities;
-import com.duzo.superhero.capabilities.SuperheroCapability;
 import com.duzo.superhero.ids.AbstractIdentifier;
 import com.duzo.superhero.recipes.SuperheroSuitRecipe;
 import net.minecraft.resources.ResourceLocation;
@@ -22,19 +22,25 @@ public class IdentifierBuilder extends AbstractIdentifier {
         super(name);
     }
 
-    public IdentifierBuilder capabilities(SuperheroCapability... caps) {
-        for (SuperheroCapability cap : caps) {
+    @SafeVarargs
+    public final IdentifierBuilder capabilities(Supplier<AbstractCapability>... caps) {
+        for (Supplier<AbstractCapability> cap : caps) {
             this.caps.add(cap);
+        }
+        return this;
+    }
+    public IdentifierBuilder capabilities(AbstractCapability... caps) {
+        for (AbstractCapability cap : caps) {
+            this.caps.add(() -> cap);
         }
         return this;
     }
     public IdentifierBuilder capabilities(SuperheroCapabilities caps) {
-        for (SuperheroCapability cap : caps) {
+        for (Supplier<AbstractCapability> cap : caps) {
             this.caps.add(cap);
         }
         return this;
     }
-
 
     public IdentifierBuilder slim(boolean slim) {
         this.slim = slim;

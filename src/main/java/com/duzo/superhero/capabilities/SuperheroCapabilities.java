@@ -5,48 +5,50 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.function.Supplier;
 
-public class SuperheroCapabilities implements Iterable<SuperheroCapability> {
-    private List<SuperheroCapability> capabilities = new ArrayList<>();
+public class SuperheroCapabilities implements Iterable<Supplier<AbstractCapability>> {
+    private List<Supplier<AbstractCapability>> capabilities = new ArrayList<>();
 
-    public SuperheroCapabilities(SuperheroCapability... capabilities) {
+    @SafeVarargs
+    public SuperheroCapabilities(Supplier<AbstractCapability>... capabilities) {
         this.add(capabilities);
     }
 
-    public SuperheroCapabilities add(SuperheroCapability capability) {
+    public SuperheroCapabilities add(Supplier<AbstractCapability> capability) {
         this.capabilities.add(capability);
         return this;
     }
-    public SuperheroCapabilities add(SuperheroCapability... capabilities) {
-        for (SuperheroCapability capability : capabilities) {
+    public SuperheroCapabilities add(Supplier<AbstractCapability>... capabilities) {
+        for (Supplier<AbstractCapability> capability : capabilities) {
             this.add(capability);
         }
         return this;
     }
     public SuperheroCapabilities add(SuperheroCapabilities caps) {
-        for (SuperheroCapability cap : caps) {
+        for (Supplier<AbstractCapability> cap : caps) {
             this.add(cap);
         }
         return this;
     }
-    public boolean has(SuperheroCapability capability) {
+    public boolean has(Supplier<AbstractCapability> capability) {
         return this.capabilities.contains(capability);
     }
 
-    public boolean has(SuperheroCapability... capabilities) {
+    public boolean has(Supplier<AbstractCapability>... capabilities) {
         boolean flag = true;
 
-        for (SuperheroCapability capability : capabilities) {
+        for (Supplier<AbstractCapability> capability : capabilities) {
             flag = flag && this.has(capability);
         }
 
         return flag;
     }
 
-    public boolean has(List<SuperheroCapability> capabilities) {
+    public boolean has(List<Supplier<AbstractCapability>> capabilities) {
         boolean flag = true;
 
-        for (SuperheroCapability capability : capabilities) {
+        for (Supplier<AbstractCapability> capability : capabilities) {
             flag = flag && this.has(capability);
         }
 
@@ -55,7 +57,7 @@ public class SuperheroCapabilities implements Iterable<SuperheroCapability> {
 
     @NotNull
     @Override
-    public Iterator<SuperheroCapability> iterator() {
+    public Iterator<Supplier<AbstractCapability>> iterator() {
         return this.capabilities.iterator();
     }
 }

@@ -1,7 +1,7 @@
 package com.duzo.superhero.ids.impls;
 
 import com.duzo.superhero.capabilities.SuperheroCapabilities;
-import com.duzo.superhero.capabilities.SuperheroCapability;
+import com.duzo.superhero.capabilities.SuperheroCapabilityRegistry;
 import com.duzo.superhero.ids.BaseIdentifier;
 import com.duzo.superhero.util.spiderman.SpiderManUtil;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -24,7 +24,7 @@ public class SpidermanIdentifier extends BaseIdentifier {
     public SpidermanIdentifier(String name, SuperheroCapabilities caps, boolean female) {
         super(name);
         this.female = female;
-        this.caps.add(SuperheroCapability.WEB_SHOOTING,SuperheroCapability.WALL_CLIMBING,SuperheroCapability.SUPER_STRENGTH,SuperheroCapability.FAST_MOBILITY,SuperheroCapability.SPIDERMAN_HUD);
+        this.caps.add(SuperheroCapabilityRegistry.WEB_SHOOTING,SuperheroCapabilityRegistry.WALL_CLIMBING,SuperheroCapabilityRegistry.SUPER_STRENGTH,SuperheroCapabilityRegistry.FAST_MOBILITY,SuperheroCapabilityRegistry.SPIDERMAN_HUD);
     }
     public SpidermanIdentifier(String name, SuperheroCapabilities caps) {
         this(name,caps,false);

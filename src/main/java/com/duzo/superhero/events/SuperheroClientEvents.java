@@ -1,6 +1,7 @@
 package com.duzo.superhero.events;
 
 import com.duzo.superhero.Superhero;
+import com.duzo.superhero.capabilities.SuperheroCapabilityRegistry;
 import com.duzo.superhero.client.gui.FlashGUIOverlay;
 import com.duzo.superhero.client.gui.JarvisGUIOverlay;
 import com.duzo.superhero.client.gui.SpiderManGUIOverlay;
@@ -13,7 +14,6 @@ import com.duzo.superhero.items.SuperheroArmourItem;
 import com.duzo.superhero.network.Network;
 import com.duzo.superhero.network.packets.AbilityC2SPacket;
 import com.duzo.superhero.util.KeyBinds;
-import com.duzo.superhero.capabilities.SuperheroCapability;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -73,7 +73,7 @@ public class SuperheroClientEvents {
 
             if (!(chest.getItem() instanceof SuperheroArmourItem hero)) return;
 
-            if (!event.getPlayer().onGround() && Screen.hasControlDown() && hero.getIdentifier().isValidArmour(event.getPlayer()) && hero.getIdentifier().getCapabilities().has(SuperheroCapability.BLAST_OFF)) {
+            if (!event.getPlayer().onGround() && Screen.hasControlDown() && hero.getIdentifier().isValidArmour(event.getPlayer()) && hero.getIdentifier().getCapabilities().has(SuperheroCapabilityRegistry.BLAST_OFF)) {
                 event.setNewFovModifier(event.getFovModifier() * 1.25f);
 //                event.setNewFovModifier((float) (event.getFovModifier() * hero.getMark().getBlastOffSpeed()));
             }

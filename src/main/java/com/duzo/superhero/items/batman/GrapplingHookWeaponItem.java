@@ -1,8 +1,9 @@
 package com.duzo.superhero.items.batman;
 
+import com.duzo.superhero.capabilities.AbstractCapability;
+import com.duzo.superhero.capabilities.SuperheroCapabilityRegistry;
 import com.duzo.superhero.entities.batman.GrapplingHookRopeEntity;
 import com.duzo.superhero.items.SuperheroWeaponItem;
-import com.duzo.superhero.capabilities.SuperheroCapability;
 import com.duzo.superhero.util.spiderman.SpiderManUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -16,17 +17,19 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 
+import java.util.function.Supplier;
+
 public class GrapplingHookWeaponItem extends SuperheroWeaponItem {
-    public GrapplingHookWeaponItem(Properties properties, SuperheroCapability... requiredCapability) {
+    public GrapplingHookWeaponItem(Properties properties, Supplier<AbstractCapability>... requiredCapability) {
         super(properties, requiredCapability);
     }
 
-    public GrapplingHookWeaponItem(Properties properties, SuperheroCapability requiredCapability) {
+    public GrapplingHookWeaponItem(Properties properties, Supplier<AbstractCapability> requiredCapability) {
         super(properties, requiredCapability);
     }
 
     public GrapplingHookWeaponItem(Properties properties) {
-        this(properties, SuperheroCapability.GRAPPLING_HOOK);
+        this(properties, SuperheroCapabilityRegistry.GRAPPLING_HOOK);
     }
 
     @Override

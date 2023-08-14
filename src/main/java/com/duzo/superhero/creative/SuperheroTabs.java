@@ -3,7 +3,7 @@ package com.duzo.superhero.creative;
 import com.duzo.superhero.Superhero;
 import com.duzo.superhero.blocks.IronManSuitCaseBlock;
 import com.duzo.superhero.blocks.SuperheroBlocks;
-import com.duzo.superhero.capabilities.SuperheroCapability;
+import com.duzo.superhero.capabilities.SuperheroCapabilityRegistry;
 import com.duzo.superhero.items.SuperheroArmourItem;
 import com.duzo.superhero.items.SuperheroItems;
 import com.duzo.superhero.items.SuperheroNanotechItem;
@@ -35,7 +35,7 @@ public class SuperheroTabs {
                 for (RegistryObject<Item> item : SuperheroItems.ITEMS.getEntries()) {
                     if (item.get() instanceof SuperheroNanotechItem || item.get() instanceof GrapplingHookWeaponItem) continue;
                     if (item.get() instanceof SuperheroArmourItem hero) {
-                        if (!hero.getIdentifier().getCapabilities().has(SuperheroCapability.WEB_SHOOTING)) continue;
+                        if (!hero.getIdentifier().getCapabilities().has(SuperheroCapabilityRegistry.WEB_SHOOTING)) continue;
                         if (hero.getIdentifier().name() == "iron_spider") continue;
                     }
                     if (item.get() instanceof BlockItem block) {

@@ -1,7 +1,7 @@
 package com.duzo.superhero.util.ironman;
 
 import com.duzo.superhero.Superhero;
-import com.duzo.superhero.capabilities.SuperheroCapability;
+import com.duzo.superhero.capabilities.SuperheroCapabilityRegistry;
 import com.duzo.superhero.ids.AbstractIdentifier;
 import com.duzo.superhero.ids.SuperheroIdentifierRegistry;
 import com.duzo.superhero.ids.impls.IronManIdentifier;
@@ -188,7 +188,7 @@ public class IronManUtil {
 
             SuperheroArmourItem hero = (SuperheroArmourItem) chest;
 
-            return Screen.hasControlDown() && Minecraft.getInstance().player.input.up && !player.onGround() && hero.getIdentifier().getCapabilities().has(SuperheroCapability.BLAST_OFF) && !player.isSwimming();
+            return Screen.hasControlDown() && Minecraft.getInstance().player.input.up && !player.onGround() && hero.getIdentifier().getCapabilities().has(SuperheroCapabilityRegistry.BLAST_OFF) && !player.isSwimming();
         }
 
         public static void blastOff(Player player,double factor) {

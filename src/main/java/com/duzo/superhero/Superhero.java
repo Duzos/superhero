@@ -2,7 +2,7 @@ package com.duzo.superhero;
 
 import com.duzo.superhero.blocks.SuperheroBlocks;
 import com.duzo.superhero.blocks.entities.SuperheroBlockEntities;
-import com.duzo.superhero.capabilities.SuperheroCapability;
+import com.duzo.superhero.capabilities.SuperheroCapabilityRegistry;
 import com.duzo.superhero.client.gui.menu.SuperheroMenuTypes;
 import com.duzo.superhero.creative.SuperheroTabs;
 import com.duzo.superhero.entities.SuperheroEntities;
@@ -48,6 +48,7 @@ public class Superhero {
         SuperheroMenuTypes.MENUS.register(modEventBus);
         SuperheroItems.ITEMS.register(modEventBus);
         SuperheroIdentifierRegistry.IDS.register(modEventBus);
+        SuperheroCapabilityRegistry.CAPS.register(modEventBus);
         SuperheroBlocks.BLOCKS.register(modEventBus);
         SuperheroSounds.SOUNDS.register(modEventBus);
         SuperheroTabs.TABS.register(modEventBus);
@@ -73,7 +74,7 @@ public class Superhero {
         }
         AbstractIdentifier id = getIDFromStack(player.getItemBySlot(EquipmentSlot.FEET));
         if (id != null) {
-            if (id.getCapabilities().has(SuperheroCapability.FAST_MOBILITY)){
+            if (id.getCapabilities().has(SuperheroCapabilityRegistry.FAST_MOBILITY)){
                 event.setDamageMultiplier(event.getDamageMultiplier() * 0.5f);
             }
         }

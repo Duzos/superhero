@@ -1,7 +1,7 @@
 package com.duzo.superhero.ids.impls;
 
 import com.duzo.superhero.capabilities.SuperheroCapabilities;
-import com.duzo.superhero.capabilities.SuperheroCapability;
+import com.duzo.superhero.capabilities.SuperheroCapabilityRegistry;
 import com.duzo.superhero.ids.BaseIdentifier;
 import net.minecraft.world.entity.EquipmentSlot;
 
@@ -20,7 +20,7 @@ public class FlashIdentifier extends BaseIdentifier {
     public FlashIdentifier(String name, SuperheroCapabilities caps) {
         super(name);
         this.caps.add(caps);
-        this.caps.add(SuperheroCapability.SPEEDSTER,SuperheroCapability.FLASH_HUD);
+        this.caps.add(SuperheroCapabilityRegistry.SPEEDSTER,SuperheroCapabilityRegistry.FLASH_HUD);
     }
 
     @Override

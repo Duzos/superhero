@@ -1,6 +1,6 @@
 package com.duzo.superhero.client.gui;
 
-import com.duzo.superhero.capabilities.SuperheroCapability;
+import com.duzo.superhero.capabilities.SuperheroCapabilityRegistry;
 import com.duzo.superhero.ids.AbstractIdentifier;
 import com.duzo.superhero.util.flash.FlashUtil;
 import net.minecraft.client.Minecraft;
@@ -24,7 +24,7 @@ public class FlashGUIOverlay {
 
         if (id == null) return;
 
-        boolean flag = id.getCapabilities().has(SuperheroCapability.FLASH_HUD);
+        boolean flag = id.getCapabilities().has(SuperheroCapabilityRegistry.FLASH_HUD);
 
         if (!flag) return;
 
