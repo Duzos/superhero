@@ -1,13 +1,17 @@
 package com.duzo.superhero.data.client;
 
 import com.duzo.superhero.Superhero;
-import com.duzo.superhero.blocks.SuperheroBlocks;
+import com.duzo.superhero.entities.SuperheroEntities;
 import com.duzo.superhero.items.SuperheroArmourItem;
 import com.duzo.superhero.items.SuperheroItems;
 import com.duzo.superhero.items.SuperheroNanotechItem;
+import com.duzo.superhero.sounds.SuperheroSounds;
 import com.duzo.superhero.util.KeyBinds;
 import net.minecraft.data.PackOutput;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.data.LanguageProvider;
 import net.minecraftforge.registries.RegistryObject;
 
@@ -38,18 +42,19 @@ public class SuperheroEnglish extends LanguageProvider {
             }
         }
 
-        // Items
-        add(SuperheroItems.NANOTECH.get(),"Nanotech");
-//        add(SuperheroItems.EDITH_GLASSES.get(),"EDITH Glasses");
-        add(SuperheroItems.MILES_HOODIE.get(),"Miles' Hoodie");
-        add(SuperheroItems.PALLADIUM_INGOT.get(), "Palladium Ingot");
-        add(SuperheroItems.RAW_PALLADIUM.get(), "Raw Palladium");
-        add(SuperheroItems.GRAPPLING_HOOK.get(),"Grappling Hook");
+        for (RegistryObject<Item> obj : SuperheroItems.ITEMS.getEntries()) {
+            if (obj.get() instanceof SuperheroArmourItem) continue;
 
-        // Blocks
-        add(SuperheroBlocks.IRONMAN_SUITCASE.get(), "Iron Man Suitcase");
-        add(SuperheroBlocks.PALLADIUM_ORE.get(), "Palladium Ore");
-        add(SuperheroBlocks.DEEPSLATE_PALLADIUM_ORE.get(), "Deepslate Palladium Ore");
+            Item item = obj.get();
+
+            add(item,toName(item));
+        }
+        for (RegistryObject<EntityType<?>> obj : SuperheroEntities.ENTITIES.getEntries()) {
+            add(obj.get(),toName(obj.get()));
+        }
+        for (RegistryObject<SoundEvent> obj : SuperheroSounds.SOUNDS.getEntries()) {
+            add(getSubtitle(obj.get()),toName(obj.get()));
+        }
 
         // Tabs
         add("item_group.superhero.superhero","Timeless Heroes");
@@ -59,5 +64,65 @@ public class SuperheroEnglish extends LanguageProvider {
         add(KeyBinds.KEY_ABILITY_TWO, "Suit Ability Two");
         add(KeyBinds.KEY_ABILITY_THREE, "Suit Ability Three");
         add(KeyBinds.KEY_ABILITY_FOUR, "Suit Ability Four");
+    }
+
+    public static String toName(Item item) {
+        String id = item.getDescriptionId(); // blah.modid.blah_blah_blah
+        String sub = id.substring(id.lastIndexOf(".") + 1); // blah_blah_blah
+
+        String spaced = sub.replace("_", " ");
+        String[] words = spaced.split(" ");
+        StringBuilder output = new StringBuilder();
+        for (String word : words) {
+            output.append(Character.toUpperCase(word.charAt(0)))
+                    .append(word.substring(1))
+                    .append(" ");
+        }
+        return output.toString().substring(0,output.toString().length() - 1);
+    }
+
+    public static String getSubtitle(SoundEvent sound) {
+        return "subtitle." + Superhero.MODID + "." + sound.getLocation().getPath();
+    }
+    public static String toName(EntityType<?> entity) {
+        String id = entity.getDescriptionId(); // blah.modid.blah_blah_blah
+        String sub = id.substring(id.lastIndexOf(".") + 1); // blah_blah_blah
+
+        String spaced = sub.replace("_", " ");
+        String[] words = spaced.split(" ");
+        StringBuilder output = new StringBuilder();
+        for (String word : words) {
+            output.append(Character.toUpperCase(word.charAt(0)))
+                    .append(word.substring(1))
+                    .append(" ");
+        }
+        return output.toString().substring(0,output.toString().length() - 1);
+    }
+    public static String toName(Block block) {
+        String id = block.getDescriptionId(); // blah.modid.blah_blah_blah
+        String sub = id.substring(id.lastIndexOf(".") + 1); // blah_blah_blah
+
+        String spaced = sub.replace("_", " ");
+        String[] words = spaced.split(" ");
+        StringBuilder output = new StringBuilder();
+        for (String word : words) {
+            output.append(Character.toUpperCase(word.charAt(0)))
+                    .append(word.substring(1))
+                    .append(" ");
+        }
+        return output.toString().substring(0,output.toString().length() - 1);
+    }
+    public static String toName(SoundEvent sound) {
+        String sub = sound.getLocation().getPath(); // the sound part in modid:sound
+
+        String spaced = sub.replace("_", " ");
+        String[] words = spaced.split(" ");
+        StringBuilder output = new StringBuilder();
+        for (String word : words) {
+            output.append(Character.toUpperCase(word.charAt(0)))
+                    .append(word.substring(1))
+                    .append(" ");
+        }
+        return output.toString().substring(0,output.toString().length() - 1);
     }
 }

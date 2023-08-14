@@ -5,8 +5,7 @@ import com.duzo.superhero.blocks.SuperheroBlocks;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.DirectionalBlock;
+import net.minecraft.world.level.block.*;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -23,11 +22,21 @@ public class BlockStateGenerator extends BlockStateProvider {
     protected void registerStatesAndModels() {
         for (RegistryObject<Block> entry : SuperheroBlocks.BLOCKS.getEntries()) {
             // @TODO this better
-            if (entry.get() instanceof DirectionalBlock) {
-//                directionalBlock(entry.get(),getModel(entry.get()));
+            if (entry.get() instanceof StairBlock) {
+                stairsBlock((StairBlock) entry.get(), new ResourceLocation(Superhero.MODID,"textures/block/" + entry.get().getDescriptionId() + ".png"));
                 continue;
             }
-            simpleBlock(entry.get(),getModel(entry.get()));
+            if (entry.get() instanceof WallBlock) {
+                wallBlock((WallBlock) entry.get(), new ResourceLocation(Superhero.MODID,"textures/block/" + entry.get().getDescriptionId() + ".png"));
+            }
+            if (entry.get() instanceof SlabBlock) {
+                slabBlock((SlabBlock) entry.get(), new ResourceLocation(Superhero.MODID,"textures/block/" + entry.get().getDescriptionId() + ".png"), new ResourceLocation(Superhero.MODID,"textures/block/" + entry.get().getDescriptionId() + ".png"));
+            }
+            if (entry.get() instanceof IronBarsBlock) {
+                paneBlock((IronBarsBlock) entry.get(),new ResourceLocation(Superhero.MODID,"textures/block/" + entry.get().getDescriptionId() + ".png"),new ResourceLocation(Superhero.MODID,"textures/block/" + entry.get().getDescriptionId() + "_side.png"));
+            }
+
+            simpleBlock(entry.get());
         }
     }
     public boolean modelExists(Block block) {

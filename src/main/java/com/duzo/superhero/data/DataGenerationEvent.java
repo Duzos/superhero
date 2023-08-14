@@ -3,6 +3,7 @@ package com.duzo.superhero.data;
 import com.duzo.superhero.Superhero;
 import com.duzo.superhero.data.client.ModelProviderItem;
 import com.duzo.superhero.data.client.SuperheroEnglish;
+import com.duzo.superhero.data.loot.ModLootTableProvider;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
@@ -26,6 +27,9 @@ public class DataGenerationEvent {
         generator.addProvider(true, new SoundDataGeneration(packOutput,existingFileHelper));
         generator.addProvider(true, new SuperheroEnglish(packOutput));
         generator.addProvider(event.includeServer(), new SuperheroWorldGenProvider(packOutput, lookupProvider));
+        generator.addProvider(event.includeServer(), ModLootTableProvider.create(packOutput));
+        generator.addProvider(event.includeServer(), new ModBlockTagsProvider(packOutput,lookupProvider,existingFileHelper));
+        generator.addProvider(event.includeServer(), new ModRecipeProvider(packOutput));
         generator.addProvider(true,new BlockStateGenerator(packOutput,Superhero.MODID,existingFileHelper));
     }
 }
