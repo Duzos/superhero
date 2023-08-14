@@ -3,7 +3,7 @@
   "minVersion": "0.8",
   "package": "com.duzo.superhero.mixin",
   "compatibilityLevel": "JAVA_8",
-  "refmap": "superhero.refmap.json",
+  "refmap": "mixins.superhero.refmap.json",
   "mixins": [
     "EntityMixin"
   ],
