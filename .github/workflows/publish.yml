@@ -20,4 +20,5 @@ jobs:
 
           github-token: ${{ secrets.GITHUB_TOKEN }}
           github-generate-changelog: true
+          github-prerelease: true
 
