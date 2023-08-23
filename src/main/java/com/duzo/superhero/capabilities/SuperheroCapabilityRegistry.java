@@ -33,6 +33,7 @@ import static com.duzo.superhero.entities.ironman.IronManEntity.spawnNew;
 import static com.duzo.superhero.items.SuperheroNanotechItem.convertArmourToNanotech;
 import static com.duzo.superhero.items.SuperheroNanotechItem.convertNanotechToArmour;
 import static com.duzo.superhero.util.SuperheroUtil.getIDFromStack;
+import static com.duzo.superhero.util.SuperheroUtil.moveMissingSlotOntoPlayer;
 import static com.duzo.superhero.util.ironman.IronManUtil.FlightUtil.bootsOnlyFlight;
 import static com.duzo.superhero.util.ironman.IronManUtil.FlightUtil.runFlight;
 import static com.duzo.superhero.util.spiderman.SpiderManUtil.*;
@@ -74,11 +75,15 @@ public class SuperheroCapabilityRegistry {
             .runner(new AbstractCapability.abilityRunner() {
                 @Override
                 public void runAbility(int num, Player player) {
-                    ItemStack head = player.getItemBySlot(EquipmentSlot.HEAD);
                     if (num == 2) {
-                        if (IronManUtil.isIronManSuit(getIDFromStack(head))) {
-                            //SuperheroData superheroData = new SuperheroData(player);
-                            System.out.println("HELLO");
+                        // If theres a helmet put it in the inventory
+                        if (!player.getItemBySlot(EquipmentSlot.HEAD).isEmpty()) {
+                            player.getInventory().placeItemBackInInventory(player.getItemBySlot(EquipmentSlot.HEAD));
+                            player.setItemSlot(EquipmentSlot.HEAD, ItemStack.EMPTY);
+                        }
+                        // Otherwise find a valid helmet and put it on the head
+                        else {
+                            moveMissingSlotOntoPlayer(player, EquipmentSlot.HEAD);
                         }
                     }
                 }
@@ -156,6 +161,20 @@ public class SuperheroCapabilityRegistry {
     public static final RegistryObject<AbstractCapability> GRAPPLING_HOOK = CAPS.register("grappling_hook", () -> new CapabilityBuilder("grappling_hook"));
 
     // IronMan
+    public static final RegistryObject<AbstractCapability> MASK_TOGGLE_IRONMAN = CAPS.register("mask_toggle_ironman", () -> new CapabilityBuilder("mask_toggle_ironman")
+            .runner(new AbstractCapability.abilityRunner() {
+                @Override
+                public void runAbility(int num, Player player) {
+                    ItemStack head = player.getItemBySlot(EquipmentSlot.HEAD);
+                    if (num == 2) {
+                        if (IronManUtil.isIronManSuit(getIDFromStack(head))) {
+                            //SuperheroData superheroData = new SuperheroData(player);
+                            System.out.println("HELLO");
+                        }
+                    }
+                }
+            })
+    );
     public static final RegistryObject<AbstractCapability> NIGHT_VISION_HELMET_ONLY = CAPS.register("night_vision_helmet_only", () -> new CapabilityBuilder("night_vision_helmet_only")
             .runner(new AbstractCapability.abilityRunner() {
                 @Override

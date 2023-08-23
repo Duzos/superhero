@@ -27,6 +27,43 @@ public class SuperheroUtil {
 
     public static final ResourceLocation DEFAULT_TEXTURE = new ResourceLocation(Superhero.MODID,"textures/heroes/generic/invisible.png");
 
+    /**
+     * Finds the specified slot in the inventory which matches the rest of the identifiers currently worn by the player and an armour slot
+     * @return
+     */
+    public static int findSlotInInventoryMatchingWorn(Player player) {
+        for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
+            if (player.getInventory().getItem(i).getItem() instanceof SuperheroArmourItem heroItem) {
+                if (doesMatchWearingArmour(player,heroItem)) return i;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * if a valid item is present in the players inventory, equip it.
+     * @param player
+     */
+    public static void moveMissingSlotOntoPlayer(Player player, EquipmentSlot slot) {
+        if (!player.getItemBySlot(slot).isEmpty()) return;
+
+        int i = findSlotInInventoryMatchingWorn(player);
+        if (i == -1) return;
+        ItemStack stack = player.getInventory().getItem(i);
+        player.setItemSlot(slot,stack);
+        player.getInventory().setItem(i,ItemStack.EMPTY);
+    }
+    public static boolean doesMatchWearingArmour(Player player, SuperheroArmourItem item) {
+        for (EquipmentSlot slot : EquipmentSlot.values()) {
+            if (!slot.isArmor()) continue;
+
+            if (player.getItemBySlot(slot).getItem() instanceof SuperheroArmourItem current) {
+                if (current.getIdentifier() != item.getIdentifier()) return false;
+            }
+        }
+        return true;
+    }
+
     public static boolean isValidArmour(LivingEntity player) {
         AbstractIdentifier currentID = null;
 
