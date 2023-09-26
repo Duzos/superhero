@@ -126,6 +126,8 @@ public class GenericSuitRenderer<T extends AbstractClientPlayer, M extends Entit
         //this.ironman.leftLeg.render(pose, buffer.getBuffer(RenderType.entityCutout(this.texture)), packedLight, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
         //pose.popPose();
         if (!usesGenericRenderer(player)) return;
+        if (player.isInvisible()) return;
+
         pose.pushPose();
 
         updateTextures(player);

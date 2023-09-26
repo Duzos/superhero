@@ -131,6 +131,7 @@ public class IronManSuitRenderer<T extends AbstractClientPlayer, M extends Entit
         //this.ironman.leftLeg.render(pose, buffer.getBuffer(RenderType.entityCutout(this.texture)), packedLight, OverlayTexture.NO_OVERLAY, e, r, t, 1);
         //pose.popPose();
         if(getIDFromPlayer(player) == null) return;
+        if (player.isInvisible()) return;
         if (player.getY() >= 185 && getIDFromPlayer(player).getCapabilities().has(SuperheroCapabilityRegistry.ICES_OVER)) { // @Loqor just check for the capability instead of the mk2 in future pls
             e = 0.69411764705F;
             r = 0.87450980392F;
