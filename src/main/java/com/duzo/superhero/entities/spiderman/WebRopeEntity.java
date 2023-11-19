@@ -19,6 +19,7 @@ public class WebRopeEntity extends Entity {
     public Player player;
 
     private float alpha = 1f;
+    private float length;
 
     private double initialDistance = 0d;
     private Vec3 initialDistanceVec = new Vec3(0,0,0);
@@ -33,6 +34,17 @@ public class WebRopeEntity extends Entity {
         super(SuperheroEntities.WEB_ROPE_ENTITY.get(), level);
         this.origin = this.position();
         this.point = point;
+        this.length = 6.0F;
+        this.player = player;
+        this.setInitialDistance(point);
+    }
+
+    @Deprecated
+    public WebRopeEntity(Level level, Vec3 point,float length, Player player) {
+        super(SuperheroEntities.WEB_ROPE_ENTITY.get(), level);
+        this.origin = this.position();
+        this.point = point;
+        this.length = length;
         this.player = player;
         this.setInitialDistance(point);
     }
@@ -459,7 +471,7 @@ public class WebRopeEntity extends Entity {
             this.setAlpha(1f);
 //            this.runSwingPhysics();
             if (this.getPlayer() != null) {
-                SpiderManUtil.swingPlayerAlongPoint(this.getPlayer(), this.position());
+                SpiderManUtil.swingPlayerAlongPoint(this.getPlayer(), this.length, this.position());
             }
         } else {
             fadeOut();

@@ -76,21 +76,20 @@ public class SpiderManUtil {
     }
 
     public static float playerDistanceToVec3(Player player, Vec3 point) {
-        float f = (float)(player.getX() - point.x());
-        float f1 = (float)(player.getY() - point.y());
-        float f2 = (float)(player.getZ() - point.z());
-        return Mth.sqrt(f * f + f1 * f1 + f2 * f2);
+        return (float) Math.sqrt(Math.pow(player.getX() - point.x, 2) + Math.pow(player.getY() - point.y, 2) + Math.pow(player.getZ() - point.z, 2));
     }
 
-    public static void swingPlayerAlongPoint(Player player, Vec3 anchor) {
+    public static void swingPlayerAlongPoint(Player player, float ropeLength, Vec3 anchor) {
+        if (player.level().isClientSide) { player.checkSlowFallDistance(); return; }
+
         float distanceToPlayer = playerDistanceToVec3(player,anchor);
-        if (distanceToPlayer > 6.0F) {
-            double d0 = (anchor.x() - player.getX()) / (double) distanceToPlayer;
-            double d1 = (anchor.y() - player.getY()) / (double) distanceToPlayer;
-            double d2 = (anchor.z() - player.getZ()) / (double) distanceToPlayer;
-            player.setDeltaMovement(player.getDeltaMovement().add(Math.copySign(d0 * d0 * 0.4D, d0), Math.copySign(d1 * d1 * 0.2D, d1), Math.copySign(d2 * d2 * 0.4D, d2)));
-            player.checkSlowFallDistance();
-        }
+
+        if (distanceToPlayer < ropeLength) return;
+
+        double d0 = (anchor.x() - player.getX()) / (double) distanceToPlayer;
+        double d1 = (anchor.y() - player.getY()) / (double) distanceToPlayer;
+        double d2 = (anchor.z() - player.getZ()) / (double) distanceToPlayer;
+        Network.sendToPlayer(new ChangeDeltaMovementS2CPacket(player.getDeltaMovement().add(Math.copySign(d0 * d0 * 0.4D, d0), Math.copySign(d1 * d1 * 0.2D, d1), Math.copySign(d2 * d2 * 0.4D, d2))), (ServerPlayer) player);
     }
 
     public static void shootWebAndSwingToIt(Player player) {
@@ -112,7 +111,11 @@ public class SpiderManUtil {
 
         player.level().playSound(null,player, SuperheroSounds.SPIDERMAN_SHOOT.get(), SoundSource.PLAYERS,0.25f,1f);
 
-        WebRopeEntity rope = new WebRopeEntity(player.level(), hitVec3, player);
+        System.out.println(playerDistanceToVec3(player, hitVec3));
+        System.out.println(player.getOnPos());
+        System.out.println(hitVec3);
+
+        WebRopeEntity rope = new WebRopeEntity(player.level(), hitVec3,playerDistanceToVec3(player,hitVec3), player);
 
         //int i = Mth.clamp(0, 0, 64);
         //float f2 = Mth.cos(player.yBodyRot * ((float) Math.PI / 180F)) * (0F + 1.21F * (float) i);
