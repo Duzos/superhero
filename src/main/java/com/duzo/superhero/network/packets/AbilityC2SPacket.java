@@ -1,5 +1,6 @@
 package com.duzo.superhero.network.packets;
 
+import com.duzo.superhero.data.SuperheroDataImpl;
 import com.duzo.superhero.items.SuperheroArmourItem;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerLevel;
@@ -56,6 +57,15 @@ public class AbilityC2SPacket {
             if (!hero.getIdentifier().isValidArmour(player)) return;
 
             hero.runAbility(player,this.number);
+
+            //sue me
+            SuperheroDataImpl.get(player).ifPresent(superheroData ->
+            {
+                superheroData.setisMaskOpen(!superheroData.isMaskOpen());
+                superheroData.sync();
+            });
+
+
         });
         return true;
     }

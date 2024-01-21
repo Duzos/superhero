@@ -1,6 +1,7 @@
 package com.duzo.superhero.client.renderers.animations;
 
 import com.duzo.superhero.Superhero;
+import com.duzo.superhero.client.models.heroes.iron_man.IronManMagicModel;
 import net.minecraft.client.animation.AnimationChannel;
 import net.minecraft.client.animation.AnimationDefinition;
 import net.minecraft.client.animation.Keyframe;
@@ -20,6 +21,15 @@ public class AnimationUtil {
 
     // Due to Mojank, this has to be created, I don't like it, you don't like it, no-one likes it...
     public static Optional<ModelPart> getAnyDescendantWithName(HumanoidModel<?> model, String partName) {
+
+        System.out.println(partName);
+
+        if(model instanceof IronManMagicModel<?> ironManMagicModel){
+            if(partName.equals("helmet")){
+                return Optional.of(ironManMagicModel.head.getChild("helmet"));
+            }
+        }
+
         return switch (partName) {
             case "RightLeg" -> Optional.of(model.rightLeg);
             case "LeftLeg" -> Optional.of(model.leftLeg);

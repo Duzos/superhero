@@ -3,6 +3,10 @@ package com.duzo.superhero.client.models.heroes.iron_man;// Made with Blockbench
 // Paste this class into your mod and generate all required imports
 
 
+import com.duzo.superhero.client.renderers.animations.AnimationUtil;
+import com.duzo.superhero.client.renderers.animations.IronManAnimations;
+import com.duzo.superhero.data.SuperheroData;
+import com.duzo.superhero.data.SuperheroDataImpl;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.HumanoidModel;
@@ -11,7 +15,6 @@ import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.AnimationState;
 import net.minecraft.world.entity.LivingEntity;
 
 public class IronManMagicModel<T extends LivingEntity> extends HumanoidModel<T> {
@@ -26,8 +29,6 @@ public class IronManMagicModel<T extends LivingEntity> extends HumanoidModel<T> 
 	public final ModelPart hat;
 	public ModelPart modelRoot;
 
-	public AnimationState MASK_OPEN = new AnimationState();
-	public AnimationState MASK_CLOSE = new AnimationState();
 
 	public IronManMagicModel(ModelPart root) {
 		super(root);
@@ -108,13 +109,23 @@ public class IronManMagicModel<T extends LivingEntity> extends HumanoidModel<T> 
 
 	@Override
 	public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-//		this.modelRoot.getAllParts().forEach(ModelPart::resetPose);
 		this.hat.visible = false;
-		this.modelRoot.render(poseStack,vertexConsumer,packedLight,packedOverlay,red,green,blue,alpha);
+
+		//head.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+		//body.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+		//rightArm.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+		//leftArm.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+		//rightLeg.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+		leftLeg.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
 	}
 
 	@Override
 	public void setupAnim(T player, float p_102619_, float p_102620_, float tick, float p_102622_, float p_102623_) {
-
+/*
+		this.modelRoot.getAllParts().forEach(ModelPart::resetPose);
+*/
+		SuperheroDataImpl.get(player).ifPresent(superheroData -> {
+			AnimationUtil.animate(this, superheroData.getAnimation(SuperheroData.AnimationStates.MASK_OPEN), IronManAnimations.SUPERHERO_IRONMANMAGICMODEL_MASK_OPEN, player.tickCount, 1);
+		});
 	}
 }

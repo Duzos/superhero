@@ -1,4 +1,4 @@
-package net.venturecraft.gliders.data.forge;
+package com.duzo.superhero.data;
 
 import com.duzo.superhero.Superhero;
 import com.duzo.superhero.data.SuperheroData;
@@ -10,6 +10,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.common.capabilities.*;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
+import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import org.jetbrains.annotations.NotNull;
@@ -40,6 +41,13 @@ public class SuperheroDataImpl implements ICapabilitySerializable<CompoundTag> {
         if (e.getObject() instanceof Player player) {
             e.addCapability(Superhero.id("player_data"), new SuperheroDataImpl(player));
         }
+    }
+
+    @SubscribeEvent
+    public static void onTick(LivingEvent.LivingTickEvent livingTickEvent){
+        SuperheroDataImpl.get(livingTickEvent.getEntity()).ifPresent(superheroData -> {
+            superheroData.tick(livingTickEvent.getEntity());
+        });
     }
 
     public static Optional<SuperheroData> get(LivingEntity player) {

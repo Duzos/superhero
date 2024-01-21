@@ -1,17 +1,22 @@
 package com.duzo.superhero.data;
 
 import com.duzo.superhero.client.renderers.animations.IronManAnimations;
+import com.duzo.superhero.items.ironman.IronManArmourItem;
 import com.duzo.superhero.network.Network;
 import com.duzo.superhero.network.sync.SyncSuperheroData;
-import com.duzo.superhero.util.ironman.IronManUtil;
+import com.duzo.superhero.util.SuperheroUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.AnimationState;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 import org.jetbrains.annotations.NotNull;
 
+@Mod.EventBusSubscriber
 public class SuperheroData {
 
     @NotNull
@@ -21,7 +26,7 @@ public class SuperheroData {
     public AnimationState maskOpenAnimation = new AnimationState();
     public AnimationState maskCloseAnimation = new AnimationState();
 
-    private boolean isOpen = false;
+    private boolean isMaskOpen = false;
 
     private float timer = 0.0F;
 
@@ -30,67 +35,56 @@ public class SuperheroData {
     }
 
     public void tick(LivingEntity livingEntity) {
-        openAndCloseLogic(livingEntity);
-        //SuperheroUtil.onTickPlayerGlide(livingEntity.level, livingEntity);
+        animateMask(livingEntity);
 
-        if (livingEntity.level().isClientSide) return;
+        if (livingEntity.level.isClientSide) return;
 
         if (livingEntity.tickCount % 40 == 0) {
             sync();
         }
         if(livingEntity instanceof Player player)
-            if(IronManUtil.isIronManSuit(player.getItemBySlot(EquipmentSlot.HEAD)))
-                setIsOpen(player.isHurt());
+            if(player.getItemBySlot(EquipmentSlot.HEAD).getItem() instanceof IronManArmourItem)
+                setisMaskOpen(true);
     }
 
-    //public static Optional<SuperheroData> get(LivingEntity player) {
-    //    throw new AssertionError();
-    //}
 
-    public boolean isOpen() {
-        return isOpen;
+    public boolean isMaskOpen() {
+        return isMaskOpen;
     }
 
-    public void setIsOpen(boolean isopen) {
-        isOpen = isopen;
+    public void setisMaskOpen(boolean isMaskOpen) {
+        this.isMaskOpen = isMaskOpen;
     }
 
-    private void openAndCloseLogic(LivingEntity livingEntity) {
-        if (isOpen()) {
-            if (!maskOpenAnimation.isStarted()) {
-                if(timer < IronManAnimations.SUPERHERO_IRONMANMAGICMODEL_MASK_OPEN.lengthInSeconds()) {
-                    maskOpenAnimation.start(livingEntity.tickCount);
-                    timer = timer + 0.1F;
-                } else if (timer >= IronManAnimations.SUPERHERO_IRONMANMAGICMODEL_MASK_OPEN.lengthInSeconds()){
-                    timer = IronManAnimations.SUPERHERO_IRONMANMAGICMODEL_MASK_OPEN.lengthInSeconds();
-                    maskOpenAnimation.stop();
-                }
+    private void animateMask(LivingEntity livingEntity) {
+
+        if(isMaskOpen()){
+
+            // Play Open Animation, stop close animation
+            if(!maskOpenAnimation.isStarted()){
+                maskCloseAnimation.stop();
+                maskOpenAnimation.start(livingEntity.tickCount);
             }
-            if(!maskOpenAnimation.isStarted() && timer >= IronManAnimations.SUPERHERO_IRONMANMAGICMODEL_MASK_CLOSE.lengthInSeconds()) {
-                timer = 0.0F;
-            }
-        } else {
-            if (!maskCloseAnimation.isStarted()) {
-                if(timer < IronManAnimations.SUPERHERO_IRONMANMAGICMODEL_MASK_CLOSE.lengthInSeconds()) {
-                    maskCloseAnimation.start(livingEntity.tickCount);
-                    timer = timer + 0.1F;
-                } else if (timer >= IronManAnimations.SUPERHERO_IRONMANMAGICMODEL_MASK_CLOSE.lengthInSeconds()){
-                    timer = IronManAnimations.SUPERHERO_IRONMANMAGICMODEL_MASK_CLOSE.lengthInSeconds();
-                    maskCloseAnimation.stop();
-                }
-            }
+            return;
         }
+
+        // Play Close Animation, stop open animation
+        if(!maskCloseAnimation.isStarted()){
+            maskOpenAnimation.stop();
+            maskCloseAnimation.start(livingEntity.tickCount);
+        }
+
     }
 
     public void sync() {
-        if (this.player.level().isClientSide) {
+        if (this.player.level.isClientSide) {
             throw new IllegalStateException("Don't sync client -> server");
         }
         Network.sendToTracking(new SyncSuperheroData(this.player.getId(), serializeNBT()),(ServerPlayer) this.player);
     }
 
     public void syncTo(ServerPlayer receiver) {
-        if (this.player.level().isClientSide) {
+        if (this.player.level.isClientSide) {
             throw new IllegalStateException("Don't sync client -> server");
         }
         Network.sendToTracking(new SyncSuperheroData(this.player.getId(), serializeNBT()),(ServerPlayer) receiver);
@@ -103,15 +97,16 @@ public class SuperheroData {
         };
     }
 
+
     public CompoundTag serializeNBT() {
         CompoundTag compoundTag = new CompoundTag();
-        compoundTag.putBoolean("is_open", isOpen);
+        compoundTag.putBoolean("is_open", isMaskOpen);
         compoundTag.putFloat("timer", timer);
         return compoundTag;
     }
 
     public void deserializeNBT(CompoundTag nbt) {
-        setIsOpen(nbt.getBoolean("is_open"));
+        setisMaskOpen(nbt.getBoolean("is_open"));
         timer = nbt.getFloat("timer");
     }
 
