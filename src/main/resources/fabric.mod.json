@@ -1,0 +1,44 @@
+{
+	"schemaVersion": 1,
+	"id": "timeless",
+	"version": "${version}",
+	"name": "TimelessHeroes",
+	"description": "superheroes",
+	"authors": [
+		"duzo"
+	],
+	"contact": {
+		"homepage": "https://github.com/Duzos/superhero",
+		"sources": "https://github.com/Duzos/superhero"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/timeless/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"mc.duzo.timeless.TimelessHeroes"
+		],
+		"client": [
+			"mc.duzo.timeless.TimelessHeroesClient"
+		],
+		"fabric-datagen": [
+          "mc.duzo.timeless.datagen.TimelessHeroesDataGenerator"
+		]
+	},
+	"mixins": [
+		"timeless.mixins.json",
+		{
+			"config": "timeless.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.15.6",
+		"minecraft": "~1.20.4",
+		"java": ">=17",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}
