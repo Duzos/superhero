@@ -1,10 +1,9 @@
 package com.duzo.superhero.data.client;
 
 import com.duzo.superhero.Superhero;
+import com.duzo.superhero.blocks.IronManSuitCaseBlock;
 import com.duzo.superhero.items.SuperheroItems;
-import com.mojang.logging.LogUtils;
 import net.minecraft.data.PackOutput;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -16,7 +15,6 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
 import java.util.Objects;
-import java.util.logging.Logger;
 
 public class ModelProviderItem extends ItemModelProvider {
 
@@ -28,6 +26,8 @@ public class ModelProviderItem extends ItemModelProvider {
     protected void registerModels() {
         for (RegistryObject<Item> entry : SuperheroItems.ITEMS.getEntries()) {
             if (entry.get() instanceof BlockItem item) {
+                if (item.getBlock() instanceof IronManSuitCaseBlock) continue; // FIXME still generates anyway?
+
                 blockItem(Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(entry.get())));
                 continue;
             }
