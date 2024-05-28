@@ -1,18 +1,12 @@
 package com.duzo.superhero.data;
 
-import com.duzo.superhero.client.renderers.animations.IronManAnimations;
-import com.duzo.superhero.items.ironman.IronManArmourItem;
 import com.duzo.superhero.network.Network;
 import com.duzo.superhero.network.sync.SyncSuperheroData;
-import com.duzo.superhero.util.SuperheroUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.AnimationState;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import org.jetbrains.annotations.NotNull;
 
@@ -37,14 +31,14 @@ public class SuperheroData {
     public void tick(LivingEntity livingEntity) {
         animateMask(livingEntity);
 
-        if (livingEntity.level.isClientSide) return;
+        if (livingEntity.level().isClientSide()) return;
 
         if (livingEntity.tickCount % 40 == 0) {
             sync();
         }
-        if(livingEntity instanceof Player player)
-            if(player.getItemBySlot(EquipmentSlot.HEAD).getItem() instanceof IronManArmourItem)
-                setisMaskOpen(true);
+        // if(livingEntity instanceof Player player)
+        //     if(player.getItemBySlot(EquipmentSlot.HEAD).getItem() instanceof IronManArmourItem)
+        //         setisMaskOpen(true);
     }
 
 
@@ -77,14 +71,14 @@ public class SuperheroData {
     }
 
     public void sync() {
-        if (this.player.level.isClientSide) {
+        if (this.player.level().isClientSide) {
             throw new IllegalStateException("Don't sync client -> server");
         }
         Network.sendToTracking(new SyncSuperheroData(this.player.getId(), serializeNBT()),(ServerPlayer) this.player);
     }
 
     public void syncTo(ServerPlayer receiver) {
-        if (this.player.level.isClientSide) {
+        if (this.player.level().isClientSide) {
             throw new IllegalStateException("Don't sync client -> server");
         }
         Network.sendToTracking(new SyncSuperheroData(this.player.getId(), serializeNBT()),(ServerPlayer) receiver);

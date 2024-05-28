@@ -1,10 +1,9 @@
 package com.duzo.superhero.client.renderers.layers;
 
 import com.duzo.superhero.Superhero;
+import com.duzo.superhero.capabilities.SuperheroCapabilityRegistry;
 import com.duzo.superhero.client.models.heroes.iron_man.IronManMagicModel;
-import com.duzo.superhero.items.ironman.IronManArmourItem;
-import com.duzo.superhero.util.SuperheroCapability;
-import com.duzo.superhero.util.SuperheroIdentifier;
+import com.duzo.superhero.ids.AbstractIdentifier;
 import com.duzo.superhero.util.ironman.IronManUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -132,7 +131,7 @@ public class IronManSuitRenderer<T extends AbstractClientPlayer, M extends Entit
         //this.ironman.leftLeg.render(pose, buffer.getBuffer(RenderType.entityCutout(this.texture)), packedLight, OverlayTexture.NO_OVERLAY, e, r, t, 1);
         //pose.popPose();
         if(getIDFromPlayer(player) == null) return;
-        if (player.getY() >= 185 && getIDFromPlayer(player).getCapabilities().has(SuperheroCapability.ICES_OVER)) { // @Loqor just check for the capability instead of the mk2 in future pls
+        if (player.getY() >= 185 && getIDFromPlayer(player).getCapabilities().has(SuperheroCapabilityRegistry.ICES_OVER)) { // @Loqor just check for the capability instead of the mk2 in future pls
             e = 0.69411764705F;
             r = 0.87450980392F;
             t = 1F;
@@ -156,14 +155,14 @@ public class IronManSuitRenderer<T extends AbstractClientPlayer, M extends Entit
         Item chest = player.getItemBySlot(EquipmentSlot.CHEST).getItem();
         Item legs = player.getItemBySlot(EquipmentSlot.LEGS).getItem();
         Item feet = player.getItemBySlot(EquipmentSlot.FEET).getItem();
-        if (head instanceof IronManArmourItem) {
+        if (IronManUtil.isIronManSuit(head)) {
             vertexConsumer = buffer.getBuffer(RenderType.entityCutout(getSolidTextureForSlotByID(EquipmentSlot.HEAD, player)));
             this.ironman.head.render(pose, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY, e, r, t, 1);
         }
-        if (chest instanceof IronManArmourItem) {
+        if (IronManUtil.isIronManSuit(chest)) {
             vertexConsumer = buffer.getBuffer(RenderType.entityCutout(getSolidTextureForSlotByID(EquipmentSlot.CHEST, player)));
             this.ironman.body.render(pose, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY, e, r, t, 1);
-            if (player.isOnGround()) {
+            if (player.onGround()) {
                 this.ironman.rightArm.getChild("right_beam").visible = true;
                 this.ironman.leftArm.getChild("left_beam").visible = true;
             } else {
@@ -173,9 +172,9 @@ public class IronManSuitRenderer<T extends AbstractClientPlayer, M extends Entit
             this.ironman.rightArm.render(pose, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY, e, r, t, 1);
             this.ironman.leftArm.render(pose, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY, e, r, t, 1);
         }
-        if (legs instanceof IronManArmourItem) {
+        if (IronManUtil.isIronManSuit(legs)) {
             vertexConsumer = buffer.getBuffer(RenderType.entityCutout(getSolidTextureForSlotByID(EquipmentSlot.LEGS, player)));
-            if (player.isOnGround()) {
+            if (player.onGround()) {
                 this.ironman.rightLeg.getChild("RightFoot").getChild("foot_right_beam").visible = true;
                 this.ironman.leftLeg.getChild("LeftFoot").getChild("foot_left_beam").visible = true;
             } else {
@@ -188,13 +187,13 @@ public class IronManSuitRenderer<T extends AbstractClientPlayer, M extends Entit
             this.ironman.leftLeg.render(pose, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY, e, r, t, 1);
         }
         VertexConsumer vertexConsumer1;
-        if (head instanceof IronManArmourItem) {
+        if (IronManUtil.isIronManSuit(head)) {
             vertexConsumer1 = buffer.getBuffer(RenderType.entityTranslucentEmissive(getLightmapTextureForSlotByID(EquipmentSlot.HEAD, player)));
             this.ironman.head.render(pose, vertexConsumer1, packedLight, OverlayTexture.NO_OVERLAY, e, r, t, 1);
         }
-        if (chest instanceof IronManArmourItem) {
+        if (IronManUtil.isIronManSuit(chest)) {
             vertexConsumer1 = buffer.getBuffer(RenderType.entityTranslucentEmissive(getLightmapTextureForSlotByID(EquipmentSlot.CHEST, player)));
-            if (player.isOnGround()) {
+            if (player.onGround()) {
                 this.ironman.rightArm.getChild("right_beam").visible = true;
                 this.ironman.leftArm.getChild("left_beam").visible = true;
             } else {
@@ -205,9 +204,9 @@ public class IronManSuitRenderer<T extends AbstractClientPlayer, M extends Entit
             this.ironman.rightArm.render(pose, vertexConsumer1, packedLight, OverlayTexture.NO_OVERLAY, e, r, t, 1);
             this.ironman.leftArm.render(pose, vertexConsumer1, packedLight, OverlayTexture.NO_OVERLAY, e, r, t, 1);
         }
-        if (legs instanceof IronManArmourItem) {
+        if (IronManUtil.isIronManSuit(legs)) {
             vertexConsumer1 = buffer.getBuffer(RenderType.entityTranslucentEmissive(getLightmapTextureForSlotByID(EquipmentSlot.LEGS, player)));
-            if (player.isOnGround()) {
+            if (player.onGround()) {
                 this.ironman.rightLeg.getChild("RightFoot").getChild("foot_right_beam").visible = true;
                 this.ironman.leftLeg.getChild("LeftFoot").getChild("foot_left_beam").visible = true;
             } else {
@@ -239,7 +238,7 @@ public class IronManSuitRenderer<T extends AbstractClientPlayer, M extends Entit
 
     private void updateTextures(Player player) {
         // Get the correct texture
-        SuperheroIdentifier id = getIDFromPlayer(player);
+        AbstractIdentifier id = getIDFromPlayer(player);
         if (id == null) return;
         if (!IronManUtil.isIronManSuit(id)) return;
         this.texture = IronManUtil.getTextureFromID(id);
@@ -249,7 +248,7 @@ public class IronManSuitRenderer<T extends AbstractClientPlayer, M extends Entit
     private ResourceLocation getSolidTextureForSlotByID(EquipmentSlot slot, Player player) {
         // Get texture from slot ID
         ItemStack stack = player.getItemBySlot(slot);
-        SuperheroIdentifier id = getIDFromStack(stack);
+        AbstractIdentifier id = getIDFromStack(stack);
         if (id == null) return this.texture;
         if (!IronManUtil.isIronManSuit(id)) return this.texture;
         return IronManUtil.getTextureFromID(id);
@@ -258,7 +257,7 @@ public class IronManSuitRenderer<T extends AbstractClientPlayer, M extends Entit
     private ResourceLocation getLightmapTextureForSlotByID(EquipmentSlot slot, Player player) {
         // Get lightmap texture from slot ID
         ItemStack stack = player.getItemBySlot(slot);
-        SuperheroIdentifier id = getIDFromStack(stack);
+        AbstractIdentifier id = getIDFromStack(stack);
         if (id == null) return this.texture;
         if (!IronManUtil.isIronManSuit(id)) return this.texture;
         return IronManUtil.getLightMapFromID(id);
