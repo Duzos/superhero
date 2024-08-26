@@ -1,6 +1,7 @@
 package mc.duzo.timeless.suit.ironman.mk5.client;
 
 import net.minecraft.client.model.*;
+import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.entity.model.BipedEntityModel;
@@ -39,7 +40,7 @@ public class MarkFiveModel extends SuitModel {
     public static TexturedModelData getTexturedModelData() {
         ModelData modelData = new ModelData();
         ModelPartData modelPartData = modelData.getRoot();
-        ModelPartData parentofsuit = modelPartData.addChild("parentofsuit", ModelPartBuilder.create(), ModelTransform.pivot(0.0F, 24.0F, -12.0F));
+        ModelPartData parentofsuit = modelPartData.addChild("parentofsuit", ModelPartBuilder.create(), ModelTransform.pivot(0.0F, 24.15F, -12.0F));
 
         ModelPartData suit = parentofsuit.addChild("suit", ModelPartBuilder.create(), ModelTransform.pivot(0.0F, -21.0F, 12.0F));
 
@@ -248,12 +249,16 @@ public class MarkFiveModel extends SuitModel {
                 .uv(93, 115).cuboid(-4.0F, -6.0F, -1.0F, 8.0F, 2.0F, 2.0F, new Dilation(0.0F)), ModelTransform.pivot(0.0F, 0.0F, 0.0F));
         return TexturedModelData.of(modelData, 256, 256);
     }
-
     @Override
     public void render(LivingEntity entity, float tickDelta, MatrixStack matrices, VertexConsumer vertexConsumers, int light, float r, float g, float b, float alpha) {
         matrices.push();
 
-        matrices.translate(0f, -0.15f, 0f);
+        if (!this.isAnimating((AbstractClientPlayerEntity) entity)) {
+            matrices.translate(0f, -0.2f, 0f);
+        } else {
+            matrices.translate(0, -0.21f, 0);
+        }
+
         this.getPart().render(matrices, vertexConsumers, light, OverlayTexture.DEFAULT_UV, r, g, b, alpha);
 
         matrices.pop();
@@ -275,7 +280,7 @@ public class MarkFiveModel extends SuitModel {
 
     @Override
     public void setAngles(LivingEntity entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
-
+        super.setAngles(entity, limbAngle, limbDistance, animationProgress, headYaw, headPitch);
     }
 
     @Override
@@ -288,5 +293,17 @@ public class MarkFiveModel extends SuitModel {
         this.leftLeg.copyTransform(model.leftLeg);
         this.rightArm.copyTransform(model.rightArm);
         this.rightLeg.copyTransform(model.rightLeg);
+    }
+
+    @Override
+    public void copyTo(BipedEntityModel<?> model) {
+        super.copyTo(model);
+
+        model.head.copyTransform(this.head);
+        model.body.copyTransform(this.body);
+        model.leftArm.copyTransform(this.leftArm);
+        model.leftLeg.copyTransform(this.leftLeg);
+        model.rightArm.copyTransform(this.rightArm);
+        model.rightLeg.copyTransform(this.rightLeg);
     }
 }

@@ -3,6 +3,7 @@ package mc.duzo.timeless.suit.client.render;
 import java.util.Optional;
 
 import net.minecraft.client.model.ModelPart;
+import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.entity.model.BipedEntityModel;
 import net.minecraft.client.render.entity.model.EntityModel;
@@ -11,6 +12,8 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.Identifier;
 
 import mc.duzo.timeless.suit.client.ClientSuit;
+import mc.duzo.timeless.suit.client.animation.SuitAnimationHolder;
+import mc.duzo.timeless.suit.client.animation.SuitAnimationTracker;
 
 public abstract class SuitModel extends EntityModel<LivingEntity> {
     /**
@@ -21,6 +24,26 @@ public abstract class SuitModel extends EntityModel<LivingEntity> {
     @Override
     public void render(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, float red, float green, float blue, float alpha) {
         this.getPart().render(matrices, vertices, light, overlay, red, green, blue, alpha);
+    }
+
+    @Override
+    public void setAngles(LivingEntity entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
+        if (!(entity instanceof AbstractClientPlayerEntity player)) return;
+        this.runAnimations(player, animationProgress);
+    }
+
+    protected void runAnimations(AbstractClientPlayerEntity player, float animationProgress) {
+        SuitAnimationHolder anim = this.getAnimation(player).orElse(null);
+        if (anim == null) return;
+
+        this.resetTransforms();
+        anim.update(this, animationProgress, player);
+    }
+    public Optional<SuitAnimationHolder> getAnimation(AbstractClientPlayerEntity player) {
+        return Optional.ofNullable(SuitAnimationTracker.getAnimation(player));
+    }
+    public boolean isAnimating(AbstractClientPlayerEntity player) {
+        return this.getAnimation(player).isPresent();
     }
 
     public Identifier texture() {
@@ -53,6 +76,9 @@ public abstract class SuitModel extends EntityModel<LivingEntity> {
         this.getPart().traverse().forEach(ModelPart::resetTransform);
     }
     public void copyFrom(BipedEntityModel<?> model) {
+
+    }
+    public void copyTo(BipedEntityModel<?> model) {
 
     }
 }

@@ -10,7 +10,13 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 
+import mc.duzo.timeless.client.animation.player.PlayerAnimationTracker;
+import mc.duzo.timeless.client.animation.player.TimelessPlayerAnimations;
+import mc.duzo.timeless.client.animation.player.holder.PlayerAnimationHolder;
 import mc.duzo.timeless.registry.Register;
+import mc.duzo.timeless.suit.client.animation.IronManAnimations;
+import mc.duzo.timeless.suit.client.animation.SuitAnimationHolder;
+import mc.duzo.timeless.suit.client.animation.SuitAnimationTracker;
 import mc.duzo.timeless.suit.set.SetRegistry;
 import mc.duzo.timeless.suit.set.SuitSet;
 
@@ -21,7 +27,17 @@ public class MarkFiveCase extends Item {
 
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-        if (world.isClient()) return TypedActionResult.consume(user.getStackInHand(hand));
+        if (world.isClient()) {
+            boolean wearing = getSet().isWearing(user);
+
+            if (!wearing) {
+                // todo - send off a packet instead
+                SuitAnimationTracker.addAnimation(user.getUuid(), new SuitAnimationHolder(IronManAnimations.MK5_CASE_OPEN, true, false));
+                PlayerAnimationTracker.addAnimation(user.getUuid(), new PlayerAnimationHolder(TimelessPlayerAnimations.MK5_CASE_OPEN));
+            }
+
+            return (!wearing) ? TypedActionResult.consume(user.getStackInHand(hand)) : TypedActionResult.fail(user.getStackInHand(hand));
+        }
 
         boolean success = fromCase((ServerPlayerEntity) user, false);
         return (success) ? TypedActionResult.consume(user.getStackInHand(hand)) : TypedActionResult.fail(user.getStackInHand(hand));

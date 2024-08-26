@@ -31,7 +31,7 @@ public abstract class PlayerEntityRendererMixin extends LivingEntityRenderer<Abs
     private void timeless$playerRender(AbstractClientPlayerEntity player, CallbackInfo ci) {
         boolean current = this.getModel().body.visible;
         if (!(current)) return;
-        if (!SuitFeature.shouldRender(player)) return;
+        if (SuitFeature.shouldRender(player)) return;
 
         this.getModel().setVisible(false);
 
