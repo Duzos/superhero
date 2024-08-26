@@ -10,16 +10,14 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 
-import mc.duzo.timeless.client.animation.player.PlayerAnimationTracker;
-import mc.duzo.timeless.client.animation.player.TimelessPlayerAnimations;
-import mc.duzo.timeless.client.animation.player.holder.PlayerAnimationHolder;
 import mc.duzo.timeless.datagen.provider.lang.AutomaticEnglish;
+import mc.duzo.timeless.network.Network;
+import mc.duzo.timeless.network.s2c.MarkFiveAnimationS2CPacket;
 import mc.duzo.timeless.registry.Register;
 import mc.duzo.timeless.suit.client.animation.IronManAnimations;
-import mc.duzo.timeless.suit.client.animation.SuitAnimationHolder;
-import mc.duzo.timeless.suit.client.animation.SuitAnimationTracker;
 import mc.duzo.timeless.suit.set.SetRegistry;
 import mc.duzo.timeless.suit.set.SuitSet;
+import mc.duzo.timeless.util.DeltaTimeManager;
 
 public class MarkFiveCase extends Item implements AutomaticEnglish {
     public MarkFiveCase() {
@@ -30,13 +28,6 @@ public class MarkFiveCase extends Item implements AutomaticEnglish {
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         if (world.isClient()) {
             boolean wearing = getSet().isWearing(user);
-
-            if (!wearing) {
-                // todo - send off a packet instead
-                SuitAnimationTracker.addAnimation(user.getUuid(), new SuitAnimationHolder(IronManAnimations.MK5_CASE_OPEN, true, false));
-                PlayerAnimationTracker.addAnimation(user.getUuid(), new PlayerAnimationHolder(TimelessPlayerAnimations.MK5_CASE_OPEN));
-            }
-
             return (!wearing) ? TypedActionResult.consume(user.getStackInHand(hand)) : TypedActionResult.fail(user.getStackInHand(hand));
         }
 
@@ -48,16 +39,25 @@ public class MarkFiveCase extends Item implements AutomaticEnglish {
         if (!force) {
             if (!(getSet().isWearing(player))) return false;
 
-            player.getArmorItems().forEach(stack -> stack.setCount(0));
+            Network.toTracking(new MarkFiveAnimationS2CPacket(player.getUuid(), false), player);
         }
 
-        player.getInventory().offerOrDrop(new ItemStack(Register.Items.MARK_FIVE_CASE));
+        DeltaTimeManager.enqueueTask((long) (IronManAnimations.MK5_CASE_CLOSE.lengthInSeconds() * 1000L), () -> toCasePost(player, force));
         return true;
     }
+    private static void toCasePost(ServerPlayerEntity player, boolean force) {
+        if (!force) {
+            player.getArmorItems().forEach(stack -> stack.setCount(0));
+        }
+        player.getInventory().offerOrDrop(new ItemStack(Register.Items.MARK_FIVE_CASE));
+    }
+
     public static boolean fromCase(ServerPlayerEntity player, boolean force) {
         if (!force) {
             if (!player.getMainHandStack().isOf(Register.Items.MARK_FIVE_CASE)) return false; // not holding
             if (getSet().isWearing(player)) return false; // already wearing
+
+            Network.toTracking(new MarkFiveAnimationS2CPacket(player.getUuid(), true), player);
 
             player.getMainHandStack().setCount(0);
         }
