@@ -1,5 +1,7 @@
 package mc.duzo.timeless.suit.client;
 
+import java.util.Optional;
+
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
@@ -40,5 +42,12 @@ public abstract class ClientSuit implements Identifiable {
     }
     public Identifier texture() {
         return new Identifier(this.id().getNamespace(), "textures/suit/" + this.id().getPath() + ".png");
+    }
+    public Optional<Identifier> emission() {
+        return Optional.empty();
+    }
+    public static Identifier createEmission(Identifier texture) {
+        int index = texture.getPath().lastIndexOf(".");
+        return new Identifier(texture.getNamespace(), texture.getPath().substring(0, index) + "_emission.png");
     }
 }

@@ -27,7 +27,7 @@ public abstract class SuitModel extends EntityModel<LivingEntity> {
         return this.getSuit().texture();
     }
     public Optional<Identifier> emission() {
-        return Optional.empty();
+        return this.getSuit().emission();
     }
     public abstract ClientSuit getSuit();
 

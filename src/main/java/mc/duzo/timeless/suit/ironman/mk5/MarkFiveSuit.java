@@ -1,5 +1,9 @@
 package mc.duzo.timeless.suit.ironman.mk5;
 
+import java.util.Optional;
+
+import net.minecraft.util.Identifier;
+
 import mc.duzo.timeless.suit.client.ClientSuit;
 import mc.duzo.timeless.suit.client.render.SuitModel;
 import mc.duzo.timeless.suit.ironman.IronManSuit;
@@ -25,6 +29,11 @@ public class MarkFiveSuit extends IronManSuit {
             @Override
             public SuitModel model() {
                 return model;
+            }
+
+            @Override
+            public Optional<Identifier> emission() {
+                return Optional.of(createEmission(this.texture()));
             }
         };
     }

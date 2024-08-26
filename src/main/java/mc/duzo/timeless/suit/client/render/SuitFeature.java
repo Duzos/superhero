@@ -20,6 +20,7 @@ import mc.duzo.timeless.suit.set.SuitSet;
 public class SuitFeature<T extends LivingEntity, M extends EntityModel<T>>
         extends FeatureRenderer<T, M> {
 
+    private static final int MAX_LIGHT = 0xF000F0;
     public SuitFeature(FeatureRendererContext<T, M> context, EntityModelLoader loader) {
         super(context);
     }
@@ -32,8 +33,8 @@ public class SuitFeature<T extends LivingEntity, M extends EntityModel<T>>
         SuitSet set = suit.getSet();
         if (!(set.isWearing(livingEntity))) return; // todo this check every frame is bad
 
-        VertexConsumer consumer = vertexConsumerProvider.getBuffer(RenderLayer.getEntityTranslucent(suit.toClient().texture()));
         SuitModel model = suit.toClient().model();
+        VertexConsumer consumer = vertexConsumerProvider.getBuffer(RenderLayer.getEntityTranslucent(model.texture()));
 
         BipedEntityModel<?> context = (BipedEntityModel<?>) this.getContextModel();
 
@@ -41,6 +42,11 @@ public class SuitFeature<T extends LivingEntity, M extends EntityModel<T>>
         model.setAngles(livingEntity, f, g, j, k, l);
 
         model.render(livingEntity, j, matrixStack, consumer, i, 1, 1, 1, 1);
+
+        if (model.emission().isPresent()) {
+            VertexConsumer emissionConsumer = vertexConsumerProvider.getBuffer(RenderLayer.getEntityTranslucentEmissive(model.emission().get()));
+            model.render(livingEntity, j, matrixStack, emissionConsumer, MAX_LIGHT, 1, 1, 1, 1);
+        }
     }
 
     private static Suit findSuit(LivingEntity entity) {
