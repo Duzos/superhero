@@ -1,5 +1,6 @@
 package mc.duzo.timeless.suit.client.render;
 
+import net.minecraft.client.render.LightmapTextureManager;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -44,8 +45,8 @@ public class SuitFeature<T extends LivingEntity, M extends EntityModel<T>>
         model.render(livingEntity, j, matrixStack, consumer, i, 1, 1, 1, 1);
 
         if (model.emission().isPresent()) {
-            VertexConsumer emissionConsumer = vertexConsumerProvider.getBuffer(RenderLayer.getEntityTranslucentEmissive(model.emission().get()));
-            model.render(livingEntity, j, matrixStack, emissionConsumer, MAX_LIGHT, 1, 1, 1, 1);
+            VertexConsumer emissionConsumer = vertexConsumerProvider.getBuffer(RenderLayer.getEntityCutoutNoCullZOffset(model.emission().get(), true));
+            model.render(livingEntity, j, matrixStack, emissionConsumer, LightmapTextureManager.MAX_LIGHT_COORDINATE, 1, 1, 1, 1);
         }
     }
 
