@@ -10,6 +10,7 @@ import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 
 import mc.duzo.timeless.Timeless;
+import mc.duzo.timeless.power.PowerRegistry;
 import mc.duzo.timeless.suit.SuitRegistry;
 import mc.duzo.timeless.suit.ironman.mk5.MarkFiveCase;
 import mc.duzo.timeless.suit.set.SetRegistry;
@@ -27,6 +28,7 @@ public class Register {
     }
 
     public static void init() {
+        PowerRegistry.init();
         SetRegistry.init();
         SuitRegistry.init();
     }

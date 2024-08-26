@@ -4,6 +4,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
 import mc.duzo.timeless.datagen.provider.lang.Translatable;
+import mc.duzo.timeless.power.PowerList;
 import mc.duzo.timeless.registry.Identifiable;
 import mc.duzo.timeless.suit.client.ClientSuit;
 import mc.duzo.timeless.suit.client.ClientSuitRegistry;
@@ -12,6 +13,7 @@ import mc.duzo.timeless.suit.set.SuitSet;
 public abstract class Suit implements Identifiable, Translatable {
     public abstract boolean isBinding();
     public abstract SuitSet getSet();
+    public abstract PowerList getPowers();
 
     @Override
     public String getTranslationKey() {

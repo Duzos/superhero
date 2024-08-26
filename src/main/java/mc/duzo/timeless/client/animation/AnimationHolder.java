@@ -22,12 +22,14 @@ public abstract class AnimationHolder {
         if (this.isFinished(player)) {
             this.state.stop();
             this.onFinished(player);
-        } else {
-            if (!this.state.isRunning()) {
-                this.onStart(player);
-            }
-            this.state.startIfNotRunning(player.age);
+            return;
         }
+
+        if (!this.state.isRunning()) {
+            this.onStart(player);
+        }
+
+        this.state.startIfNotRunning(player.age);
     }
 
     public boolean isFinished(AbstractClientPlayerEntity entity) {

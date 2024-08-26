@@ -4,6 +4,7 @@ import net.fabricmc.api.ModInitializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import mc.duzo.timeless.network.Network;
 import mc.duzo.timeless.registry.Register;
 
 public class Timeless implements ModInitializer {
@@ -13,5 +14,6 @@ public class Timeless implements ModInitializer {
     @Override
     public void onInitialize() {
         Register.init();
+        Network.init();
     }
 }
