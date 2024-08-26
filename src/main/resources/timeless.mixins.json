@@ -1,6 +1,6 @@
 {
 	"required": true,
-	"package": "mc.duzo.mixin",
+	"package": "mc.duzo.timeless.mixin",
 	"compatibilityLevel": "JAVA_17",
 	"mixins": [
 

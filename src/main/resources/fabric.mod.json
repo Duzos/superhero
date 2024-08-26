@@ -16,10 +16,10 @@
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"mc.duzo.Timeless"
+			"mc.duzo.timeless.Timeless"
 		],
 		"fabric-datagen": [
-			"mc.duzo.TimelessDataGenerator"
+			"mc.duzo.timeless.datagen.TimelessDataGenerator"
 		]
 	},
 	"mixins": [

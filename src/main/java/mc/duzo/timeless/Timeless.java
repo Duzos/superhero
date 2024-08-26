@@ -1,4 +1,4 @@
-package mc.duzo;
+package mc.duzo.timeless;
 
 import net.fabricmc.api.ModInitializer;
 
