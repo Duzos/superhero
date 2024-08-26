@@ -10,6 +10,9 @@ import mc.duzo.timeless.suit.Suit;
 import mc.duzo.timeless.suit.SuitRegistry;
 import mc.duzo.timeless.suit.item.SuitItem;
 
+/**
+ * A version of SuitSet which registers its components, eg suit + items
+ */
 public class RegisteringSuitSet extends SuitSet {
     protected RegisteringSuitSet(Identifier id, Suit suit, SuitItem... items) {
         super(id, suit, items);

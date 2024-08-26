@@ -19,6 +19,9 @@
 		"main": [
 			"mc.duzo.timeless.Timeless"
 		],
+		"client": [
+			"mc.duzo.timeless.client.TimelessClient"
+		],
 		"fabric-datagen": [
 			"mc.duzo.timeless.datagen.TimelessDataGenerator"
 		]
