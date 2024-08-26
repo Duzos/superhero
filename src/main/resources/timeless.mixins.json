@@ -3,7 +3,7 @@
 	"package": "mc.duzo.timeless.mixin",
 	"compatibilityLevel": "JAVA_17",
 	"mixins": [
-
+		"EnchantmentHelperMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
