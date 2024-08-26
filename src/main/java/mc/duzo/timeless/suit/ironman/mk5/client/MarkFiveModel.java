@@ -255,8 +255,6 @@ public class MarkFiveModel extends SuitModel {
 
         if (!this.isAnimating((AbstractClientPlayerEntity) entity)) {
             matrices.translate(0f, -0.2f, 0f);
-        } else {
-            matrices.translate(0, -0.21f, 0);
         }
 
         this.getPart().render(matrices, vertexConsumers, light, OverlayTexture.DEFAULT_UV, r, g, b, alpha);
