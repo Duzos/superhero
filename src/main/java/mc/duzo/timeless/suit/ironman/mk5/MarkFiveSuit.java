@@ -4,6 +4,6 @@ import mc.duzo.timeless.suit.ironman.IronManSuit;
 
 public class MarkFiveSuit extends IronManSuit {
     public MarkFiveSuit() {
-        super("five");
+        super("mk_five");
     }
 }
