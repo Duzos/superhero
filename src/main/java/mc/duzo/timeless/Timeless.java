@@ -1,8 +1,7 @@
 package mc.duzo.timeless;
 
-import mc.duzo.timeless.suit.SuitRegistry;
+import mc.duzo.timeless.registry.Register;
 import net.fabricmc.api.ModInitializer;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,6 +11,6 @@ public class Timeless implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
-		SuitRegistry.init();
+		Register.init();
 	}
 }
