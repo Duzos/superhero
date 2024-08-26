@@ -5,6 +5,7 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 
 import mc.duzo.timeless.datagen.provider.lang.LanguageProvider;
 import mc.duzo.timeless.datagen.provider.lang.LanguageType;
+import mc.duzo.timeless.datagen.provider.model.TimelessModelProvider;
 import mc.duzo.timeless.datagen.provider.sound.BasicSoundProvider;
 
 public class TimelessDataGenerator implements DataGeneratorEntrypoint {
@@ -14,6 +15,7 @@ public class TimelessDataGenerator implements DataGeneratorEntrypoint {
 
         genLang(pack);
         genSounds(pack);
+        genModels(pack);
     }
 
     private void genLang(FabricDataGenerator.Pack pack) {
@@ -36,6 +38,10 @@ public class TimelessDataGenerator implements DataGeneratorEntrypoint {
 
             return provider;
         })));
+    }
+
+    private void genModels(FabricDataGenerator.Pack pack) {
+        pack.addProvider(((output, registriesFuture) -> new TimelessModelProvider(output)));
     }
 
     private static String convertToName(String str) {

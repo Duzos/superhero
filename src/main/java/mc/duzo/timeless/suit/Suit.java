@@ -19,6 +19,11 @@ public abstract class Suit implements Identifiable {
 
         return ClientSuitRegistry.register(this.createClient()); // todo registry may be frozen
     }
+
+    /**
+     * creates the client-side version of this suit
+     * this MUST have the annotation @Environment(EnvType.CLIENT) or your game will crash
+     */
     @Environment(EnvType.CLIENT)
     protected abstract ClientSuit createClient();
 }

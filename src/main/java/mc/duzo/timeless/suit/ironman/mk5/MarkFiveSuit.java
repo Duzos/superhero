@@ -2,6 +2,9 @@ package mc.duzo.timeless.suit.ironman.mk5;
 
 import java.util.Optional;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+
 import net.minecraft.util.Identifier;
 
 import mc.duzo.timeless.suit.client.ClientSuit;
@@ -21,6 +24,7 @@ public class MarkFiveSuit extends IronManSuit {
         return SetRegistry.MARK_FIVE;
     }
 
+    @Environment(EnvType.CLIENT)
     @Override
     protected ClientSuit createClient() {
         SuitModel model = new MarkFiveModel();

@@ -11,11 +11,12 @@ import net.minecraft.recipe.Ingredient;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Util;
 
+import mc.duzo.timeless.datagen.provider.model.AutomaticModel;
 import mc.duzo.timeless.suit.Suit;
 import mc.duzo.timeless.suit.item.SuitItem;
 import mc.duzo.timeless.suit.item.SuitMaterial;
 
-public class IronManSuitItem extends SuitItem {
+public class IronManSuitItem extends SuitItem implements AutomaticModel {
     public IronManSuitItem(Suit suit, Type type) {
         super(suit, IronManMaterial.INSTANCE, type, new FabricItemSettings().maxCount(1));
     }
