@@ -1,4 +1,4 @@
-name: Publish on GitHub
+name: Publish Release on GitHub
 
 on: [ pull_request, workflow_dispatch, push ]
 

@@ -1,5 +1,5 @@
 
-name: Automated beta builds
+name: Publish Beta on Discord
 
 on:
   push:
