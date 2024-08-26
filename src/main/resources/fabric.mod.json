@@ -3,13 +3,14 @@
 	"id": "timeless",
 	"version": "${version}",
 	"name": "Timeless Heroes",
-	"description": "superhero mod",
+	"description": "Adds superheroes into Fabric Minecraft!",
 	"authors": [
-		"duzo"
+		"duzo",
+		"Loqor"
 	],
 	"contact": {
 		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"sources": "https://github.com/Duzos/superhero"
 	},
 	"license": "CC0-1.0",
 	"icon": "assets/timeless/icon.png",
