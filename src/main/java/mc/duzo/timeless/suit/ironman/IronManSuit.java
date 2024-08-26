@@ -1,34 +1,35 @@
 package mc.duzo.timeless.suit.ironman;
 
-import mc.duzo.timeless.Timeless;
-import mc.duzo.timeless.suit.Suit;
 import net.minecraft.util.Identifier;
 
+import mc.duzo.timeless.Timeless;
+import mc.duzo.timeless.suit.Suit;
+
 public abstract class IronManSuit extends Suit {
-	private final Identifier id;
+    private final Identifier id;
 
-	protected IronManSuit(Identifier id) {
-		this.id = id;
-	}
-	protected IronManSuit(String mark, String modid) {
-		this(new Identifier(modid, "iron_man_" + mark));
-	}
+    protected IronManSuit(Identifier id) {
+        this.id = id;
+    }
+    protected IronManSuit(String mark, String modid) {
+        this(new Identifier(modid, "iron_man_" + mark));
+    }
 
-	/**
-	 * For Timeless heroes ONLY
-	 * Addon mods should use other constructor
-	 */
-	protected IronManSuit(String mark) {
-		this(mark, Timeless.MOD_ID);
-	}
+    /**
+     * For Timeless heroes ONLY
+     * Addon mods should use other constructor
+     */
+    protected IronManSuit(String mark) {
+        this(mark, Timeless.MOD_ID);
+    }
 
-	@Override
-	public boolean isBinding() {
-		return true;
-	}
+    @Override
+    public boolean isBinding() {
+        return true;
+    }
 
-	@Override
-	public Identifier id() {
-		return this.id;
-	}
+    @Override
+    public Identifier id() {
+        return this.id;
+    }
 }
