@@ -19,7 +19,7 @@ public class ArmorFeatureRendererMixin {
     private void timeless$getArmorTexture(ArmorItem item, boolean secondLayer, @Nullable String overlay, CallbackInfoReturnable<Identifier> cir) {
         if (!(item instanceof SuitItem suit)) return;
 
-        if (!suit.getSuit().toClient().hasRenderer()) return;
+        if (!suit.getSuit().toClient().hasModel()) return;
 
         cir.setReturnValue(new Identifier(Timeless.MOD_ID, "textures/empty.png"));
     }

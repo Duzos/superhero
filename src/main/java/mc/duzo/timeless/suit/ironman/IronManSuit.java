@@ -4,7 +4,6 @@ import net.minecraft.util.Identifier;
 
 import mc.duzo.timeless.Timeless;
 import mc.duzo.timeless.suit.Suit;
-import mc.duzo.timeless.suit.client.ClientSuit;
 
 public abstract class IronManSuit extends Suit {
     private final Identifier id;
@@ -32,15 +31,5 @@ public abstract class IronManSuit extends Suit {
     @Override
     public Identifier id() {
         return this.id;
-    }
-
-    @Override
-    protected ClientSuit createClient() {
-        return new ClientSuit(this) {
-            @Override
-            public boolean hasRenderer() {
-                return true;
-            }
-        };
     }
 }

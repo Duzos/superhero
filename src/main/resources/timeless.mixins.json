@@ -6,7 +6,8 @@
 		"EnchantmentHelperMixin"
 	],
 	"client": [
-		"client.ArmorFeatureRendererMixin"
+		"client.ArmorFeatureRendererMixin",
+		"client.PlayerEntityRendererMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

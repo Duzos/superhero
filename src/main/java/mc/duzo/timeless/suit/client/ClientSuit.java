@@ -1,11 +1,16 @@
 package mc.duzo.timeless.suit.client;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+
 import net.minecraft.util.Identifier;
 
 import mc.duzo.timeless.registry.Identifiable;
 import mc.duzo.timeless.suit.Suit;
 import mc.duzo.timeless.suit.SuitRegistry;
+import mc.duzo.timeless.suit.client.render.SuitModel;
 
+@Environment(EnvType.CLIENT)
 public abstract class ClientSuit implements Identifiable {
     private final Suit parent;
     protected ClientSuit(Suit suit) {
@@ -24,5 +29,16 @@ public abstract class ClientSuit implements Identifiable {
         return this.toServer().id();
     }
 
-    public abstract boolean hasRenderer();
+    /**
+     * @return whether this suit has a custom model and will use the timeless renderer
+     */
+    public boolean hasModel() {
+        return this.model() != null;
+    }
+    public SuitModel model() {
+        return null;
+    }
+    public Identifier texture() {
+        return new Identifier(this.id().getNamespace(), "textures/suit/" + this.id().getPath() + ".png");
+    }
 }

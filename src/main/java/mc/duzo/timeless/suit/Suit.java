@@ -6,9 +6,12 @@ import net.fabricmc.api.Environment;
 import mc.duzo.timeless.registry.Identifiable;
 import mc.duzo.timeless.suit.client.ClientSuit;
 import mc.duzo.timeless.suit.client.ClientSuitRegistry;
+import mc.duzo.timeless.suit.set.SuitSet;
 
 public abstract class Suit implements Identifiable {
     public abstract boolean isBinding();
+    public abstract SuitSet getSet();
+
     @Environment(EnvType.CLIENT)
     public ClientSuit toClient() {
         ClientSuit found = ClientSuitRegistry.REGISTRY.get(this.id());
