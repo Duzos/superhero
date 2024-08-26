@@ -3,7 +3,9 @@ package mc.duzo.timeless.suit.set;
 import java.util.HashMap;
 import java.util.function.BiFunction;
 
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ArmorItem;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 
 import mc.duzo.timeless.registry.Identifiable;
@@ -40,5 +42,27 @@ public class SuitSet extends HashMap<ArmorItem.Type, SuitItem> implements Identi
     @Override
     public Identifier id() {
         return this.id;
+    }
+    public Suit suit() {
+        return this.suit;
+    }
+
+    public boolean isWearing(LivingEntity entity) {
+        int target = this.values().size();
+        int count = 0;
+
+        for (ItemStack stack : entity.getArmorItems()) {
+            if (this.containsValue(stack.getItem())) {
+                count++;
+            }
+        }
+
+        return count == target;
+    }
+    public void wear(LivingEntity entity) {
+        this.values().forEach(item -> this.wear(entity, item));
+    }
+    private void wear(LivingEntity entity, SuitItem item) {
+        entity.equipStack(item.getSlotType(), new ItemStack(item));
     }
 }

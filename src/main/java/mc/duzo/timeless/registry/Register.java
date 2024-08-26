@@ -11,12 +11,18 @@ import net.minecraft.util.Identifier;
 
 import mc.duzo.timeless.Timeless;
 import mc.duzo.timeless.suit.SuitRegistry;
+import mc.duzo.timeless.suit.ironman.mk5.MarkFiveCase;
 import mc.duzo.timeless.suit.set.SetRegistry;
 
 public class Register {
     public static class Items {
+        public static MarkFiveCase MARK_FIVE_CASE = register("mk_five_case", new MarkFiveCase());
+
         public static <T extends Item> T register(Identifier id, T entry) {
             return Registry.register(Registries.ITEM, id, entry);
+        }
+        private static <T extends Item> T register(String name, T entry) {
+            return register(new Identifier(Timeless.MOD_ID, name), entry);
         }
     }
 
