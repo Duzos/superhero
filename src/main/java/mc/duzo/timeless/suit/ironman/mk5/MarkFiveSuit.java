@@ -16,7 +16,7 @@ import mc.duzo.timeless.suit.set.SuitSet;
 
 public class MarkFiveSuit extends IronManSuit {
     public MarkFiveSuit() {
-        super("mk_five");
+        super("mark_five");
     }
 
     @Override

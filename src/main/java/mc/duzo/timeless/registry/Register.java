@@ -16,7 +16,7 @@ import mc.duzo.timeless.suit.set.SetRegistry;
 
 public class Register {
     public static class Items {
-        public static MarkFiveCase MARK_FIVE_CASE = register("mk_five_case", new MarkFiveCase());
+        public static MarkFiveCase MARK_FIVE_CASE = register("mark_five_case", new MarkFiveCase());
 
         public static <T extends Item> T register(Identifier id, T entry) {
             return Registry.register(Registries.ITEM, id, entry);
