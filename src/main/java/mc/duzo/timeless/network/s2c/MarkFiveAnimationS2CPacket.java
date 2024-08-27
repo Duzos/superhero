@@ -39,9 +39,7 @@ public record MarkFiveAnimationS2CPacket(UUID player, boolean isPuttingOn) imple
         SuitAnimationHolder suit = (isPuttingOn) ? new SuitAnimationHolder(IronManAnimations.MK5_CASE_OPEN, true, false, true) : new SuitAnimationHolder(IronManAnimations.MK5_CASE_CLOSE, true, false, true);
         SuitAnimationTracker.addAnimation(player, suit);
 
-        if (!isPuttingOn) return; // todo - close anim for player
-
-        PlayerAnimationHolder anim = new PlayerAnimationHolder(TimelessPlayerAnimations.MK5_CASE_OPEN);
+        PlayerAnimationHolder anim = (isPuttingOn) ? new PlayerAnimationHolder(TimelessPlayerAnimations.MK5_CASE_OPEN) : new PlayerAnimationHolder(TimelessPlayerAnimations.MK5_CASE_CLOSE);
         PlayerAnimationTracker.addAnimation(player, anim);
     }
 }
