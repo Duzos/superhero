@@ -36,9 +36,13 @@ public abstract class SuitModel extends EntityModel<LivingEntity> {
         SuitAnimationHolder anim = this.getAnimation(player).orElse(null);
         if (anim == null) return;
 
+        this.runAnimations(player, animationProgress, anim);
+    }
+    protected void runAnimations(AbstractClientPlayerEntity player, float animationProgress, SuitAnimationHolder anim) {
         this.resetTransforms();
         anim.update(this, animationProgress, player);
     }
+
     public Optional<SuitAnimationHolder> getAnimation(AbstractClientPlayerEntity player) {
         return Optional.ofNullable(SuitAnimationTracker.getAnimation(player));
     }

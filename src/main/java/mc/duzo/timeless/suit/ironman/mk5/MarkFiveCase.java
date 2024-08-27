@@ -14,7 +14,7 @@ import mc.duzo.timeless.datagen.provider.lang.AutomaticEnglish;
 import mc.duzo.timeless.network.Network;
 import mc.duzo.timeless.network.s2c.MarkFiveAnimationS2CPacket;
 import mc.duzo.timeless.registry.Register;
-import mc.duzo.timeless.suit.client.animation.IronManAnimations;
+import mc.duzo.timeless.suit.client.animation.impl.ironman.IronManAnimations;
 import mc.duzo.timeless.suit.set.SetRegistry;
 import mc.duzo.timeless.suit.set.SuitSet;
 import mc.duzo.timeless.util.DeltaTimeManager;

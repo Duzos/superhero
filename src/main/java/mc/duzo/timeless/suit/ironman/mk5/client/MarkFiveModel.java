@@ -20,6 +20,7 @@ public class MarkFiveModel extends SuitModel {
     private final ModelPart rightArm;
     private final ModelPart body;
     private final ModelPart head;
+    private final ModelPart casePart;
     private ClientSuit parent;
     public MarkFiveModel(ModelPart root) {
         this.root = root;
@@ -30,8 +31,7 @@ public class MarkFiveModel extends SuitModel {
         this.leftArm = this.getChild("LeftArm").orElseThrow();
         this.body = this.getChild("Body").orElseThrow();
         this.head = this.getChild("Head").orElseThrow();
-
-        this.getChild("case").orElseThrow().visible = false;
+        this.casePart = this.getChild("case").orElseThrow();
     }
     public MarkFiveModel() {
         this(getTexturedModelData().createModel());
