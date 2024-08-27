@@ -10,10 +10,15 @@ import mc.duzo.timeless.client.animation.player.PlayerAnimationHelper;
 public abstract class AnimationHolder {
     protected final AnimationState state;
     protected final Animation animation;
+    private final boolean thirdPerson;
 
-    protected AnimationHolder(Animation anim) {
+    protected AnimationHolder(Animation anim, boolean thirdPerson) {
         this.state = new AnimationState();
         this.animation = anim;
+        this.thirdPerson = thirdPerson;
+    }
+    protected AnimationHolder(Animation anim) {
+        this(anim, true);
     }
 
     public void update(EntityModel<?> model, float progress, AbstractClientPlayerEntity player) {
@@ -50,5 +55,9 @@ public abstract class AnimationHolder {
     }
     public Animation getAnimation() {
         return animation;
+    }
+
+    public boolean isThirdPerson() {
+        return thirdPerson;
     }
 }

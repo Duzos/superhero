@@ -12,8 +12,8 @@ public class SuitAnimationHolder extends AnimationHolder {
     private final boolean playerMimics;
     private SuitModel model;
 
-    public SuitAnimationHolder(Animation anim, boolean renderPlayer, boolean playerMimics) {
-        super(anim);
+    public SuitAnimationHolder(Animation anim, boolean renderPlayer, boolean playerMimics, boolean thirdPerson) {
+        super(anim, thirdPerson);
         this.renderPlayer = renderPlayer;
         this.playerMimics = playerMimics;
     }

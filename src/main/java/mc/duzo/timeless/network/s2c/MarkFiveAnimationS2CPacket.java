@@ -36,7 +36,7 @@ public record MarkFiveAnimationS2CPacket(UUID player, boolean isPuttingOn) imple
     }
 
     public void handle(ClientPlayerEntity client, PacketSender sender) {
-        SuitAnimationHolder suit = (isPuttingOn) ? new SuitAnimationHolder(IronManAnimations.MK5_CASE_OPEN, true, false) : new SuitAnimationHolder(IronManAnimations.MK5_CASE_CLOSE, true, false);
+        SuitAnimationHolder suit = (isPuttingOn) ? new SuitAnimationHolder(IronManAnimations.MK5_CASE_OPEN, true, false, true) : new SuitAnimationHolder(IronManAnimations.MK5_CASE_CLOSE, true, false, true);
         SuitAnimationTracker.addAnimation(player, suit);
 
         if (!isPuttingOn) return; // todo - close anim for player

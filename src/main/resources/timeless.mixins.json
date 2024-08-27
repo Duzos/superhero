@@ -8,7 +8,8 @@
 	"client": [
 		"client.ArmorFeatureRendererMixin",
 		"client.PlayerEntityRendererMixin",
-		"client.PlayerEntityModelMixin"
+		"client.PlayerEntityModelMixin",
+		"client.PerspectiveMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
