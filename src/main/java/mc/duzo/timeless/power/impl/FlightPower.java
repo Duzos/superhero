@@ -51,35 +51,42 @@ public class FlightPower extends Power {
     private Vec3d getVelocity(ServerPlayerEntity player) {
         Vec3d change = new Vec3d(0, 0, 0);
 
-        change = change.add(getForwardVelocity(player));
+        ServerKeybind.Keymap map = ServerKeybind.get(player);
+        change = change.add(getVelocityFor(player, map.isMovingForward(), 0));
+        change = change.add(getVelocityFor(player, map.isMovingBackward(), 180));
+        change = change.add(getVelocityFor(player, map.isMovingRight(), 270));
+        change = change.add(getVelocityFor(player, map.isMovingLeft(), 90));
         change = change.add(getVerticalVelocity(player));
+
+        Vec3d current = player.getVelocity();
+        change = change.add(current.x, 0, current.z);
 
         return change;
     }
-    private Vec3d getForwardVelocity(ServerPlayerEntity player) {
-        if (!ServerKeybind.isMovingForward(player)) return Vec3d.ZERO;
+    private Vec3d getVelocityFor(ServerPlayerEntity player, boolean shouldRun, double angle) {
+        if (!shouldRun) return Vec3d.ZERO;
 
         Vec3d change = new Vec3d(0, 0, 0);
 
-        Vec3d look = player.getRotationVector().rotateZ((float) Math.toRadians(0));
-        change = change.add(look.x / 4, 0, look.z / 4);
+        Vec3d look = player.getRotationVector().rotateY((float) Math.toRadians(angle));
 
-        look = player.getRotationVector();
-        change = change.add(look.x, 0, look.z);
+        double multiplier = player.isSprinting() ? 0.1 : 0.05;
+        change = change.add(look.x * multiplier, 0, look.z * multiplier);
 
         return change;
     }
     private Vec3d getVerticalVelocity(ServerPlayerEntity player) {
         Vec3d change = new Vec3d(0, 0, 0);
 
-        if (ServerKeybind.isJumping(player)) {
-            return change.add(0, 0.1, 0).add(0, player.getVelocity().y, 0);
+        if (ServerKeybind.get(player).isJumping()) {
+            return change.add(0, (player.isSprinting()) ? 0.15 : 0.1, 0).add(0, player.getVelocity().y, 0);
         }
 
         double yVelocity = player.getVelocity().y;
 
         if (HoverPower.hasHover(player)) {
             yVelocity = Math.max(yVelocity, 0.08);
+            if (player.isSneaking()) yVelocity = -0.25;
         }
 
         change = change.add(0, yVelocity, 0);
