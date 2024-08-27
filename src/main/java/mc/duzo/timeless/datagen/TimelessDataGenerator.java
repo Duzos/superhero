@@ -6,6 +6,7 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
 
+import mc.duzo.timeless.Timeless;
 import mc.duzo.timeless.datagen.provider.lang.AutomaticEnglish;
 import mc.duzo.timeless.datagen.provider.lang.LanguageProvider;
 import mc.duzo.timeless.datagen.provider.lang.LanguageType;
@@ -43,6 +44,8 @@ public class TimelessDataGenerator implements DataGeneratorEntrypoint {
 
                 provider.addTranslation(item, convertToName(Registries.ITEM.getId(item).getPath()));
             }
+
+            provider.addTranslation("itemGroup." + Timeless.MOD_ID, "Timeless Heroes");
 
             return provider;
         })));

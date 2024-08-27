@@ -1,12 +1,18 @@
 package mc.duzo.timeless.registry;
 
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
+import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
+import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
+import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
 import mc.duzo.timeless.Timeless;
@@ -27,10 +33,27 @@ public class Register {
         }
     }
 
+    public static class ItemGroups {
+        public static final RegistryKey<ItemGroup> KEY = RegistryKey.of(Registries.ITEM_GROUP.getKey(), Identifier.of(Timeless.MOD_ID, "item_group"));
+        public static final ItemGroup GROUP = FabricItemGroup.builder()
+                .icon(() -> new ItemStack(Items.MARK_FIVE_CASE))
+                .displayName(Text.translatable("itemGroup." + Timeless.MOD_ID))
+                .build();
+
+        public static void init() {
+            Registry.register(Registries.ITEM_GROUP, KEY, GROUP);
+
+            ItemGroupEvents.modifyEntriesEvent(KEY).register(group -> {
+                group.add(Items.MARK_FIVE_CASE);
+            });
+        }
+    }
+
     public static void init() {
         PowerRegistry.init();
         SetRegistry.init();
         SuitRegistry.init();
+        ItemGroups.init();
     }
 
     public static <V, T extends V> T register(Registry<V> registry, String name, T entry) {
