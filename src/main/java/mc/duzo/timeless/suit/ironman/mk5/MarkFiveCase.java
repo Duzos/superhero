@@ -14,7 +14,6 @@ import mc.duzo.timeless.datagen.provider.lang.AutomaticEnglish;
 import mc.duzo.timeless.network.Network;
 import mc.duzo.timeless.network.s2c.MarkFiveAnimationS2CPacket;
 import mc.duzo.timeless.registry.Register;
-import mc.duzo.timeless.suit.client.animation.impl.ironman.IronManAnimations;
 import mc.duzo.timeless.suit.set.SetRegistry;
 import mc.duzo.timeless.suit.set.SuitSet;
 import mc.duzo.timeless.util.time.Scheduler;
@@ -44,7 +43,7 @@ public class MarkFiveCase extends Item implements AutomaticEnglish {
             Network.toTracking(new MarkFiveAnimationS2CPacket(player.getUuid(), false), player);
         }
 
-        Scheduler.runTaskLater(() -> toCasePost(player, force), TimeUnit.SECONDS, (long) (IronManAnimations.MK5_CASE_CLOSE.lengthInSeconds()));
+        Scheduler.runTaskLater(() -> toCasePost(player, force), TimeUnit.SECONDS, (long) (8.038f));
         return true;
     }
     private static void toCasePost(ServerPlayerEntity player, boolean force) {
