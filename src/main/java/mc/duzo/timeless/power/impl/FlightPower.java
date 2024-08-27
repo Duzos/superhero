@@ -1,5 +1,6 @@
 package mc.duzo.timeless.power.impl;
 
+import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -11,6 +12,7 @@ import net.minecraft.util.math.random.Random;
 
 import mc.duzo.timeless.Timeless;
 import mc.duzo.timeless.power.Power;
+import mc.duzo.timeless.suit.ironman.IronManSuit;
 import mc.duzo.timeless.suit.item.SuitItem;
 import mc.duzo.timeless.util.ServerKeybind;
 
@@ -70,7 +72,7 @@ public class FlightPower extends Power {
 
         Vec3d look = player.getRotationVector().rotateY((float) Math.toRadians(angle));
 
-        double multiplier = player.isSprinting() ? 0.1 : 0.05;
+        double multiplier = (getSuit(player).getHorizontalFlightModifier(player.isSprinting()) / 100f);
         change = change.add(look.x * multiplier, 0, look.z * multiplier);
 
         return change;
@@ -79,7 +81,7 @@ public class FlightPower extends Power {
         Vec3d change = new Vec3d(0, 0, 0);
 
         if (ServerKeybind.get(player).isJumping()) {
-            return change.add(0, (player.isSprinting()) ? 0.125 : 0.1, 0).add(0, player.getVelocity().y, 0);
+            return change.add(0, (getSuit(player).getVerticalFlightModifier(player.isSprinting()) / 100f), 0).add(0, player.getVelocity().y, 0);
         }
 
         double yVelocity = player.getVelocity().y;
@@ -100,6 +102,13 @@ public class FlightPower extends Power {
         if (data == null) return false;
 
         return data.getBoolean("FlightEnabled");
+    }
+
+    private static IronManSuit getSuit(ServerPlayerEntity player) { // todo not assume IronManSuit
+        if (!(player.getEquippedStack(EquipmentSlot.CHEST).getItem() instanceof SuitItem item)) return null;
+        if (!(item.getSuit() instanceof IronManSuit suit)) return null;
+
+        return suit;
     }
 
     private void createParticles(ServerPlayerEntity player) {

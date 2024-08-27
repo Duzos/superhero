@@ -52,4 +52,14 @@ public class MarkFiveSuit extends IronManSuit {
             }
         };
     }
+
+    @Override
+    public int getVerticalFlightModifier(boolean isSprinting) {
+        return (isSprinting) ? 15 : 10;
+    }
+
+    @Override
+    public int getHorizontalFlightModifier(boolean isSprinting) {
+        return (isSprinting) ? 15 : 5;
+    }
 }
