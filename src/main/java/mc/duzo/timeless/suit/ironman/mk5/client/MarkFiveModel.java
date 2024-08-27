@@ -277,11 +277,6 @@ public class MarkFiveModel extends SuitModel {
     }
 
     @Override
-    public void setAngles(LivingEntity entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
-        super.setAngles(entity, limbAngle, limbDistance, animationProgress, headYaw, headPitch);
-    }
-
-    @Override
     public void copyFrom(BipedEntityModel<?> model) {
         super.copyFrom(model);
 

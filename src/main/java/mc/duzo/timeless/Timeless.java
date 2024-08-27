@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import mc.duzo.timeless.network.Network;
 import mc.duzo.timeless.registry.Register;
 import mc.duzo.timeless.util.ServerLifecycleHooks;
+import mc.duzo.timeless.util.time.Scheduler;
 
 public class Timeless implements ModInitializer {
     public static final String MOD_ID = "timeless";
@@ -14,6 +15,7 @@ public class Timeless implements ModInitializer {
 
     @Override
     public void onInitialize() {
+        Scheduler.init();
         ServerLifecycleHooks.init();
         Register.init();
         Network.init();

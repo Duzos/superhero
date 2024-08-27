@@ -79,13 +79,13 @@ public class FlightPower extends Power {
         Vec3d change = new Vec3d(0, 0, 0);
 
         if (ServerKeybind.get(player).isJumping()) {
-            return change.add(0, (player.isSprinting()) ? 0.15 : 0.1, 0).add(0, player.getVelocity().y, 0);
+            return change.add(0, (player.isSprinting()) ? 0.125 : 0.1, 0).add(0, player.getVelocity().y, 0);
         }
 
         double yVelocity = player.getVelocity().y;
 
         if (HoverPower.hasHover(player)) {
-            yVelocity = Math.max(yVelocity, 0.08);
+            yVelocity = Math.max(yVelocity, 0.08); // todo seems to flicker movement downwards
             if (player.isSneaking()) yVelocity = -0.25;
         }
 
