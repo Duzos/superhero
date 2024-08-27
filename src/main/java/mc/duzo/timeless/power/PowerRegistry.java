@@ -9,6 +9,7 @@ import net.minecraft.util.Identifier;
 
 import mc.duzo.timeless.Timeless;
 import mc.duzo.timeless.power.impl.FlightPower;
+import mc.duzo.timeless.power.impl.HoverPower;
 import mc.duzo.timeless.suit.ironman.mk5.MarkFiveCase;
 
 public class PowerRegistry {
@@ -22,6 +23,7 @@ public class PowerRegistry {
             .run(player -> MarkFiveCase.toCase(player, false))
             .build().register();
     public static Power FLIGHT = new FlightPower().register();
+    public static Power HOVER = new HoverPower().register();
 
     public static void init() {}
 }

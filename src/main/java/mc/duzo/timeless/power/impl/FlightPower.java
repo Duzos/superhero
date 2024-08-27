@@ -37,11 +37,10 @@ public class FlightPower extends Power {
     public void tick(ServerPlayerEntity player) {
         player.fallDistance = 0;
 
-        if (!ServerKeybind.isJumping(player)) return;
         if (player.isOnGround()) return;
         if (!(hasFlight(player))) return;
 
-        Vec3d change = ServerKeybind.isMovingForward(player) ? getVelocity(player) : player.getVelocity().add(0, 0.1, 0);
+        Vec3d change = getVelocity(player);
 
         player.setVelocity(change);
         player.velocityModified = true;
@@ -52,15 +51,43 @@ public class FlightPower extends Power {
     private Vec3d getVelocity(ServerPlayerEntity player) {
         Vec3d change = new Vec3d(0, 0, 0);
 
-        Vec3d look = player.getRotationVector().rotateZ((float) Math.toRadians(0));
-        change = change.add(look.x / 4, 0.1, look.z / 4);
-
-        look = player.getRotationVector();
-        change = change.add(look);
+        change = change.add(getForwardVelocity(player));
+        change = change.add(getVerticalVelocity(player));
 
         return change;
     }
-    private boolean hasFlight(ServerPlayerEntity player) {
+    private Vec3d getForwardVelocity(ServerPlayerEntity player) {
+        if (!ServerKeybind.isMovingForward(player)) return Vec3d.ZERO;
+
+        Vec3d change = new Vec3d(0, 0, 0);
+
+        Vec3d look = player.getRotationVector().rotateZ((float) Math.toRadians(0));
+        change = change.add(look.x / 4, 0, look.z / 4);
+
+        look = player.getRotationVector();
+        change = change.add(look.x, 0, look.z);
+
+        return change;
+    }
+    private Vec3d getVerticalVelocity(ServerPlayerEntity player) {
+        Vec3d change = new Vec3d(0, 0, 0);
+
+        if (ServerKeybind.isJumping(player)) {
+            return change.add(0, 0.1, 0).add(0, player.getVelocity().y, 0);
+        }
+
+        double yVelocity = player.getVelocity().y;
+
+        if (HoverPower.hasHover(player)) {
+            yVelocity = Math.max(yVelocity, 0.08);
+        }
+
+        change = change.add(0, yVelocity, 0);
+
+        return change;
+    }
+
+    public static boolean hasFlight(ServerPlayerEntity player) {
         NbtCompound data = SuitItem.Data.get(player);
 
         if (data == null) return false;
