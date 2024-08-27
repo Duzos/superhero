@@ -1,5 +1,6 @@
 package mc.duzo.timeless.power;
 
+import mc.duzo.timeless.power.impl.FlightPower;
 import net.fabricmc.fabric.api.event.registry.FabricRegistryBuilder;
 
 import net.minecraft.registry.Registry;
@@ -17,7 +18,10 @@ public class PowerRegistry {
         return Registry.register(REGISTRY, entry.id(), entry);
     }
 
-    public static Power TO_CASE = Power.create(new Identifier(Timeless.MOD_ID, "to_case"), player -> MarkFiveCase.toCase(player, false)).register();
+    public static Power TO_CASE = Power.Builder.create(new Identifier(Timeless.MOD_ID, "to_case"))
+            .run(player -> MarkFiveCase.toCase(player, false))
+            .build().register();
+    public static Power FLIGHT = new FlightPower().register();
 
     public static void init() {}
 }
