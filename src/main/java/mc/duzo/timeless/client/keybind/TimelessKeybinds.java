@@ -31,5 +31,7 @@ public class TimelessKeybinds {
         if (player == null) return;
 
         binds.forEach(bind -> bind.tick(player));
+
+        KeybindSync.tick(player);
     }
 }
