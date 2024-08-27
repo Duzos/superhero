@@ -2,11 +2,13 @@ package mc.duzo.timeless.suit.item;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ArmorMaterial;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.*;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
@@ -55,5 +57,26 @@ public abstract class SuitItem extends ArmorItem implements Identifiable {
         if (!stack.equals(player.getEquippedStack(EquipmentSlot.CHEST))) return; // return if this stack isnt being worn in chest
 
         this.parent.getPowers().forEach(power -> power.tick(player));
+    }
+
+    public static class Data {
+        public static NbtCompound get(LivingEntity entity) {
+            ItemStack stack = entity.getEquippedStack(EquipmentSlot.CHEST);
+
+            if (stack == null) return null;
+            if (!(stack.getItem() instanceof SuitItem)) return null;
+
+            return stack.getOrCreateSubNbt("SuitData");
+        }
+        public static NbtElement get(LivingEntity entity, String key) {
+            NbtCompound data = get(entity);
+            if (data == null) return null;
+            return data.get(key);
+        }
+        public static void set(LivingEntity entity, String key, NbtElement value) {
+            NbtCompound data = get(entity);
+            if (data == null) return;
+            data.put(key, value);
+        }
     }
 }

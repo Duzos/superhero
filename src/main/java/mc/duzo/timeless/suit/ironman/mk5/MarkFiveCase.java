@@ -47,6 +47,8 @@ public class MarkFiveCase extends Item implements AutomaticEnglish {
     }
     private static void toCasePost(ServerPlayerEntity player, boolean force) {
         if (!force) {
+            if (!(getSet().isWearing(player))) return;
+
             player.getArmorItems().forEach(stack -> stack.setCount(0));
         }
         player.getInventory().offerOrDrop(new ItemStack(Register.Items.MARK_FIVE_CASE));

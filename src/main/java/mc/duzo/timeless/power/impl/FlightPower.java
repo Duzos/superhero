@@ -1,11 +1,13 @@
 package mc.duzo.timeless.power.impl;
 
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
 
 import mc.duzo.timeless.Timeless;
 import mc.duzo.timeless.power.Power;
+import mc.duzo.timeless.suit.item.SuitItem;
 import mc.duzo.timeless.util.ServerKeybind;
 
 public class FlightPower extends Power {
@@ -17,19 +19,25 @@ public class FlightPower extends Power {
 
     @Override
     public boolean run(ServerPlayerEntity player) {
-        return false;
+        NbtCompound data = SuitItem.Data.get(player);
+
+        if (data == null) return false;
+
+        boolean hasFlight = data.getBoolean("FlightEnabled");
+        data.putBoolean("FlightEnabled", !hasFlight);
+
+        return true;
     }
 
     @Override
     public void tick(ServerPlayerEntity player) {
-        if (!ServerKeybind.isJumping(player)) return;
-        if (player.isOnGround()) return;
-
         player.fallDistance = 0;
 
-        Vec3d change = ServerKeybind.isMovingForward(player) ? getVelocity(player) : player.getVelocity().add(0, 0.1, 0);
+        if (!ServerKeybind.isJumping(player)) return;
+        if (player.isOnGround()) return;
+        if (!(hasFlight(player))) return;
 
-        System.out.println(change);
+        Vec3d change = ServerKeybind.isMovingForward(player) ? getVelocity(player) : player.getVelocity().add(0, 0.1, 0);
 
         player.setVelocity(change);
         player.velocityModified = true;
@@ -45,6 +53,13 @@ public class FlightPower extends Power {
         change = change.add(look);
 
         return change;
+    }
+    private boolean hasFlight(ServerPlayerEntity player) {
+        NbtCompound data = SuitItem.Data.get(player);
+
+        if (data == null) return false;
+
+        return data.getBoolean("FlightEnabled");
     }
 
     @Override
