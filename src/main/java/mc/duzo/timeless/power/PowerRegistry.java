@@ -1,6 +1,5 @@
 package mc.duzo.timeless.power;
 
-import mc.duzo.timeless.power.impl.FlightPower;
 import net.fabricmc.fabric.api.event.registry.FabricRegistryBuilder;
 
 import net.minecraft.registry.Registry;
@@ -9,6 +8,7 @@ import net.minecraft.registry.SimpleRegistry;
 import net.minecraft.util.Identifier;
 
 import mc.duzo.timeless.Timeless;
+import mc.duzo.timeless.power.impl.FlightPower;
 import mc.duzo.timeless.suit.ironman.mk5.MarkFiveCase;
 
 public class PowerRegistry {

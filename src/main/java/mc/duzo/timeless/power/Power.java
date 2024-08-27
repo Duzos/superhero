@@ -1,11 +1,12 @@
 package mc.duzo.timeless.power;
 
-import mc.duzo.timeless.datagen.provider.lang.Translatable;
-import mc.duzo.timeless.registry.Identifiable;
+import java.util.function.Consumer;
+
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 
-import java.util.function.Consumer;
+import mc.duzo.timeless.datagen.provider.lang.Translatable;
+import mc.duzo.timeless.registry.Identifiable;
 
 public abstract class Power implements Identifiable, Translatable {
     public abstract boolean run(ServerPlayerEntity player);
