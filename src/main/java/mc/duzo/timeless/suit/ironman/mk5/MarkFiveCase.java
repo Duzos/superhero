@@ -37,6 +37,7 @@ public class MarkFiveCase extends Item implements AutomaticEnglish {
 
     public static boolean toCase(ServerPlayerEntity player, boolean force) {
         if (!force) {
+            if (!player.isOnGround()) return false;
             if (!(getSet().isWearing(player))) return false;
 
             Network.toTracking(new MarkFiveAnimationS2CPacket(player.getUuid(), false), player);
@@ -56,6 +57,7 @@ public class MarkFiveCase extends Item implements AutomaticEnglish {
 
     public static boolean fromCase(ServerPlayerEntity player, boolean force) {
         if (!force) {
+            if (!player.isOnGround()) return false;
             if (!player.getMainHandStack().isOf(Register.Items.MARK_FIVE_CASE)) return false; // not holding
             if (getSet().isWearing(player)) return false; // already wearing
 
