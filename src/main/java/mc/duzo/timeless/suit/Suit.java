@@ -10,6 +10,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.sound.SoundEvent;
 
 import mc.duzo.timeless.datagen.provider.lang.Translatable;
+import mc.duzo.timeless.power.Power;
 import mc.duzo.timeless.power.PowerList;
 import mc.duzo.timeless.registry.Identifiable;
 import mc.duzo.timeless.suit.client.ClientSuit;
@@ -26,6 +27,9 @@ public abstract class Suit implements Identifiable, Translatable {
     public abstract boolean isBinding();
     public abstract SuitSet getSet();
     public abstract PowerList getPowers();
+    public boolean hasPower(Power power) {
+        return this.getPowers().contains(power);
+    }
     public abstract SoundEvent getStepSound();
 
     @Override

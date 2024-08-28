@@ -6,9 +6,10 @@ import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.util.Identifier;
 
 import mc.duzo.timeless.Timeless;
+import mc.duzo.timeless.power.PowerRegistry;
 import mc.duzo.timeless.power.impl.FlightPower;
 import mc.duzo.timeless.power.impl.HoverPower;
-import mc.duzo.timeless.suit.ironman.IronManSuit;
+import mc.duzo.timeless.suit.Suit;
 
 public class JarvisGui {
     private static final Identifier HUD = new Identifier(Timeless.MOD_ID, "textures/gui/jarvis/hud.png");
@@ -20,8 +21,9 @@ public class JarvisGui {
         if (player == null) return;
         if (client.gameRenderer.getCamera().isThirdPerson()) return;
 
-        IronManSuit suit = FlightPower.getSuit(player);
+        Suit suit = Suit.findSuit(player).orElse(null);
         if (suit == null) return;
+        if (!(suit.hasPower(PowerRegistry.JARVIS))) return;
 
         // main overlay
         context.drawTexture(HUD, 0, 0, 0, 0, getScreenWidth(), getScreenHeight(), getScreenWidth(), getScreenHeight());

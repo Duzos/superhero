@@ -24,6 +24,7 @@ public class PowerRegistry {
             .build().register();
     public static Power FLIGHT = new FlightPower().register();
     public static Power HOVER = new HoverPower().register();
+    public static Power JARVIS = Power.Builder.create(new Identifier(Timeless.MOD_ID, "jarvis")).build().register();
 
     public static void init() {}
 }

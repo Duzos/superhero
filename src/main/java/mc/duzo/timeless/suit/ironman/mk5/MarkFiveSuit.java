@@ -22,7 +22,7 @@ public class MarkFiveSuit extends IronManSuit {
     public MarkFiveSuit() {
         super("mark_five");
 
-        this.powers = PowerList.of(PowerRegistry.TO_CASE, PowerRegistry.FLIGHT, PowerRegistry.HOVER);
+        this.powers = PowerList.of(PowerRegistry.TO_CASE, PowerRegistry.FLIGHT, PowerRegistry.HOVER, PowerRegistry.JARVIS);
     }
 
     @Override
