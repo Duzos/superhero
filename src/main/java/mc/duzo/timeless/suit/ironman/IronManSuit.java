@@ -1,9 +1,11 @@
 package mc.duzo.timeless.suit.ironman;
 
+import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
 
 import mc.duzo.timeless.Timeless;
 import mc.duzo.timeless.datagen.provider.lang.AutomaticEnglish;
+import mc.duzo.timeless.registry.Register;
 import mc.duzo.timeless.suit.Suit;
 
 public abstract class IronManSuit extends Suit implements AutomaticEnglish {
@@ -32,6 +34,11 @@ public abstract class IronManSuit extends Suit implements AutomaticEnglish {
     @Override
     public Identifier id() {
         return this.id;
+    }
+
+    @Override
+    public SoundEvent getStepSound() {
+        return Register.Sounds.IRONMAN_STEP;
     }
 
     public abstract int getVerticalFlightModifier(boolean isSprinting);

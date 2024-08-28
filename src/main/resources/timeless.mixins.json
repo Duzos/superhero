@@ -1,17 +1,18 @@
 {
-	"required": true,
-	"package": "mc.duzo.timeless.mixin",
-	"compatibilityLevel": "JAVA_17",
-	"mixins": [
-		"EnchantmentHelperMixin"
-	],
-	"client": [
-		"client.ArmorFeatureRendererMixin",
-		"client.PlayerEntityRendererMixin",
-		"client.PlayerEntityModelMixin",
-		"client.PerspectiveMixin"
-	],
-	"injectors": {
-		"defaultRequire": 1
+  "required": true,
+  "package": "mc.duzo.timeless.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "EnchantmentHelperMixin",
+    "EntityMixin"
+  ],
+  "client": [
+    "client.ArmorFeatureRendererMixin",
+    "client.PerspectiveMixin",
+    "client.PlayerEntityModelMixin",
+    "client.PlayerEntityRendererMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
 	}
 }

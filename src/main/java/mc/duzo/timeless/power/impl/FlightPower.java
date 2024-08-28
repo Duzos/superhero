@@ -1,6 +1,5 @@
 package mc.duzo.timeless.power.impl;
 
-import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
@@ -15,6 +14,7 @@ import mc.duzo.timeless.Timeless;
 import mc.duzo.timeless.network.Network;
 import mc.duzo.timeless.network.s2c.UpdateFlyingStatusS2CPacket;
 import mc.duzo.timeless.power.Power;
+import mc.duzo.timeless.suit.Suit;
 import mc.duzo.timeless.suit.ironman.IronManSuit;
 import mc.duzo.timeless.suit.item.SuitItem;
 import mc.duzo.timeless.util.ServerKeybind;
@@ -130,8 +130,7 @@ public class FlightPower extends Power {
     }
 
     public static IronManSuit getSuit(PlayerEntity player) { // todo not assume IronManSuit
-        if (!(player.getEquippedStack(EquipmentSlot.CHEST).getItem() instanceof SuitItem item)) return null;
-        if (!(item.getSuit() instanceof IronManSuit suit)) return null;
+        if (!(Suit.findSuit(player).orElse(null) instanceof IronManSuit suit)) return null;
 
         return suit;
     }
