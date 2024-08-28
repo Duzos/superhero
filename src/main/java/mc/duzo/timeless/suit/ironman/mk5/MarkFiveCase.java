@@ -6,6 +6,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
@@ -40,6 +41,7 @@ public class MarkFiveCase extends Item implements AutomaticEnglish {
             if (!player.isOnGround()) return false;
             if (!(getSet().isWearing(player))) return false;
 
+            player.getWorld().playSound(null, player.getBlockPos(), Register.Sounds.MARK5_NOISES, SoundCategory.PLAYERS, 0.25f, 1f);
             Network.toTracking(new MarkFiveAnimationS2CPacket(player.getUuid(), false), player);
         }
 
@@ -61,6 +63,7 @@ public class MarkFiveCase extends Item implements AutomaticEnglish {
             if (!player.getMainHandStack().isOf(Register.Items.MARK_FIVE_CASE)) return false; // not holding
             if (getSet().isWearing(player)) return false; // already wearing
 
+            player.getWorld().playSound(null, player.getBlockPos(), Register.Sounds.MARK5_NOISES, SoundCategory.PLAYERS, 0.25f, 1f);
             Network.toTracking(new MarkFiveAnimationS2CPacket(player.getUuid(), true), player);
 
             player.getMainHandStack().setCount(0);

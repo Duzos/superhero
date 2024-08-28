@@ -57,6 +57,7 @@ public class TimelessDataGenerator implements DataGeneratorEntrypoint {
             BasicSoundProvider provider = new BasicSoundProvider(output);
 
             provider.addSound("thruster", Register.Sounds.THRUSTER);
+            provider.addSound("mark5_noises", Register.Sounds.MARK5_NOISES);
 
             return provider;
         })));
