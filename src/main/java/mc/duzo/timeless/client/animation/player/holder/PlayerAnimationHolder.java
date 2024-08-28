@@ -6,10 +6,14 @@ import net.minecraft.client.render.entity.model.EntityModel;
 import net.minecraft.client.render.entity.model.PlayerEntityModel;
 
 import mc.duzo.timeless.client.animation.AnimationHolder;
+import mc.duzo.timeless.client.animation.AnimationInfo;
 import mc.duzo.timeless.client.animation.player.PlayerAnimationHelper;
 
 public class PlayerAnimationHolder extends AnimationHolder {
 
+    public PlayerAnimationHolder(Animation anim, AnimationInfo info) {
+        super(anim, info);
+    }
     public PlayerAnimationHolder(Animation anim) {
         super(anim);
     }
@@ -21,42 +25,4 @@ public class PlayerAnimationHolder extends AnimationHolder {
         super.update(model, progress, player);
     }
 
-    public enum RenderType {
-        ALL {
-            @Override
-            public void apply(PlayerEntityModel<AbstractClientPlayerEntity> model) {
-                model.setVisible(true);
-            }
-        }, // render player
-        FIRST_LAYER {
-            @Override
-            public void apply(PlayerEntityModel<AbstractClientPlayerEntity> model) {
-                model.setVisible(true);
-
-                model.jacket.visible = false;
-                model.leftPants.visible = false;
-                model.rightPants.visible = false;
-                model.leftSleeve.visible = false;
-                model.rightSleeve.visible = false;
-                model.hat.visible = false;
-            }
-        }, // render only first layer
-        EXCLUDE_LEGS {
-            @Override
-            public void apply(PlayerEntityModel<AbstractClientPlayerEntity> model) {
-                FIRST_LAYER.apply(model);
-
-                model.leftLeg.visible = false;
-                model.rightLeg.visible = false;
-            }
-        }, // hide legs AND first layer
-        NONE {
-            @Override
-            public void apply(PlayerEntityModel<AbstractClientPlayerEntity> model) {
-                model.setVisible(false);
-            }
-        }; // render nothing
-
-        public abstract void apply(PlayerEntityModel<AbstractClientPlayerEntity> model);
-    }
 }

@@ -12,7 +12,7 @@ import net.minecraft.client.render.entity.LivingEntityRenderer;
 import net.minecraft.client.render.entity.PlayerEntityRenderer;
 import net.minecraft.client.render.entity.model.PlayerEntityModel;
 
-import mc.duzo.timeless.client.animation.player.holder.PlayerAnimationHolder;
+import mc.duzo.timeless.client.animation.AnimationInfo;
 import mc.duzo.timeless.suit.client.render.SuitFeature;
 
 @Mixin(PlayerEntityRenderer.class)
@@ -34,9 +34,9 @@ public abstract class PlayerEntityRendererMixin extends LivingEntityRenderer<Abs
         if (!(current)) return;
 
         MinecraftClient client = MinecraftClient.getInstance();
-        PlayerAnimationHolder.RenderType type = SuitFeature.getRenderType(player);
+        AnimationInfo.RenderType type = SuitFeature.getRenderType(player);
 
-        if (type == PlayerAnimationHolder.RenderType.NONE && player.equals(client.player) && !client.gameRenderer.getCamera().isThirdPerson()) {
+        if (type == AnimationInfo.RenderType.NONE && player.equals(client.player) && !client.gameRenderer.getCamera().isThirdPerson()) {
             return;
         }
 
