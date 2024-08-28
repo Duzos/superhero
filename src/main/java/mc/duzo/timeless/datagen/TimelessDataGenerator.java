@@ -12,6 +12,7 @@ import mc.duzo.timeless.datagen.provider.lang.LanguageProvider;
 import mc.duzo.timeless.datagen.provider.lang.LanguageType;
 import mc.duzo.timeless.datagen.provider.model.TimelessModelProvider;
 import mc.duzo.timeless.datagen.provider.sound.BasicSoundProvider;
+import mc.duzo.timeless.registry.Register;
 import mc.duzo.timeless.suit.Suit;
 import mc.duzo.timeless.suit.SuitRegistry;
 
@@ -55,7 +56,7 @@ public class TimelessDataGenerator implements DataGeneratorEntrypoint {
         pack.addProvider((((output, registriesFuture) -> {
             BasicSoundProvider provider = new BasicSoundProvider(output);
 
-
+            provider.addSound("thruster", Register.Sounds.THRUSTER);
 
             return provider;
         })));

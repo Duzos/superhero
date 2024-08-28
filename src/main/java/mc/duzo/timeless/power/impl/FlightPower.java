@@ -12,6 +12,8 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.random.Random;
 
 import mc.duzo.timeless.Timeless;
+import mc.duzo.timeless.network.Network;
+import mc.duzo.timeless.network.s2c.UpdateFlyingStatusS2CPacket;
 import mc.duzo.timeless.power.Power;
 import mc.duzo.timeless.suit.ironman.IronManSuit;
 import mc.duzo.timeless.suit.item.SuitItem;
@@ -26,12 +28,7 @@ public class FlightPower extends Power {
 
     @Override
     public boolean run(ServerPlayerEntity player) {
-        NbtCompound data = SuitItem.Data.get(player);
-
-        if (data == null) return false;
-
-        boolean hasFlight = data.getBoolean("FlightEnabled");
-        data.putBoolean("FlightEnabled", !hasFlight);
+        setFlight(player, !hasFlight(player));
 
         return true;
     }
@@ -40,8 +37,11 @@ public class FlightPower extends Power {
     public void tick(ServerPlayerEntity player) {
         player.fallDistance = 0;
 
-        if (player.isOnGround()) return;
-        if (!(hasFlight(player))) return;
+        if (player.isOnGround() || !(hasFlight(player))) {
+            if (isFlying(player)) setIsFlying(player, false);
+            return;
+        }
+        if (!isFlying(player)) setIsFlying(player, true);
 
         Vec3d change = getVelocity(player);
 
@@ -103,6 +103,30 @@ public class FlightPower extends Power {
         if (data == null) return false;
 
         return data.getBoolean("FlightEnabled");
+    }
+    private static void setFlight(PlayerEntity player, boolean val) {
+        NbtCompound data = SuitItem.Data.get(player);
+
+        if (data == null) return;
+
+        data.putBoolean("FlightEnabled", val);
+    }
+    public static boolean isFlying(PlayerEntity player) {
+        NbtCompound data = SuitItem.Data.get(player);
+
+        if (data == null) return false;
+
+        return data.getBoolean("IsFlying");
+    }
+    private static void setIsFlying(PlayerEntity player, boolean val) {
+        NbtCompound data = SuitItem.Data.get(player);
+
+        if (data == null) return;
+
+        data.putBoolean("IsFlying", val);
+
+        if (player instanceof ServerPlayerEntity)
+            Network.toTracking(new UpdateFlyingStatusS2CPacket(player.getUuid(), val), (ServerPlayerEntity) player);
     }
 
     public static IronManSuit getSuit(PlayerEntity player) { // todo not assume IronManSuit

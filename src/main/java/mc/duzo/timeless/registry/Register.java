@@ -12,6 +12,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
+import net.minecraft.sound.SoundEvent;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
@@ -49,11 +50,27 @@ public class Register {
         }
     }
 
+    public static class Sounds {
+        public static final SoundEvent THRUSTER = register("thruster");
+
+        private static SoundEvent register(String name) {
+            return register(new Identifier(Timeless.MOD_ID, name));
+        }
+        private static SoundEvent register(Identifier id) {
+            return Registry.register(Registries.SOUND_EVENT, id, SoundEvent.of(id));
+        }
+
+        public static void init() {
+
+        }
+    }
+
     public static void init() {
         PowerRegistry.init();
         SetRegistry.init();
         SuitRegistry.init();
         ItemGroups.init();
+        Sounds.init();
     }
 
     public static <V, T extends V> T register(Registry<V> registry, String name, T entry) {
