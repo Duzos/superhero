@@ -18,12 +18,7 @@ public class HoverPower extends Power {
 
     @Override
     public boolean run(ServerPlayerEntity player) {
-        NbtCompound data = SuitItem.Data.get(player);
-
-        if (data == null) return false;
-
-        boolean hasHover = data.getBoolean("HoverEnabled");
-        data.putBoolean("HoverEnabled", !hasHover);
+        setHover(player, !hasHover(player));
 
         return true;
     }
@@ -33,6 +28,18 @@ public class HoverPower extends Power {
 
     }
 
+    @Override
+    public void onLoad(ServerPlayerEntity player) {
+        setHover(player, hasHover(player));
+    }
+
+    private static void setHover(ServerPlayerEntity player, boolean val) {
+        NbtCompound data = SuitItem.Data.get(player);
+
+        if (data == null) return;
+
+        data.putBoolean("HoverEnabled", val);
+    }
     public static boolean hasHover(PlayerEntity player) {
         NbtCompound data = SuitItem.Data.get(player);
 

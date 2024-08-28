@@ -51,6 +51,12 @@ public class FlightPower extends Power {
         this.createParticles(player);
     }
 
+    @Override
+    public void onLoad(ServerPlayerEntity player) {
+        setFlight(player, hasFlight(player));
+        setIsFlying(player, isFlying(player));
+    }
+
     private Vec3d getVelocity(ServerPlayerEntity player) {
         Vec3d change = new Vec3d(0, 0, 0);
 

@@ -20,17 +20,19 @@ public class MaskTogglePower extends Power {
 
     @Override
     public boolean run(ServerPlayerEntity player) {
-        setMask(player, !hasMask(player));
-        Network.toTracking(new MarkFiveMaskS2CPacket(player.getUuid(), hasMask(player)), player);
+        setMask(player, !hasMask(player), true);
 
         return true;
     }
-    private static void setMask(ServerPlayerEntity player, boolean val) {
+    private static void setMask(ServerPlayerEntity player, boolean val, boolean sync) {
         NbtCompound data = SuitItem.Data.get(player);
 
         if (data == null) return;
 
         data.putBoolean("MaskEnabled", val);
+
+        if (sync)
+            Network.toTracking(new MarkFiveMaskS2CPacket(player.getUuid(), val), player);
     }
     public static boolean hasMask(PlayerEntity player) {
         NbtCompound data = SuitItem.Data.get(player);
@@ -44,6 +46,11 @@ public class MaskTogglePower extends Power {
     @Override
     public void tick(ServerPlayerEntity player) {
 
+    }
+
+    @Override
+    public void onLoad(ServerPlayerEntity player) {
+        setMask(player, hasMask(player), true);
     }
 
     @Override
