@@ -3,12 +3,14 @@ package mc.duzo.timeless.power.impl;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.Identifier;
 
 import mc.duzo.timeless.Timeless;
 import mc.duzo.timeless.network.Network;
 import mc.duzo.timeless.network.s2c.MarkFiveMaskS2CPacket;
 import mc.duzo.timeless.power.Power;
+import mc.duzo.timeless.registry.Register;
 import mc.duzo.timeless.suit.item.SuitItem;
 
 public class MaskTogglePower extends Power {
@@ -21,6 +23,7 @@ public class MaskTogglePower extends Power {
     @Override
     public boolean run(ServerPlayerEntity player) {
         setMask(player, !hasMask(player), true);
+        player.getWorld().playSound(null, player.getBlockPos(), Register.Sounds.IRONMAN_MASK, SoundCategory.PLAYERS, 0.25f, 1f);
 
         return true;
     }

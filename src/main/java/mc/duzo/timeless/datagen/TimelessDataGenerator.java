@@ -59,6 +59,7 @@ public class TimelessDataGenerator implements DataGeneratorEntrypoint {
             provider.addSound("thruster", Register.Sounds.THRUSTER);
             provider.addSound("mark5_noises", Register.Sounds.MARK5_NOISES);
             provider.addSound("ironman_step", Register.Sounds.IRONMAN_STEP);
+            provider.addSound("ironman_mask", Register.Sounds.IRONMAN_MASK);
 
             return provider;
         })));
