@@ -5,16 +5,17 @@ import net.minecraft.client.render.entity.animation.Animation;
 import net.minecraft.client.render.entity.model.EntityModel;
 
 import mc.duzo.timeless.client.animation.AnimationHolder;
+import mc.duzo.timeless.client.animation.player.holder.PlayerAnimationHolder;
 import mc.duzo.timeless.suit.client.render.SuitModel;
 
 public class SuitAnimationHolder extends AnimationHolder {
-    private final boolean renderPlayer;
+    private final PlayerAnimationHolder.RenderType playerRender;
     private final boolean playerMimics;
     private SuitModel model;
 
-    public SuitAnimationHolder(Animation anim, boolean renderPlayer, boolean playerMimics, boolean thirdPerson) {
+    public SuitAnimationHolder(Animation anim, PlayerAnimationHolder.RenderType playerRender, boolean playerMimics, boolean thirdPerson) {
         super(anim, thirdPerson);
-        this.renderPlayer = renderPlayer;
+        this.playerRender = playerRender;
         this.playerMimics = playerMimics;
     }
 
@@ -26,8 +27,8 @@ public class SuitAnimationHolder extends AnimationHolder {
         super.update(model, progress, player);
     }
 
-    public boolean shouldRenderPlayer() {
-        return this.renderPlayer;
+    public PlayerAnimationHolder.RenderType getPlayerRenderType() {
+        return this.playerRender;
     }
     public boolean shouldPlayerMimic() {
         return this.playerMimics;

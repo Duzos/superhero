@@ -257,6 +257,8 @@ public class MarkFiveModel extends SuitModel {
             matrices.translate(0f, -0.2f, 0f);
         }
 
+        matrices.scale(1.0125f, 1.0125f, 1.0125f);
+
         this.getPart().render(matrices, vertexConsumers, light, OverlayTexture.DEFAULT_UV, r, g, b, alpha);
 
         matrices.pop();

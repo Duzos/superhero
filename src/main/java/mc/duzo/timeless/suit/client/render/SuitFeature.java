@@ -15,6 +15,7 @@ import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 
+import mc.duzo.timeless.client.animation.player.holder.PlayerAnimationHolder;
 import mc.duzo.timeless.suit.Suit;
 import mc.duzo.timeless.suit.client.animation.SuitAnimationHolder;
 import mc.duzo.timeless.suit.item.SuitItem;
@@ -59,16 +60,16 @@ public class SuitFeature<T extends LivingEntity, M extends EntityModel<T>>
         return item.getSuit();
     }
 
-    public static boolean shouldRender(LivingEntity livingEntity) {
+    public static PlayerAnimationHolder.RenderType getRenderType(LivingEntity livingEntity) {
         Suit suit = findSuit(livingEntity);
-        if (suit == null) return true;
+        if (suit == null) return PlayerAnimationHolder.RenderType.ALL;
 
         SuitSet set = suit.getSet();
-        if (!(set.isWearing(livingEntity))) return true; // todo this check every frame is bad
+        if (!(set.isWearing(livingEntity))) return PlayerAnimationHolder.RenderType.ALL; // todo this check every frame is bad
 
         SuitAnimationHolder anim = suit.toClient().model().getAnimation((AbstractClientPlayerEntity) livingEntity).orElse(null);
-        if (anim == null) return false;
+        if (anim == null) return PlayerAnimationHolder.RenderType.EXCLUDE_LEGS;
 
-        return anim.shouldRenderPlayer();
+        return anim.getPlayerRenderType();
     }
 }
