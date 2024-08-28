@@ -26,6 +26,6 @@ public abstract class EntityMixin {
         Suit suit = Suit.findSuit(player).orElse(null);
         if (suit == null) return;
 
-        this.playSound(suit.getStepSound(), 1f, 1f);
+        this.playSound(suit.getStepSound(), 0.2f, player.getRandom().nextBetween(9, 11) / 10f);
     }
 }
