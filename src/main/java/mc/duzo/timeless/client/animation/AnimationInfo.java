@@ -3,7 +3,7 @@ package mc.duzo.timeless.client.animation;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.entity.model.PlayerEntityModel;
 
-public record AnimationInfo(RenderType render, Perspective perspective, Movement movement) {
+public record AnimationInfo(RenderType render, Perspective perspective, Movement movement, Transform transform) {
 
     public enum RenderType {
         ALL {
@@ -68,5 +68,10 @@ public record AnimationInfo(RenderType render, Perspective perspective, Movement
         public boolean isFrontView() {
             return this.frontView;
         }
+    }
+
+    public enum Transform {
+        ALL,
+        TARGETED;
     }
 }

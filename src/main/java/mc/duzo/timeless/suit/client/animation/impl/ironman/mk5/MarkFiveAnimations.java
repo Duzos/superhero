@@ -1,12 +1,12 @@
-package mc.duzo.timeless.suit.client.animation.impl.ironman;
+package mc.duzo.timeless.suit.client.animation.impl.ironman.mk5;
 
 import net.minecraft.client.render.entity.animation.Animation;
 import net.minecraft.client.render.entity.animation.AnimationHelper;
 import net.minecraft.client.render.entity.animation.Keyframe;
 import net.minecraft.client.render.entity.animation.Transformation;
 
-public class IronManAnimations {
-    public static final Animation MK5_CASE_OPEN = Animation.Builder.create(8.04f)
+public class MarkFiveAnimations {
+    public static final Animation CASE_OPEN = Animation.Builder.create(8.04f)
             .addBoneAnimation("suit",
                     new Transformation(Transformation.Targets.TRANSLATE,
                             new Keyframe(0.879999999999999f, AnimationHelper.createTranslationalVector(0f, -19f, -13f),
@@ -1158,7 +1158,7 @@ public class IronManAnimations {
                             new Keyframe(0.3199999999999994f, AnimationHelper.createScalingVector(1f, 1f, 1f),
                                     Transformation.Interpolations.LINEAR))).build();
 
-    public static final Animation MK5_CASE_CLOSE = Animation.Builder.create(8.04f)
+    public static final Animation CASE_CLOSE = Animation.Builder.create(8.04f)
             .addBoneAnimation("suit",
                     new Transformation(Transformation.Targets.TRANSLATE,
                             new Keyframe(6.24f, AnimationHelper.createTranslationalVector(0f, 0f, 0f),
@@ -2308,5 +2308,52 @@ public class IronManAnimations {
                             new Keyframe(7.88f, AnimationHelper.createScalingVector(1.25f, 1.25f, 1.25f),
                                     Transformation.Interpolations.LINEAR),
                             new Keyframe(8.04f, AnimationHelper.createScalingVector(0f, 0f, 0f),
+                                    Transformation.Interpolations.LINEAR))).build();
+
+    public static final Animation MASK_OPEN = Animation.Builder.create(1f)
+            .addBoneAnimation("bone22",
+                    new Transformation(Transformation.Targets.ROTATE,
+                            new Keyframe(0f, AnimationHelper.createRotationalVector(0f, 0f, 0f),
+                                    Transformation.Interpolations.LINEAR),
+                            new Keyframe(0.5416766f, AnimationHelper.createRotationalVector(25f, 0f, 0f),
+                                    Transformation.Interpolations.LINEAR)))
+            .addBoneAnimation("bone31",
+                    new Transformation(Transformation.Targets.TRANSLATE,
+                            new Keyframe(0f, AnimationHelper.createTranslationalVector(0f, 0f, 0f),
+                                    Transformation.Interpolations.LINEAR),
+                            new Keyframe(0.20834334f, AnimationHelper.createTranslationalVector(0f, 0f, -1f),
+                                    Transformation.Interpolations.LINEAR),
+                            new Keyframe(0.9583434f, AnimationHelper.createTranslationalVector(0f, -0.1f, -1.7f),
+                                    Transformation.Interpolations.LINEAR)))
+            .addBoneAnimation("bone31",
+                    new Transformation(Transformation.Targets.ROTATE,
+                            new Keyframe(0f, AnimationHelper.createRotationalVector(0f, 0f, 0f),
+                                    Transformation.Interpolations.LINEAR),
+                            new Keyframe(0.5416766f, AnimationHelper.createRotationalVector(0f, 0f, 0f),
+                                    Transformation.Interpolations.LINEAR),
+                            new Keyframe(0.9583434f, AnimationHelper.createRotationalVector(-82.5f, 0f, 0f),
+                                    Transformation.Interpolations.LINEAR))).build();
+    public static final Animation MASK_CLOSE = Animation.Builder.create(1f)
+            .addBoneAnimation("bone22",
+                    new Transformation(Transformation.Targets.ROTATE,
+                            new Keyframe(0.41676674f, AnimationHelper.createRotationalVector(25f, 0f, 0f),
+                                    Transformation.Interpolations.LINEAR),
+                            new Keyframe(0.9583434f, AnimationHelper.createRotationalVector(0f, 0f, 0f),
+                                    Transformation.Interpolations.LINEAR)))
+            .addBoneAnimation("bone31",
+                    new Transformation(Transformation.Targets.TRANSLATE,
+                            new Keyframe(0f, AnimationHelper.createTranslationalVector(0f, -0.1f, -1.7f),
+                                    Transformation.Interpolations.LINEAR),
+                            new Keyframe(0.75f, AnimationHelper.createTranslationalVector(0f, 0f, -1f),
+                                    Transformation.Interpolations.LINEAR),
+                            new Keyframe(0.9583434f, AnimationHelper.createTranslationalVector(0f, 0f, 0f),
+                                    Transformation.Interpolations.LINEAR)))
+            .addBoneAnimation("bone31",
+                    new Transformation(Transformation.Targets.ROTATE,
+                            new Keyframe(0f, AnimationHelper.createRotationalVector(-82.5f, 0f, 0f),
+                                    Transformation.Interpolations.LINEAR),
+                            new Keyframe(0.41676674f, AnimationHelper.createRotationalVector(0f, 0f, 0f),
+                                    Transformation.Interpolations.LINEAR),
+                            new Keyframe(0.9583434f, AnimationHelper.createRotationalVector(0f, 0f, 0f),
                                     Transformation.Interpolations.LINEAR))).build();
 }

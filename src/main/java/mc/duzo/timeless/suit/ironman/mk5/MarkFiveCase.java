@@ -13,7 +13,7 @@ import net.minecraft.world.World;
 
 import mc.duzo.timeless.datagen.provider.lang.AutomaticEnglish;
 import mc.duzo.timeless.network.Network;
-import mc.duzo.timeless.network.s2c.MarkFiveAnimationS2CPacket;
+import mc.duzo.timeless.network.s2c.MarkFiveCaseS2CPacket;
 import mc.duzo.timeless.registry.Register;
 import mc.duzo.timeless.suit.set.SetRegistry;
 import mc.duzo.timeless.suit.set.SuitSet;
@@ -42,7 +42,7 @@ public class MarkFiveCase extends Item implements AutomaticEnglish {
             if (!(getSet().isWearing(player))) return false;
 
             player.getWorld().playSound(null, player.getBlockPos(), Register.Sounds.MARK5_NOISES, SoundCategory.PLAYERS, 0.25f, 1f);
-            Network.toTracking(new MarkFiveAnimationS2CPacket(player.getUuid(), false), player);
+            Network.toTracking(new MarkFiveCaseS2CPacket(player.getUuid(), false), player);
         }
 
         Scheduler.runTaskLater(() -> toCasePost(player, force), TimeUnit.SECONDS, (long) (8.038f));
@@ -64,7 +64,7 @@ public class MarkFiveCase extends Item implements AutomaticEnglish {
             if (getSet().isWearing(player)) return false; // already wearing
 
             player.getWorld().playSound(null, player.getBlockPos(), Register.Sounds.MARK5_NOISES, SoundCategory.PLAYERS, 0.25f, 1f);
-            Network.toTracking(new MarkFiveAnimationS2CPacket(player.getUuid(), true), player);
+            Network.toTracking(new MarkFiveCaseS2CPacket(player.getUuid(), true), player);
 
             player.getMainHandStack().setCount(0);
         }

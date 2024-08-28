@@ -11,6 +11,7 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.Identifier;
 
+import mc.duzo.timeless.client.animation.AnimationInfo;
 import mc.duzo.timeless.suit.client.ClientSuit;
 import mc.duzo.timeless.suit.client.animation.SuitAnimationHolder;
 import mc.duzo.timeless.suit.client.animation.SuitAnimationTracker;
@@ -39,7 +40,8 @@ public abstract class SuitModel extends EntityModel<LivingEntity> {
         this.runAnimations(player, animationProgress, anim);
     }
     protected void runAnimations(AbstractClientPlayerEntity player, float animationProgress, SuitAnimationHolder anim) {
-        this.resetTransforms();
+        if (anim.getInfo().transform() == AnimationInfo.Transform.ALL)
+            this.resetTransforms();
         anim.update(this, animationProgress, player);
     }
 

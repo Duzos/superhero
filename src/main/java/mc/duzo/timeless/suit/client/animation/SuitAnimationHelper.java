@@ -26,6 +26,7 @@ public class SuitAnimationHelper {
         float f = getRunningSeconds(animation, runningTime);
         animation.boneAnimations().forEach((key, list) -> {
             Optional<ModelPart> optional = getChild(model, key);;
+            optional.ifPresent(ModelPart::resetTransform);
             optional.ifPresent(part -> list.forEach(transformation -> {
                 Keyframe[] keyframes = transformation.keyframes();
                 int i = Math.max(0, MathHelper.binarySearch(0, keyframes.length, index -> f <= keyframes[index].timestamp()) - 1);

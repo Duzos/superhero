@@ -9,6 +9,7 @@ import mc.duzo.timeless.Timeless;
 import mc.duzo.timeless.power.PowerRegistry;
 import mc.duzo.timeless.power.impl.FlightPower;
 import mc.duzo.timeless.power.impl.HoverPower;
+import mc.duzo.timeless.power.impl.MaskTogglePower;
 import mc.duzo.timeless.suit.Suit;
 
 public class JarvisGui {
@@ -24,6 +25,7 @@ public class JarvisGui {
         Suit suit = Suit.findSuit(player).orElse(null);
         if (suit == null) return;
         if (!(suit.hasPower(PowerRegistry.JARVIS))) return;
+        if (suit.hasPower(PowerRegistry.MASK_TOGGLE) && !(MaskTogglePower.hasMask(player))) return;
 
         // main overlay
         context.drawTexture(HUD, 0, 0, 0, 0, getScreenWidth(), getScreenHeight(), getScreenWidth(), getScreenHeight());

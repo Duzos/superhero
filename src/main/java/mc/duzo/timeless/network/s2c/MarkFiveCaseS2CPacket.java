@@ -16,12 +16,12 @@ import mc.duzo.timeless.client.animation.player.TimelessPlayerAnimations;
 import mc.duzo.timeless.client.animation.player.holder.PlayerAnimationHolder;
 import mc.duzo.timeless.suit.client.animation.SuitAnimationHolder;
 import mc.duzo.timeless.suit.client.animation.SuitAnimationTracker;
-import mc.duzo.timeless.suit.client.animation.impl.ironman.MarkFiveCaseAnimation;
+import mc.duzo.timeless.suit.client.animation.impl.ironman.mk5.MarkFiveCaseAnimation;
 
-public record MarkFiveAnimationS2CPacket(UUID player, boolean isPuttingOn) implements FabricPacket {
-    public static final PacketType<MarkFiveAnimationS2CPacket> TYPE = PacketType.create(new Identifier(Timeless.MOD_ID, "mark_five_animation"), MarkFiveAnimationS2CPacket::new);
+public record MarkFiveCaseS2CPacket(UUID player, boolean isPuttingOn) implements FabricPacket {
+    public static final PacketType<MarkFiveCaseS2CPacket> TYPE = PacketType.create(new Identifier(Timeless.MOD_ID, "mark_five_animation"), MarkFiveCaseS2CPacket::new);
 
-    public MarkFiveAnimationS2CPacket(PacketByteBuf buf) {
+    public MarkFiveCaseS2CPacket(PacketByteBuf buf) {
         this(buf.readUuid(), buf.readBoolean());
     }
     @Override

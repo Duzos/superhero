@@ -8,7 +8,9 @@ import net.minecraft.client.render.entity.model.BipedEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
 
+import mc.duzo.timeless.client.animation.AnimationInfo;
 import mc.duzo.timeless.suit.client.ClientSuit;
+import mc.duzo.timeless.suit.client.animation.SuitAnimationHolder;
 import mc.duzo.timeless.suit.client.render.SuitModel;
 import mc.duzo.timeless.suit.set.SetRegistry;
 
@@ -253,7 +255,8 @@ public class MarkFiveModel extends SuitModel {
     public void render(LivingEntity entity, float tickDelta, MatrixStack matrices, VertexConsumer vertexConsumers, int light, float r, float g, float b, float alpha) {
         matrices.push();
 
-        if (!this.isAnimating((AbstractClientPlayerEntity) entity)) {
+        SuitAnimationHolder anim = this.getAnimation((AbstractClientPlayerEntity) entity).orElse(null);
+        if (anim == null || anim.getInfo().transform() == AnimationInfo.Transform.TARGETED) {
             matrices.translate(0f, -0.2f, 0f);
         }
 

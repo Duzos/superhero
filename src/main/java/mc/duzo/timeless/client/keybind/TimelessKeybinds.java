@@ -24,6 +24,7 @@ public class TimelessKeybinds {
         new PowerKeybind(1, GLFW.GLFW_KEY_Z).register();
         new PowerKeybind(2, GLFW.GLFW_KEY_R).register();
         new PowerKeybind(3, GLFW.GLFW_KEY_G).register();
+        new PowerKeybind(4, GLFW.GLFW_KEY_H).register();
     }
 
     private static void tick(MinecraftClient client) {

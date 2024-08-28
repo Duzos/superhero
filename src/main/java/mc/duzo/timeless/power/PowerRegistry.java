@@ -10,6 +10,7 @@ import net.minecraft.util.Identifier;
 import mc.duzo.timeless.Timeless;
 import mc.duzo.timeless.power.impl.FlightPower;
 import mc.duzo.timeless.power.impl.HoverPower;
+import mc.duzo.timeless.power.impl.MaskTogglePower;
 import mc.duzo.timeless.suit.ironman.mk5.MarkFiveCase;
 
 public class PowerRegistry {
@@ -25,6 +26,7 @@ public class PowerRegistry {
     public static Power FLIGHT = new FlightPower().register();
     public static Power HOVER = new HoverPower().register();
     public static Power JARVIS = Power.Builder.create(new Identifier(Timeless.MOD_ID, "jarvis")).build().register();
+    public static Power MASK_TOGGLE = new MaskTogglePower().register();
 
     public static void init() {}
 }

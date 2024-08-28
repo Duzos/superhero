@@ -1,4 +1,4 @@
-package mc.duzo.timeless.suit.client.animation.impl.ironman;
+package mc.duzo.timeless.suit.client.animation.impl.ironman.mk5;
 
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 
@@ -7,7 +7,7 @@ import mc.duzo.timeless.suit.client.animation.SuitAnimationHolder;
 
 public class MarkFiveCaseAnimation extends SuitAnimationHolder {
     public MarkFiveCaseAnimation(boolean isPuttingOn) {
-        super((isPuttingOn) ? IronManAnimations.MK5_CASE_OPEN : IronManAnimations.MK5_CASE_CLOSE, new AnimationInfo(AnimationInfo.RenderType.FIRST_LAYER, AnimationInfo.Perspective.THIRD_PERSON_FRONT, AnimationInfo.Movement.DISABLE), false);
+        super((isPuttingOn) ? MarkFiveAnimations.CASE_OPEN : MarkFiveAnimations.CASE_CLOSE, new AnimationInfo(AnimationInfo.RenderType.FIRST_LAYER, AnimationInfo.Perspective.THIRD_PERSON_FRONT, AnimationInfo.Movement.DISABLE, AnimationInfo.Transform.ALL), false);
     }
 
     @Override

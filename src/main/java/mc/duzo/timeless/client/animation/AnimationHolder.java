@@ -18,7 +18,7 @@ public abstract class AnimationHolder {
         this.info = info;
     }
     protected AnimationHolder(Animation anim) {
-        this(anim, new AnimationInfo(AnimationInfo.RenderType.ALL, AnimationInfo.Perspective.THIRD_PERSON_FRONT, AnimationInfo.Movement.DISABLE));
+        this(anim, new AnimationInfo(AnimationInfo.RenderType.ALL, AnimationInfo.Perspective.THIRD_PERSON_FRONT, AnimationInfo.Movement.DISABLE, AnimationInfo.Transform.ALL));
     }
 
     public void update(EntityModel<?> model, float progress, AbstractClientPlayerEntity player) {
