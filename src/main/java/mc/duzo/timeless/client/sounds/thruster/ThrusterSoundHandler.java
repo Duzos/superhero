@@ -3,9 +3,17 @@ package mc.duzo.timeless.client.sounds.thruster;
 import java.util.HashMap;
 import java.util.UUID;
 
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
+
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 
+import mc.duzo.timeless.client.sounds.manager.SoundManager;
+
 public class ThrusterSoundHandler {
+    static {
+        ClientPlayConnectionEvents.DISCONNECT.register((handler, client) -> SoundManager.thrusters().sounds.clear());
+    }
+
     private final HashMap<UUID, ThrusterSound> sounds;
 
     public ThrusterSoundHandler() {
