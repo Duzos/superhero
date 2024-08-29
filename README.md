@@ -32,6 +32,8 @@ Use code [duzo](https://www.bisecthosting.com/duzo) for **25%** OFF!
 ---
 
 ## Links
+### [PUBLIC BETA](https://github.com/Duzos/superhero/releases)
+
 [Github](https://github.com/duzos/superhero/)
 
 [Curseforge](https://www.curseforge.com/minecraft/mc-mods/timeless-heroes)
