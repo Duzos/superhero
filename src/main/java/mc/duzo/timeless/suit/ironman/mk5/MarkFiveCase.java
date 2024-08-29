@@ -66,7 +66,7 @@ public class MarkFiveCase extends Item implements AutomaticEnglish {
             player.getWorld().playSound(null, player.getBlockPos(), Register.Sounds.MARK5_NOISES, SoundCategory.PLAYERS, 0.25f, 1f);
             Network.toTracking(new MarkFiveCaseS2CPacket(player.getUuid(), true), player);
 
-            player.getMainHandStack().setCount(0);
+            player.setStackInHand(Hand.MAIN_HAND, ItemStack.EMPTY);
         }
 
         getSet().wear(player);
