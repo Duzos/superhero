@@ -8,6 +8,7 @@ import net.minecraft.client.render.entity.model.BipedEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.math.RotationAxis;
 import net.minecraft.util.math.Vec3d;
 
 import mc.duzo.timeless.client.animation.AnimationInfo;
@@ -288,6 +289,32 @@ public class MarkFiveModel extends SuitModel {
         this.rightLeg.roll = this.rightArm.roll / 2f + 0.1f;
         this.leftLeg.roll = this.leftArm.roll / 2f - 0.1f;
     }
+
+    @Override
+    public void renderArm(boolean isRight, AbstractClientPlayerEntity player, int i, MatrixStack matrices, VertexConsumer buffer, int light, int i1, int i2, int i3, int i4) {
+        if (isRight) this.renderRightArm(player, i, matrices, buffer, light, i1, i2, i3, i4);
+        else this.renderLeftArm(player, i, matrices, buffer, light, i1, i2, i3, i4);
+    }
+    private void renderRightArm(AbstractClientPlayerEntity player, int i, MatrixStack matrices, VertexConsumer buffer, int light, int i1, int i2, int i3, int i4) {
+        matrices.push();
+
+        this.rightArm.resetTransform();
+        matrices.translate(0f, 0.2f, 0f);
+        matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(7.5f));
+        this.rightArm.render(matrices, buffer, light, OverlayTexture.DEFAULT_UV, 1f, 1f, 1f, 1f);
+
+        matrices.pop();
+    }
+    private void renderLeftArm(AbstractClientPlayerEntity player, int i, MatrixStack matrices, VertexConsumer buffer, int light, int i1, int i2, int i3, int i4) {
+        matrices.push();
+
+        this.leftArm.resetTransform();
+        matrices.translate(0f, 0.2f, 0f);
+        this.leftArm.render(matrices, buffer, light, OverlayTexture.DEFAULT_UV, 1f, 1f, 1f, 1f);
+
+        matrices.pop();
+    }
+
 
     @Override
     public ClientSuit getSuit() {
