@@ -36,7 +36,7 @@ public abstract class PlayerEntityRendererMixin extends LivingEntityRenderer<Abs
         MinecraftClient client = MinecraftClient.getInstance();
         AnimationInfo.RenderType type = SuitFeature.getRenderType(player);
 
-        if (type == AnimationInfo.RenderType.NONE && player.equals(client.player) && !client.gameRenderer.getCamera().isThirdPerson()) {
+        if (type == AnimationInfo.RenderType.NONE || type == AnimationInfo.RenderType.TORSO_HEAD && player.equals(client.player) && !client.gameRenderer.getCamera().isThirdPerson()) {
             return;
         }
 

@@ -68,7 +68,7 @@ public class SuitFeature<T extends LivingEntity, M extends EntityModel<T>>
         if (!(set.isWearing(livingEntity))) return AnimationInfo.RenderType.ALL; // todo this check every frame is bad
 
         SuitAnimationHolder anim = suit.toClient().model().getAnimation((AbstractClientPlayerEntity) livingEntity).orElse(null);
-        if (anim == null) return AnimationInfo.RenderType.EXCLUDE_LEGS;
+        if (anim == null) return AnimationInfo.RenderType.TORSO_HEAD;
 
         return anim.getInfo().render();
     }

@@ -25,15 +25,18 @@ public record AnimationInfo(RenderType render, Perspective perspective, Movement
                 model.hat.visible = false;
             }
         }, // render only first layer
-        EXCLUDE_LEGS {
+        TORSO_HEAD {
             @Override
             public void apply(PlayerEntityModel<AbstractClientPlayerEntity> model) {
                 FIRST_LAYER.apply(model);
 
                 model.leftLeg.visible = false;
                 model.rightLeg.visible = false;
+                model.rightArm.visible = false;
+                model.leftArm.visible = false;
+                model.body.visible = false;
             }
-        }, // hide legs AND first layer
+        }, // head AND no first layer
         NONE {
             @Override
             public void apply(PlayerEntityModel<AbstractClientPlayerEntity> model) {

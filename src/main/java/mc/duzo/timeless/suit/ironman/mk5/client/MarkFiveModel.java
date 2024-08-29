@@ -7,8 +7,11 @@ import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.entity.model.BipedEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.math.Vec3d;
 
 import mc.duzo.timeless.client.animation.AnimationInfo;
+import mc.duzo.timeless.power.impl.FlightPower;
 import mc.duzo.timeless.suit.client.ClientSuit;
 import mc.duzo.timeless.suit.client.animation.SuitAnimationHolder;
 import mc.duzo.timeless.suit.client.render.SuitModel;
@@ -257,6 +260,7 @@ public class MarkFiveModel extends SuitModel {
 
         SuitAnimationHolder anim = this.getAnimation((AbstractClientPlayerEntity) entity).orElse(null);
         if (anim == null || anim.getInfo().transform() == AnimationInfo.Transform.TARGETED) {
+            this.rotateParts(entity);
             matrices.translate(0f, -0.2f, 0f);
         }
 
@@ -265,6 +269,24 @@ public class MarkFiveModel extends SuitModel {
         this.getPart().render(matrices, vertexConsumers, light, OverlayTexture.DEFAULT_UV, r, g, b, alpha);
 
         matrices.pop();
+    }
+
+    private void rotateParts(LivingEntity entity) {
+        if (!FlightPower.isFlying((PlayerEntity) entity)) return;
+
+        Vec3d velocity = entity.getVelocity().rotateY(((float) Math.toRadians(entity.getYaw())));
+        float velocityX = (float) velocity.x / 2f;
+        float velocityZ = (float) velocity.z / 2f;
+
+        this.rightArm.pitch = velocityZ;
+        this.leftArm.pitch = velocityZ;
+        this.rightArm.roll += velocityX + 0.1f; // todo causes some weird part of the model to go flying about
+        this.leftArm.roll += velocityX - 0.1f;
+
+        this.rightLeg.pitch = velocityZ / 3f;
+        this.leftLeg.pitch = velocityZ / 3f;
+        this.rightLeg.roll = this.rightArm.roll / 2f + 0.1f;
+        this.leftLeg.roll = this.leftArm.roll / 2f - 0.1f;
     }
 
     @Override

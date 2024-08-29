@@ -7,7 +7,7 @@ import mc.duzo.timeless.suit.client.animation.SuitAnimationHolder;
 
 public class MarkFiveMaskAnimation extends SuitAnimationHolder {
     public MarkFiveMaskAnimation(boolean isPuttingOn) {
-        super((isPuttingOn) ? MarkFiveAnimations.MASK_CLOSE : MarkFiveAnimations.MASK_OPEN, new AnimationInfo(AnimationInfo.RenderType.EXCLUDE_LEGS, null, AnimationInfo.Movement.ALLOW, AnimationInfo.Transform.TARGETED), false);
+        super((isPuttingOn) ? MarkFiveAnimations.MASK_CLOSE : MarkFiveAnimations.MASK_OPEN, new AnimationInfo(AnimationInfo.RenderType.TORSO_HEAD, null, AnimationInfo.Movement.ALLOW, AnimationInfo.Transform.TARGETED), false);
     }
 
     @Override
