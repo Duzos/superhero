@@ -281,7 +281,7 @@ public class MarkFiveModel extends SuitModel {
 
         this.rightArm.pitch = velocityZ;
         this.leftArm.pitch = velocityZ;
-        this.rightArm.roll += velocityX + 0.1f; // todo causes some weird part of the model to go flying about
+        this.rightArm.roll += velocityX + 0.1f; // oh its the emission
         this.leftArm.roll += velocityX - 0.1f;
 
         this.rightLeg.pitch = velocityZ / 3f;
