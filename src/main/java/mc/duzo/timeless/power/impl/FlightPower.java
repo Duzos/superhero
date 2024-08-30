@@ -48,7 +48,8 @@ public class FlightPower extends Power {
         player.setVelocity(change);
         player.velocityModified = true;
 
-        this.createParticles(player);
+        if (change.y > 0 || (ServerKeybind.get(player).isJumping()))
+            this.createParticles(player);
     }
 
     @Override
