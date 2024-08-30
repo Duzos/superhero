@@ -59,9 +59,9 @@ public class MarkFiveCase extends Item implements AutomaticEnglish {
 
     public static boolean fromCase(ServerPlayerEntity player, boolean force) {
         if (!force) {
-            if (!player.isOnGround()) return false;
+            if (!player.isOnGround()) return false; // not on ground
             if (!player.getMainHandStack().isOf(Register.Items.MARK_FIVE_CASE)) return false; // not holding
-            if (getSet().isWearing(player)) return false; // already wearing
+            if (hasArmor(player)) return false; // wearing armor
 
             player.getWorld().playSound(null, player.getBlockPos(), Register.Sounds.MARK5_NOISES, SoundCategory.PLAYERS, 0.25f, 1f);
             Network.toTracking(new MarkFiveCaseS2CPacket(player.getUuid(), true), player);
@@ -71,6 +71,13 @@ public class MarkFiveCase extends Item implements AutomaticEnglish {
 
         getSet().wear(player);
         return true;
+    }
+    private static boolean hasArmor(ServerPlayerEntity player) {
+        for (ItemStack stack : player.getArmorItems()) {
+            if (!(stack.isEmpty())) return true;
+        }
+
+        return false;
     }
 
     private static SuitSet getSet() {
