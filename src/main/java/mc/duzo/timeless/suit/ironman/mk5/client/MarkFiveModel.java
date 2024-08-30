@@ -276,18 +276,35 @@ public class MarkFiveModel extends SuitModel {
         if (!FlightPower.isFlying((PlayerEntity) entity)) return;
 
         Vec3d velocity = entity.getVelocity().rotateY(((float) Math.toRadians(entity.getYaw())));
+
+        float velocityY = Math.min((float) velocity.y / 2f, 0);
         float velocityX = (float) velocity.x / 2f;
         float velocityZ = (float) velocity.z / 2f;
 
         this.rightArm.pitch = velocityZ;
         this.leftArm.pitch = velocityZ;
-        this.rightArm.roll += velocityX + 0.1f; // oh its the emission
-        this.leftArm.roll += velocityX - 0.1f;
+        this.rightArm.roll += velocityX + 0.1f - velocityY;
+        this.leftArm.roll += velocityX - 0.1f + velocityY;
 
-        this.rightLeg.pitch = velocityZ / 3f;
-        this.leftLeg.pitch = velocityZ / 3f;
+        this.rightLeg.pitch = velocityZ / 3f - velocityY;
+        this.leftLeg.pitch = velocityZ / 3f - velocityY;
         this.rightLeg.roll = this.rightArm.roll / 2f + 0.1f;
         this.leftLeg.roll = this.leftArm.roll / 2f - 0.1f;
+
+        this.body.pitch = velocityZ / 3f - (velocityY / 3f);
+        this.body.roll = velocityX / 3f;
+
+        this.rightLeg.pivotY -= this.body.pitch * 3f * 1.4f;
+        this.rightLeg.pivotZ += this.body.pitch * 3f * 3.2f;
+        this.rightLeg.pivotX -= this.body.roll * 3f * 3.2f;
+
+        this.leftLeg.pivotY -= this.body.pitch * 3f * 1.4f;
+        this.leftLeg.pivotZ += this.body.pitch * 3f * 3.2f;
+        this.leftLeg.pivotX -= this.body.roll * 3f * 3.2f;
+    }
+    private static double round (double value, int precision) {
+        int scale = (int) Math.pow(10, precision);
+        return (double) Math.round(value * scale) / scale;
     }
 
     @Override
