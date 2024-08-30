@@ -18,7 +18,11 @@ public class HoverPower extends Power {
 
     @Override
     public boolean run(ServerPlayerEntity player) {
-        setHover(player, !hasHover(player));
+        boolean hasHover = hasHover(player);
+
+        if (!hasHover && player.getVelocity().getY() < 0) return false;
+
+        setHover(player, !hasHover);
 
         return true;
     }
