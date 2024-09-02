@@ -51,9 +51,9 @@ public class MarkFiveCase extends Item implements AutomaticEnglish {
     private static void toCasePost(ServerPlayerEntity player, boolean force) {
         if (!force) {
             if (!(getSet().isWearing(player))) return;
-
-            player.getArmorItems().forEach(stack -> stack.setCount(0));
         }
+
+        player.getArmorItems().forEach(stack -> stack.setCount(0));
         player.getInventory().offerOrDrop(new ItemStack(Register.Items.MARK_FIVE_CASE));
     }
 
@@ -62,12 +62,12 @@ public class MarkFiveCase extends Item implements AutomaticEnglish {
             if (!player.isOnGround()) return false; // not on ground
             if (!player.getMainHandStack().isOf(Register.Items.MARK_FIVE_CASE)) return false; // not holding
             if (hasArmor(player)) return false; // wearing armor
-
-            player.getWorld().playSound(null, player.getBlockPos(), Register.Sounds.MARK5_NOISES, SoundCategory.PLAYERS, 0.25f, 1f);
-            Network.toTracking(new MarkFiveCaseS2CPacket(player.getUuid(), true), player);
-
-            player.setStackInHand(Hand.MAIN_HAND, ItemStack.EMPTY);
         }
+
+        player.getWorld().playSound(null, player.getBlockPos(), Register.Sounds.MARK5_NOISES, SoundCategory.PLAYERS, 0.25f, 1f);
+        Network.toTracking(new MarkFiveCaseS2CPacket(player.getUuid(), true), player);
+
+        player.setStackInHand(Hand.MAIN_HAND, ItemStack.EMPTY);
 
         getSet().wear(player);
         return true;
