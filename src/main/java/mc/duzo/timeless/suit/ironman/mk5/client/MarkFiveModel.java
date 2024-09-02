@@ -1,5 +1,7 @@
 package mc.duzo.timeless.suit.ironman.mk5.client;
 
+import mc.duzo.animation.generic.AnimationInfo;
+
 import net.minecraft.client.model.*;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.OverlayTexture;
@@ -11,7 +13,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.RotationAxis;
 import net.minecraft.util.math.Vec3d;
 
-import mc.duzo.timeless.client.animation.AnimationInfo;
 import mc.duzo.timeless.power.impl.FlightPower;
 import mc.duzo.timeless.suit.client.ClientSuit;
 import mc.duzo.timeless.suit.client.animation.SuitAnimationHolder;

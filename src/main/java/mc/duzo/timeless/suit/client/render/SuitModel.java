@@ -2,6 +2,8 @@ package mc.duzo.timeless.suit.client.render;
 
 import java.util.Optional;
 
+import mc.duzo.animation.generic.AnimationInfo;
+
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.VertexConsumer;
@@ -11,7 +13,6 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.Identifier;
 
-import mc.duzo.timeless.client.animation.AnimationInfo;
 import mc.duzo.timeless.suit.client.ClientSuit;
 import mc.duzo.timeless.suit.client.animation.SuitAnimationHolder;
 import mc.duzo.timeless.suit.client.animation.SuitAnimationTracker;
@@ -47,7 +48,7 @@ public abstract class SuitModel extends EntityModel<LivingEntity> {
     }
 
     public Optional<SuitAnimationHolder> getAnimation(AbstractClientPlayerEntity player) {
-        return Optional.ofNullable(SuitAnimationTracker.getAnimation(player));
+        return Optional.ofNullable(SuitAnimationTracker.getInstance().get(player));
     }
     public boolean isAnimating(AbstractClientPlayerEntity player) {
         return this.getAnimation(player).isPresent();

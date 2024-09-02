@@ -2,9 +2,11 @@ package mc.duzo.timeless.suit.client;
 
 import java.util.Optional;
 
+import mc.duzo.animation.generic.AnimationInfo;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.Identifier;
 
 import mc.duzo.timeless.registry.Identifiable;
@@ -49,5 +51,9 @@ public abstract class ClientSuit implements Identifiable {
     public static Identifier createEmission(Identifier texture) {
         int index = texture.getPath().lastIndexOf(".");
         return new Identifier(texture.getNamespace(), texture.getPath().substring(0, index) + "_emission.png");
+    }
+
+    public AnimationInfo getAnimationInfo(LivingEntity entity) {
+        return new AnimationInfo(AnimationInfo.RenderType.ALL, null, AnimationInfo.Movement.ALLOW, AnimationInfo.Transform.TARGETED);
     }
 }

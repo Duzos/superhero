@@ -3,10 +3,20 @@ package mc.duzo.timeless.suit.client.animation;
 import java.util.HashMap;
 import java.util.UUID;
 
-import net.minecraft.client.network.AbstractClientPlayerEntity;
+import mc.duzo.animation.generic.AnimationTracker;
 
-public class SuitAnimationTracker {
+import net.minecraft.client.network.AbstractClientPlayerEntity;
+import net.minecraft.util.Identifier;
+
+import mc.duzo.timeless.Timeless;
+import mc.duzo.timeless.registry.Register;
+
+public class SuitAnimationTracker extends AnimationTracker<SuitAnimationHolder> {
     private static final HashMap<UUID, SuitAnimationHolder> ANIMATIONS = new HashMap<>();
+
+    public SuitAnimationTracker() {
+        super(new Identifier(Timeless.MOD_ID, "suit"));
+    }
 
     public static SuitAnimationHolder getAnimation(AbstractClientPlayerEntity entity) {
         UUID uuid = entity.getUuid();
@@ -24,5 +34,9 @@ public class SuitAnimationTracker {
     }
     public static void clearAnimation(UUID uuid) {
         ANIMATIONS.remove(uuid);
+    }
+
+    public static SuitAnimationTracker getInstance() {
+        return Register.Trackers.SUIT;
     }
 }

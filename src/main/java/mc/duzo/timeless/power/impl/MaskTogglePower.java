@@ -1,5 +1,7 @@
 package mc.duzo.timeless.power.impl;
 
+import mc.duzo.animation.DuzoAnimationMod;
+
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -7,10 +9,9 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.Identifier;
 
 import mc.duzo.timeless.Timeless;
-import mc.duzo.timeless.network.Network;
-import mc.duzo.timeless.network.s2c.MarkFiveMaskS2CPacket;
 import mc.duzo.timeless.power.Power;
 import mc.duzo.timeless.registry.Register;
+import mc.duzo.timeless.suit.client.animation.SuitAnimationHolder;
 import mc.duzo.timeless.suit.item.SuitItem;
 
 public class MaskTogglePower extends Power {
@@ -34,8 +35,10 @@ public class MaskTogglePower extends Power {
 
         data.putBoolean("MaskEnabled", val);
 
-        if (sync)
-            Network.toTracking(new MarkFiveMaskS2CPacket(player.getUuid(), val), player);
+        if (sync) {
+            SuitAnimationHolder anim = (val) ? Register.Animations.Suits.MarkFive.MASK_OPEN.get() : Register.Animations.Suits.MarkFive.MASK_CLOSE.get();
+            DuzoAnimationMod.play(player, Register.Trackers.SUIT, anim);
+        }
     }
     public static boolean hasMask(PlayerEntity player) {
         NbtCompound data = SuitItem.Data.get(player);

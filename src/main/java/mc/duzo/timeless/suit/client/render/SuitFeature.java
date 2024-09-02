@@ -1,6 +1,5 @@
 package mc.duzo.timeless.suit.client.render;
 
-import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.LightmapTextureManager;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
@@ -15,9 +14,7 @@ import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 
-import mc.duzo.timeless.client.animation.AnimationInfo;
 import mc.duzo.timeless.suit.Suit;
-import mc.duzo.timeless.suit.client.animation.SuitAnimationHolder;
 import mc.duzo.timeless.suit.item.SuitItem;
 import mc.duzo.timeless.suit.set.SuitSet;
 
@@ -58,18 +55,5 @@ public class SuitFeature<T extends LivingEntity, M extends EntityModel<T>>
         if (!(chest.getItem() instanceof SuitItem item)) return null;
 
         return item.getSuit();
-    }
-
-    public static AnimationInfo.RenderType getRenderType(LivingEntity livingEntity) {
-        Suit suit = findSuit(livingEntity);
-        if (suit == null) return AnimationInfo.RenderType.ALL;
-
-        SuitSet set = suit.getSet();
-        if (!(set.isWearing(livingEntity))) return AnimationInfo.RenderType.ALL; // todo this check every frame is bad
-
-        SuitAnimationHolder anim = suit.toClient().model().getAnimation((AbstractClientPlayerEntity) livingEntity).orElse(null);
-        if (anim == null) return AnimationInfo.RenderType.TORSO_HEAD;
-
-        return anim.getInfo().render();
     }
 }

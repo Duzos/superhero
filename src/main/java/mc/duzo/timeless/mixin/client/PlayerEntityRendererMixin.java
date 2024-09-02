@@ -5,7 +5,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.RenderLayer;
@@ -17,7 +16,6 @@ import net.minecraft.client.render.entity.model.PlayerEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Arm;
 
-import mc.duzo.timeless.client.animation.AnimationInfo;
 import mc.duzo.timeless.suit.Suit;
 import mc.duzo.timeless.suit.client.ClientSuit;
 import mc.duzo.timeless.suit.client.render.SuitFeature;
@@ -33,21 +31,6 @@ public abstract class PlayerEntityRendererMixin extends LivingEntityRenderer<Abs
         PlayerEntityRenderer renderer = (PlayerEntityRenderer) (Object) this;
 
         this.addFeature(new SuitFeature<>(renderer, ctx.getModelLoader()));
-    }
-
-    @Inject(method = "setModelPose", at = @At("TAIL"))
-    private void timeless$playerRender(AbstractClientPlayerEntity player, CallbackInfo ci) {
-        boolean current = this.getModel().body.visible;
-        if (!(current)) return;
-
-        MinecraftClient client = MinecraftClient.getInstance();
-        AnimationInfo.RenderType type = SuitFeature.getRenderType(player);
-
-        if (type == AnimationInfo.RenderType.NONE || type == AnimationInfo.RenderType.TORSO_HEAD && player.equals(client.player) && !client.gameRenderer.getCamera().isThirdPerson()) {
-            return;
-        }
-
-        type.apply(this.getModel());
     }
 
     @Inject(method = "renderArm" , at = @At("HEAD"), cancellable = true)

@@ -2,9 +2,11 @@ package mc.duzo.timeless.suit.ironman.mk5;
 
 import java.util.Optional;
 
+import mc.duzo.animation.generic.AnimationInfo;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.Identifier;
 
 import mc.duzo.timeless.power.PowerList;
@@ -39,6 +41,7 @@ public class MarkFiveSuit extends IronManSuit {
     @Override
     protected ClientSuit createClient() {
         SuitModel model = new MarkFiveModel();
+        AnimationInfo info = new AnimationInfo(AnimationInfo.RenderType.TORSO_HEAD, null, AnimationInfo.Movement.ALLOW, null);
 
         return new ClientSuit(this) {
             @Override
@@ -49,6 +52,12 @@ public class MarkFiveSuit extends IronManSuit {
             @Override
             public Optional<Identifier> emission() {
                 return Optional.of(createEmission(this.texture()));
+            }
+
+            @Override
+            public AnimationInfo getAnimationInfo(LivingEntity entity) {
+                if (!(getSet().isWearing(entity))) return null;
+                return info;
             }
         };
     }

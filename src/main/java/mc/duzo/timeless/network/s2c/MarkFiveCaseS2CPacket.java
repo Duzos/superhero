@@ -12,10 +12,10 @@ import net.minecraft.util.Identifier;
 
 import mc.duzo.timeless.Timeless;
 import mc.duzo.timeless.client.animation.player.PlayerAnimationTracker;
-import mc.duzo.timeless.client.animation.player.TimelessPlayerAnimations;
 import mc.duzo.timeless.client.animation.player.holder.PlayerAnimationHolder;
 import mc.duzo.timeless.suit.client.animation.SuitAnimationHolder;
 import mc.duzo.timeless.suit.client.animation.SuitAnimationTracker;
+import mc.duzo.timeless.suit.client.animation.impl.ironman.mk5.MarkFiveAnimations;
 import mc.duzo.timeless.suit.client.animation.impl.ironman.mk5.MarkFiveCaseAnimation;
 
 public record MarkFiveCaseS2CPacket(UUID player, boolean isPuttingOn) implements FabricPacket {
@@ -39,7 +39,7 @@ public record MarkFiveCaseS2CPacket(UUID player, boolean isPuttingOn) implements
         SuitAnimationHolder suit = new MarkFiveCaseAnimation(isPuttingOn);
         SuitAnimationTracker.addAnimation(player, suit);
 
-        PlayerAnimationHolder anim = (isPuttingOn) ? new PlayerAnimationHolder(TimelessPlayerAnimations.MK5_CASE_OPEN) : new PlayerAnimationHolder(TimelessPlayerAnimations.MK5_CASE_CLOSE);
+        PlayerAnimationHolder anim = (isPuttingOn) ? new PlayerAnimationHolder(MarkFiveAnimations.CASE_OPEN_PLAYER) : new PlayerAnimationHolder(MarkFiveAnimations.CASE_CLOSE_PLAYER);
         PlayerAnimationTracker.addAnimation(player, anim);
     }
 }
