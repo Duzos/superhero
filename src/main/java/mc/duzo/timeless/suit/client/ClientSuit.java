@@ -3,13 +3,13 @@ package mc.duzo.timeless.suit.client;
 import java.util.Optional;
 
 import mc.duzo.animation.generic.AnimationInfo;
+import mc.duzo.animation.registry.Identifiable;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.Identifier;
 
-import mc.duzo.timeless.registry.Identifiable;
 import mc.duzo.timeless.suit.Suit;
 import mc.duzo.timeless.suit.SuitRegistry;
 import mc.duzo.timeless.suit.client.render.SuitModel;

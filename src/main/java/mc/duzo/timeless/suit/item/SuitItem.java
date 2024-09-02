@@ -1,5 +1,7 @@
 package mc.duzo.timeless.suit.item;
 
+import mc.duzo.animation.registry.Identifiable;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
@@ -15,7 +17,6 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 
-import mc.duzo.timeless.registry.Identifiable;
 import mc.duzo.timeless.suit.Suit;
 
 public abstract class SuitItem extends ArmorItem implements Identifiable {

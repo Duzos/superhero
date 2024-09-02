@@ -2,13 +2,13 @@ package mc.duzo.timeless.power;
 
 import java.util.function.Consumer;
 
+import mc.duzo.animation.registry.Identifiable;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 
 import mc.duzo.timeless.datagen.provider.lang.Translatable;
-import mc.duzo.timeless.registry.Identifiable;
 import mc.duzo.timeless.suit.Suit;
 
 public abstract class Power implements Identifiable, Translatable {

@@ -2,6 +2,7 @@ package mc.duzo.timeless.suit;
 
 import java.util.Optional;
 
+import mc.duzo.animation.registry.Identifiable;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
@@ -12,7 +13,6 @@ import net.minecraft.sound.SoundEvent;
 import mc.duzo.timeless.datagen.provider.lang.Translatable;
 import mc.duzo.timeless.power.Power;
 import mc.duzo.timeless.power.PowerList;
-import mc.duzo.timeless.registry.Identifiable;
 import mc.duzo.timeless.suit.client.ClientSuit;
 import mc.duzo.timeless.suit.client.ClientSuitRegistry;
 import mc.duzo.timeless.suit.item.SuitItem;

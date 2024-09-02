@@ -3,12 +3,13 @@ package mc.duzo.timeless.suit.set;
 import java.util.HashMap;
 import java.util.function.BiFunction;
 
+import mc.duzo.animation.registry.Identifiable;
+
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 
-import mc.duzo.timeless.registry.Identifiable;
 import mc.duzo.timeless.suit.Suit;
 import mc.duzo.timeless.suit.item.SuitItem;
 
