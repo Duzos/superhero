@@ -10,9 +10,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.Hand;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 
+import mc.duzo.timeless.Timeless;
 import mc.duzo.timeless.datagen.provider.lang.AutomaticEnglish;
 import mc.duzo.timeless.registry.Register;
 import mc.duzo.timeless.suit.set.SetRegistry;
@@ -45,8 +47,8 @@ public class MarkFiveCase extends Item implements AutomaticEnglish {
 
         player.getWorld().playSound(null, player.getBlockPos(), Register.Sounds.MARK5_NOISES, SoundCategory.PLAYERS, 0.25f, 1f);
 
-        DuzoAnimationMod.play(player, Register.Trackers.SUIT, Register.Animations.Suits.MarkFive.CASE_CLOSE.get());
-        DuzoAnimationMod.play(player, TrackerRegistry.PLAYER, Register.Animations.Players.MARK_FIVE_CASE_CLOSE.get());
+        DuzoAnimationMod.play(player, Register.Trackers.SUIT, new Identifier(Timeless.MOD_ID, "ironman_mk5_case_close"));
+        DuzoAnimationMod.play(player, TrackerRegistry.PLAYER, new Identifier(Timeless.MOD_ID, "ironman_mk5_case_close_player"));
 
         Scheduler.runTaskLater(() -> toCasePost(player, force), TimeUnit.SECONDS, (long) (8.038f));
         return true;
@@ -69,8 +71,8 @@ public class MarkFiveCase extends Item implements AutomaticEnglish {
 
         player.getWorld().playSound(null, player.getBlockPos(), Register.Sounds.MARK5_NOISES, SoundCategory.PLAYERS, 0.25f, 1f);
 
-        DuzoAnimationMod.play(player, Register.Trackers.SUIT, Register.Animations.Suits.MarkFive.CASE_OPEN.get());
-        DuzoAnimationMod.play(player, TrackerRegistry.PLAYER, Register.Animations.Players.MARK_FIVE_CASE_OPEN.get());
+        DuzoAnimationMod.play(player, Register.Trackers.SUIT, new Identifier(Timeless.MOD_ID, "ironman_mk5_case_open"));
+        DuzoAnimationMod.play(player, TrackerRegistry.PLAYER, new Identifier(Timeless.MOD_ID, "ironman_mk5_case_open_player"));
 
         player.setStackInHand(Hand.MAIN_HAND, ItemStack.EMPTY);
 

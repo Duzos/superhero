@@ -111,7 +111,7 @@ public class FlightPower extends Power {
 
         return data.getBoolean("FlightEnabled");
     }
-    private static void setFlight(PlayerEntity player, boolean val) {
+    public static void setFlight(PlayerEntity player, boolean val) {
         NbtCompound data = SuitItem.Data.get(player);
 
         if (data == null) return;

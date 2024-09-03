@@ -1,10 +1,5 @@
 package mc.duzo.timeless.registry;
 
-import java.util.function.Supplier;
-
-import mc.duzo.animation.api.AnimationEvents;
-import mc.duzo.animation.player.holder.PlayerAnimationHolder;
-import mc.duzo.animation.registry.AnimationRegistry;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
@@ -23,12 +18,8 @@ import net.minecraft.util.Identifier;
 
 import mc.duzo.timeless.Timeless;
 import mc.duzo.timeless.power.PowerRegistry;
-import mc.duzo.timeless.suit.Suit;
 import mc.duzo.timeless.suit.SuitRegistry;
 import mc.duzo.timeless.suit.client.animation.SuitAnimationTracker;
-import mc.duzo.timeless.suit.client.animation.impl.ironman.mk5.MarkFiveAnimations;
-import mc.duzo.timeless.suit.client.animation.impl.ironman.mk5.MarkFiveCaseAnimation;
-import mc.duzo.timeless.suit.client.animation.impl.ironman.mk5.MarkFiveMaskAnimation;
 import mc.duzo.timeless.suit.ironman.mk5.MarkFiveCase;
 import mc.duzo.timeless.suit.set.SetRegistry;
 
@@ -85,44 +76,6 @@ public class Register {
 
         }
     }
-    public static class Animations {
-
-        public static class Players {
-            public static final Supplier<PlayerAnimationHolder> MARK_FIVE_CASE_OPEN = AnimationRegistry.instance().register(() -> new PlayerAnimationHolder(new Identifier(Timeless.MOD_ID, "ironman_mk5_case_open_player"), MarkFiveAnimations.CASE_OPEN_PLAYER));
-            public static final Supplier<PlayerAnimationHolder> MARK_FIVE_CASE_CLOSE = AnimationRegistry.instance().register(() -> new PlayerAnimationHolder(new Identifier(Timeless.MOD_ID, "ironman_mk5_case_close_player"), MarkFiveAnimations.CASE_CLOSE_PLAYER));
-
-            public static void init() {}
-
-        }
-        public static class Suits {
-            public static class MarkFive {
-                public static final Supplier<MarkFiveCaseAnimation> CASE_OPEN = AnimationRegistry.instance().register(() -> new MarkFiveCaseAnimation(true));
-                public static final Supplier<MarkFiveCaseAnimation> CASE_CLOSE = AnimationRegistry.instance().register(() -> new MarkFiveCaseAnimation(false));
-                public static final Supplier<MarkFiveMaskAnimation> MASK_OPEN = AnimationRegistry.instance().register(() -> new MarkFiveMaskAnimation(true));
-                public static final Supplier<MarkFiveMaskAnimation> MASK_CLOSE = AnimationRegistry.instance().register(() -> new MarkFiveMaskAnimation(false));
-
-                public static void init() {
-
-                }
-            }
-
-            public static void init() {
-                MarkFive.init();
-
-                AnimationEvents.FIND_ANIMATION_INFO.register(player -> {
-                    Suit suit = Suit.findSuit(player).orElse(null);
-                    if (suit == null) return AnimationEvents.Result.pass();
-
-                    return new AnimationEvents.Result<>(suit.toClient().getAnimationInfo(player));
-                });
-            }
-        }
-
-        public static void init() {
-            Players.init();
-            Suits.init();
-        }
-    }
 
     public static void init() {
         PowerRegistry.init();
@@ -131,7 +84,6 @@ public class Register {
         ItemGroups.init();
         Sounds.init();
         Trackers.init();
-        Animations.init();
     }
 
     public static <V, T extends V> T register(Registry<V> registry, String name, T entry) {

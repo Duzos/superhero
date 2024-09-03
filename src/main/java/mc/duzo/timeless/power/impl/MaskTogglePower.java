@@ -11,7 +11,7 @@ import net.minecraft.util.Identifier;
 import mc.duzo.timeless.Timeless;
 import mc.duzo.timeless.power.Power;
 import mc.duzo.timeless.registry.Register;
-import mc.duzo.timeless.suit.client.animation.SuitAnimationHolder;
+import mc.duzo.timeless.suit.ironman.IronManSuit;
 import mc.duzo.timeless.suit.item.SuitItem;
 
 public class MaskTogglePower extends Power {
@@ -36,7 +36,10 @@ public class MaskTogglePower extends Power {
         data.putBoolean("MaskEnabled", val);
 
         if (sync) {
-            SuitAnimationHolder anim = (val) ? Register.Animations.Suits.MarkFive.MASK_OPEN.get() : Register.Animations.Suits.MarkFive.MASK_CLOSE.get();
+            IronManSuit suit = FlightPower.getSuit(player);
+            if (suit == null) return;
+            Identifier anim = suit.getMaskAnimation(val);
+            if (anim == null) return;
             DuzoAnimationMod.play(player, Register.Trackers.SUIT, anim);
         }
     }

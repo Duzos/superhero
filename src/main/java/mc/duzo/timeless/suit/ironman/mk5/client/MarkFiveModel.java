@@ -306,10 +306,6 @@ public class MarkFiveModel extends SuitModel {
         this.leftLeg.pivotZ += this.body.pitch * 3f * 3.2f;
         this.leftLeg.pivotX -= this.body.roll * 3f * 3.2f;
     }
-    private static double round (double value, int precision) {
-        int scale = (int) Math.pow(10, precision);
-        return (double) Math.round(value * scale) / scale;
-    }
 
     @Override
     public void renderArm(boolean isRight, AbstractClientPlayerEntity player, int i, MatrixStack matrices, VertexConsumer buffer, int light, int i1, int i2, int i3, int i4) {

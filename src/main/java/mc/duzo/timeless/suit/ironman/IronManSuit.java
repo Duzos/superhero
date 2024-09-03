@@ -43,4 +43,8 @@ public abstract class IronManSuit extends Suit implements AutomaticEnglish {
 
     public abstract int getVerticalFlightModifier(boolean isSprinting);
     public abstract int getHorizontalFlightModifier(boolean isSprinting);
+
+    public Identifier getMaskAnimation(boolean isOpening) {
+        return null;
+    }
 }
