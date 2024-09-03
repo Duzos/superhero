@@ -18,6 +18,11 @@ Use code [duzo](https://www.bisecthosting.com/duzo) for **25%** OFF!
 - Adds many of your favourite Superheroes into Minecraft!
 - TODO - finish this lol
 
+## Dependencies
+
+- [Fabric API](https://fabricmc.net/)
+- [Animator](https://modrinth.com/mod/animator)
+
 ## Credits
 
 ### Developers:
