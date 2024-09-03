@@ -39,6 +39,7 @@ public class ThrusterSound extends PositionedLoopingSound {
     }
     private void updateVolume() {
         this.setVolume(MathHelper.clamp((float) (this.getSpeed() / 35f), 0.25f, 2f));
+        // this.setPitch(MathHelper.clamp((float) (this.getSpeed() / 20f), 0.25f, 1f));
     }
     private double getSpeed() {
         double deltaX = player.getX() - player.prevX;
