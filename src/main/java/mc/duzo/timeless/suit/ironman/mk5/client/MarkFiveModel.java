@@ -287,10 +287,13 @@ public class MarkFiveModel extends SuitModel {
         this.rightArm.roll += velocityX + 0.1f - velocityY;
         this.leftArm.roll += velocityX - 0.1f + velocityY;
 
-        this.rightLeg.pitch = velocityZ / 3f - velocityY;
-        this.leftLeg.pitch = velocityZ / 3f - velocityY;
-        this.rightLeg.roll = this.rightArm.roll / 2f + 0.1f;
-        this.leftLeg.roll = this.leftArm.roll / 2f - 0.1f;
+        this.rightLeg.pitch = velocityZ / 1.25f - velocityY;
+        this.leftLeg.pitch = velocityZ / 1.25f - velocityY;
+        this.rightLeg.roll = this.rightArm.roll / 2f;
+        this.leftLeg.roll = this.leftArm.roll / 2f;
+
+        this.rightLeg.pitch = Math.min(this.rightLeg.pitch, 1.25f);
+        this.leftLeg.pitch = Math.min(this.leftLeg.pitch, 1.25f);
 
         this.body.pitch = velocityZ / 3f - (velocityY / 3f);
         this.body.roll = velocityX / 3f;
