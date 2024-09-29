@@ -20,7 +20,7 @@ import mc.duzo.timeless.suit.Suit;
 
 public class JarvisGui {
     private static final Identifier HUD = new Identifier(Timeless.MOD_ID, "textures/gui/jarvis/hud.png");
-    private static final int ALPHA_GRAY = ColorHelper.Argb.getArgb(125, 255, 255 ,255);
+    private static final int ALPHA_GRAY = ColorHelper.Argb.getArgb(125, 255, 255, 255);
 
     public static void render(DrawContext context, float delta) {
         MinecraftClient client = MinecraftClient.getInstance();
@@ -33,6 +33,7 @@ public class JarvisGui {
         if (suit == null) return;
         if (!(suit.hasPower(PowerRegistry.JARVIS))) return;
         if (suit.hasPower(PowerRegistry.MASK_TOGGLE) && !(MaskTogglePower.hasMask(player))) return;
+
 
         // has flight
         boolean hasFlight = FlightPower.hasFlight(player);

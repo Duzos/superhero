@@ -28,6 +28,7 @@ public class SuitSet extends HashMap<ArmorItem.Type, SuitItem> implements Identi
     public SuitSet(Suit suit, BiFunction<Suit, ArmorItem.Type, SuitItem> func) {
         this(suit, func.apply(suit, ArmorItem.Type.HELMET), func.apply(suit, ArmorItem.Type.CHESTPLATE), func.apply(suit, ArmorItem.Type.LEGGINGS), func.apply(suit, ArmorItem.Type.BOOTS));
     }
+
     protected void put(SuitItem item) {
         if (!(this.suit.equals(item.getSuit())))
             throw new IllegalArgumentException("SuitItem does not match this.suit");
@@ -48,6 +49,14 @@ public class SuitSet extends HashMap<ArmorItem.Type, SuitItem> implements Identi
         return this.suit;
     }
 
+    public static boolean hasArmor(LivingEntity entity) {
+        for (ItemStack stack : entity.getArmorItems()) {
+            if (!(stack.isEmpty())) return true;
+        }
+
+        return false;
+    }
+
     public boolean isWearing(LivingEntity entity) {
         int target = this.values().size();
         int count = 0;
@@ -60,8 +69,11 @@ public class SuitSet extends HashMap<ArmorItem.Type, SuitItem> implements Identi
 
         return count == target;
     }
-    public void wear(LivingEntity entity) {
+    public boolean wear(LivingEntity entity) {
+        if (hasArmor(entity)) return false;
+
         this.values().forEach(item -> this.wear(entity, item));
+        return true;
     }
     private void wear(LivingEntity entity, SuitItem item) {
         entity.equipStack(item.getSlotType(), new ItemStack(item));

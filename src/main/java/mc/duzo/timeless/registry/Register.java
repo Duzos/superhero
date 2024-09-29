@@ -3,8 +3,14 @@ package mc.duzo.timeless.registry;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
+import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 
 import net.minecraft.block.Block;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.SpawnGroup;
+import net.minecraft.entity.attribute.DefaultAttributeContainer;
+import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
@@ -20,6 +26,7 @@ import mc.duzo.timeless.Timeless;
 import mc.duzo.timeless.power.PowerRegistry;
 import mc.duzo.timeless.suit.SuitRegistry;
 import mc.duzo.timeless.suit.client.animation.SuitAnimationTracker;
+import mc.duzo.timeless.suit.ironman.IronManEntity;
 import mc.duzo.timeless.suit.ironman.mk5.MarkFiveCase;
 import mc.duzo.timeless.suit.set.SetRegistry;
 
@@ -77,6 +84,20 @@ public class Register {
         }
     }
 
+    public static class Entities {
+        public static final EntityType<IronManEntity> IRON_MAN = register(Registries.ENTITY_TYPE, "iron_man", EntityType.Builder.<IronManEntity>create(IronManEntity::new, SpawnGroup.MISC)
+                .setDimensions(0.6f, 1.8f)
+                .build("iron_man"));
+
+        public static void init() {
+            registerAttributes(IRON_MAN, MobEntity.createLivingAttributes().build());
+        }
+
+        private static void registerAttributes(EntityType<? extends LivingEntity> type, DefaultAttributeContainer attributes) {
+            FabricDefaultAttributeRegistry.register(type, attributes);
+        }
+    }
+
     public static void init() {
         PowerRegistry.init();
         SetRegistry.init();
@@ -84,6 +105,7 @@ public class Register {
         ItemGroups.init();
         Sounds.init();
         Trackers.init();
+        Entities.init();
     }
 
     public static <V, T extends V> T register(Registry<V> registry, String name, T entry) {

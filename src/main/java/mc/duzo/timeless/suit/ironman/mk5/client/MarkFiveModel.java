@@ -9,7 +9,6 @@ import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.entity.model.BipedEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.RotationAxis;
 import net.minecraft.util.math.Vec3d;
 
@@ -260,10 +259,12 @@ public class MarkFiveModel extends SuitModel {
     public void render(LivingEntity entity, float tickDelta, MatrixStack matrices, VertexConsumer vertexConsumers, int light, float r, float g, float b, float alpha) {
         matrices.push();
 
-        SuitAnimationHolder anim = this.getAnimation((AbstractClientPlayerEntity) entity).orElse(null);
-        if (anim == null || anim.getInfo().transform() == AnimationInfo.Transform.TARGETED) {
-            this.rotateParts(entity);
-            matrices.translate(0f, -0.2f, 0f);
+        if (entity instanceof AbstractClientPlayerEntity player) {
+            SuitAnimationHolder anim = this.getAnimation(player).orElse(null);
+            if (anim == null || anim.getInfo().transform() == AnimationInfo.Transform.TARGETED) {
+                this.rotateParts(player);
+                matrices.translate(0f, -0.2f, 0f);
+            }
         }
 
         matrices.scale(1.0125f, 1.0125f, 1.0125f);
@@ -273,8 +274,8 @@ public class MarkFiveModel extends SuitModel {
         matrices.pop();
     }
 
-    private void rotateParts(LivingEntity entity) {
-        if (!FlightPower.isFlying((PlayerEntity) entity)) return;
+    private void rotateParts(AbstractClientPlayerEntity entity) {
+        if (!FlightPower.isFlying(entity)) return;
 
         Vec3d velocity = entity.getVelocity().rotateY(((float) Math.toRadians(entity.getYaw())));
 

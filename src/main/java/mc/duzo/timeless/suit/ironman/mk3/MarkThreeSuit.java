@@ -23,7 +23,7 @@ public class MarkThreeSuit extends IronManSuit {
     public MarkThreeSuit() {
         super("mark_three");
 
-        this.powers = PowerList.of(PowerRegistry.JARVIS, PowerRegistry.FLIGHT, PowerRegistry.HOVER, PowerRegistry.MASK_TOGGLE );
+        this.powers = PowerList.of(PowerRegistry.SENTRY, PowerRegistry.FLIGHT, PowerRegistry.HOVER, PowerRegistry.MASK_TOGGLE, PowerRegistry.JARVIS);
     }
 
     @Override
