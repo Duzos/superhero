@@ -41,7 +41,8 @@ public abstract class PlayerEntityRendererMixin extends LivingEntityRenderer<Abs
         if (!(clientSuit.hasModel())) return;
 
         boolean isRight = player.getMainArm() == Arm.RIGHT;
-        clientSuit.model().renderArm(isRight, player, 0, matrices, vertexConsumers.getBuffer(RenderLayer.getEntityTranslucent(clientSuit.texture())), light, 1, 1, 1, 1);
+        // todo - this will create a new model every frame, which is bad
+        clientSuit.model().get().renderArm(isRight, player, 0, matrices, vertexConsumers.getBuffer(RenderLayer.getEntityTranslucent(clientSuit.texture())), light, 1, 1, 1, 1);
         ci.cancel();
     }
 }

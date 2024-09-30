@@ -17,6 +17,8 @@ import mc.duzo.timeless.suit.ironman.mk2.client.MarkTwoModel;
 import mc.duzo.timeless.suit.set.SetRegistry;
 import mc.duzo.timeless.suit.set.SuitSet;
 
+import java.util.function.Supplier;
+
 public class MarkTwoSuit extends IronManSuit {
     private final PowerList powers;
 
@@ -39,13 +41,12 @@ public class MarkTwoSuit extends IronManSuit {
     @Environment(EnvType.CLIENT)
     @Override
     protected ClientSuit createClient() {
-        SuitModel model = new MarkTwoModel();
         AnimationInfo info = new AnimationInfo(AnimationInfo.RenderType.TORSO_HEAD, null, AnimationInfo.Movement.ALLOW, null);
 
         return new ClientSuit(this) {
             @Override
-            public SuitModel model() {
-                return model;
+            public Supplier<SuitModel> model() {
+                return MarkTwoModel::new;
             }
 
             @Override
