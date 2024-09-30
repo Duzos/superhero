@@ -5,7 +5,9 @@ import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 
+import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
+import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SpawnGroup;
@@ -23,6 +25,8 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
 import mc.duzo.timeless.Timeless;
+import mc.duzo.timeless.block.SuitApplicationBlock;
+import mc.duzo.timeless.block.entity.SuitApplicationBlockEntity;
 import mc.duzo.timeless.commands.command.TimelessCommands;
 import mc.duzo.timeless.power.PowerRegistry;
 import mc.duzo.timeless.suit.SuitRegistry;
@@ -55,6 +59,7 @@ public class Register {
 
             ItemGroupEvents.modifyEntriesEvent(KEY).register(group -> {
                 group.add(Items.MARK_FIVE_CASE);
+                group.add(Blocks.SUIT_APPLICATION);
             });
         }
     }
@@ -99,6 +104,21 @@ public class Register {
         }
     }
 
+    public static class Blocks {
+        public static final Block SUIT_APPLICATION = registerBlockAndItem("suit_application", new SuitApplicationBlock(AbstractBlock.Settings.create()));
+
+        public static void init() {
+
+        }
+    }
+    public static class BlockEntities {
+        public static final BlockEntityType<SuitApplicationBlockEntity> SUIT_APPLICATION_BE = register(Registries.BLOCK_ENTITY_TYPE, "suit_application", BlockEntityType.Builder.create(SuitApplicationBlockEntity::new, Blocks.SUIT_APPLICATION).build(null));
+
+        public static void init() {
+
+        }
+    }
+
     public static void init() {
         PowerRegistry.init();
         SetRegistry.init();
@@ -107,6 +127,8 @@ public class Register {
         Sounds.init();
         Trackers.init();
         Entities.init();
+        Blocks.init();
+        BlockEntities.init();
         TimelessCommands.init();
     }
 
