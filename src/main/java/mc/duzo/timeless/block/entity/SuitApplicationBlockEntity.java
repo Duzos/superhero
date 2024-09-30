@@ -92,7 +92,7 @@ public class SuitApplicationBlockEntity extends BlockEntity implements BlockEnti
         }
 
         // try remove suit
-        player.getArmorItems().forEach(stack -> stack.setCount(0));
+        found.getSet().clear(player);
         this.setSet(found.getSet());
     }
 }

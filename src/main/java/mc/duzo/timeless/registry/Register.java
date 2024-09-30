@@ -69,6 +69,8 @@ public class Register {
         public static final SoundEvent MARK5_NOISES = register("mark5_noises");
         public static final SoundEvent IRONMAN_STEP = register("ironman_step");
         public static final SoundEvent IRONMAN_MASK = register("ironman_mask");
+        public static final SoundEvent IRONMAN_POWERUP = register("ironman_powerup");
+        public static final SoundEvent IRONMAN_POWERDOWN = register("ironman_powerdown");
 
         private static SoundEvent register(String name) {
             return register(new Identifier(Timeless.MOD_ID, name));

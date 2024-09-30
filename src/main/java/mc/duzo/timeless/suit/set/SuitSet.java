@@ -69,12 +69,36 @@ public class SuitSet extends HashMap<ArmorItem.Type, SuitItem> implements Identi
 
         return count == target;
     }
-    public boolean wear(LivingEntity entity) {
+    public boolean wear(LivingEntity entity, boolean playSounds) {
         if (hasArmor(entity)) return false;
 
         this.values().forEach(item -> this.wear(entity, item));
+
+        if (playSounds && this.suit.getEquipSound().isPresent()) {
+            entity.getWorld().playSound(null, entity.getBlockPos(), this.suit.getEquipSound().orElse(null), entity.getSoundCategory(), 1.0F, 1.0F);
+        }
+
         return true;
     }
+    public boolean wear(LivingEntity entity) {
+        return this.wear(entity, true);
+    }
+
+    public boolean clear(LivingEntity entity, boolean playSounds) {
+        if (!(this.isWearing(entity))) return false;
+
+        this.values().forEach(item -> entity.equipStack(item.getSlotType(), ItemStack.EMPTY));
+
+        if (playSounds && this.suit.getUnequipSound().isPresent()) {
+            entity.getWorld().playSound(null, entity.getBlockPos(), this.suit.getUnequipSound().orElse(null), entity.getSoundCategory(), 1.0F, 1.0F);
+        }
+
+        return true;
+    }
+    public boolean clear(LivingEntity entity) {
+        return this.clear(entity, true);
+    }
+
     private void wear(LivingEntity entity, SuitItem item) {
         entity.equipStack(item.getSlotType(), new ItemStack(item));
     }

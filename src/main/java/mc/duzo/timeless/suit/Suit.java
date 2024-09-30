@@ -31,6 +31,12 @@ public abstract class Suit implements Identifiable, Translatable {
         return this.getPowers().contains(power);
     }
     public abstract SoundEvent getStepSound();
+    public Optional<SoundEvent> getEquipSound() {
+        return Optional.empty();
+    }
+    public Optional<SoundEvent> getUnequipSound() {
+        return Optional.empty();
+    }
 
     @Override
     public String getTranslationKey() {

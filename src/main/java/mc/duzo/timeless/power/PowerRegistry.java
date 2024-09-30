@@ -36,7 +36,7 @@ public class PowerRegistry {
         if (!(Suit.findSuit(player).orElse(null) instanceof IronManSuit suit)) return;
 
         player.getWorld().spawnEntity(new IronManEntity(player.getServerWorld(), suit, player));
-        player.getArmorItems().forEach(stack -> stack.setCount(0));
+        suit.getSet().clear(player);
     }).build().register();
 
     public static void init() {}
