@@ -12,6 +12,7 @@ import mc.duzo.timeless.suit.ironman.IronManSuitItem;
 import mc.duzo.timeless.suit.ironman.mk2.MarkTwoSuit;
 import mc.duzo.timeless.suit.ironman.mk3.MarkThreeSuit;
 import mc.duzo.timeless.suit.ironman.mk5.MarkFiveSuit;
+import mc.duzo.timeless.suit.ironman.mk7.MarkSevenSuit;
 
 public class SetRegistry {
     public static final SimpleRegistry<SuitSet> REGISTRY = FabricRegistryBuilder.createSimple(RegistryKey.<SuitSet>ofRegistry(new Identifier(Timeless.MOD_ID, "suit_set"))).buildAndRegister();
@@ -20,11 +21,13 @@ public class SetRegistry {
         return Registry.register(REGISTRY, suit.id(), suit);
     }
 
+    public static SuitSet MARK_SEVEN;
     public static SuitSet MARK_FIVE;
     public static SuitSet MARK_THREE;
     public static SuitSet MARK_TWO;
 
     public static void init() {
+        MARK_SEVEN = register(new RegisteringSuitSet(new MarkSevenSuit(), IronManSuitItem::new));
         MARK_FIVE = register(new RegisteringSuitSet(new MarkFiveSuit(), IronManSuitItem::new));
         MARK_THREE = register(new RegisteringSuitSet(new MarkThreeSuit(), IronManSuitItem::new));
         MARK_TWO = register(new RegisteringSuitSet(new MarkTwoSuit(), IronManSuitItem::new));

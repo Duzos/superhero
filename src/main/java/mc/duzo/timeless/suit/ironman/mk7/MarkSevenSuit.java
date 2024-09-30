@@ -1,4 +1,4 @@
-package mc.duzo.timeless.suit.ironman.mk3;
+package mc.duzo.timeless.suit.ironman.mk7;
 
 import java.util.function.Supplier;
 
@@ -15,22 +15,22 @@ import mc.duzo.timeless.power.PowerRegistry;
 import mc.duzo.timeless.suit.client.ClientSuit;
 import mc.duzo.timeless.suit.client.render.SuitModel;
 import mc.duzo.timeless.suit.ironman.IronManSuit;
-import mc.duzo.timeless.suit.ironman.mk3.client.MarkThreeModel;
+import mc.duzo.timeless.suit.ironman.mk7.client.MarkSevenModel;
 import mc.duzo.timeless.suit.set.SetRegistry;
 import mc.duzo.timeless.suit.set.SuitSet;
 
-public class MarkThreeSuit extends IronManSuit {
+public class MarkSevenSuit extends IronManSuit {
     private final PowerList powers;
 
-    public MarkThreeSuit() {
-        super("mark_three");
+    public MarkSevenSuit() {
+        super("mark_seven");
 
-        this.powers = PowerList.of(PowerRegistry.JARVIS, PowerRegistry.FLIGHT, PowerRegistry.HOVER, PowerRegistry.MASK_TOGGLE);
+        this.powers = PowerList.of(PowerRegistry.SENTRY, PowerRegistry.FLIGHT, PowerRegistry.HOVER, PowerRegistry.MASK_TOGGLE, PowerRegistry.JARVIS);
     }
 
     @Override
     public SuitSet getSet() {
-        return SetRegistry.MARK_THREE;
+        return SetRegistry.MARK_SEVEN;
     }
 
     @Override
@@ -46,7 +46,7 @@ public class MarkThreeSuit extends IronManSuit {
         return new ClientSuit(this) {
             @Override
             public Supplier<SuitModel> model() {
-                return MarkThreeModel::new;
+                return MarkSevenModel::new;
             }
 
             @Override
