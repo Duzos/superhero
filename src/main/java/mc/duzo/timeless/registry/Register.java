@@ -23,6 +23,7 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
 import mc.duzo.timeless.Timeless;
+import mc.duzo.timeless.commands.command.TimelessCommands;
 import mc.duzo.timeless.power.PowerRegistry;
 import mc.duzo.timeless.suit.SuitRegistry;
 import mc.duzo.timeless.suit.client.animation.SuitAnimationTracker;
@@ -106,6 +107,7 @@ public class Register {
         Sounds.init();
         Trackers.init();
         Entities.init();
+        TimelessCommands.init();
     }
 
     public static <V, T extends V> T register(Registry<V> registry, String name, T entry) {
