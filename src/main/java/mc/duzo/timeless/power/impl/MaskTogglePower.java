@@ -6,6 +6,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
 
 import mc.duzo.timeless.Timeless;
@@ -41,6 +42,9 @@ public class MaskTogglePower extends Power {
             Identifier anim = suit.getMaskAnimation(val);
             if (anim == null) return;
             DuzoAnimationMod.play(player, Register.Trackers.SUIT, anim);
+
+            SoundEvent sound = val ? suit.getEquipSound().orElse(null) : suit.getUnequipSound().orElse(null);
+            if (sound != null) player.playSound(sound, SoundCategory.PLAYERS, 1f, 1f);
         }
     }
     public static boolean hasMask(PlayerEntity player) {
