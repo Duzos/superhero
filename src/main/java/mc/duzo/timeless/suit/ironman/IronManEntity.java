@@ -1,7 +1,7 @@
 package mc.duzo.timeless.suit.ironman;
 
-import java.util.List;
-
+import mc.duzo.timeless.registry.Register;
+import mc.duzo.timeless.suit.SuitRegistry;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
@@ -16,11 +16,10 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Arm;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
-import mc.duzo.timeless.registry.Register;
-import mc.duzo.timeless.suit.SuitRegistry;
+import java.util.List;
 
 public class IronManEntity extends LivingEntity { // todo - PathAwareEntity for sentry mode
     private static final TrackedData<String> SUIT = DataTracker.registerData(IronManEntity.class, TrackedDataHandlerRegistry.STRING);
@@ -33,13 +32,13 @@ public class IronManEntity extends LivingEntity { // todo - PathAwareEntity for 
 
         this.setSuit(suit);
     }
-    public IronManEntity(World world, IronManSuit suit, BlockPos pos, float yaw, float pitch) {
+    public IronManEntity(World world, IronManSuit suit, Vec3d pos, float yaw, float pitch) {
         this(world, suit);
 
         this.refreshPositionAndAngles(pos.getX(), pos.getY(), pos.getZ(), yaw, pitch);
     }
     public IronManEntity(World world, IronManSuit suit, ServerPlayerEntity source) {
-        this(world, suit, source.getBlockPos(), source.getYaw(), source.getPitch());
+        this(world, suit, source.getPos(), source.getYaw(), source.getPitch());
     }
 
     public IronManSuit getSuit() {

@@ -32,6 +32,7 @@ public class IronManEntityRenderer extends EntityRenderer<IronManEntity> {
         matrices.push();
 
         matrices.translate(0, 1.5, 0);
+        matrices.multiply(RotationAxis.NEGATIVE_Y.rotationDegrees(entity.getYaw()));
         matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(180));
 
         model.render(entity, tickDelta, matrices, consumer, light, 1, 1, 1, 1); // todo - the model appears to be global, meaning all transforms to one get applied to all. needs fixing ASAP
