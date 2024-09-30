@@ -1,7 +1,8 @@
 package mc.duzo.timeless.suit.ironman;
 
-import mc.duzo.timeless.registry.Register;
-import mc.duzo.timeless.suit.SuitRegistry;
+import java.util.List;
+import java.util.Optional;
+
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
@@ -22,8 +23,8 @@ import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
-import java.util.List;
-import java.util.Optional;
+import mc.duzo.timeless.registry.Register;
+import mc.duzo.timeless.suit.SuitRegistry;
 
 public class IronManEntity extends LivingEntity { // todo - PathAwareEntity for sentry mode
     private static final TrackedData<String> SUIT = DataTracker.registerData(IronManEntity.class, TrackedDataHandlerRegistry.STRING);
