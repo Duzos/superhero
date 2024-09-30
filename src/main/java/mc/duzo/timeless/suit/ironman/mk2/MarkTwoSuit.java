@@ -1,5 +1,7 @@
 package mc.duzo.timeless.suit.ironman.mk2;
 
+import java.util.function.Supplier;
+
 import mc.duzo.animation.generic.AnimationInfo;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -16,8 +18,6 @@ import mc.duzo.timeless.suit.ironman.IronManSuit;
 import mc.duzo.timeless.suit.ironman.mk2.client.MarkTwoModel;
 import mc.duzo.timeless.suit.set.SetRegistry;
 import mc.duzo.timeless.suit.set.SuitSet;
-
-import java.util.function.Supplier;
 
 public class MarkTwoSuit extends IronManSuit {
     private final PowerList powers;

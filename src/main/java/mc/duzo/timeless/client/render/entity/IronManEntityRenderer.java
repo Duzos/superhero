@@ -1,8 +1,5 @@
 package mc.duzo.timeless.client.render.entity;
 
-import mc.duzo.timeless.suit.Suit;
-import mc.duzo.timeless.suit.client.render.SuitModel;
-import mc.duzo.timeless.suit.ironman.IronManEntity;
 import net.minecraft.client.render.LightmapTextureManager;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
@@ -12,6 +9,10 @@ import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.RotationAxis;
+
+import mc.duzo.timeless.suit.Suit;
+import mc.duzo.timeless.suit.client.render.SuitModel;
+import mc.duzo.timeless.suit.ironman.IronManEntity;
 
 public class IronManEntityRenderer extends EntityRenderer<IronManEntity> {
     private Suit suit;

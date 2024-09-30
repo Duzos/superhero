@@ -1,8 +1,5 @@
 package mc.duzo.timeless.suit.client.render;
 
-import mc.duzo.timeless.suit.Suit;
-import mc.duzo.timeless.suit.item.SuitItem;
-import mc.duzo.timeless.suit.set.SuitSet;
 import net.minecraft.client.render.LightmapTextureManager;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
@@ -16,6 +13,10 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
+
+import mc.duzo.timeless.suit.Suit;
+import mc.duzo.timeless.suit.item.SuitItem;
+import mc.duzo.timeless.suit.set.SuitSet;
 
 public class SuitFeature<T extends LivingEntity, M extends EntityModel<T>>
         extends FeatureRenderer<T, M> {
