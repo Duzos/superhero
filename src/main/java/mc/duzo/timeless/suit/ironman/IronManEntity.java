@@ -5,10 +5,12 @@ import mc.duzo.timeless.suit.SuitRegistry;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.projectile.ProjectileUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -16,13 +18,16 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Arm;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 import java.util.List;
+import java.util.Optional;
 
 public class IronManEntity extends LivingEntity { // todo - PathAwareEntity for sentry mode
     private static final TrackedData<String> SUIT = DataTracker.registerData(IronManEntity.class, TrackedDataHandlerRegistry.STRING);
+    private int cooldown = 0;
 
     public IronManEntity(EntityType<? extends IronManEntity> entityType, World world) {
         super(entityType, world);
@@ -31,6 +36,7 @@ public class IronManEntity extends LivingEntity { // todo - PathAwareEntity for 
         this(Register.Entities.IRON_MAN, world);
 
         this.setSuit(suit);
+        this.cooldown = 60;
     }
     public IronManEntity(World world, IronManSuit suit, Vec3d pos, float yaw, float pitch) {
         this(world, suit);
@@ -63,6 +69,42 @@ public class IronManEntity extends LivingEntity { // todo - PathAwareEntity for 
         }
 
         return success ? ActionResult.SUCCESS : ActionResult.FAIL;
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+
+        if (!this.getWorld().isClient()){
+            if (this.cooldown > 0) {
+                this.cooldown--;
+            } else {
+                this.tryApply();
+            }
+        }
+    }
+
+    private void tryApply() {
+        PlayerEntity found = findNearbyPlayer().orElse(null);
+
+        if (found == null) return;
+
+        boolean success = this.getSuit().getSet().wear(found);
+
+        if (success) {
+            this.discard();
+        }
+    }
+
+    private Optional<PlayerEntity> findNearbyPlayer() {
+        EntityHitResult ray = ProjectileUtil.getEntityCollision(this.getWorld(), this, this.getPos(), this.getPos().offset(this.getMovementDirection().getOpposite(), 0.25f).add(0, 1.5, 0), this.getBoundingBox().stretch(this.getVelocity()).expand(1.0), (entity -> (entity instanceof PlayerEntity)));;
+        if (ray == null) return Optional.empty();
+        return Optional.of((PlayerEntity) ray.getEntity());
+    }
+
+    @Override
+    public boolean damage(DamageSource source, float amount) {
+        return false;
     }
 
     @Override
