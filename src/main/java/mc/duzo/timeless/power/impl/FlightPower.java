@@ -89,7 +89,17 @@ public class FlightPower extends Power {
         Vec3d change = new Vec3d(0, 0, 0);
 
         if (ServerKeybind.get(player).isJumping()) {
-            return change.add(0, (getSuit(player).getVerticalFlightModifier(player.isSprinting()) / 100f), 0).add(0, player.getVelocity().y, 0);
+            boolean isPressingMovement = ServerKeybind.get(player).isMovingForward() || ServerKeybind.get(player).isMovingBackward() || ServerKeybind.get(player).isMovingRight() || ServerKeybind.get(player).isMovingLeft();
+            if (!(isPressingMovement) || !(player.isSprinting())) { // just move straight up
+                return change.add(0, (getSuit(player).getVerticalFlightModifier(player.isSprinting()) / 100f), 0).add(0, player.getVelocity().y, 0);
+            }
+
+            double multiplier = (getSuit(player).getHorizontalFlightModifier(player.isSprinting()) / 10f);
+
+            float i = -player.getPitch() / 90;
+            change = change.add(0, (i * (multiplier * ((i < 0) ? 1 : 1))), 0);
+
+            return change;
         }
 
         double yVelocity = player.getVelocity().y;
