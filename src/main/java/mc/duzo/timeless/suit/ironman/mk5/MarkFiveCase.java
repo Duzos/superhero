@@ -66,6 +66,7 @@ public class MarkFiveCase extends Item implements AutomaticEnglish {
         if (!force) {
             if (!player.isOnGround()) return false; // not on ground
             if (!player.getMainHandStack().isOf(Register.Items.MARK_FIVE_CASE)) return false; // not holding
+            if (SuitSet.hasArmor(player)) return false; // already wearing
         }
 
         player.getWorld().playSound(null, player.getBlockPos(), Register.Sounds.MARK5_NOISES, SoundCategory.PLAYERS, 0.25f, 1f);
