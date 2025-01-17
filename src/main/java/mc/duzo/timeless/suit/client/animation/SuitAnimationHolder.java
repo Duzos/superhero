@@ -3,9 +3,9 @@ package mc.duzo.timeless.suit.client.animation;
 import mc.duzo.animation.generic.AnimationHolder;
 import mc.duzo.animation.generic.AnimationInfo;
 
-import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.entity.animation.Animation;
 import net.minecraft.client.render.entity.model.EntityModel;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.Identifier;
 
 import mc.duzo.timeless.suit.client.render.SuitModel;
@@ -20,7 +20,7 @@ public class SuitAnimationHolder extends AnimationHolder {
     }
 
     @Override
-    public void update(EntityModel<?> model, float progress, AbstractClientPlayerEntity player) {
+    public void update(EntityModel<?> model, float progress, LivingEntity player) {
         SuitAnimationHelper.updateAnimation(this.state, this.animation, progress, 1.0f, (SuitModel) model);
         this.model = (SuitModel) model;
 

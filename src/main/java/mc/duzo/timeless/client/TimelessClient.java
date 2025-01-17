@@ -25,6 +25,7 @@ import mc.duzo.timeless.suit.client.animation.impl.ironman.generic.GenericIronMa
 import mc.duzo.timeless.suit.client.animation.impl.ironman.mk5.MarkFiveAnimations;
 import mc.duzo.timeless.suit.client.animation.impl.ironman.mk5.MarkFiveCaseAnimation;
 import mc.duzo.timeless.suit.client.animation.impl.ironman.mk5.MarkFiveMaskAnimation;
+import mc.duzo.timeless.suit.ironman.client.sentry.SentryAnimation;
 
 public class TimelessClient implements ClientModInitializer {
     @Override
@@ -68,6 +69,8 @@ public class TimelessClient implements ClientModInitializer {
                 public static class IronMan {
                     public static final Supplier<MarkFiveMaskAnimation> MASK_OPEN = AnimationRegistry.instance().register(() -> new SuitAnimationHolder(new Identifier(Timeless.MOD_ID, "ironman_generic_mask_open"), GenericIronManAnimations.MASK_OPEN, new AnimationInfo(AnimationInfo.RenderType.TORSO_HEAD, null, AnimationInfo.Movement.ALLOW, AnimationInfo.Transform.TARGETED), false));
                     public static final Supplier<MarkFiveMaskAnimation> MASK_CLOSE = AnimationRegistry.instance().register(() -> new SuitAnimationHolder(new Identifier(Timeless.MOD_ID, "ironman_generic_mask_close"), GenericIronManAnimations.MASK_CLOSE, new AnimationInfo(AnimationInfo.RenderType.TORSO_HEAD, null, AnimationInfo.Movement.ALLOW, AnimationInfo.Transform.TARGETED), false));
+                    public static final Supplier<SuitAnimationHolder> BACK_OPEN = AnimationRegistry.instance().register(() -> new SuitAnimationHolder(new Identifier(Timeless.MOD_ID, "ironman_generic_back_open"), SentryAnimation.SUIT_OPEN, new AnimationInfo(AnimationInfo.RenderType.ALL, AnimationInfo.Perspective.THIRD_PERSON_BACK, AnimationInfo.Movement.DISABLE, AnimationInfo.Transform.ALL), false));
+                    public static final Supplier<SuitAnimationHolder> BACK_CLOSE = AnimationRegistry.instance().register(() -> new SuitAnimationHolder(new Identifier(Timeless.MOD_ID, "ironman_generic_back_close"), SentryAnimation.SUIT_OPEN2, new AnimationInfo(AnimationInfo.RenderType.ALL, AnimationInfo.Perspective.THIRD_PERSON_BACK, AnimationInfo.Movement.DISABLE, AnimationInfo.Transform.ALL), false));
 
                     public static void init() {
 

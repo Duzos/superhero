@@ -97,7 +97,7 @@ public class IronManEntity extends LivingEntity { // todo - PathAwareEntity for 
         }
     }
 
-    private Optional<PlayerEntity> findNearbyPlayer(float range) {
+    public Optional<PlayerEntity> findNearbyPlayer(float range) {
         EntityHitResult ray = ProjectileUtil.getEntityCollision(this.getWorld(), this, this.getPos(), this.getPos().offset(this.getMovementDirection().getOpposite(), range).add(0, 1.5, 0), this.getBoundingBox().stretch(this.getVelocity()).expand(1.0), (entity -> (entity instanceof PlayerEntity)));;
         if (ray == null) return Optional.empty();
         return Optional.of((PlayerEntity) ray.getEntity());

@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 
 import net.minecraft.util.Util;
@@ -19,6 +20,7 @@ public class Scheduler {
 
     private Scheduler() {
         ServerTickEvents.END_SERVER_TICK.register(server -> this.tasks.removeIf(Task::tryTick));
+        ClientTickEvents.END_CLIENT_TICK.register(client -> this.tasks.removeIf(Task::tryTick));
     }
 
     public static void init() {
