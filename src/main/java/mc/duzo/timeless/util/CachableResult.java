@@ -2,8 +2,8 @@ package mc.duzo.timeless.util;
 
 import java.util.function.Supplier;
 
-import mc.duzo.timeless.util.time.Scheduler;
-import mc.duzo.timeless.util.time.TimeUnit;
+import dev.drtheo.scheduler.api.Scheduler;
+import dev.drtheo.scheduler.api.TimeUnit;
 
 public class CachableResult<T> {
     private final Supplier<T> getter;
@@ -13,7 +13,7 @@ public class CachableResult<T> {
     public CachableResult(Supplier<T> getter, TimeUnit unit, long time) {
         this.getter = getter;
 
-        Scheduler.runTaskTimer(this::invalidate, unit, time);
+        Scheduler.get().runTaskTimer((task) -> this.invalidate(), unit, time); // i dont like this anymore
         this.invalidate();
     }
 
@@ -25,8 +25,6 @@ public class CachableResult<T> {
     }
     private void validate() {
         if (this.dirty) {
-            System.out.println("Validating");
-
             this.update();
             this.dirty = false;
         }

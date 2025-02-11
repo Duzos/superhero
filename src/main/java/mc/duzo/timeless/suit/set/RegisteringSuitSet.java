@@ -3,9 +3,10 @@ package mc.duzo.timeless.suit.set;
 import java.util.function.BiFunction;
 
 import net.minecraft.item.ArmorItem;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 
-import mc.duzo.timeless.registry.Register;
 import mc.duzo.timeless.suit.Suit;
 import mc.duzo.timeless.suit.SuitRegistry;
 import mc.duzo.timeless.suit.item.SuitItem;
@@ -40,7 +41,7 @@ public class RegisteringSuitSet extends SuitSet {
         }
     }
     private void registerItem(SuitItem item) {
-        Register.Items.register(item.id(), item);
+        Registry.register(Registries.ITEM, item.id(), item);
     }
     private void registerSuit() {
         SuitRegistry.register(this.suit);

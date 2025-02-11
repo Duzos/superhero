@@ -1,8 +1,9 @@
 package mc.duzo.timeless.suit.ironman.mk5;
 
+import dev.drtheo.scheduler.api.Scheduler;
+import dev.drtheo.scheduler.api.TimeUnit;
 import mc.duzo.animation.DuzoAnimationMod;
 import mc.duzo.animation.registry.client.TrackerRegistry;
-import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -15,16 +16,14 @@ import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 
 import mc.duzo.timeless.Timeless;
-import mc.duzo.timeless.datagen.provider.lang.AutomaticEnglish;
+import mc.duzo.timeless.datagen.provider.lang.AutomaticSuitEnglish;
 import mc.duzo.timeless.registry.Register;
 import mc.duzo.timeless.suit.set.SetRegistry;
 import mc.duzo.timeless.suit.set.SuitSet;
-import mc.duzo.timeless.util.time.Scheduler;
-import mc.duzo.timeless.util.time.TimeUnit;
 
-public class MarkFiveCase extends Item implements AutomaticEnglish {
-    public MarkFiveCase() {
-        super(new FabricItemSettings().maxCount(1));
+public class MarkFiveCase extends Item implements AutomaticSuitEnglish {
+    public MarkFiveCase(Settings settings) {
+        super(settings.maxCount(1));
     }
 
     @Override
@@ -50,7 +49,7 @@ public class MarkFiveCase extends Item implements AutomaticEnglish {
         DuzoAnimationMod.play(player, Register.Trackers.SUIT, new Identifier(Timeless.MOD_ID, "ironman_mk5_case_close"));
         DuzoAnimationMod.play(player, TrackerRegistry.PLAYER, new Identifier(Timeless.MOD_ID, "ironman_mk5_case_close_player"));
 
-        Scheduler.runTaskLater(() -> toCasePost(player, force), TimeUnit.SECONDS, (long) (8.038f));
+        Scheduler.get().runTaskLater(() -> toCasePost(player, force), TimeUnit.SECONDS, (long) (8.038f));
         return true;
     }
     private static void toCasePost(ServerPlayerEntity player, boolean force) {

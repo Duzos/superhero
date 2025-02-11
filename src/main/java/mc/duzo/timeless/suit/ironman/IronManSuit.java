@@ -6,11 +6,11 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
 
 import mc.duzo.timeless.Timeless;
-import mc.duzo.timeless.datagen.provider.lang.AutomaticEnglish;
+import mc.duzo.timeless.datagen.provider.lang.AutomaticSuitEnglish;
 import mc.duzo.timeless.registry.Register;
 import mc.duzo.timeless.suit.Suit;
 
-public abstract class IronManSuit extends Suit implements AutomaticEnglish {
+public abstract class IronManSuit extends Suit implements AutomaticSuitEnglish {
     private final Identifier id;
 
     protected IronManSuit(Identifier id) {

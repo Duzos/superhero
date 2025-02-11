@@ -2,6 +2,8 @@ package mc.duzo.timeless.suit.ironman.client.sentry;
 
 import java.util.Optional;
 
+import dev.drtheo.scheduler.api.TimeUnit;
+
 import net.minecraft.client.render.entity.animation.Animation;
 import net.minecraft.client.render.entity.animation.AnimationHelper;
 import net.minecraft.client.render.entity.animation.Keyframe;
@@ -15,7 +17,6 @@ import mc.duzo.timeless.suit.client.animation.SuitAnimationTracker;
 import mc.duzo.timeless.suit.client.render.SuitModel;
 import mc.duzo.timeless.suit.ironman.IronManEntity;
 import mc.duzo.timeless.util.CachableResult;
-import mc.duzo.timeless.util.time.TimeUnit;
 
 public class SentryAnimation {
     private final SuitModel parent;
