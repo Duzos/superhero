@@ -40,7 +40,7 @@ dependencies {
     // duzos animator
     modImplementation files("libs/animator.jar")
 
-    include(modImplementation("com.github.pavatus:sakitus:${project.sakitus_version}")) {
+    modImplementation("com.github.amblelabs:modkit:${project.sakitus_version}") {
         exclude(group: "net.fabricmc.fabric-api")
     }
 
