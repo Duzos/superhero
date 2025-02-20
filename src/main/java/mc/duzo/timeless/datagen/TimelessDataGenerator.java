@@ -1,7 +1,7 @@
 package mc.duzo.timeless.datagen;
 
-import dev.pavatus.lib.datagen.lang.LanguageType;
-import dev.pavatus.lib.datagen.lang.SakitusLanguageProvider;
+import dev.amble.lib.datagen.lang.AmbleLanguageProvider;
+import dev.amble.lib.datagen.lang.LanguageType;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 
@@ -29,7 +29,7 @@ public class TimelessDataGenerator implements DataGeneratorEntrypoint {
 
     private void genEnglish(FabricDataGenerator.Pack pack) {
         pack.addProvider((((output, registriesFuture) -> {
-            SakitusLanguageProvider provider = new SakitusLanguageProvider(output, LanguageType.EN_US);
+            AmbleLanguageProvider provider = new AmbleLanguageProvider(output, LanguageType.EN_US);
 
             for (Suit suit : SuitRegistry.REGISTRY) {
                 if (!(suit instanceof AutomaticSuitEnglish)) continue;

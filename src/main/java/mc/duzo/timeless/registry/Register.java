@@ -1,13 +1,13 @@
 package mc.duzo.timeless.registry;
 
-import dev.pavatus.lib.block.ABlockSettings;
-import dev.pavatus.lib.container.RegistryContainer;
-import dev.pavatus.lib.container.impl.BlockContainer;
-import dev.pavatus.lib.container.impl.ItemContainer;
-import dev.pavatus.lib.container.impl.ItemGroupContainer;
-import dev.pavatus.lib.container.impl.SoundContainer;
-import dev.pavatus.lib.item.AItemSettings;
-import dev.pavatus.lib.itemgroup.AItemGroup;
+import dev.amble.lib.block.ABlockSettings;
+import dev.amble.lib.container.RegistryContainer;
+import dev.amble.lib.container.impl.BlockContainer;
+import dev.amble.lib.container.impl.ItemContainer;
+import dev.amble.lib.container.impl.ItemGroupContainer;
+import dev.amble.lib.container.impl.SoundContainer;
+import dev.amble.lib.item.AItemSettings;
+import dev.amble.lib.itemgroup.AItemGroup;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 
